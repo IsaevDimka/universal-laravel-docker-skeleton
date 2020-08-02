@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\API\v1;
 
-use App\Http\Controllers\API\APIController;
+use App\Http\Controllers\API\ApiController;
 use App\Services\BackendService;
 
-class StatusController extends APIController
+class StatusController extends ApiController
 {
     protected BackendService $backendService;
 

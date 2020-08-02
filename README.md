@@ -18,14 +18,25 @@ __🐳 Docker containers__
 + `roadrunner` — php:7.4-cli & spiral/roadrunner v1.8.1
 + `clickhouse-server` — yandex/clickhouse-server
 
-__General installation on production__
+
+## Features
+
+- Laravel 7
+- Vue + VueRouter + Vuex + VueI18n + ESlint
+- Pages with dynamic import and custom layouts
+- Login, register, email verification and password reset
+- Authentication with JWT
+- Socialite integration
+- Bootstrap 4 + Font Awesome 5
+
+## Installation
 
 + `git clone <this repo>`
 + `make build`
 + `make mongodb-install`
 + `make install`
 
-__Commands__
+## Commands
 
 Maintenance mode
 ``` shell
@@ -65,6 +76,16 @@ php artisan version:commit
 php artisan version:timestamp
 ```
 
-__Dependencies__
+## Socialite
+
+This project comes with GitHub as an example for [Laravel Socialite](https://laravel.com/docs/5.8/socialite).
+
+To enable the provider create a new GitHub application and use `https://example.com/api/oauth/github/callback` as the Authorization callback URL.
+
+Edit `.env` and set `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` with the keys form your GitHub application.
+
+For other providers you may need to set the appropriate keys in `config/services.php` and redirect url in `OAuthController.php`.
+
+## Dependencies
 
 

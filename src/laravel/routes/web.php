@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'MainController@index')->name('index');
+//Route::get('/', 'MainController@index')->name('index');
 
 Route::group(['prefix' => 'debug', 'as' => 'debug.'], function () {
     Route::get('/', 'DebugController@index')->name('index');

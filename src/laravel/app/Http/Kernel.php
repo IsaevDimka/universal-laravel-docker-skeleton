@@ -21,6 +21,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        \App\Http\Middleware\SetLocale::class,
         \App\Http\Middleware\PrettyPrint::class,
     ];
 
@@ -37,6 +38,10 @@ class Kernel extends HttpKernel
             // \Illuminate\Session\Middleware\AuthenticateSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        ],
+
+        'spa' => [
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
@@ -68,15 +73,10 @@ class Kernel extends HttpKernel
 
         'csrf' => \App\Http\Middleware\VerifyCsrfToken::class,
 
-        //        'client' => \Laravel\Passport\Http\Middleware\CheckClientCredentials::class,
-        //        'scopes' => \Laravel\Passport\Http\Middleware\CheckScopes::class,
-        //        'scope' => \Laravel\Passport\Http\Middleware\CheckForAnyScope::class,
-
         'token' => \App\Http\Middleware\CheckApiToken::class,
         'cors'  =>     \Fruitcake\Cors\HandleCors::class,
 
         'token_config' => \App\Http\Middleware\CheckApiConfigToken::class,
-        'token_scopes' => \App\Http\Middleware\CheckApiTokenScopes::class,
 
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,

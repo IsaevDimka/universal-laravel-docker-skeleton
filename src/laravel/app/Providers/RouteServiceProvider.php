@@ -46,6 +46,10 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
+        $this->mapBackendRoutes();
+
+        $this->mapSpaRoutes();
+
         //
     }
 
@@ -93,5 +97,19 @@ class RouteServiceProvider extends ServiceProvider
             ->prefix('backend')
             ->as('backend.')
             ->group(base_path('routes/backend.php'));
+    }
+
+    /**
+     * Define the "spa" routes for the application.
+     *
+     * These routes are typically stateless.
+     *
+     * @return void
+     */
+    protected function mapSpaRoutes()
+    {
+        Route::middleware('spa')
+             ->namespace($this->namespace)
+             ->group(base_path('routes/spa.php'));
     }
 }

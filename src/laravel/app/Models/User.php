@@ -4,13 +4,17 @@ namespace App\Models;
 
 use App\Casts\Json;
 use App\Casts\Locale;
+use App\Notifications\ResetPassword;
+use App\Notifications\VerifyEmail;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
-use Laravel\Passport\HasApiTokens;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
  * App\Models\User
@@ -21,6 +25,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $last_name
  * @property string $email
  * @property string|null $phone
+ * @property string|null $telegram_chat_id
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property \Illuminate\Support\Carbon|null $last_visit_at
  * @property string $password
@@ -64,11 +69,12 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User active()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User notActive()
  */
-class User extends Authenticatable implements MustVerifyEmail, HasLocalePreference
+class User extends Authenticatable implements MustVerifyEmail, HasLocalePreference, JWTSubject
 {
     use Notifiable;
-    use HasApiTokens;
     use HasRoles;
+
+    const FORMAT_DATETIME = 'Y-m-d H:i:s';
 
     /**
      * The attributes that are mass assignable.
@@ -81,6 +87,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         'last_name',
         'email',
         'phone',
+        'telegram_chat_id',
         'email_verified_at',
         'last_visit_at',
         'password',
@@ -199,18 +206,17 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
                 return $this->notifications();
             case 'mail':
                 return $this->email;
-            case 'nexmo':
-            case 'cmtelecom':
             case 'sms':
                 return $this->phone;
             case 'telegram':
+                return $this->telegram_chat_id;
         }
     }
 
     /**
      * Route notifications for the mail channel.
      *
-     * @return string
+     * @return string|null
      */
     public function routeNotificationForMail()
     {
@@ -220,11 +226,21 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     /**
      * Route notifications for the sms channel.
      *
-     * @return string
+     * @return string|null
      */
     public function routeNotificationForSms()
     {
         return $this->phone;
+    }
+
+    /**
+     * Route notifications for the telegram channel.
+     *
+     * @return string|null
+     */
+    public function routeNotificationForTelegram()
+    {
+        return $this->telegram_chat_id;
     }
 
     /**
@@ -252,8 +268,75 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
      */
     public function hasValidEmail() : bool
     {
-        list($username, $domain) = explode('@', $this->email);
+        [$username, $domain] = explode('@', $this->email);
 
         return checkdnsrr($domain, 'MX');
+    }
+
+    /**
+     * Get the oauth providers.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function oauthProviders()
+    {
+        return $this->hasMany(\App\Models\OAuthProvider::class);
+    }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPassword($token));
+    }
+
+    /**
+     * Send the email verification notification.
+     *
+     * @return void
+     */
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new VerifyEmail);
+    }
+
+    /**
+     * @return int
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        return BaseModel::formatingCarbonAttribute($value);
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return BaseModel::formatingCarbonAttribute($value);
+    }
+
+    public function getLastVisitAtAttribute($value)
+    {
+        return BaseModel::formatingCarbonAttribute($value);
+    }
+
+    public function getEmailVerifiedAtAttribute($value)
+    {
+        return BaseModel::formatingCarbonAttribute($value);
     }
 }

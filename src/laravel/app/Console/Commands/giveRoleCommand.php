@@ -43,6 +43,7 @@ class giveRoleCommand extends Command
         $role = $this->choice('Role ?', Role::all()->pluck('name')->toArray());
 
         if ($this->confirm('Assign role "'.$role.'"? to "'.$username.'"')) {
+            /** @var User $user */
             $user = User::where('username', $username)->first();
             $user->assignRole($role);
             $this->info('User: "'.$username.'" assign Role "'.$role.'"');

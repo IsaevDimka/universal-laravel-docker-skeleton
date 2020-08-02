@@ -14,16 +14,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['namespace' => 'API\v1', 'prefix' => 'v1', 'middleware' => 'throttle:600', 'as' => 'api.v1.'], function() {
+Route::group(['namespace' => 'API\v1', 'prefix' => 'v1', 'as' => 'api.v1.'], function() {
     Route::group(['middleware' => ['guest:api', 'throttle:60,1']], function () {
-        Route::post('login', 'AuthController@login')->name('login');
-        Route::post('signup', 'AuthController@signup')->name('signup');
+        Route::post('login', 'Auth\LoginController@login');
+        Route::post('register', 'Auth\RegisterController@register');
+
+        Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+        Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
+        Route::post('email/verify/{user}', 'Auth\VerificationController@verify')->name('verification.verify');
+        Route::post('email/resend', 'Auth\VerificationController@resend');
+
+        Route::post('oauth/{driver}', 'Auth\OAuthController@redirectToProvider');
+        Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
+
         Route::get('status', 'StatusController')->name('status');
     });
 
     Route::group(['middleware' => 'auth:api'], function() {
-        Route::post('logout', 'AuthController@logout')->name('logout');
-        Route::post('getUser', 'AuthController@getUser')->name('getUser');
+        Route::post('logout', 'Auth\LoginController@logout');
+        Route::get('/user', 'Auth\UserController@current');
+        Route::patch('settings/profile', 'Settings\ProfileController@update');
+        Route::patch('settings/password', 'Settings\PasswordController@update');
     });
 
     /**

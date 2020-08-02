@@ -65,24 +65,20 @@ class Handler extends ExceptionHandler
     {
         if($exception instanceof MaintenanceModeException){
             if(in_array('api', Route::getCurrentRoute()->middleware()) || $request->wantsJson()){
-                return response()->json([
-                    'status'  => 'error',
-                    'code'    => 503,
-                    'message' => !empty($exception->getMessage()) ? $exception->getMessage() : 'Service Unavailable',
-                    'errors'  => [],
-                ], 503);
+                return api()->response(
+                    503,
+                    !empty($exception->getMessage()) ? $exception->getMessage() : 'Service Unavailable'
+                );
             }
             throw new HttpException(503, $exception->getMessage());
         }
 
         if ($exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException){
             if(in_array('api', Route::getCurrentRoute()->middleware()) || $request->wantsJson()){
-                return response()->json([
-                    'status'  => 'error',
-                    'code'    => $exception->getCode(),
-                    'message' => 'Entry for '.str_replace(self::MODELS_NAMESPACE, '', $exception->getModel()).' by ids: '.implode(',', $exception->getIds()).' not found',
-                    'errors'  => [],
-                ], 404);
+                if($request->expectsJson())
+                {
+                    return api()->notFound('Entry for '.str_replace(self::MODELS_NAMESPACE, '', $exception->getModel()).' by ids: '.implode(',', $exception->getIds()).' not found');
+                }
             }
         }
         return parent::render($request, $exception);
@@ -95,40 +91,8 @@ class Handler extends ExceptionHandler
      */
     public function unauthenticated($request, AuthenticationException $exception)
     {
-        // Check API route
-        if(in_array('api', Route::getCurrentRoute()->middleware())){
-            return response()->json([
-                'status'    => 'error',
-                'code'      => $exception->getCode(),
-                'message'   => $exception->getMessage(),
-                'errors'    => [],
-            ], 401);
-        }
-
-        return redirect()->guest('login');
-    }
-
-    /**
-     * Create a response object from the given validation exception.
-     *
-     * @param  \Illuminate\Validation\ValidationException  $e
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    protected function convertValidationExceptionToResponse(ValidationException $e, $request)
-    {
-        if ($e->response) {
-            return $e->response;
-        }
-        $errors = $e->validator->errors()->getMessages();
-        if ($request->expectsJson()) {
-            return response()->json([
-                'status'  => 'error',
-                'code'    => $e->getCode(),
-                'message' => $e->getMessage(),
-                'errors'  => $errors,
-            ], $e->status);
-        }
-        return redirect()->back()->withInput($request->input())->withErrors($errors);
+        return $request->expectsJson()
+            ? api()->response(401, $exception->getMessage())
+            : redirect()->guest(url('/login'));
     }
 }

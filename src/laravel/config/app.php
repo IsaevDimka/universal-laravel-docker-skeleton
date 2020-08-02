@@ -84,6 +84,11 @@ return [
 
     'locale' => 'en',
 
+    'locales' => [
+        'en' => 'EN',
+        'ru' => 'RU',
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
@@ -190,6 +195,7 @@ return [
         Jenssegers\Mongodb\MongodbServiceProvider::class,
         Sentry\Laravel\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
     ],
 
     /*

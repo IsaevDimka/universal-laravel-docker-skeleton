@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Laravel\Passport\Token;
 use Illuminate\Auth\AuthenticationException;
 
 class CheckApiToken
@@ -33,14 +32,6 @@ class CheckApiToken
             return $next($request);
         }
 
-        if(!empty(Token::whereId($request->token)->whereRevoked(false)->count())
-        ){
-            logger()->channel('mongodb')->debug(__METHOD__, [
-                'collection'    => 'API_v1_middleware_CheckApiToken_successful',
-                'token'         => $request->token,
-            ]);
-            return $next($request);
-        }
         logger()->channel('mongodb')->error(__METHOD__, [
             'collection'    => 'API_v1_middleware_CheckApiToken_error',
             'token'         => $request->token,

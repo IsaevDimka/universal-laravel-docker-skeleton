@@ -20,7 +20,7 @@ class givePermissionCommand extends Command
      *
      * @var string
      */
-    protected $description = 'give Permission To user';
+    protected $description = 'give Permission to user';
 
     /**
      * Create a new command instance.

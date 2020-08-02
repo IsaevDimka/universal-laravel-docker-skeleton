@@ -17,11 +17,15 @@ class RolesAndPermissionsSeeder extends Seeder
     {
         // Reset cached roles and permissions
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
-
         // create permissions
-        Permission::create(['name' => 'api']);
+
+        Permission::create(['name' => 'api', 'guard_name' => 'web']);
+        Permission::create(['name' => 'debug', 'guard_name' => 'web']);
+        Permission::create(['name' => 'beta', 'guard_name' => 'web']);
 
         // create roles and assign created permissions
-        Role::create(['name' => 'root'])->givePermissionTo(Permission::all());
+        Role::create(['name' => 'root', 'guard_name' => 'web'])->givePermissionTo(Permission::all());
+        Role::create(['name' => 'admin', 'guard_name' => 'web']);
+        Role::create(['name' => 'client', 'guard_name' => 'web']);
     }
 }

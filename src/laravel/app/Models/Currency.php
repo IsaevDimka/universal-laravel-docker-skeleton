@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -33,7 +34,6 @@ class Currency extends BaseModel
 {
     use SoftDeletes;
 
-    const DATEFORMAT = 'Y-m-d H:i:s';
     protected $table = 'currencies';
 
     protected $primaryKey = 'id';
@@ -62,9 +62,13 @@ class Currency extends BaseModel
         $this->attributes['sign'] = \mb_strtoupper($value);
     }
 
-
-    public function getTransactionDateAttribute($value)
+    public function getCreatedAtAttribute($value)
     {
-        return Carbon::parse($value)->format('Y-m-d H:i:s');
+        return BaseModel::formatingCarbonAttribute($value);
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return BaseModel::formatingCarbonAttribute($value);
     }
 }

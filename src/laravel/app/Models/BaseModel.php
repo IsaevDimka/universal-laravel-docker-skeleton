@@ -3,6 +3,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -15,6 +16,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class BaseModel extends Model
 {
+    public const FORMAT_DATETIME = 'Y-m-d H:i:s';
+
     /**
      * Get table name
      *
@@ -23,5 +26,10 @@ class BaseModel extends Model
     public static function getTableName() : string
     {
         return with(new static)->getTable();
+    }
+
+    public static function formatingCarbonAttribute($value)
+    {
+        return Carbon::parse($value)->format(BaseModel::FORMAT_DATETIME);
     }
 }

@@ -19,3 +19,4 @@ _ide_helper.php
 _ide_helper_models.php
 laravel.app.js
 /public/status.json
+/public/dist
