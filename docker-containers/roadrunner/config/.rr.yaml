@@ -1,0 +1,6 @@
+http:
+  address: :6080
+  workers:
+    command: "php /var/www/roadrunner/worker.php"
+    pool:
+      numWorkers: 4
