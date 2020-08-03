@@ -3,6 +3,12 @@ FROM php:7.4-cli
 MAINTAINER Dmitriy Isaev <isaevdimka@gmail.com>
 LABEL Description="high-performance PHP application server, load balancer and process manager"
 
+######################################
+## Set the timezone:
+######################################
+ARG TIMEZONE
+RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} > /etc/timezone
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
   nano \
   mc \
@@ -10,7 +16,24 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   libzip-dev \
   unzip \
   procps \
-  inotify-tools
+  inotify-tools \
+  unzip
+
+######################################
+## Set the locale:
+######################################
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y locales
+RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+    dpkg-reconfigure --frontend=noninteractive locales && \
+    update-locale LANG=en_US.UTF-8
+
+RUN locale-gen \
+    en_US.UTF-8
+
+ENV LANGUAGE=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
+ENV LC_CTYPE=UTF-8
+ENV LANG=en_US.UTF-8
 
 # Install PHP Extensions
 RUN docker-php-ext-install zip \
@@ -25,7 +48,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
   && mv composer.phar /usr/local/bin/composer
 
 # Download RoadRunner
-ENV RR_VERSION 1.8.1
+ARG RR_VERSION
 RUN mkdir /tmp/rr \
   && cd /tmp/rr \
   && echo "{\"require\":{\"spiral/roadrunner\":\"${RR_VERSION}\"}}" >> composer.json \
@@ -36,7 +59,10 @@ RUN mkdir /tmp/rr \
 # Copy RoadRunner config
 COPY config /etc/roadrunner
 
-RUN ln -snf /usr/share/zoneinfo/$TIMEZONE /etc/localtime && echo $TIMEZONE > /etc/timezone
+# Copy php config
+ADD ./opcache.ini /usr/local/etc/php/conf.d
+
+RUN rm -r /var/lib/apt/lists/*
 
 WORKDIR /var/www/roadrunner
 

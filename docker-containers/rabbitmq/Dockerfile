@@ -1,5 +1,7 @@
 FROM rabbitmq:3.8.5-management
 
 MAINTAINER Dmitriy Isaev <isaevdimka@gmail.com>
+LABEL Description="RabbitMQ + management container"
 
-RUN ln -snf /usr/share/zoneinfo/$TIMEZONE /etc/localtime && echo $TIMEZONE > /etc/timezone
+ARG TIMEZONE
+RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} > /etc/timezone

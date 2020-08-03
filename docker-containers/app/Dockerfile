@@ -137,7 +137,8 @@ ENV LANG=en_US.UTF-8
 #####################################
 # Set the timezone:
 #####################################
-RUN ln -snf /usr/share/zoneinfo/$TIMEZONE /etc/localtime && echo $TIMEZONE > /etc/timezone
+ARG TIMEZONE
+RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} > /etc/timezone
 
 #####################################
 # Laravel Schedule Cron Job:
@@ -176,6 +177,7 @@ ENV PHP_XDEBUG_VERSION 2.9.6
 #RUN pecl install xdebug-${PHP_XDEBUG_VERSION} \
 #    && docker-php-ext-enable xdebug
 #ADD ./xdebug.ini /usr/local/etc/php/conf.d
+
 #####################################
 # Supervisor consumers:
 #####################################

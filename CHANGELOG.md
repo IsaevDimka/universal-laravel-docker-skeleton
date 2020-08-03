@@ -30,3 +30,11 @@
 - Fixed API methods
 - Fixed routes
 - Fixed migrations and seeders
+
+## [0.0.3] - 2020-08-04
+
+### Fixed
+
++ Fixed RoadRunner container, configs, apps
++ Fixed docker containers set timezone from env
++ Fixed and improve docker-compose.yml

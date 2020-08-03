@@ -1,6 +1,54 @@
 http:
-  address: :6080
+  address: :8082
   workers:
-    command: "php /var/www/roadrunner/worker.php"
+    command: "php /var/www/roadrunner/psr-worker.php"
     pool:
-      numWorkers: 4
+      numWorkers: 1
+      maxJobs:    1
+  # HTTP service provides HTTP2 transport
+  http2:
+    # enable HTTP/2, only with TSL, enabled by default
+    enabled: true
+
+    # max transfer channels, default 128
+    maxConcurrentStreams: 128
+# reload can reset rr servers when files change
+reload:
+  # refresh internval (default 1s)
+  interval: 1s
+  # file extensions to watch, defaults to [.php]
+  patterns: [".php"]
+  # list of services to watch
+  services:
+    http:
+      # list of dirs, "" root
+      dirs: ["/var/www/roadrunner"]
+      # include sub directories
+      recursive: true
+
+# Additional HTTP headers and CORS control.
+headers:
+  # Middleware to handle CORS requests, https://www.w3.org/TR/cors/
+  cors:
+    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin
+    allowedOrigin: "*"
+
+    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Headers
+    allowedHeaders: "*"
+
+    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Methods
+    allowedMethods: "GET,POST,PUT,DELETE"
+
+    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Credentials
+    allowCredentials: true
+
+    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Expose-Headers
+    exposedHeaders: "Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma"
+
+    # Max allowed age in seconds
+    maxAge: 600
+
+  # Automatically add headers to every response.
+  response:
+    "X-Powered-By": "RoadRunner"
+    "Content-Type": "application/json"

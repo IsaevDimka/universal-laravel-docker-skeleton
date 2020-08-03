@@ -17,13 +17,13 @@ volumes:
 services:
   # PHP-fpm Service
   laravel-app:
-    build: ./docker-containers/app
+    build:
+      context: ./docker-containers/app
+      args:
+        TIMEZONE: ${TIMEZONE}
     container_name: laravel-app
     restart: unless-stopped
     tty: true
-    environment:
-      TZ: ${TIMEZONE}
-      PHP_IDE_CONFIG: "serverName=docker"
     ports:
       - ${APP_PORT}:9000
       - ${APP_SUPERVISOR_PORT}:9001
@@ -46,12 +46,13 @@ services:
 
   # Nginx Service
   laravel-nginx:
-    build: ./docker-containers/nginx
+    build:
+      context: ./docker-containers/nginx
+      args:
+        TIMEZONE: ${TIMEZONE}
     container_name: laravel-nginx
     restart: unless-stopped
     tty: true
-    environment:
-      TZ: ${TIMEZONE}
     ports:
       - ${WEBSERVER_HTTP_PORT}:80
       - ${WEBSERVER_HTTPS_PORT}:443
@@ -68,7 +69,10 @@ services:
 
   # PostgreSQL
   laravel-postgres:
-    build: ./docker-containers/postgres
+    build:
+      context: ./docker-containers/postgres
+      args:
+        TIMEZONE: ${TIMEZONE}
     container_name: laravel-postgres
     restart: always
     environment:
@@ -89,7 +93,10 @@ services:
   # ClickHouse
   laravel-clickhouse:
     container_name: laravel-clickhouse
-    build: ./docker-containers/clickhouse
+    build:
+      context: ./docker-containers/clickhouse
+      args:
+        TIMEZONE: ${TIMEZONE}
     restart: unless-stopped
     volumes:
       - laravel-clickhouse-data:/var/lib/clickhouse
@@ -101,12 +108,12 @@ services:
 
   # Memcached
   laravel-memcached:
-    build: ./docker-containers/memcached
+    build:
+      context: ./docker-containers/memcached
     container_name: laravel-memcached
     restart: always
     environment:
       MEMCACHED_CACHE_SIZE: ${MEMCACHED_CACHE_SIZE}
-      TZ: ${TIMEZONE}
     ports:
       - ${MEMCACHED_PORT}:11211
     networks:
@@ -114,11 +121,10 @@ services:
 
   # Redis
   laravel-redis:
-    build: ./docker-containers/redis
+    build:
+      context: ./docker-containers/redis
     container_name: laravel-redis
     restart: unless-stopped
-    environment:
-      TZ: ${TIMEZONE}
     command:
       - 'redis-server'
       - '--include /etc/redis/redis.conf'
@@ -140,14 +146,16 @@ services:
 
   # MongoDB
   laravel-mongodb:
-    build: ./docker-containers/mongodb
+    build:
+      context: ./docker-containers/mongodb
+      args:
+        TIMEZONE: ${TIMEZONE}
     container_name: laravel-mongodb
     restart: unless-stopped
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
       MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
-      TZ: ${TIMEZONE}
     ports:
       - ${MONGO_PORT}:27017
     volumes:
@@ -161,7 +169,10 @@ services:
 
   # RabbitMQ
   laravel-rabbitmq:
-      build: ./docker-containers/rabbitmq
+      build:
+        context: ./docker-containers/rabbitmq
+        args:
+          TIMEZONE: ${TIMEZONE}
       container_name: laravel-rabbitmq
       restart: unless-stopped
       environment:
@@ -173,7 +184,6 @@ services:
 #        RABBITMQ_SSL_KEYFILE: ${RABBITMQ_SSL_KEYFILE}
 #        RABBITMQ_SSL_VERIFY: ${RABBITMQ_SSL_VERIFY}
 #        RABBITMQ_SSL_FAIL_IF_NO_PEER_CERT: ${RABBITMQ_SSL_FAIL_IF_NO_PEER_CERT}
-        TZ: ${TIMEZONE}
       ports:
           - ${RABBITMQ_MANAGEMENT_PORT}:15672
           - ${RABBITMQ_EXCHANGE_PORT}:5672
@@ -186,11 +196,10 @@ services:
 
   # Adminer
   laravel-adminer:
-    build: ./docker-containers/adminer
+    build:
+      context: ./docker-containers/adminer
     container_name: laravel-adminer
     restart: unless-stopped
-    environment:
-      TZ: ${TIMEZONE}
     ports:
       - ${ADMINER_PORT}:8080
     logging:
@@ -199,20 +208,20 @@ services:
       - laravel-network
 
 # RoadRunner service
-#  laravel-roadrunner:
-#    build: ./docker-containers/roadrunner
-#    container_name: laravel-roadrunner
-#    restart: unless-stopped
-#    environment:
-#      TZ: ${TIMEZONE}
-#      RR_VERSION: ${RR_VERSION}
-#    ports:
-#      - ${ROADRUNNER_HTTP_PORT}:8082
-#      - ${ROADRUNNER_HTTPS_PORT}:8084
-#    volumes:
-#      - ./src/roadrunner/:/var/www/roadrunner
-#      - ./src/roadrunner/etc/roadrunner:/etc/roadrunner
-#      - ./docker-containers/nginx/letsencrypt:/etc/letsencrypt
-#    networks:
-#      - laravel-network
+  laravel-roadrunner:
+    build:
+      context: ./docker-containers/roadrunner
+      args:
+        TIMEZONE: ${TIMEZONE}
+        RR_VERSION: ${RR_VERSION}
+    container_name: laravel-roadrunner
+    restart: unless-stopped
+    ports:
+      - ${ROADRUNNER_HTTP_PORT}:8082
+      - ${ROADRUNNER_HTTPS_PORT}:8084
+    volumes:
+      - ./src/roadrunner/:/var/www/roadrunner
+      - ./docker-containers/nginx/letsencrypt:/etc/letsencrypt
+    networks:
+      - laravel-network
 

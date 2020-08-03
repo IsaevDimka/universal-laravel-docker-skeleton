@@ -54,7 +54,7 @@ return [
         //    'connections' => [],
         //],
         \BeyondCode\SelfDiagnosis\Checks\StorageDirectoryIsLinked::class,
-        \App\SelfDiagnosisChecks\MyCustomCheck::class,
+        \App\Checks\MyCustomCheck::class,
     ],
 
     /*
