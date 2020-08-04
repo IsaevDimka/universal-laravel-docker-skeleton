@@ -89,3 +89,7 @@ For other providers you may need to set the appropriate keys in `config/services
 ## Dependencies
 
 
+## License
+MIT License (MIT). Please see [`LICENSE`](./LICENSE) for more information. Maintained by [Isaev Dmitriy](https://isaevdimka.ru).
+
+
