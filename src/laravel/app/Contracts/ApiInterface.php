@@ -10,10 +10,10 @@ interface ApiInterface
     /**
      * Create API response.
      *
-     * @param int    $status
-     * @param string $message
-     * @param array  $data
-     * @param array  $extraData
+     * @param int         $status
+     * @param string|null $message
+     * @param array       $data
+     * @param array       $extraData
      *
      * @return JsonResponse
      */
@@ -22,9 +22,9 @@ interface ApiInterface
     /**
      * Create successful (200) API response.
      *
-     * @param string $message
-     * @param array  $data
-     * @param array  $extraData
+     * @param string|null $message
+     * @param array       $data
+     * @param array       $extraData
      *
      * @return JsonResponse
      */
@@ -33,7 +33,7 @@ interface ApiInterface
     /**
      * Create Not found (404) API response.
      *
-     * @param string $message
+     * @param string|null $message
      *
      * @return JsonResponse
      */
@@ -42,9 +42,9 @@ interface ApiInterface
     /**
      * Create Validation (422) API response.
      *
-     * @param string $message
-     * @param array  $errors
-     * @param array  $extraData
+     * @param string|null $message
+     * @param array       $errors
+     * @param array       $extraData
      *
      * @return JsonResponse
      */
@@ -53,9 +53,9 @@ interface ApiInterface
     /**
      * Create Validation (422) API response.
      *
-     * @param string $message
-     * @param array  $data
-     * @param array  $extraData
+     * @param string|null $message
+     * @param array       $data
+     * @param array       $extraData
      *
      * @return JsonResponse
      */
@@ -64,9 +64,9 @@ interface ApiInterface
     /**
      * Create Server error (500) API response.
      *
-     * @param string $message
-     * @param array  $data
-     * @param array  $extraData
+     * @param string|null $message
+     * @param array       $data
+     * @param array       $extraData
      *
      * @return JsonResponse
      */

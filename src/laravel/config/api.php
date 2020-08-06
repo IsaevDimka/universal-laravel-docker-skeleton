@@ -9,6 +9,11 @@ return [
     ],
 
     /*
+     * Api Debug Mode
+     */
+    'debug' => env('API_DEBUG', false),
+
+    /*
      * Turn to string the status code in the json response's body.
      */
     'stringify' => true,
@@ -30,6 +35,11 @@ return [
     'include_app_info' => true,
 
     /*
+     * Include default message by http code if "message" is null in the JSON response
+     */
+    'include_nullable_message_status_text' => true,
+
+    /*
      * Json response's body labels.
      */
     'keys'      => [
@@ -44,9 +54,10 @@ return [
      */
     'messages' => [
         'success'    => 'Process is successfully completed',
-        'notfound'   => 'Sorry no results query for your request.',
-        'validation' => 'Validation Failed please check the request attributes and try again.',
-        'forbidden'  => 'You don\'t have permission to access this content.',
+        'bad'        => 'Bad Request',
+        'notfound'   => 'Sorry no results query for your request',
+        'validation' => 'Validation Failed please check the request attributes and try again',
+        'forbidden'  => 'You don\'t have permission to access this content',
         'error'      => 'Server error, please try again later',
     ],
 ];

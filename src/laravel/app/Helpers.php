@@ -1,26 +1,27 @@
 <?php
 
 /**
- * @param        $string
+ * @param string $string
  * @param int    $pre
  * @param int    $post
  * @param string $mark
  *
  * @return string
  */
-function markString($string, $pre = 1, $post = 1, $mark = '*')
+function markString(string $string, $pre = 1, $post = 1, $mark = '*')
 {
-    return preg_replace_callback('/^(\+?\w{' . $pre . '})([\S\s]+)(\w{' . $post . '})$/', function ($match) use ($mark) {
-        return $match[1] . str_repeat($mark, strlen($match[2])) . $match[3];
+    return preg_replace_callback('/^(\+?\w{' . $pre . '})([\S\s]+)(\w{' . $post . '})$/',
+        function ($match) use ($mark) {
+            return $match[1] . str_repeat($mark, strlen($match[2])) . $match[3];
     }, $string);
 }
 
 /**
- * @param $seconds
+ * @param float $seconds
  *
  * @return string
  */
-function formatDuration($seconds)
+function formatDuration(float $seconds)
 {
     if ($seconds < 0.001) {
         return round($seconds * 1000000).'μs';
@@ -36,14 +37,14 @@ if (!function_exists('api')) {
     /**
      * Create a new APIResponse instance.
      *
-     * @param int    $status
-     * @param string $message
-     * @param array  $data
-     * @param array  $extraData
+     * @param int         $status
+     * @param string|null $message
+     * @param array       $data
+     * @param array       $extraData
      *
-     * @return \App\Responses\APIResponse|\Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
-    function api($status = 200, $message = '', $data = [], ...$extraData)
+    function api($status = 200, $message = null, $data = [], ...$extraData)
     {
         if (func_num_args() === 0) {
             return app(\App\Contracts\ApiInterface::class);
@@ -58,30 +59,29 @@ if (!function_exists('ok')) {
     /**
      * Return success response.
      *
-     * @param string $message
-     * @param array  $data
-     * @param array  $extraData
+     * @param string|null $message
+     * @param array       $data
+     * @param array       $extraData
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    function ok($message = '', $data = [], ...$extraData)
+    function ok($message = null, $data = [], ...$extraData)
     {
         return api()->ok($message, $data, ...$extraData);
     }
 }
 
 if (!function_exists('success')) {
-
     /**
      * Return success response.
      *
-     * @param string $message
-     * @param array  $data
-     * @param array  $extraData
+     * @param string|null $message
+     * @param array       $data
+     * @param array       $extraData
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    function success($message = '', $data = [], ...$extraData)
+    function success($message = null, $data = [], ...$extraData)
     {
         return api()->success($message, $data, ...$extraData);
     }
