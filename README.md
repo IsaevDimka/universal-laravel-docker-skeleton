@@ -1,5 +1,7 @@
 # Universal laravel docker skeleton
 
+[![Changelog badge][changelog-badge]][changelog] [![Version 1.1.0 Badge][version-badge]][changelog] [![MIT License Badge][license-badge]][license]
+
 __Requirements__
 
 + Host OS — Win/Linux/UNIX/Mac
@@ -88,8 +90,17 @@ For other providers you may need to set the appropriate keys in `config/services
 
 ## Dependencies
 
+## Contribute
+
+Please do contribute! Issues and pull requests are welcome.
+
+Thank you for your help improving software one changelog at a time!
 
 ## License
 MIT License (MIT). Please see [`LICENSE`](./LICENSE) for more information. Maintained by [Isaev Dmitriy](https://isaevdimka.ru).
 
-
+[version-badge]: https://img.shields.io/badge/alpha-0.0.4-blue.svg
+[changelog]: ./CHANGELOG.md
+[changelog-badge]: https://img.shields.io/badge/changelog-docker%20skeleton-%23E05735
+[license]: ./LICENSE
+[license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
