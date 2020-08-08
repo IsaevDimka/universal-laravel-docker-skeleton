@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['namespace' => 'API\v1', 'prefix' => 'v1', 'as' => 'api.v1.'], function() {
+
+    Route::get('localization/{locale}', 'LocalizationController')->where(['locale' => '[a-zA-Z]{2}'])->name('localization');
+
     Route::group(['middleware' => ['guest:api', 'throttle:60,1']], function () {
         Route::post('login', 'Auth\LoginController@login');
         Route::post('register', 'Auth\RegisterController@register');

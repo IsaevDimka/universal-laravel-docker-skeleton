@@ -10,7 +10,8 @@ class ProfileController extends ApiController
     /**
      * Update the user's profile information.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
@@ -21,7 +22,7 @@ class ProfileController extends ApiController
          * TODO: Make request
          */
         $this->validate($request, [
-            'username'         => 'required|string|max:256|unique:users,username',
+            'username'         => 'required|string|max:256|unique:users,username,' . $user->id,
             'first_name'       => 'nullable||string|max:256',
             'last_name'        => 'nullable||string|max:256',
             'email'            => 'required|email|unique:users,email,' . $user->id,
@@ -29,6 +30,6 @@ class ProfileController extends ApiController
             'telegram_chat_id' => 'nullable|string|max:256',
         ]);
 
-        return tap($user)->update($request->only('username', 'email', 'first_name', 'last_name', 'phone', 'telegram_chat_id'));
+        return tap($user)->update($request->only('email', 'first_name', 'last_name', 'email', 'phone', 'telegram_chat_id'));
     }
 }

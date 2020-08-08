@@ -69,7 +69,13 @@
       <div class="form-group row">
         <label class="col-md-3 col-form-label text-md-right">{{ $t('locale') }}</label>
         <div class="col-md-7">
-          <input v-model="form.locale" :class="{ 'is-invalid': form.errors.has('locale') }" class="form-control" type="text" name="locale" readonly>
+          <select v-model="form.locale" :class="{ 'is-invalid': form.errors.has('locale') }" class="custom-select">
+            <option v-for="(value, key) in locales"
+                    :key="key"
+                    :label="`${key} (${value})`"
+                    :value="key"
+            >{{ value }}</option>
+          </select>
           <has-error :form="form" field="locale" />
         </div>
       </div>
@@ -105,12 +111,14 @@ export default {
       last_name: '',
       email: '',
       phone: '',
-      telegram_chat_id: ''
+      telegram_chat_id: '',
+      locale: '',
     })
   }),
 
   computed: mapGetters({
-    user: 'auth/user'
+    user: 'auth/user',
+    locales: 'lang/locales'
   }),
 
   created () {

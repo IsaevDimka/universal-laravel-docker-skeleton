@@ -55,6 +55,7 @@
 <script>
 import Form from 'vform'
 import LoginWithGithub from '~/components/LoginWithGithub'
+import { loadMessages } from '~/plugins/i18n'
 
 export default {
   middleware: 'guest',
@@ -85,6 +86,12 @@ export default {
         token: data.token,
         remember: this.remember
       })
+
+      // Save the user locale.
+      if (this.$i18n.locale !== data.locale) {
+        loadMessages(data.locale)
+        this.$store.dispatch('lang/setLocale', { locale: data.locale })
+      }
 
       // Fetch the user.
       await this.$store.dispatch('auth/fetchUser')

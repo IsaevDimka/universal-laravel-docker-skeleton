@@ -33,7 +33,6 @@ function formatDuration(float $seconds)
 }
 
 if (!function_exists('api')) {
-
     /**
      * Create a new APIResponse instance.
      *
@@ -42,7 +41,7 @@ if (!function_exists('api')) {
      * @param array       $data
      * @param array       $extraData
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return App\Contracts\ApiInterface
      */
     function api($status = 200, $message = null, $data = [], ...$extraData)
     {
@@ -51,38 +50,5 @@ if (!function_exists('api')) {
         }
 
         return app(\App\Contracts\ApiInterface::class)->response($status, $message, $data, ...$extraData);
-    }
-}
-
-if (!function_exists('ok')) {
-
-    /**
-     * Return success response.
-     *
-     * @param string|null $message
-     * @param array       $data
-     * @param array       $extraData
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    function ok($message = null, $data = [], ...$extraData)
-    {
-        return api()->ok($message, $data, ...$extraData);
-    }
-}
-
-if (!function_exists('success')) {
-    /**
-     * Return success response.
-     *
-     * @param string|null $message
-     * @param array       $data
-     * @param array       $extraData
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    function success($message = null, $data = [], ...$extraData)
-    {
-        return api()->success($message, $data, ...$extraData);
     }
 }

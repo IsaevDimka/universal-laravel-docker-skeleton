@@ -3,18 +3,18 @@ blade-directive: version
 current:
   label: v
   major: 0
-  minor: 0
-  patch: 4
+  minor: 1
+  patch: 0
   prerelease: alpha
-  buildmetadata: 2
-  commit: '100002'
+  buildmetadata: 1
+  commit: '100001'
   timestamp:
     year: 2020
     month: 8
-    day: 6
-    hour: 19
-    minute: 46
-    second: 4
+    day: 8
+    hour: 18
+    minute: 7
+    second: 9
     timezone: Asia/Ho_Chi_Minh
 commit:
   mode: increment
@@ -45,7 +45,7 @@ format:
   buildmetadata: '{$buildmetadata}'
   commit: '{$commit}'
   version: '{$version-only} [(?={$prerelease})]'
-  version-only: 'v{$major}.{$minor}.{$patch}'
+  version-only: '{$label}{$major}.{$minor}.{$patch}'
   full: '{$version-only} [(?={$prerelease})] [build ?={$buildmetadata}] (commit {$commit})'
   compact: '{$version-only} [(?={$prerelease})] [build ?={$buildmetadata}]'
   timestamp-year: '{$timestamp.year}'

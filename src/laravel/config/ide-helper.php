@@ -79,6 +79,7 @@ return array(
 
     'helper_files' => array(
         base_path().'/vendor/laravel/framework/src/Illuminate/Support/helpers.php',
+        base_path().'/app/Helpers.php',
     ),
 
     /*
@@ -92,7 +93,7 @@ return array(
     */
 
     'model_locations' => array(
-        'app',
+        'app/Models',
     ),
 
     /*
@@ -135,7 +136,7 @@ return array(
     */
 
     'interfaces' => array(
-
+        base_path().'/app/Contracts/ApiInterface.php',
     ),
 
     /*
@@ -165,7 +166,9 @@ return array(
     |
     */
     'custom_db_types' => array(
-
+        'postgresql' => [
+            'jsonb' => 'json_array',
+        ],
     ),
 
     /*

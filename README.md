@@ -99,7 +99,7 @@ Thank you for your help improving software one changelog at a time!
 ## License
 MIT License (MIT). Please see [`LICENSE`](./LICENSE) for more information. Maintained by [IsaevDimka](https://github.com/IsaevDimka).
 
-[version-badge]: https://img.shields.io/badge/alpha-0.0.4-blue.svg
+[version-badge]: https://img.shields.io/badge/alpha-0.1.0-blue.svg
 [changelog]: ./CHANGELOG.md
 [changelog-badge]: https://img.shields.io/badge/changelog-docker%20skeleton-%23E05735
 [license]: ./LICENSE

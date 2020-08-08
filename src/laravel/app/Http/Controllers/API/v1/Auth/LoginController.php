@@ -61,10 +61,14 @@ class LoginController extends ApiController
         $token = (string) $this->guard()->getToken();
         $expiration = $this->guard()->getPayload()->get('exp');
 
+        /** @var User $user */
+        $user = $request->user();
+
         return response()->json([
-            'token' => $token,
+            'token'      => $token,
             'token_type' => 'bearer',
             'expires_in' => $expiration - time(),
+            'locale'     => $user->locale,
         ]);
     }
 

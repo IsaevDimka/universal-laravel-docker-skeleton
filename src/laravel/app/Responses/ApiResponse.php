@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response as ResponseStatus;
 class ApiResponse implements ApiInterface
 {
 
-    const FORMAT_DATETIME = 'Y-m-d H:i:s';
+    const FORMAT_DATETIME = Carbon::DEFAULT_TO_STRING_FORMAT;
 
     const BYPASS_KEY = 'debug';
 

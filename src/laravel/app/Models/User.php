@@ -6,13 +6,11 @@ use App\Casts\Json;
 use App\Casts\Locale;
 use App\Notifications\ResetPassword;
 use App\Notifications\VerifyEmail;
-use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
@@ -68,6 +66,9 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @mixin Authenticatable
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User active()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User notActive()
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\OAuthProvider[] $oauthProviders
+ * @property-read int|null $oauth_providers_count
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereTelegramChatId($value)
  */
 class User extends Authenticatable implements MustVerifyEmail, HasLocalePreference, JWTSubject
 {

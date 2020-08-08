@@ -31,6 +31,28 @@ interface ApiInterface
     public function ok($message = null, $data = [], ...$extraData);
 
     /**
+     * Create successful (200) API response.
+     *
+     * @param string|null $message
+     * @param array       $data
+     * @param array       $extraData
+     *
+     * @return JsonResponse
+     */
+    public function success($message = null, $data = [], ...$extraData);
+
+    /**
+     * Create bad (400) API response.
+     *
+     * @param string|null $message
+     * @param array       $errors
+     * @param array       $extraData
+     *
+     * @return JsonResponse
+     */
+    public function bad($message = null, $errors = [], ...$extraData);
+
+    /**
      * Create Not found (404) API response.
      *
      * @param string|null $message

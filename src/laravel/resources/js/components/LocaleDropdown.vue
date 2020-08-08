@@ -18,6 +18,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { loadMessages } from '~/plugins/i18n'
+import axios from 'axios'
 
 export default {
   computed: mapGetters({
@@ -29,8 +30,8 @@ export default {
     setLocale (locale) {
       if (this.$i18n.locale !== locale) {
         loadMessages(locale)
-
         this.$store.dispatch('lang/setLocale', { locale })
+        axios.get(`/api/v1/localization/${locale}`);
       }
     }
   }

@@ -1,10 +1,7 @@
 <template>
-    <div>
-        <div class="container mt-4">
-            <card title="Backend">
-            </card>
-        </div>
-    </div>
+  <card title="Backend">
+      <p>Backend | under construction</p>
+  </card>
 </template>
 
 <script>
