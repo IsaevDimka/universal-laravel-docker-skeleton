@@ -97,7 +97,7 @@ Please do contribute! Issues and pull requests are welcome.
 Thank you for your help improving software one changelog at a time!
 
 ## License
-MIT License (MIT). Please see [`LICENSE`](./LICENSE) for more information. Maintained by [Isaev Dmitriy](https://isaevdimka.ru).
+MIT License (MIT). Please see [`LICENSE`](./LICENSE) for more information. Maintained by [IsaevDimka](https://github.com/IsaevDimka).
 
 [version-badge]: https://img.shields.io/badge/alpha-0.0.4-blue.svg
 [changelog]: ./CHANGELOG.md
