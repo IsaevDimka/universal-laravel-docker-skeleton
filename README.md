@@ -2,14 +2,14 @@
 
 [![Changelog badge][changelog-badge]][changelog] [![Version 1.1.0 Badge][version-badge]][changelog] [![MIT License Badge][license-badge]][license]
 
-__Requirements__
+## Requirements
 
 + Host OS — Win/Linux/UNIX/Mac
 + Docker
 
-__🐳 Docker containers__
+## 🐳 Docker containers
 
-+ `php` — php:7.4-fpm | Laravel v7.12.0 | Socket.io 
++ `php` — php:7.4-fpm | Laravel v7.22.x | Socket.io 
 + `nginx` — nginx:1.19.0-alpine
 + `postgres` — postgres:12.3-alpine
 + `memcached` — memcached:1.6.6-alpine
@@ -89,6 +89,7 @@ Edit `.env` and set `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` with the keys 
 For other providers you may need to set the appropriate keys in `config/services.php` and redirect url in `OAuthController.php`.
 
 ## Dependencies
+
 
 ## Contribute
 
