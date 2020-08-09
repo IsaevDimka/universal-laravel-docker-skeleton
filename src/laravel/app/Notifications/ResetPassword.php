@@ -13,8 +13,9 @@ class ResetPassword extends Notification implements ShouldQueue
     use Queueable;
     use setTagsForHorizonQueueNotificationTrait;
 
-    public function __construct()
+    public function __construct($token)
     {
+        $this->token = $token;
         $this->queue = config('notifications.queue');
         $this->connection = config('notifications.connection');
     }

@@ -83,14 +83,14 @@ export default {
 
       // Save the token.
       this.$store.dispatch('auth/saveToken', {
-        token: data.token,
+        token: data.data.token,
         remember: this.remember
       })
 
       // Save the user locale.
-      if (this.$i18n.locale !== data.locale) {
-        loadMessages(data.locale)
-        this.$store.dispatch('lang/setLocale', { locale: data.locale })
+      if (this.$i18n.locale !== data.data.locale) {
+        loadMessages(data.data.locale)
+        this.$store.dispatch('lang/setLocale', { locale: data.data.locale })
       }
 
       // Fetch the user.

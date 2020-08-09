@@ -64,7 +64,7 @@ class LoginController extends ApiController
         /** @var User $user */
         $user = $request->user();
 
-        return response()->json([
+        return api()->ok(null, [
             'token'      => $token,
             'token_type' => 'bearer',
             'expires_in' => $expiration - time(),

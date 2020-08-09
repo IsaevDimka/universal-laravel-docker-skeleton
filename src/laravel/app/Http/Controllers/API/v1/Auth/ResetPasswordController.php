@@ -25,11 +25,11 @@ class ResetPasswordController extends ApiController
      *
      * @param  \Illuminate\Http\Request $request
      * @param  string  $response
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     protected function sendResetResponse(Request $request, $response)
     {
-        return ['status' => trans($response)];
+        return api()->ok(trans($response));
     }
 
     /**
@@ -37,10 +37,10 @@ class ResetPasswordController extends ApiController
      *
      * @param  \Illuminate\Http\Request $request
      * @param  string  $response
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     protected function sendResetFailedResponse(Request $request, $response)
     {
-        return response()->json(['email' => trans($response)], 400);
+        return api()->validation('Invalid email', ['email' => trans($response)]);
     }
 }
