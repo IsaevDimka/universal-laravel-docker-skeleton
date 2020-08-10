@@ -13,4 +13,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('{path}', 'SpaController')->where('path', '(.*)');
+Route::get(env('LARAVUE_PATH', ''), 'SpaController')->where('any', '.*')->name('spa');

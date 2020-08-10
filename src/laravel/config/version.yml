@@ -2,11 +2,11 @@ mode: increment
 blade-directive: version
 current:
   label: v
-  major: 0
-  minor: 1
+  major: 1
+  minor: 0
   patch: 0
   prerelease: alpha
-  buildmetadata: 1
+  buildmetadata: 2
   commit: '100001'
   timestamp:
     year: 2020

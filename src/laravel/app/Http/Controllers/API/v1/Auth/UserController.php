@@ -21,7 +21,8 @@ class UserController extends ApiController
         $roles = $user->getRoleNames()->toArray();
         $permissions = $user->getPermissionNames()->toArray();
 
-        $user_data = array_merge($user->toArray(), compact('roles', 'permissions'));
-        return response()->json($user_data);
+        $avatar = 'https://i.pravatar.cc/';
+        $user_data = array_merge($user->toArray(), compact('roles', 'permissions', 'avatar'));
+        return api()->ok(null, $user_data);
     }
 }
