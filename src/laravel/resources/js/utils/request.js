@@ -1,39 +1,34 @@
-import '@/bootstrap';
-import { Message } from 'element-ui';
-import { getToken } from '@/utils/auth';
+import axios from 'axios'
+import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
+import { getToken } from '@/utils/auth'
 
-// Create axios instance
-const service = window.axios.create({
-  baseURL: process.env.MIX_BASE_API,
-  timeout: 5000, // Request timeout
-});
+// create an axios instance
+const service = axios.create({
+    baseURL: process.env.MIX_BASE_API, // url = base url + request url
+    // withCredentials: true, // send cookies when cross-domain requests
+    timeout: 5000 // request timeout
+})
 
-// Request intercepter
+// request interceptor
 service.interceptors.request.use(
-  config => {
-      
-    if (store.getters.token) {
-      // let each request carry token
-      // ['X-Token'] is a custom headers key
-      // please modify it according to the actual situation
-      const token = getToken()
-      config.headers['Authorization'] = `Bearer ${token}`
+    config => {
+
+        if (store.getters.token) {
+            // let each request carry token
+            // ['X-Token'] is a custom headers key
+            // please modify it according to the actual situation
+            const token = getToken()
+            config.headers['Authorization'] = `Bearer ${token}`
+        }
+        return config
+    },
+    error => {
+        // do something with request error
+        console.log(error) // for debug
+        return Promise.reject(error)
     }
-
-    // const locale = store.getters['lang/locale']
-    // if (locale) {
-    //   request.headers.common['Accept-Language'] = locale
-    // }
-
-    return config;
-  },
-  error => {
-    // Do something with request error
-    console.log(error); // for debug
-    Promise.reject(error);
-  }
-);
+)
 
 // response interceptor
 service.interceptors.response.use(
@@ -48,23 +43,51 @@ service.interceptors.response.use(
      * You can also judge the status by HTTP Status Code
      */
     response => {
-      const { data: res, status } = response
+        const res = response;
 
-      if (status === 200) {
-        return res
-      } else {
-        Message({
-          message: res.message || 'Error',
-          type: 'error',
-          duration: 5 * 1000
-        })
-        return Promise.reject(new Error(res.message || 'Error'))
-      }
+        // if the custom code is not 200, it is judged as an error.
+        if (res.data.status !== 200) {
+
+            Message({
+                message: res.data.message || 'Error',
+                type: 'error',
+                duration: 5 * 1000
+            })
+
+            if (res.data.status === 401) {
+                // to re-login
+                MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
+                    confirmButtonText: 'Re-Login',
+                    cancelButtonText: 'Cancel',
+                    type: 'warning'
+                }).then(() => {
+                    store.dispatch('user/resetToken').then(() => {
+                        location.reload()
+                    })
+                })
+            }
+
+            return Promise.reject(new Error(res.data.message || 'Error'))
+        } else {
+            return res
+        }
     },
     error => {
-      const { data } = error.response
-      const rejectData = errorFilter(data)
-      return Promise.reject(rejectData)
+        console.log('requestError: ' + error.response.data) // for debug
+        if (error.response && error.response.data) {
+            Message({
+                message: `[${error.response.data.status ?? error.response.status}] ${error.response.data.message}`,
+                type: 'error',
+                duration: 5 * 1000
+            })
+            return Promise.reject(error.response.data);
+        }
+        Message({
+            message: error.message,
+            type: 'error',
+            duration: 5 * 1000
+        })
+        return Promise.reject(error)
     }
 )
 

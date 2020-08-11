@@ -6,7 +6,7 @@
           <user-card :user="user" />
           <user-bio />
         </el-col>
-        <el-col :span="18">
+        <el-col :span="14">
           <user-activity :user="user" />
         </el-col>
       </el-row>
@@ -36,7 +36,7 @@ export default {
   methods: {
     async getUser() {
       const data = await this.$store.dispatch('user/getInfo');
-      this.user = data;
+      this.user = data.data;
     },
   },
 };

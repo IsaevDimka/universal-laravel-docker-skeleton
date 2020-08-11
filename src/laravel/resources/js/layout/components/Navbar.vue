@@ -8,6 +8,8 @@
       <template v-if="device!=='mobile'">
         <search id="header-search" class="right-menu-item" />
 
+        <error-log v-role="['root', 'admin']" class="errLog-container right-menu-item hover-effect" />
+
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
 
         <el-tooltip :content="$t('navbar.size')" effect="dark" placement="bottom">
@@ -33,7 +35,7 @@
               {{ $t('navbar.profile') }}
             </el-dropdown-item>
           </router-link>
-          <a target="_blank" href="https://github.com/tuandm/laravue/">
+          <a target="_blank" href="http://github.com/IsaevDimka/universal-laravel-docker-skeleton">
             <el-dropdown-item>
               {{ $t('navbar.github') }}
             </el-dropdown-item>
@@ -55,20 +57,25 @@ import Screenfull from '@/components/Screenfull';
 import SizeSelect from '@/components/SizeSelect';
 import LangSelect from '@/components/LangSelect';
 import Search from '@/components/HeaderSearch';
+import permission from '@/directive/permission'; // Permission directive (v-permission)
+import role from '@/directive/role'; // Permission directive (v-role)
+import ErrorLog from '@/components/ErrorLog'
 
 export default {
   components: {
     Breadcrumb,
     Hamburger,
+    ErrorLog,
     Screenfull,
     SizeSelect,
     LangSelect,
     Search,
   },
+  directives: { permission, role },
   computed: {
     ...mapGetters([
       'sidebar',
-      'name',
+      'username',
       'avatar',
       'device',
       'userId',

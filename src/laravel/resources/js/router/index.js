@@ -13,6 +13,7 @@ Vue.use(Router);
 import Layout from '@/layout';
 
 /* Router for modules */
+import landingRoutes from './modules/landing';
 import elementUiRoutes from './modules/element-ui';
 import componentRoutes from './modules/components';
 import chartsRoutes from './modules/charts';
@@ -54,28 +55,32 @@ export const constantRoutes = [
     children: [
       {
         path: '/redirect/:path*',
+        name: 'Redirect',
         component: () => import('@/views/redirect/index'),
       },
     ],
   },
   {
     path: '/login',
+    name: 'Login',
     component: () => import('@/views/login/index'),
     hidden: true,
   },
   {
     path: '/auth-redirect',
+    name: 'AuthRedirect',
     component: () => import('@/views/login/AuthRedirect'),
     hidden: true,
   },
   {
     path: '/404',
-    redirect: { name: 'Page404' },
+    name: 'Page404',
     component: () => import('@/views/error-page/404'),
     hidden: true,
   },
   {
     path: '/401',
+    name: 'Page401',
     component: () => import('@/views/error-page/401'),
     hidden: true,
   },
@@ -92,6 +97,7 @@ export const constantRoutes = [
       },
     ],
   },
+  landingRoutes,
   {
     path: '/documentation',
     component: Layout,
@@ -207,7 +213,7 @@ export const asyncRoutes = [
   {
     path: '/i18n',
     component: Layout,
-    meta: { permissions: ['view menu i18n'] },
+    // meta: { permissions: ['view menu i18n'] },
     children: [
       {
         path: 'index',
@@ -222,18 +228,29 @@ export const asyncRoutes = [
     component: Layout,
     children: [
       {
-        path: 'https://github.com/tuandm/laravue',
+        path: 'http://github.com/IsaevDimka/universal-laravel-docker-skeleton',
         meta: { title: 'externalLink', icon: 'link' },
       },
     ],
   },
-  { path: '*', redirect: '/404', hidden: true },
+  {
+    path: '/error-log',
+    component: Layout,
+    children: [
+      {
+        path: 'log',
+        component: () => import('@/views/error-log/index'),
+        name: 'ErrorLog',
+        meta: { title: 'Error Log', icon: 'bug' }
+      }
+    ]
+  },
+  { path: '*', name: 'NotFound', redirect: '/404', hidden: true },
 ];
 
 const createRouter = () => new Router({
-  // mode: 'history', // require service support
+  mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
-  base: process.env.MIX_VUE_PATH,
   routes: constantRoutes,
 });
 

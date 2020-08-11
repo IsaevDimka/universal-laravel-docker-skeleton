@@ -16,7 +16,7 @@ return [
     /*
      * Turn to string the status code in the json response's body.
      */
-    'stringify' => true,
+    'stringify' => false,
 
     /*
      * Set the status code from the json response to be the same as the status code

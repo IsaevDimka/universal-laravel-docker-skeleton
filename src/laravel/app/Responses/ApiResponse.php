@@ -159,7 +159,7 @@ class ApiResponse implements ApiInterface
     }
 
     /**
-     * Create Validation (422) API response.
+     * Create forbidden (403) API response.
      *
      * @param string|null $message
      * @param array       $data

@@ -4,17 +4,8 @@
       <svg-icon class-name="international-icon" icon-class="language" />
     </div>
     <el-dropdown-menu slot="dropdown">
-      <el-dropdown-item :disabled="language==='vi'" command="vi">
-        Tiếng Việt
-      </el-dropdown-item>
-      <el-dropdown-item :disabled="language==='en'" command="en">
-        English
-      </el-dropdown-item>
-      <el-dropdown-item :disabled="language==='zh'" command="zh">
-        中文
-      </el-dropdown-item>
-      <el-dropdown-item :disabled="language==='ru'" command="ru">
-        Русский
+      <el-dropdown-item v-for="(name, sign) in locales" :key="sign" :disabled="language === sign" :command="sign">
+        {{ name }}
       </el-dropdown-item>
     </el-dropdown-menu>
   </el-dropdown>
@@ -25,6 +16,9 @@ export default {
   computed: {
     language() {
       return this.$store.getters.language;
+    },
+    locales() {
+      return this.$store.getters.locales;
     },
   },
   methods: {

@@ -1,8 +1,8 @@
 {
-  "name": "laravue",
-  "version": "0.11.0",
+  "name": "dockerlaravue",
+  "version": "1.0.0",
   "description": "A beautiful dashboard for Laravel built by VueJS",
-  "author": "Tuan Duong <bacduong@gmail.com>",
+  "author": "IsaevDimka <isaevdimka@gmail.com>",
   "license": "MIT",
   "private": true,
   "scripts": {

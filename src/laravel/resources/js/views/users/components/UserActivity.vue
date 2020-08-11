@@ -1,5 +1,5 @@
 <template>
-  <el-card v-if="user.name">
+  <el-card v-if="user">
     <el-tabs v-model="activeActivity" @tab-click="handleClick">
       <el-tab-pane label="Activity" name="first">
         <div class="user-activity">
@@ -149,8 +149,8 @@
         </div>
       </el-tab-pane>
       <el-tab-pane v-loading="updating" label="Account" name="third">
-        <el-form-item label="Name">
-          <el-input v-model="user.name" :disabled="user.role === 'admin'" />
+        <el-form-item label="Username">
+          <el-input v-model="user.username" :disabled="user.role === 'admin'" />
         </el-form-item>
         <el-form-item label="Email">
           <el-input v-model="user.email" :disabled="user.role === 'admin'" />
@@ -175,10 +175,11 @@ export default {
       type: Object,
       default: () => {
         return {
-          name: '',
+          username: '',
           email: '',
           avatar: '',
           roles: [],
+          permissions: [],
         };
       },
     },

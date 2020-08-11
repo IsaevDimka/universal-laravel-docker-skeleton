@@ -8,7 +8,16 @@ import getPageTitle from '@/utils/get-page-title';
 
 NProgress.configure({ showSpinner: false }); // NProgress Configuration
 
-const whiteList = ['/login', '/auth-redirect', 'dashboard']; // no redirect whitelist
+// no redirect whitelist route name
+const whiteList = [
+  'Login',
+  'AuthRedirect',
+  'Redirect',
+  'Landing',
+  'Page404',
+  'Page401',
+  'NotFound',
+];
 
 router.beforeEach(async(to, from, next) => {
   // start progress bar
@@ -33,7 +42,8 @@ router.beforeEach(async(to, from, next) => {
         try {
           // get user info
           // note: roles must be a object array! such as: ['admin'] or ,['manager','editor']
-          const { roles, permissions } = await store.dispatch('user/getInfo');
+          const { data } = await store.dispatch('user/getInfo');
+          const { roles, permissions } = data;
 
           // generate accessible routes map based on roles
           const accessRoutes = await store.dispatch('permission/generateRoutes', { roles, permissions });
@@ -51,9 +61,29 @@ router.beforeEach(async(to, from, next) => {
   } else {
     /* has no token*/
 
-    if (whiteList.indexOf(to.matched[0] ? to.matched[0].path : '') !== -1) {
-      // in the free login whitelist, go directly
+    function keyExists(key, search) {
+      if (!search || (search.constructor !== Array && search.constructor !== Object)) {
+        return false;
+      }
+      for (var i = 0; i < search.length; i++) {
+        if (search[i] === key) {
+          return true;
+        }
+      }
+      return key in search;
+    }
+
+    if(!to.name)
+    {
+      console.log('go 404');
+      next('/404');
+      NProgress.done();
+      return;
+    }
+    console.log('test', to.name, keyExists(to.name, whiteList));
+    if (keyExists(to.name, whiteList)) {
       next();
+      NProgress.done();
     } else {
       // other pages that do not have permission to access are redirected to the login page.
       next(`/login?redirect=${to.path}`);

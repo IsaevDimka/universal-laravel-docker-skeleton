@@ -5,8 +5,6 @@ namespace App\Exceptions;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Foundation\Http\Exceptions\MaintenanceModeException;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
 
@@ -64,7 +62,7 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
         if($exception instanceof MaintenanceModeException){
-            if(in_array('api', Route::getCurrentRoute()->middleware()) || $request->wantsJson()){
+            if($request->expectsJson()){
                 return api()->response(
                     503,
                     !empty($exception->getMessage()) ? $exception->getMessage() : 'Service Unavailable'
@@ -74,13 +72,23 @@ class Handler extends ExceptionHandler
         }
 
         if ($exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException){
-            if(in_array('api', Route::getCurrentRoute()->middleware()) || $request->wantsJson()){
-                if($request->expectsJson())
-                {
-                    return api()->notFound('Entry for '.str_replace(self::MODELS_NAMESPACE, '', $exception->getModel()).' by ids: '.implode(',', $exception->getIds()).' not found');
-                }
+            if($request->expectsJson()){
+                return api()->notFound('Entry for '.str_replace(self::MODELS_NAMESPACE, '', $exception->getModel()).' by ids: '.implode(',', $exception->getIds()).' not found');
             }
         }
+
+        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
+            if ($request->expectsJson()) {
+                return api()->notFound();
+            }
+        }
+
+        if ($exception instanceof \Spatie\Permission\Exceptions\UnauthorizedException) {
+            if($request->expectsJson()){
+                return api()->forbidden($exception->getMessage());
+            }
+        }
+
         return parent::render($request, $exception);
     }
 

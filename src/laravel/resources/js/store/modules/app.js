@@ -1,5 +1,7 @@
 import Cookies from 'js-cookie';
 import { getLanguage } from '@/lang/index';
+import request from '@/utils/request';
+import axios from "axios";
 
 const state = {
   sidebar: {
@@ -8,6 +10,7 @@ const state = {
   },
   device: 'desktop',
   language: getLanguage(),
+  locales: window.config.locales,
   size: Cookies.get('size') || 'medium',
 };
 
@@ -51,6 +54,10 @@ const actions = {
   },
   setLanguage({ commit }, language) {
     commit('SET_LANGUAGE', language);
+    request({
+      url: `/localization/${language}`,
+      method: 'get',
+    });
   },
   setSize({ commit }, size) {
     commit('SET_SIZE', size);

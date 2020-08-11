@@ -23,9 +23,9 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="Name">
+      <el-table-column align="center" label="Username">
         <template slot-scope="scope">
-          <span>{{ scope.row.name }}</span>
+          <span>{{ scope.row.username }}</span>
         </template>
       </el-table-column>
 
@@ -35,23 +35,29 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="Role" width="120">
+      <el-table-column align="center" label="Roles" width="120">
         <template slot-scope="scope">
-          <span>{{ scope.row.roles.join(', ') }}</span>
+          <span>{{ scope.row.roles.join(' | ') }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="Permissions" width="120">
+        <template slot-scope="scope">
+          <span>{{ scope.row.permissions.join(' | ') }}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="Actions" width="350">
         <template slot-scope="scope">
-          <router-link v-if="!scope.row.roles.includes('admin')" :to="'/administrator/users/edit/'+scope.row.id">
-            <el-button v-permission="['manage user']" type="primary" size="small" icon="el-icon-edit">
+          <router-link :to="'/administrator/users/edit/'+scope.row.id">
+            <el-button type="primary" size="small" icon="el-icon-edit">
               Edit
             </el-button>
           </router-link>
-          <el-button v-if="!scope.row.roles.includes('admin')" v-permission="['manage permission']" type="warning" size="small" icon="el-icon-edit" @click="handleEditPermissions(scope.row.id);">
+          <el-button type="warning" size="small" icon="el-icon-edit" @click="handleEditPermissions(scope.row.id);">
             Permissions
           </el-button>
-          <el-button v-if="scope.row.roles.includes('visitor')" v-permission="['manage user']" type="danger" size="small" icon="el-icon-delete" @click="handleDelete(scope.row.id, scope.row.name);">
+          <el-button type="danger" size="small" icon="el-icon-delete" @click="handleDelete(scope.row.id, scope.row.name);">
             Delete
           </el-button>
         </template>
@@ -274,12 +280,13 @@ export default {
     async getList() {
       const { limit, page } = this.query;
       this.loading = true;
-      const { data, meta } = await userResource.list(this.query);
-      this.list = data;
+      const { data } = await userResource.list(this.query);
+
+      this.list = data.data;
       this.list.forEach((element, index) => {
         element['index'] = (page - 1) * limit + index + 1;
       });
-      this.total = meta.total;
+      this.total = data.data_count;
       this.loading = false;
     },
     handleFilter() {

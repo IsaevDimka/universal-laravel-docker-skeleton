@@ -5,31 +5,18 @@ import store from '@/store';
 import { Message } from 'element-ui';
 
 const state = {
-    id: null,
-    user: null,
+    data: [],
     token: getToken(),
-    name: '',
-    avatar: '',
-    introduction: '',
     roles: [],
     permissions: [],
 };
 
 const mutations = {
-    SET_ID: (state, id) => {
-        state.id = id;
+    SET_USER: (state, user) => {
+        state.data = user;
     },
     SET_TOKEN: (state, token) => {
         state.token = token;
-    },
-    SET_INTRODUCTION: (state, introduction) => {
-        state.introduction = introduction;
-    },
-    SET_NAME: (state, name) => {
-        state.name = name;
-    },
-    SET_AVATAR: (state, avatar) => {
-        state.avatar = avatar;
     },
     SET_ROLES: (state, roles) => {
         state.roles = roles;
@@ -46,9 +33,10 @@ const actions = {
         return new Promise((resolve, reject) => {
             login({email: email.trim(), password: password})
                 .then(response => {
-                    const {data} = response
-                    commit('SET_TOKEN', data.token)
-                    setToken(data.token)
+                    const { data } = response;
+
+                    setToken(data.data.token)
+                    commit('SET_TOKEN', data.data.token)
                     resolve();
                 })
                 .catch(error => {
@@ -68,18 +56,16 @@ const actions = {
                     reject('Verification failed, please Login again.')
                 }
 
-                const { roles, name, avatar } = data
+                const user = data.data;
 
                 // roles must be a non-empty array
-                if (!roles || roles.length <= 0) {
-                    reject('getInfo: roles must be a non-null array!')
+                if (!user.roles || user.roles.length <= 0) {
+                    reject('getInfo: roles must be a non-null array!');
                 }
 
-                const mapRoles = roles.map(role => role.name)
-                commit('SET_ROLES', mapRoles)
-                commit('SET_NAME', name)
-                commit('SET_AVATAR', avatar)
-                // commit('SET_INTRODUCTION', introduction)
+                commit('SET_USER', user)
+                commit('SET_ROLES', user.roles)
+                commit('SET_PERMISSIONS', user.permissions);
                 resolve(data)
             }).catch(error => {
                 reject(error)
@@ -93,7 +79,9 @@ const actions = {
             logout()
                 .then(() => {
                     commit('SET_TOKEN', '');
+                    commit('SET_USER', '')
                     commit('SET_ROLES', []);
+                    commit('SET_PERMISSIONS', []);
                     removeToken();
                     resetRouter();
                     resolve();
@@ -108,7 +96,9 @@ const actions = {
     resetToken({commit}) {
         return new Promise(resolve => {
             commit('SET_TOKEN', '');
+            commit('SET_USER', '')
             commit('SET_ROLES', []);
+            commit('SET_PERMISSIONS', []);
             removeToken();
             resolve();
         });

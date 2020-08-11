@@ -1,20 +1,23 @@
 <template>
-  <el-card v-if="user.name">
+  <el-card v-if="user">
     <div class="user-profile">
       <div class="user-avatar box-center">
         <pan-thumb :image="user.avatar" :height="'100px'" :width="'100px'" :hoverable="false" />
       </div>
       <div class="box-center">
         <div class="user-name text-center">
-          {{ user.name }}
+          {{ user.username }}
         </div>
         <div class="user-role text-center text-muted">
-          {{ getRole() }}
+          Roles: {{ getRoles() }}
+        </div>
+        <div class="user-role text-center text-muted">
+          Permissions: {{ getPermissions() }}
         </div>
       </div>
       <div class="box-social">
         <el-table :data="social" :show-header="false">
-          <el-table-column prop="name" label="Name" />
+          <el-table-column prop="username" label="Username" />
           <el-table-column label="Count" align="left" width="100">
             <template slot-scope="scope">
               {{ scope.row.count | toThousandFilter }}
@@ -41,10 +44,11 @@ export default {
       type: Object,
       default: () => {
         return {
-          name: '',
+          username: '',
           email: '',
           avatar: '',
           roles: [],
+          permissions: [],
         };
       },
     },
@@ -68,9 +72,11 @@ export default {
     };
   },
   methods: {
-    getRole() {
-      const roles = this.user.roles.map(value => this.$options.filters.uppercaseFirst(value));
-      return roles.join(' | ');
+    getRoles() {
+      return this.user.roles.map((value) => this.$options.filters.uppercaseFirst(value)).join(' | ');
+    },
+    getPermissions() {
+      return this.user.permissions.join(' | ');
     },
   },
 };

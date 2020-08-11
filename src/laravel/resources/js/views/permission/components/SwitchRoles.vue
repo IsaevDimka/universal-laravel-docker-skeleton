@@ -8,11 +8,7 @@
     </div>
     <div>
       <el-radio-group v-model="switchRoles" v-loading="loading">
-        <el-radio-button label="admin" />
-        <el-radio-button label="manager" />
-        <el-radio-button label="editor" />
-        <el-radio-button label="user" />
-        <el-radio-button label="visitor" />
+        <el-radio-button v-for="(item, index) in list" :key="item.index" :label="item.name" />
       </el-radio-group>
     </div>
   </div>
@@ -52,7 +48,8 @@ export default {
     async getRoles() {
       this.loading = true;
       const { data } = await roleResource.list({});
-      this.list = data;
+
+      this.list = data.data;
       this.list.forEach((role, index) => {
         role['index'] = index + 1;
         role['description'] = this.$t('roles.description.' + role.name);

@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       activeName: 'directly',
-      inputData: 'https://github.com/tuandm/laravue',
+      inputData: 'http://github.com/IsaevDimka/universal-laravel-docker-skeleton',
     };
   },
   methods: {

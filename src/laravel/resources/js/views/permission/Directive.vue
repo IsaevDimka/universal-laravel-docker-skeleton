@@ -56,13 +56,13 @@
       </div>
 
       <div>
-        <span v-role="['admin','editor']" class="permission-alert">
+        <span v-role="['admin','editor', 'root']" class="permission-alert">
           Both
           <el-tag class="permission-tag" size="small">admin</el-tag> and
           <el-tag class="permission-tag" size="small">editor</el-tag> can see this
         </span>
-        <el-tag v-role="['admin','editor']" class="permission-sourceCode" type="info">
-          v-role="['admin','editor']"
+        <el-tag v-role="['admin','editor', 'root']" class="permission-sourceCode" type="info">
+          v-role="['admin','editor', 'root']"
         </el-tag>
       </div>
 
@@ -92,6 +92,13 @@
       </code>
 
       <el-tabs type="border-card" style="width:550px;">
+        <el-tab-pane v-if="checkRole(['root'])" label="Admin">
+          Root can see this
+          <el-tag class="permission-sourceCode" type="info">
+            v-if="checkRole(['root'])"
+          </el-tag>
+        </el-tab-pane>
+
         <el-tab-pane v-if="checkRole(['admin'])" label="Admin">
           Admin can see this
           <el-tag class="permission-sourceCode" type="info">
