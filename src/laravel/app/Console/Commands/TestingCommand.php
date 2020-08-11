@@ -46,7 +46,6 @@ class TestingCommand extends Command
 //        $this->line("<fg=yellow>YELLOW</fg=yellow>\t");
 //        $this->line("<fg=white>white</fg=white>");
 
-        dd(\Hash::make('isaevdimka'));
         if (method_exists($this, $method = Str::studly($this->option('method') ?? null))) {
             $this->{$method}();
         }else{
@@ -54,8 +53,34 @@ class TestingCommand extends Command
             return 2;
         }
 
-        $meta = \App\Services\DebugService::result();
+        $meta = \App\Services\DebugService::result(['durations', 'queryLogs']);
         $this->comment(\json_encode($meta, JSON_PRETTY_PRINT));
+    }
+
+    private function progressBar()
+    {
+        $count_items = 10;
+
+        $duration_start = microtime(true);
+
+        $progressBar = $this->output->createProgressBar($count_items);
+        $progressBar->setFormat('debug');
+        $progressBar->getProgressPercent();
+        $progressBar->display();
+        $progressBar->start();
+
+        $moon = [];
+        for ($i = 1; $i <= $count_items; $i++) {
+            sleep(1);
+            $moon[] = $i;
+            $progressBar->advance();
+        }
+
+        $progressBar->finish();
+
+        $this->info("\n");
+        $this->info('Count elements in array: '. count($moon));
+        $this->info('Duration: ' . formatDuration(microtime(true) - $duration_start));
     }
 
     private function notify()
