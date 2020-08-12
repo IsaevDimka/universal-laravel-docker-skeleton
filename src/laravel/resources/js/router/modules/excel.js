@@ -2,7 +2,7 @@
 import Layout from '@/layout';
 
 const excelRoutes = {
-  path: '/excel',
+  path: '/backend/excel',
   component: Layout,
   redirect: '/excel/export-excel',
   name: 'Excel',

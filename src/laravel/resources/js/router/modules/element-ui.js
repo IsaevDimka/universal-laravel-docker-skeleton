@@ -1,7 +1,7 @@
 import Layout from '@/layout';
 
 const elementUiRoutes = {
-  path: '/element-ui',
+  path: '/backend/element-ui',
   component: Layout,
   redirect: '/element-ui/form',
   name: 'Element UI',

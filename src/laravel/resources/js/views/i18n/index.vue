@@ -7,17 +7,8 @@
       </div>
       <div>
         <el-radio-group v-model="lang" size="small">
-          <el-radio label="vi" border>
-            Tiếng Việt
-          </el-radio>
-          <el-radio label="en" border>
-            English
-          </el-radio>
-          <el-radio label="ru" border>
-            Русский
-          </el-radio>
-          <el-radio label="zh" border>
-            简体中文
+          <el-radio v-for="(name, sign) in locales" :key="sign" :label="sign" border>
+            {{ name }}
           </el-radio>
         </el-radio-group>
         <el-tag style="margin-top:15px;display:block;" type="info">
@@ -109,6 +100,9 @@ export default {
     };
   },
   computed: {
+    locales() {
+      return this.$store.getters.locales;
+    },
     lang: {
       get() {
         return this.$store.state.app.language;

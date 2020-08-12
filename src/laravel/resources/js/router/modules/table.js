@@ -1,7 +1,7 @@
 import Layout from '@/layout';
 
 const tableRoutes = {
-  path: '/table',
+  path: '/backend/table',
   component: Layout,
   redirect: '/table/complex-table',
   name: 'Complex Table',

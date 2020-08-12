@@ -2,7 +2,7 @@
 import Layout from '@/layout';
 
 const exampleRoutes = {
-  path: '/example',
+  path: '/backend/example',
   component: Layout,
   redirect: '/example/list',
   name: 'Example',

@@ -2,7 +2,7 @@
 import Layout from '@/layout';
 
 const chartsRoutes = {
-  path: '/charts',
+  path: '/backend/charts',
   component: Layout,
   redirect: 'noredirect',
   name: 'Charts',

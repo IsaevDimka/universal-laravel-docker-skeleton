@@ -37,7 +37,6 @@
 import errGif from '@/assets/401_images/401.gif';
 
 export default {
-  name: 'Page401',
   data() {
     return {
       errGif: errGif + '?' + +new Date(),
@@ -48,7 +47,7 @@ export default {
   methods: {
     back() {
       if (this.$route.query.noGoBack) {
-        this.$router.push({ path: '/dashboard' });
+        this.$router.push({ path: '/' });
       } else {
         this.$router.go(-1);
       }

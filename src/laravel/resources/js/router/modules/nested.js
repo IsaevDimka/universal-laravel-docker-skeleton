@@ -2,7 +2,7 @@
 import Layout from '@/layout';
 
 const nestedRoutes = {
-  path: '/nested',
+  path: '/backend/nested',
   component: Layout,
   redirect: '/nested/menu1',
   name: 'Nested',

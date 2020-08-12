@@ -105,7 +105,7 @@ export default {
           login(this.loginForm).then(() => {
             this.$store.dispatch('user/login', this.loginForm)
               .then(() => {
-                this.$router.push({ path: this.redirect || '/', query: this.otherQuery }, onAbort => {});
+                this.$router.push({ path: this.redirect || '/backend', query: this.otherQuery }, onAbort => {});
                 this.loading = false;
               })
               .catch(() => {

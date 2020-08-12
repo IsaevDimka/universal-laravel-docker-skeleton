@@ -2,7 +2,7 @@
 import Layout from '@/layout';
 
 const adminRoutes = {
-  path: '/administrator',
+  path: '/backend/administrator',
   component: Layout,
   redirect: '/administrator/users',
   name: 'Administrator',

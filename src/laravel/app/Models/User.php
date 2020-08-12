@@ -125,6 +125,12 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         'locale'            => Locale::class,
     ];
 
+    /**
+     * Set permissions guard to API by default
+     * @var string
+     */
+//    protected $guard_name = 'api';
+
     public static function boot()
     {
         parent::boot();
@@ -340,4 +346,33 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     {
         return BaseModel::formatingCarbonAttribute($value);
     }
+
+    /**
+     * Check whether current role is admin
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return $this->hasRole(Role::ROLE_ADMIN);
+    }
+
+    /**
+     * Check whether current role is root
+     * @return bool
+     */
+    public function isRoot(): bool
+    {
+        return $this->hasRole(Role::ROLE_ROOT);
+    }
+
+    /**
+     * Check whether current role is visitor
+     *
+     * @return bool
+     */
+    public function isVisitor() : bool
+    {
+        return $this->hasRole(Role::ROLE_VISITOR);
+    }
+
 }

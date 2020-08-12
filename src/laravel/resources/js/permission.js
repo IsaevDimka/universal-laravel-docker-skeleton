@@ -8,15 +8,28 @@ import getPageTitle from '@/utils/get-page-title';
 
 NProgress.configure({ showSpinner: false }); // NProgress Configuration
 
+
+function keyExists(key, search) {
+  if (!search || (search.constructor !== Array && search.constructor !== Object)) {
+    return false;
+  }
+  for (var i = 0; i < search.length; i++) {
+    if (search[i] === key) {
+      return true;
+    }
+  }
+  return key in search;
+}
+
 // no redirect whitelist route name
 const whiteList = [
-  'Login',
-  'AuthRedirect',
-  'Redirect',
-  'Landing',
-  'Page404',
-  'Page401',
-  'NotFound',
+  'login',
+  'auth_redirect',
+  'redirect',
+  'landing',
+  'page_404',
+  'page_401',
+  'not_found',
 ];
 
 router.beforeEach(async(to, from, next) => {
@@ -31,7 +44,7 @@ router.beforeEach(async(to, from, next) => {
   if (hasToken) {
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
-      next({ path: '/' });
+      next({ path: '/backend' });
       NProgress.done();
     } else {
       // determine whether the user has obtained his permission roles through getInfo
@@ -61,35 +74,25 @@ router.beforeEach(async(to, from, next) => {
   } else {
     /* has no token*/
 
-    function keyExists(key, search) {
-      if (!search || (search.constructor !== Array && search.constructor !== Object)) {
-        return false;
-      }
-      for (var i = 0; i < search.length; i++) {
-        if (search[i] === key) {
-          return true;
-        }
-      }
-      return key in search;
-    }
-
     if(!to.name)
     {
-      console.log('go 404');
+      // alert('go 404');
       next('/404');
       NProgress.done();
       return;
     }
-    console.log('test', to.name, keyExists(to.name, whiteList));
+
     if (keyExists(to.name, whiteList)) {
+      // alert(`go whitelist ${to.name} | ${keyExists(to.name, whiteList)}`);
       next();
       NProgress.done();
-    } else {
+      return;
+    }
       // other pages that do not have permission to access are redirected to the login page.
+      // alert('go login');
       next(`/login?redirect=${to.path}`);
       NProgress.done();
     }
-  }
 });
 
 router.afterEach(() => {

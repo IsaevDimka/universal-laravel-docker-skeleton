@@ -1,9 +1,12 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="query.keyword" :placeholder="$t('table.keyword')" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="query.keyword" :placeholder="$t('table.keyword')" clearable style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-select v-model="query.role" :placeholder="$t('table.role')" clearable style="width: 90px" class="filter-item" @change="handleFilter">
         <el-option v-for="item in roles" :key="item" :label="item | uppercaseFirst" :value="item" />
+      </el-select>
+      <el-select v-model="query.permission" :placeholder="$t('table.permission')" clearable style="width: 90px" class="filter-item" @change="handleFilter">
+        <el-option v-for="item in permissions" :key="item" :label="item | uppercaseFirst" :value="item" />
       </el-select>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         {{ $t('table.search') }}
@@ -47,6 +50,22 @@
         </template>
       </el-table-column>
 
+      <el-table-column align="center" label="is_active" width="120">
+        <template slot-scope="scope">
+          <el-switch
+              v-model="scope.row.is_active"
+              active-color="#13ce66"
+              inactive-color="#ff4949">
+          </el-switch>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="locale">
+        <template slot-scope="scope">
+          <span>{{ scope.row.locale }}</span>
+        </template>
+      </el-table-column>
+
       <el-table-column align="center" label="Actions" width="350">
         <template slot-scope="scope">
           <router-link :to="'/administrator/users/edit/'+scope.row.id">
@@ -57,7 +76,7 @@
           <el-button type="warning" size="small" icon="el-icon-edit" @click="handleEditPermissions(scope.row.id);">
             Permissions
           </el-button>
-          <el-button type="danger" size="small" icon="el-icon-delete" @click="handleDelete(scope.row.id, scope.row.name);">
+          <el-button type="danger" size="small" icon="el-icon-delete" @click="handleDelete(scope.row.id, scope.row.username);">
             Delete
           </el-button>
         </template>
@@ -101,11 +120,16 @@
         <el-form ref="userForm" :rules="rules" :model="newUser" label-position="left" label-width="150px" style="max-width: 500px;">
           <el-form-item :label="$t('user.role')" prop="role">
             <el-select v-model="newUser.role" class="filter-item" placeholder="Please select role">
-              <el-option v-for="item in nonAdminRoles" :key="item" :label="item | uppercaseFirst" :value="item" />
+              <el-option v-for="item in roles" :key="item" :label="item | uppercaseFirst" :value="item" />
             </el-select>
           </el-form-item>
-          <el-form-item :label="$t('user.name')" prop="name">
-            <el-input v-model="newUser.name" />
+          <el-form-item :label="$t('user.permission')" prop="permission">
+            <el-select v-model="newUser.permission" clearable class="filter-item" placeholder="Please select permission">
+              <el-option v-for="item in permissions" :key="item" :label="item | uppercaseFirst" :value="item" />
+            </el-select>
+          </el-form-item>
+          <el-form-item :label="$t('user.username')" prop="username">
+            <el-input v-model="newUser.username" />
           </el-form-item>
           <el-form-item :label="$t('user.email')" prop="email">
             <el-input v-model="newUser.email" />
@@ -113,8 +137,8 @@
           <el-form-item :label="$t('user.password')" prop="password">
             <el-input v-model="newUser.password" show-password />
           </el-form-item>
-          <el-form-item :label="$t('user.confirmPassword')" prop="confirmPassword">
-            <el-input v-model="newUser.confirmPassword" show-password />
+          <el-form-item :label="$t('user.confirm_password')" prop="confirm_password">
+            <el-input v-model="newUser.confirm_password" show-password />
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -127,6 +151,9 @@
         </div>
       </div>
     </el-dialog>
+
+    <debagger-pannel height="initial" :json="list">{{ list }}</debagger-pannel>
+
   </div>
 </template>
 
@@ -137,7 +164,9 @@ import Resource from '@/api/resource';
 import waves from '@/directive/waves'; // Waves directive
 import permission from '@/directive/permission'; // Permission directive
 import checkPermission from '@/utils/permission'; // Permission checking
+import RoleResource from '@/api/role';
 
+const roleResource = new RoleResource();
 const userResource = new UserResource();
 const permissionResource = new Resource('permissions');
 
@@ -164,8 +193,9 @@ export default {
         limit: 15,
         keyword: '',
         role: '',
+        permission: '',
       },
-      roles: ['admin', 'manager', 'editor', 'user', 'visitor'],
+      roles: [],
       nonAdminRoles: ['editor', 'user', 'visitor'],
       newUser: {},
       dialogFormVisible: false,
@@ -179,13 +209,13 @@ export default {
       },
       rules: {
         role: [{ required: true, message: 'Role is required', trigger: 'change' }],
-        name: [{ required: true, message: 'Name is required', trigger: 'blur' }],
+        username: [{ required: true, message: 'Username is required', trigger: 'blur' }],
         email: [
           { required: true, message: 'Email is required', trigger: 'blur' },
           { type: 'email', message: 'Please input correct email address', trigger: ['blur', 'change'] },
         ],
         password: [{ required: true, message: 'Password is required', trigger: 'blur' }],
-        confirmPassword: [{ validator: validateConfirmPassword, trigger: 'blur' }],
+        confirm_password: [{ required: true, validator: validateConfirmPassword, trigger: 'blur' }],
       },
       permissionProps: {
         children: 'children',
@@ -263,18 +293,26 @@ export default {
   created() {
     this.resetNewUser();
     this.getList();
-    if (checkPermission(['manage permission'])) {
-      this.getPermissions();
-    }
+    this.getRoles();
+    this.getPermissions();
+    // if (checkPermission(['manage permission'])) {
+    // }
   },
   methods: {
     checkPermission,
+    async getRoles() {
+      this.loading = true;
+      const { data } = await roleResource.list({});
+
+      this.roles = data.data.map(role => role.name);
+      this.loading = false;
+    },
     async getPermissions() {
       const { data } = await permissionResource.list({});
-      const { all, menu, other } = this.classifyPermissions(data);
-      this.permissions = all;
-      this.menuPermissions = menu;
-      this.otherPermissions = other;
+      // const { all, menu, other } = this.classifyPermissions(data.data);
+      this.permissions = data.data.map(permission => permission.name);
+      // this.menuPermissions = menu;
+      // this.otherPermissions = other;
     },
 
     async getList() {
@@ -286,7 +324,7 @@ export default {
       this.list.forEach((element, index) => {
         element['index'] = (page - 1) * limit + index + 1;
       });
-      this.total = data.data_count;
+      this.total = data.total;
       this.loading = false;
     },
     handleFilter() {
@@ -300,8 +338,8 @@ export default {
         this.$refs['userForm'].clearValidate();
       });
     },
-    handleDelete(id, name) {
-      this.$confirm('This will permanently delete user ' + name + '. Continue?', 'Warning', {
+    handleDelete(id, username) {
+      this.$confirm('This will permanently delete user ' + username + '. Continue?', 'Warning', {
         confirmButtonText: 'OK',
         cancelButtonText: 'Cancel',
         type: 'warning',
@@ -343,12 +381,13 @@ export default {
       this.$refs['userForm'].validate((valid) => {
         if (valid) {
           this.newUser.roles = [this.newUser.role];
+          this.newUser.permissions = [this.newUser.permission];
           this.userCreating = true;
           userResource
             .store(this.newUser)
             .then(response => {
               this.$message({
-                message: 'New user ' + this.newUser.name + '(' + this.newUser.email + ') has been created successfully.',
+                message: 'New user ' + this.newUser.username + '(' + this.newUser.email + ') has been created successfully.',
                 type: 'success',
                 duration: 5 * 1000,
               });
@@ -370,18 +409,19 @@ export default {
     },
     resetNewUser() {
       this.newUser = {
-        name: '',
+        username: '',
         email: '',
         password: '',
-        confirmPassword: '',
-        role: 'user',
+        confirm_password: '',
+        role: '',
+        permission: '',
       };
     },
     handleDownload() {
       this.downloading = true;
       import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['id', 'user_id', 'name', 'email', 'role'];
-        const filterVal = ['index', 'id', 'name', 'email', 'role'];
+        const tHeader = ['id', 'user_id', 'username', 'email', 'roles', 'permissions'];
+        const filterVal = ['index', 'id', 'username', 'email', 'roles', 'permissions'];
         const data = this.formatJson(filterVal, this.list);
         excel.export_json_to_excel({
           header: tHeader,

@@ -2,7 +2,7 @@
 import Layout from '@/layout';
 
 const errorRoutes = {
-  path: '/error',
+  path: '/backend/error',
   component: Layout,
   redirect: 'noredirect',
   name: 'ErrorPages',

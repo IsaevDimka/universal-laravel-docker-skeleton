@@ -146,6 +146,7 @@ export default {
     confirm: 'Confirm',
     keyword: 'Keyword',
     role: 'Role',
+    permission: 'Permission'
   },
   errorLog: {
     tips: 'Please click the bug icon in the upper right corner',
@@ -184,9 +185,11 @@ export default {
   },
   user: {
     'role': 'Role',
+    'permission': 'Permission',
     'password': 'Password',
-    'confirmPassword': 'Confirm password',
+    'confirm_password': 'Confirm password',
     'name': 'Name',
+    'username': 'Username',
     'email': 'Email',
   },
   roles: {

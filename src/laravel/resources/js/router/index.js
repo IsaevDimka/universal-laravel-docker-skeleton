@@ -55,51 +55,51 @@ export const constantRoutes = [
     children: [
       {
         path: '/redirect/:path*',
-        name: 'Redirect',
+        name: 'redirect',
         component: () => import('@/views/redirect/index'),
       },
     ],
   },
   {
     path: '/login',
-    name: 'Login',
+    name: 'login',
     component: () => import('@/views/login/index'),
     hidden: true,
   },
   {
     path: '/auth-redirect',
-    name: 'AuthRedirect',
+    name: 'auth_redirect',
     component: () => import('@/views/login/AuthRedirect'),
     hidden: true,
   },
   {
     path: '/404',
-    name: 'Page404',
+    name: 'page_404',
     component: () => import('@/views/error-page/404'),
     hidden: true,
   },
   {
     path: '/401',
-    name: 'Page401',
+    name: 'page_401',
     component: () => import('@/views/error-page/401'),
     hidden: true,
   },
+  landingRoutes,
   {
-    path: '',
+    path: '/backend',
     component: Layout,
-    redirect: 'dashboard',
+    redirect: '/backend/dashboard',
     children: [
       {
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
+        name: 'dashboard',
         meta: { title: 'dashboard', icon: 'dashboard', noCache: false },
       },
     ],
   },
-  landingRoutes,
   {
-    path: '/documentation',
+    path: '/backend/documentation',
     component: Layout,
     redirect: '/documentation/index',
     children: [
@@ -112,7 +112,7 @@ export const constantRoutes = [
     ],
   },
   {
-    path: '/profile',
+    path: '/backend/profile',
     component: Layout,
     redirect: '/profile/edit',
     children: [
@@ -125,7 +125,7 @@ export const constantRoutes = [
     ],
   },
   {
-    path: '/guide',
+    path: '/backend/guide',
     component: Layout,
     redirect: '/guide/index',
     children: [
@@ -148,7 +148,7 @@ export const asyncRoutes = [
   tableRoutes,
   adminRoutes,
   {
-    path: '/theme',
+    path: '/backend/theme',
     component: Layout,
     redirect: 'noredirect',
     children: [
@@ -161,7 +161,7 @@ export const asyncRoutes = [
     ],
   },
   {
-    path: '/clipboard',
+    path: '/backend/clipboard',
     component: Layout,
     redirect: 'noredirect',
     meta: { permissions: ['view menu clipboard'] },
@@ -177,7 +177,7 @@ export const asyncRoutes = [
   errorRoutes,
   excelRoutes,
   {
-    path: '/zip',
+    path: '/backend/zip',
     component: Layout,
     redirect: '/zip/download',
     alwaysShow: true,
@@ -192,7 +192,7 @@ export const asyncRoutes = [
     ],
   },
   {
-    path: '/pdf',
+    path: '/backend/pdf',
     component: Layout,
     redirect: '/pdf/index',
     meta: { title: 'pdf', icon: 'pdf', permissions: ['view menu pdf'] },
@@ -206,12 +206,12 @@ export const asyncRoutes = [
     ],
   },
   {
-    path: '/pdf/download',
+    path: '/backend/pdf/download',
     component: () => import('@/views/pdf/Download'),
     hidden: true,
   },
   {
-    path: '/i18n',
+    path: '/backend/i18n',
     component: Layout,
     // meta: { permissions: ['view menu i18n'] },
     children: [
@@ -224,7 +224,7 @@ export const asyncRoutes = [
     ],
   },
   {
-    path: '/external-link',
+    path: '/backend/external-link',
     component: Layout,
     children: [
       {
@@ -234,18 +234,18 @@ export const asyncRoutes = [
     ],
   },
   {
-    path: '/error-log',
+    path: '/backend/error-log',
     component: Layout,
     children: [
       {
         path: 'log',
         component: () => import('@/views/error-log/index'),
-        name: 'ErrorLog',
+        name: 'error_log',
         meta: { title: 'Error Log', icon: 'bug' }
       }
     ]
   },
-  { path: '*', name: 'NotFound', redirect: '/404', hidden: true },
+  { path: '*', name: 'not_found', redirect: '/404', hidden: true },
 ];
 
 const createRouter = () => new Router({

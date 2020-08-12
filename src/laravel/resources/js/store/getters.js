@@ -1,4 +1,5 @@
 const getters = {
+  devDrawer: state => state.dev.drawer,
   sidebar: state => state.app.sidebar,
   language: state => state.app.language,
   locales: state => state.app.locales,

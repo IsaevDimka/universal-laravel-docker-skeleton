@@ -31,7 +31,6 @@
 const icon404 = require('@/assets/404_images/404.png').default;
 const icon404Cloud = require('@/assets/404_images/404_cloud.png').default;
 export default {
-  name: 'Page404',
   data() {
     return {
       icon404: icon404,

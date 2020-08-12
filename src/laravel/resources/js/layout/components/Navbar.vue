@@ -8,7 +8,9 @@
       <template v-if="device!=='mobile'">
         <search id="header-search" class="right-menu-item" />
 
-        <error-log v-role="['root', 'admin']" class="errLog-container right-menu-item hover-effect" />
+        <div v-role="['root']" class="right-menu-item"><dev-mode-switch /></div>
+
+        <error-log v-role="['root']" class="errLog-container right-menu-item hover-effect" />
 
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
 
@@ -21,16 +23,16 @@
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'/128'" class="user-avatar">
+          <img :src="avatar" class="user-avatar">
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
-          <router-link to="/">
+          <router-link to="/backend">
             <el-dropdown-item>
               {{ $t('navbar.dashboard') }}
             </el-dropdown-item>
           </router-link>
-          <router-link v-show="userId !== null" :to="`/profile/edit`">
+          <router-link v-show="userId !== null" :to="`/backend/profile/edit`">
             <el-dropdown-item>
               {{ $t('navbar.profile') }}
             </el-dropdown-item>
@@ -60,6 +62,8 @@ import Search from '@/components/HeaderSearch';
 import permission from '@/directive/permission'; // Permission directive (v-permission)
 import role from '@/directive/role'; // Permission directive (v-role)
 import ErrorLog from '@/components/ErrorLog'
+import DevModeSwitch from '@/components/Debagger/dev-mode-switch'
+import checkPermission from '@/utils/permission'
 
 export default {
   components: {
@@ -70,6 +74,7 @@ export default {
     SizeSelect,
     LangSelect,
     Search,
+    DevModeSwitch,
   },
   directives: { permission, role },
   computed: {

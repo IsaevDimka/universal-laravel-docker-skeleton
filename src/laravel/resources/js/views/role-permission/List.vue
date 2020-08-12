@@ -158,7 +158,7 @@ export default {
     },
 
     permissionKeys(permissions) {
-      return permissions.map(permssion => permssion.id);
+      return permissions.map(permission => permission.id);
     },
 
     handleEditPermissions(id) {
