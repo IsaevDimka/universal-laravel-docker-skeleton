@@ -69,9 +69,24 @@ class ApiResponse implements ApiInterface
             $json  = array_merge($json, compact('debug'));
         }
 
+        if (config('api.notify_too_many_requests') && $status == ResponseStatus::HTTP_TOO_MANY_REQUESTS) {
+            $request = \request();
+            $ip = $request->ip();
+            $ua = $request->userAgent();
+            $token = $request->bearerToken();
+            $method = $request->getMethod();
+            $fullUrl = $request->fullUrl();
+            $data = $request->toArray();
+            $user_id = \auth()->id();
+            $hit = compact('ip', 'ua', 'token', 'fullUrl', 'method', 'data', 'user_id');
+            $json = array_merge($json, compact('hit'));
+            logger()->channel('telegram')->warning($message, $json);
+            logger()->warning($message, $json);
+        }
+
         return (config('api.match_status'))
-            ? response()->json($json, $status)->withHeaders($this->headers)
-            : response()->json($json)->withHeaders($this->headers);
+            ? response()->json($json, $status, [])->setEncodingOptions(JSON_UNESCAPED_UNICODE)->withHeaders($this->headers)
+            : response()->json($json)->setEncodingOptions(JSON_UNESCAPED_UNICODE)->withHeaders($this->headers);
     }
 
     /**
