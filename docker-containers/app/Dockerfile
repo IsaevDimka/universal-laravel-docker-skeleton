@@ -19,6 +19,7 @@ RUN apt-get update && \
         nano \
         mc \
         htop \
+        wget \
         libxml2-dev \
         apt-utils
 
@@ -159,6 +160,7 @@ CMD cron && tail -f /var/log/cron.log
 # php config
 ADD ./php.ini /usr/local/etc/php/conf.d
 ADD ./opcache.ini /usr/local/etc/php/conf.d
+ADD ./laravel.ini /usr/local/etc/php/conf.d
 
 COPY ./docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
@@ -170,13 +172,85 @@ RUN ln -s /usr/local/bin/docker-entrypoint.sh /
 #RUN npm install -g laravel-echo-server
 #COPY laravel-echo-server.conf /etc/supervisor/conf.d
 
-#####################################
-# XDEBUG Server:
-#####################################
-ENV PHP_XDEBUG_VERSION 2.9.6
-#RUN pecl install xdebug-${PHP_XDEBUG_VERSION} \
-#    && docker-php-ext-enable xdebug
-#ADD ./xdebug.ini /usr/local/etc/php/conf.d
+###########################################################################
+# pgsql client | pg_dump
+###########################################################################
+
+ARG INSTALL_PG_CLIENT=true
+ARG INSTALL_POSTGIS=false
+
+RUN if [ ${INSTALL_PG_CLIENT} = true ]; then \
+    # Create folders if not exists (https://github.com/tianon/docker-brew-debian/issues/65)
+    mkdir -p /usr/share/man/man1 && \
+    mkdir -p /usr/share/man/man7 && \
+    # Install the pgsql client
+    bash -c "echo deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main >> /etc/apt/sources.list.d/pgdg.list" && \
+    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
+    apt-get update && \
+    apt-get install -y postgresql-client-12 && \
+    if [ ${INSTALL_POSTGIS} = true ]; then \
+      apt-get install -y postgis; \
+    fi \
+;fi
+
+###########################################################################
+# xDebug:
+###########################################################################
+ARG INSTALL_XDEBUG=false
+
+RUN if [ ${INSTALL_XDEBUG} = true ]; then \
+  # Install the xdebug extension
+  if [ $(php -r "echo PHP_MAJOR_VERSION;") = "5" ]; then \
+    pecl install xdebug-2.5.5; \
+  else \
+    if [ $(php -r "echo PHP_MINOR_VERSION;") = "0" ]; then \
+      pecl install xdebug-2.9.0; \
+    else \
+      pecl install xdebug; \
+    fi \
+  fi && \
+  docker-php-ext-enable xdebug \
+;fi
+
+# Copy xdebug configuration for remote debugging
+ADD ./xdebug.ini /usr/local/etc/php/conf.d
+
+RUN sed -i "s/xdebug.remote_autostart=0/xdebug.remote_autostart=1/" /usr/local/etc/php/conf.d/xdebug.ini && \
+    sed -i "s/xdebug.remote_enable=0/xdebug.remote_enable=1/" /usr/local/etc/php/conf.d/xdebug.ini && \
+    sed -i "s/xdebug.cli_color=0/xdebug.cli_color=1/" /usr/local/etc/php/conf.d/xdebug.ini
+
+###########################################################################
+# Xhprof:
+###########################################################################
+
+ARG INSTALL_XHPROF=false
+
+RUN if [ ${INSTALL_XHPROF} = true ]; then \
+    # Install the php xhprof extension
+    if [ $(php -r "echo PHP_MAJOR_VERSION;") = 7 ]; then \
+      curl -L -o /tmp/xhprof.tar.gz "https://github.com/tideways/php-xhprof-extension/archive/v5.0.1.tar.gz"; \
+    else \
+      curl -L -o /tmp/xhprof.tar.gz "https://codeload.github.com/phacility/xhprof/tar.gz/master"; \
+    fi \
+    && mkdir -p xhprof \
+    && tar -C xhprof -zxvf /tmp/xhprof.tar.gz --strip 1 \
+    && ( \
+        cd xhprof \
+        && phpize \
+        && ./configure \
+        && make \
+        && make install \
+    ) \
+    && rm -r xhprof \
+    && rm /tmp/xhprof.tar.gz \
+;fi
+
+COPY ./xhprof.ini /usr/local/etc/php/conf.d
+
+RUN if [ ${INSTALL_XHPROF} = false ]; then \
+    rm /usr/local/etc/php/conf.d/xhprof.ini \
+;fi
+
 
 #####################################
 # Supervisor consumers:

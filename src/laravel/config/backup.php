@@ -1,5 +1,4 @@
 <?php
-
 return [
 
     'backup' => [
@@ -73,7 +72,7 @@ return [
              * For a complete list of available customization options, see https://github.com/spatie/db-dumper
              */
             'databases' => [
-//                'mysql',
+                'pgsql',
             ],
         ],
 
@@ -88,14 +87,14 @@ return [
          *
          * If you do not want any compressor at all, set it to null.
          */
-        'database_dump_compressor' => null,
+        'database_dump_compressor' => Spatie\DbDumper\Compressors\GzipCompressor::class,
 
         'destination' => [
 
             /*
              * The filename prefix used for the backup zip file.
              */
-            'filename_prefix' => '',
+            'filename_prefix' => env('APP_NAME', 'laravel').'_',
 
             /*
              * The disk names on which the backups will be stored.

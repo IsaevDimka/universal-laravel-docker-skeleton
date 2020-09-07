@@ -13,7 +13,8 @@ class TestingCommand extends Command
      * @var string
      */
     protected $signature = 'testing
-                            {--method= : Only check these urls}';
+                            {--f= : Functions}
+                            ';
 
     /**
      * The console command description.
@@ -21,6 +22,7 @@ class TestingCommand extends Command
      * @var string
      */
     protected $description = 'Command description';
+
 
     /**
      * Create a new command instance.
@@ -46,8 +48,8 @@ class TestingCommand extends Command
 //        $this->line("<fg=yellow>YELLOW</fg=yellow>\t");
 //        $this->line("<fg=white>white</fg=white>");
 
-        if (method_exists($this, $method = Str::studly($this->option('method') ?? null))) {
-            $this->{$method}();
+        if (method_exists($this, $f = Str::studly($this->option('f') ?? null))) {
+            $this->{$f}();
         }else{
             $this->error("Testing method not found!");
             return 2;
@@ -55,6 +57,17 @@ class TestingCommand extends Command
 
         $meta = \App\Services\DebugService::result(['durations', 'queryLogs']);
         $this->comment(\json_encode($meta, JSON_PRETTY_PRINT));
+    }
+
+    private function filewrite()
+    {
+        $result = [];
+        $result = \json_encode($result, JSON_PRETTY_PRINT);
+
+        $file = storage_path('/logs/' . __FUNCTION__ . '.json');
+        $log  = fopen($file, 'a');
+        fwrite($log, $result);
+        fclose($log);
     }
 
     private function progressBar()
@@ -87,7 +100,17 @@ class TestingCommand extends Command
     {
         $channel = 'mail';
         $route = 'isaevdimka@gmail.com';
-        \Illuminate\Support\Facades\Notification::route($channel, $route)->notify(new \App\Notifications\MailMessageNotification());
+        $data = [
+            'subject'      => $subject ?? 'Спасибо за регистрацию',
+            'replyTo'      => $replyTo ?? null,
+            'line_1'       => $line_1 ?? 'Ваша логин: ',
+            'line_2'       => $line_2 ?? 'Ваш пароль: '.$route,
+            'action_label' => $action_label ?? 'Перейти на сайт',
+            'action_url'   => $action_url ?? url()->to('/'),
+            'line_3'       => $line_3 ?? null,
+        ];
+        \Illuminate\Support\Facades\Notification::route($channel, $route)
+                                                ->notify(new \App\Notifications\MailMessageNotification());
     }
 
     private function getNodeByWeights(array $weights = []) : array
