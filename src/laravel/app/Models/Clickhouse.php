@@ -9,6 +9,7 @@ class Clickhouse
     const COLUMN_UINT8    = 'UInt8';
     const COLUMN_UINT16   = 'UInt16';
     const COLUMN_UINT32   = 'UInt32';
+    const COLUMN_UINT64   = 'UInt64';
     const COLUMN_INT8     = 'Int8';
     const COLUMN_INT32    = 'Int32';
     const COLUMN_INT64    = 'Int64';
@@ -16,6 +17,8 @@ class Clickhouse
     const COLUMN_DATE     = 'Date';
     const COLUMN_DATETIME = 'DateTime';
     const COLUMN_UUID     = 'UUID';
+    const COLUMN_IPV4     = 'IPv4';
+    const COLUMN_IPV6     = 'IPv6';
 
     public const CONNECTION = 'clickhouse';
 

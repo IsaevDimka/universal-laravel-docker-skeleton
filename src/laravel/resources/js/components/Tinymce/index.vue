@@ -102,10 +102,11 @@ export default {
         code_dialog_width: 1000,
         advlist_bullet_styles: 'square',
         advlist_number_styles: 'default',
-        imagetools_cors_hosts: ['www.tinymce.com', 'codepen.io'],
         default_link_target: '_blank',
         link_title: false,
         nonbreaking_force_tab: true, // inserting nonbreaking space &nbsp; need Nonbreaking Space Plugin
+        relative_urls: false,
+        remove_script_host : false,
         init_instance_callback: editor => {
           if (_this.value) {
             editor.setContent(_this.value);
@@ -142,7 +143,7 @@ export default {
     imageSuccessCBK(arr) {
       const _this = this;
       arr.forEach(v => {
-        window.tinymce.get(_this.tinymceId).insertContent(`<img class="wscnph" src="${v.url}" >`);
+        window.tinymce.get(_this.tinymceId).insertContent(`<img class="wscnph" src="${v.url}">`);
       });
     },
   },

@@ -1,6 +1,6 @@
 <template>
   <div
-      v-if="devDrawer"
+      v-if="devDrawer || node_env !== 'production'"
       class="dev-drawer"
       :style="{ height }"
   >
@@ -39,6 +39,14 @@ export default {
     ...mapGetters([
       'devDrawer'
     ])
+  },
+  data(){
+    return{
+      node_env: null,
+    };
+  },
+  created() {
+    this.node_env = process.env.NODE_ENV;
   },
   methods: {
     handleCopy(text, event) {

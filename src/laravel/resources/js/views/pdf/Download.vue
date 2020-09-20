@@ -1,22 +1,22 @@
 <template>
   <div
     v-loading.fullscreen.lock="fullscreenLoading"
-    class="main-article"
+    class="main-news"
     element-loading-text="Efforts to generate PDF"
   >
-    <div class="article__heading">
-      <div class="article__heading__title">
-        {{ article.title }}
+    <div class="news__heading">
+      <div class="news__heading__title">
+        {{ news.title }}
       </div>
     </div>
     <div style="color: #ccc;">
-      This article is from Evan You on
+      This news is from Evan You on
       <a
         target="_blank"
         href="https://medium.com/the-vue-point/plans-for-the-next-iteration-of-vue-js-777ffea6fabf"
       >medium</a>
     </div>
-    <div ref="content" class="node-article-content" v-html="article.content" />
+    <div ref="content" class="node-news-content" v-html="news.content" />
   </div>
 </template>
 
@@ -24,7 +24,7 @@
 export default {
   data() {
     return {
-      article: '',
+      news: '',
       fullscreenLoading: true,
     };
   },
@@ -36,7 +36,7 @@ export default {
       import('./content.js').then(data => {
         const { title } = data.default;
         document.title = title;
-        this.article = data.default;
+        this.news = data.default;
         setTimeout(() => {
           this.fullscreenLoading = false;
           this.$nextTick(() => {
@@ -64,7 +64,7 @@ export default {
   }
 }
 
-.main-article {
+.main-news {
   padding: 20px;
   margin: 0 auto;
   display: block;
@@ -72,13 +72,13 @@ export default {
   background: #fff;
 }
 
-.article__heading {
+.news__heading {
   position: relative;
   padding: 0 0 20px;
   overflow: hidden;
 }
 
-.article__heading__title {
+.news__heading__title {
   display: block;
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -93,7 +93,7 @@ export default {
   overflow: hidden;
 }
 
-.node-article-content {
+.node-news-content {
   margin: 20px 0 0;
   @include clearfix;
   font-size: 16px;

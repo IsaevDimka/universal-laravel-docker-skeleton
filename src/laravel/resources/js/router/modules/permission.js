@@ -8,7 +8,7 @@ const permissionRoutes = {
   meta: {
     title: 'permission',
     icon: 'lock',
-    permissions: ['view menu permission'],
+    roles: ['root'],
   },
   children: [
     {
@@ -17,7 +17,8 @@ const permissionRoutes = {
       name: 'PagePermission',
       meta: {
         title: 'pagePermission',
-        permissions: ['manage permission'],
+        // permissions: ['manage permission'],
+        test: true,
       },
     },
     {

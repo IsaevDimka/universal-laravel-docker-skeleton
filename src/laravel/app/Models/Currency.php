@@ -29,16 +29,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Currency withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Currency withoutTrashed()
  * @mixin \Illuminate\Database\Eloquent\
+ * @property bool $isActive
+ * @property-read mixed $createdAt
+ * @property-read mixed $updatedAt
  */
 class Currency extends BaseModel
 {
-    use SoftDeletes;
 
     protected $table = 'currencies';
 
     protected $primaryKey = 'id';
-
-    protected $dates = ['deleted_at'];
+    public $timestamps = false;
 
     protected $fillable = [
         'id',
@@ -64,11 +65,11 @@ class Currency extends BaseModel
 
     public function getCreatedAtAttribute($value)
     {
-        return BaseModel::formatingCarbonAttribute($value);
+        return BaseModel::formattingCarbonAttribute($value);
     }
 
     public function getUpdatedAtAttribute($value)
     {
-        return BaseModel::formatingCarbonAttribute($value);
+        return BaseModel::formattingCarbonAttribute($value);
     }
 }

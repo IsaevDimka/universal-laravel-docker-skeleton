@@ -57,6 +57,8 @@ class UserController extends ApiController
         if (!empty($keyword)) {
             $userQuery->orWhere('username', 'LIKE', '%' . $keyword . '%');
             $userQuery->orWhere('email', 'LIKE', '%' . $keyword . '%');
+            $userQuery->orWhere('first_name', 'LIKE', '%' . $keyword . '%');
+            $userQuery->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
         }
 
         $total = $userQuery->count();

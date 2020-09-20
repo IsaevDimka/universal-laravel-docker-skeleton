@@ -29,15 +29,13 @@
 - Login, register, email verification and password reset
 - Authentication with JWT
 - Socialite integration
-- Bootstrap 4 + Font Awesome 5
+- Element UI
 
 ## Installation
 
 + `git clone <this repo>`
 + `make build`
-+ `make mongodb-install`
 + `make install`
-
 ## Commands
 
 Maintenance mode

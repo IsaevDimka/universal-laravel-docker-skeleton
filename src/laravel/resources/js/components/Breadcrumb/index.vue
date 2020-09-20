@@ -37,7 +37,7 @@ export default {
 
       const first = matched[0];
       if (first && first.name.trim().toLocaleLowerCase() !== 'backend'.toLocaleLowerCase()) {
-        matched = [{ path: '/backend', meta: { title: 'Backend' }}].concat(matched);
+        matched = [{ path: '/backend', meta: { title: 'Личный кабинет' }}].concat(matched);
       }
 
       this.levelList = matched.filter(

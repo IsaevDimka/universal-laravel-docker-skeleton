@@ -136,7 +136,7 @@ class ApiResponse implements ApiInterface
             $message = config('api.messages.bad');
         }
 
-        return $this->response(ResponseStatus::HTTP_BAD_REQUEST, $message, $errors, ...$extraData);
+        return $this->response(ResponseStatus::HTTP_BAD_REQUEST, $message, [], compact('errors'), ...$extraData);
     }
 
     /**
@@ -170,42 +170,42 @@ class ApiResponse implements ApiInterface
             $message = config('api.messages.validation');
         }
 
-        return $this->response(ResponseStatus::HTTP_UNPROCESSABLE_ENTITY, $message, $errors, ...$extraData);
+        return $this->response(ResponseStatus::HTTP_UNPROCESSABLE_ENTITY, $message, [], compact('errors'), ...$extraData);
     }
 
     /**
      * Create forbidden (403) API response.
      *
      * @param string|null $message
-     * @param array       $data
+     * @param array       $errors
      * @param array       $extraData
      *
      * @return JsonResponse
      */
-    public function forbidden($message = null, $data = [], ...$extraData)
+    public function forbidden($message = null, $errors = [], ...$extraData)
     {
         if(is_null($message)) {
             $message = config('api.messages.forbidden');
         }
 
-        return $this->response(ResponseStatus::HTTP_FORBIDDEN, $message, $data, ...$extraData);
+        return $this->response(ResponseStatus::HTTP_FORBIDDEN, $message, [], compact('errors'), ...$extraData);
     }
 
     /**
      * Create Server error (500) API response.
      *
      * @param string|null $message
-     * @param array       $data
+     * @param array       $errors
      * @param array       $extraData
      *
      * @return JsonResponse
      */
-    public function error($message = null, $data = [], ...$extraData)
+    public function error($message = null, $errors = [], ...$extraData)
     {
         if(is_null($message)) {
             $message = config('api.messages.error');
         }
 
-        return $this->response(ResponseStatus::HTTP_INTERNAL_SERVER_ERROR, $message, $data, ...$extraData);
+        return $this->response(ResponseStatus::HTTP_INTERNAL_SERVER_ERROR, $message, [], compact('errors'), ...$extraData);
     }
 }

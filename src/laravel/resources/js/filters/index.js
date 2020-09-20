@@ -44,3 +44,14 @@ export function toThousandFilter(num) {
 export function uppercaseFirst(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+export function truncate(text, limit, suffix) {
+  text = text.trim();
+  if( text.length <= limit) return text;
+  text = text.slice( 0, limit); // тупо отрезать по лимиту
+  let lastSpace = text.lastIndexOf(" ");
+  if( lastSpace > 0) { // нашлась граница слов, ещё укорачиваем
+    text = text.substr(0, lastSpace);
+  }
+  return text + suffix || '...';
+}

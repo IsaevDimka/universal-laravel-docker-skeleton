@@ -9,7 +9,7 @@ const nestedRoutes = {
   meta: {
     title: 'nested',
     icon: 'nested',
-    permissions: ['view menu nested routes'],
+    roles: ['root'],
   },
   children: [
     {

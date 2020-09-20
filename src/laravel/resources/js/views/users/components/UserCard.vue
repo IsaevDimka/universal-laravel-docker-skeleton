@@ -1,33 +1,46 @@
 <template>
   <el-card v-if="user">
     <div class="user-profile">
-      <div class="user-avatar box-center">
-        <pan-thumb :image="user.avatar" :height="'100px'" :width="'100px'" :hoverable="false" />
-      </div>
+<!--      <div class="user-avatar box-center">-->
+<!--        <pan-thumb :image="user.avatar" :height="'100px'" :width="'100px'" :hoverable="false" />-->
+<!--      </div>-->
       <div class="box-center">
         <div class="user-name text-center">
-          {{ user.username }}
+          ID: {{ user.id }}
         </div>
-        <div class="user-role text-center text-muted">
-          Roles: {{ getRoles() }}
-        </div>
-        <div class="user-role text-center text-muted">
-          Permissions: {{ getPermissions() }}
+<!--        <div class="user-item text-center text-muted">-->
+<!--          Roles: {{ getRoles() }}-->
+<!--        </div>-->
+<!--        <div class="user-item text-center text-muted">-->
+<!--          Permissions: {{ getPermissions() }}-->
+<!--        </div>-->
+        <div class="user-item text-center text-muted">
+          {{ user.is_active ? 'Active' : 'Is not active' }}
         </div>
       </div>
       <div class="box-social">
-        <el-table :data="social" :show-header="false">
-          <el-table-column prop="username" label="Username" />
-          <el-table-column label="Count" align="left" width="100">
+        <el-table :data="tableData" :show-header="false" style="width: 100%" stripe>
+          <el-table-column align="left" width="120">
             <template slot-scope="scope">
-              {{ scope.row.count | toThousandFilter }}
+              {{ scope.row.label }}
             </template>
           </el-table-column>
+          <el-table-column align="left" width="200">
+            <template slot-scope="scope">
+              <el-input v-model="user[scope.row.key]" :disabled="!isEdit"></el-input>
+            </template>
+          </el-table-column>
+<!--          <el-table-column align="right" width="300">-->
+<!--            <template slot-scope="scope">-->
+<!--              <el-button type="default" @click="handleSaveRow">Save</el-button>-->
+<!--              <el-button type="primary" @click="handleEditRow">Edit</el-button>-->
+<!--            </template>-->
+<!--          </el-table-column>-->
         </el-table>
       </div>
       <div class="user-follow">
         <el-button type="primary" style="width: 100%;">
-          Follow
+          Action
         </el-button>
       </div>
     </div>
@@ -44,8 +57,8 @@ export default {
       type: Object,
       default: () => {
         return {
-          username: '',
           email: '',
+          phone: '',
           avatar: '',
           roles: [],
           permissions: [],
@@ -55,28 +68,35 @@ export default {
   },
   data() {
     return {
-      social: [
+      tableData: [
         {
-          'name': 'Followers',
-          'count': 1235,
+          label: 'Phone',
+          key: 'phone',
         },
         {
-          'name': 'Following',
-          'count': 23512,
+          label: 'Email',
+          key: 'email',
         },
         {
-          'name': 'Friends',
-          'count': 7242,
-        },
+          label: 'Telegram',
+          key: 'telegram_chat_id',
+        }
       ],
+      isEdit: false,
     };
   },
   methods: {
     getRoles() {
-      return this.user.roles.map((value) => this.$options.filters.uppercaseFirst(value)).join(' | ');
+      return this.user.roles ? this.user.roles.map((value) => this.$options.filters.uppercaseFirst(value)).join(' | ') : '';
     },
     getPermissions() {
-      return this.user.permissions.join(' | ');
+      return this.user.permissions ? this.user.permissions.join(' | ') : '';
+    },
+    handleEditRow() {
+      this.isEdit = true
+    },
+    handleSaveRow() {
+      this.isEdit = false
     },
   },
 };
@@ -90,7 +110,7 @@ export default {
   .box-center {
     padding-top: 10px;
   }
-  .user-role {
+  .user-item {
     padding-top: 10px;
     font-weight: 400;
     font-size: 14px;

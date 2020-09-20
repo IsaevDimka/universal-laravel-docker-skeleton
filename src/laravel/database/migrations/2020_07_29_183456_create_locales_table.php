@@ -18,7 +18,6 @@ class CreateLocalesTable extends Migration
             $table->string('sign')->index()->unique();
             $table->string('name');
             $table->boolean('is_active')->default(true);
-            $table->timestamps();
         });
     }
 

@@ -29,9 +29,9 @@ const mutations = {
 const actions = {
     // user login
     login({commit}, userInfo) {
-        const {email, password} = userInfo;
+        const {email, password, phone, auth_type} = userInfo;
         return new Promise((resolve, reject) => {
-            login({email: email.trim(), password: password})
+            login({auth_type: auth_type, email: email.trim(), phone: phone.trim(), password: password})
                 .then(response => {
                     const { data } = response;
 
@@ -68,7 +68,7 @@ const actions = {
                 commit('SET_PERMISSIONS', user.permissions);
                 resolve(data)
             }).catch(error => {
-                reject(error)
+                reject(error);
             })
         })
     },

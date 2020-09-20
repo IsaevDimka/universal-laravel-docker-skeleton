@@ -9,6 +9,7 @@ const errorRoutes = {
   meta: {
     title: 'errorPages',
     icon: '404',
+    roles: ['root'],
   },
   children: [
     {

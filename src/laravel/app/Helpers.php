@@ -13,7 +13,7 @@ function markString(string $string, $pre = 1, $post = 1, $mark = '*')
     return preg_replace_callback('/^(\+?\w{' . $pre . '})([\S\s]+)(\w{' . $post . '})$/',
         function ($match) use ($mark) {
             return $match[1] . str_repeat($mark, strlen($match[2])) . $match[3];
-        }, $string);
+    }, $string);
 }
 
 /**

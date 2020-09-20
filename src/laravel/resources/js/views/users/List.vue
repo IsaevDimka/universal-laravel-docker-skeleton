@@ -68,7 +68,7 @@
 
       <el-table-column align="center" label="Actions" width="350">
         <template slot-scope="scope">
-          <router-link :to="'/administrator/users/edit/'+scope.row.id">
+          <router-link :to="'/backend/administrator/users/edit/'+scope.row.id">
             <el-button type="primary" size="small" icon="el-icon-edit">
               Edit
             </el-button>
@@ -164,6 +164,7 @@ import Resource from '@/api/resource';
 import waves from '@/directive/waves'; // Waves directive
 import permission from '@/directive/permission'; // Permission directive
 import checkPermission from '@/utils/permission'; // Permission checking
+import checkRole from '@/utils/role'; // Role checking
 import RoleResource from '@/api/role';
 
 const roleResource = new RoleResource();
@@ -295,11 +296,15 @@ export default {
     this.getList();
     this.getRoles();
     this.getPermissions();
-    // if (checkPermission(['manage permission'])) {
+    // if (checkRole(['admin'])) {
+    //   alalertert('is admin');
+    // }else{
+    //   alert('is not admin');
     // }
   },
   methods: {
     checkPermission,
+    checkRole,
     async getRoles() {
       this.loading = true;
       const { data } = await roleResource.list({});

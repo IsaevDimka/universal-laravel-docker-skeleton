@@ -98,19 +98,7 @@ export const constantRoutes = [
       },
     ],
   },
-  {
-    path: '/backend/documentation',
-    component: Layout,
-    redirect: '/documentation/index',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/documentation/index'),
-        name: 'Documentation',
-        meta: { title: 'documentation', icon: 'documentation', noCache: true },
-      },
-    ],
-  },
+
   {
     path: '/backend/profile',
     component: Layout,
@@ -124,33 +112,53 @@ export const constantRoutes = [
       },
     ],
   },
-  {
-    path: '/backend/guide',
-    component: Layout,
-    redirect: '/guide/index',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/guide/index'),
-        name: 'Guide',
-        meta: { title: 'guide', icon: 'guide', noCache: true },
-      },
-    ],
-  },
-  elementUiRoutes,
 ];
 
 export const asyncRoutes = [
   permissionRoutes,
   componentRoutes,
   chartsRoutes,
+  elementUiRoutes,
   nestedRoutes,
   tableRoutes,
   adminRoutes,
   {
+    path: '/backend/documentation',
+    component: Layout,
+    redirect: '/documentation/index',
+    meta: {
+      roles: ['root'],
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/documentation/index'),
+        name: 'Documentation',
+        meta: { title: 'documentation', icon: 'documentation', noCache: true, roles: ['root'], },
+      },
+    ],
+  },
+  {
+    path: '/backend/guide',
+    component: Layout,
+    redirect: '/guide/index',
+    meta: {
+      roles: ['root'],
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/guide/index'),
+        name: 'Guide',
+        meta: { title: 'guide', icon: 'guide', noCache: true,},
+      },
+    ],
+  },
+  {
     path: '/backend/theme',
     component: Layout,
     redirect: 'noredirect',
+    meta: { roles: ['root'] },
     children: [
       {
         path: 'index',
@@ -164,13 +172,13 @@ export const asyncRoutes = [
     path: '/backend/clipboard',
     component: Layout,
     redirect: 'noredirect',
-    meta: { permissions: ['view menu clipboard'] },
+    meta: { roles: ['root'] },
     children: [
       {
         path: 'index',
         component: () => import('@/views/clipboard/index'),
         name: 'ClipboardDemo',
-        meta: { title: 'clipboardDemo', icon: 'clipboard', roles: ['admin', 'manager', 'editor', 'user'] },
+        meta: { title: 'clipboardDemo', icon: 'clipboard', roles: ['root'] },
       },
     ],
   },
@@ -181,7 +189,7 @@ export const asyncRoutes = [
     component: Layout,
     redirect: '/zip/download',
     alwaysShow: true,
-    meta: { title: 'zip', icon: 'zip', permissions: ['view menu zip'] },
+    meta: { title: 'zip', icon: 'zip', roles: ['root'] },
     children: [
       {
         path: 'download',
@@ -195,7 +203,7 @@ export const asyncRoutes = [
     path: '/backend/pdf',
     component: Layout,
     redirect: '/pdf/index',
-    meta: { title: 'pdf', icon: 'pdf', permissions: ['view menu pdf'] },
+    meta: { title: 'pdf', icon: 'pdf', permissions: ['view menu pdf'], roles: ['root'] },
     children: [
       {
         path: 'index',
@@ -214,6 +222,9 @@ export const asyncRoutes = [
     path: '/backend/i18n',
     component: Layout,
     // meta: { permissions: ['view menu i18n'] },
+    meta:{
+      roles: ['root'],
+    },
     children: [
       {
         path: 'index',
@@ -223,19 +234,22 @@ export const asyncRoutes = [
       },
     ],
   },
-  {
-    path: '/backend/external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'http://github.com/IsaevDimka/universal-laravel-docker-skeleton',
-        meta: { title: 'externalLink', icon: 'link' },
-      },
-    ],
-  },
+  // {
+  //   path: '/backend/external-link',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'http://github.com/IsaevDimka/universal-laravel-docker-skeleton',
+  //       meta: { title: 'externalLink', icon: 'link' },
+  //     },
+  //   ],
+  // },
   {
     path: '/backend/error-log',
     component: Layout,
+    meta: {
+      roles: ['root'],
+    },
     children: [
       {
         path: 'log',
@@ -249,7 +263,7 @@ export const asyncRoutes = [
 ];
 
 const createRouter = () => new Router({
-  mode: 'history', // require service support
+  mode: 'hash', // require service support | history, hash
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes,
 });

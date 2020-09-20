@@ -3,69 +3,103 @@
 namespace App\Http\Controllers\API\v1\Auth;
 
 use App\Http\Controllers\API\ApiController;
+use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Traits\PhoneNumberFormattingTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class RegisterController extends ApiController
 {
-    use RegistersUsers;
+    use PhoneNumberFormattingTrait;
+
 
     /**
      * Create a new controller instance.
      *
-     * @return void
      */
     public function __construct()
     {
         $this->middleware('guest');
     }
 
-    /**
-     * The user has been registered.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function registered(Request $request, User $user)
+    public function __invoke(Request $request)
     {
-        if ($user instanceof MustVerifyEmail) {
-            return response()->json(['status' => trans('verification.sent')]);
+        $messages = [
+
+        ];
+        $rules = [
+            'phone'                 => ['required', function ($attribute, $value, $fail) {
+                $validationPhoneNumber = $this->phoneNumberFormatting($value, 'RU');
+                if (! $validationPhoneNumber['status']) {
+                    $fail('Неверный формат номера телефона!', compact('attribute'));
+                }
+                if (\App\Models\User::where('phone', '=', $validationPhoneNumber['formatted']['formatE164'])->exists()) {
+                    $fail('Пользователь с таким номером телефона уже зарегистрирован!', compact('attribute'));
+                }
+            }],
+            'phone_is_verify'       => ['required', 'boolean', 'in:1'],
+            'email'                 => [
+                'nullable', 'string', 'email', 'max:255', function ($attribute, $value, $fail) {
+                    if (\App\Models\User::where('email', 'ilike', mb_strtolower($value))->exists()) {
+                        $fail(__('validation.unique', compact('attribute')));
+                    }
+                }
+            ],
+            'password'              => ['required', 'string', 'min:8', 'confirmed'],
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            // event to clickhouse
+            return api()->validation(null, $validator->errors()->toArray());
         }
 
-        return response()->json($user);
-    }
+        $payload = $validator->validated();
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
-        ]);
-    }
+        $payload['is_active'] = true;
+        $payload['locale'] = app()->getLocale();
+        $validationPhoneNumber = $this->phoneNumberFormatting($payload['phone'], 'RU');
+        $payload['phone'] = $validationPhoneNumber['formatted']['formatE164'];
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\User
-     */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        $user = User::create($payload);
+
+        $user->assignRole('voter');
+        if ($payload['is_observer']) {
+            $user->assignRole('observer');
+        }
+
+        if (! $payload['email']) {
+            $user->sendEmailVerificationNotification();
+            /**
+             * Welcome mail
+             */
+            $data = [
+                'subject'      => 'Thank you for registering',
+                'replyTo'      => null,
+                'line_1'       => 'Login: '.$payload['email'],
+                'line_2'       => 'Pass: '.$payload['password'],
+                'action_label' => 'Go to site',
+                'action_url'   => url()->to('/'),
+                'line_3'       => null,
+            ];
+
+            $user->notify(new \App\Notifications\MailMessageNotification($data));
+        }
+
+        // event to clickhouse
+
+        # Notify new user
+        if(app()->environment('production', 'develop', 'local')) {
+            /**
+             * @todo: Make jobs
+             */
+            logger()->channel('telegram')->info("Register new user: ".PHP_EOL."ID: ".$user->id);
+        }
+        return api()->ok('Register successful', UserResource::make($user), compact('payload'));
     }
 }

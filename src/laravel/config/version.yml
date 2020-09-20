@@ -4,17 +4,17 @@ current:
   label: v
   major: 1
   minor: 0
-  patch: 1
-  prerelease: alpha
-  buildmetadata: 2
-  commit: '100001'
+  patch: 0
+  prerelease: stable
+  buildmetadata: 0
+  commit: 10001a
   timestamp:
     year: 2020
     month: 9
-    day: 7
+    day: 19
     hour: 16
-    minute: 32
-    second: 9
+    minute: 22
+    second: 39
     timezone: Asia/Ho_Chi_Minh
 commit:
   mode: increment
@@ -46,7 +46,7 @@ format:
   commit: '{$commit}'
   version: '{$version-only} [(?={$prerelease})]'
   version-only: '{$label}{$major}.{$minor}.{$patch}'
-  full: '{$version-only} [(?={$prerelease})] [build ?={$buildmetadata}] (commit {$commit})'
+  full: '{$compact} (commit {$commit})'
   compact: '{$version-only} [(?={$prerelease})] [build ?={$buildmetadata}]'
   timestamp-year: '{$timestamp.year}'
   timestamp-month: '{$timestamp.month}'

@@ -28,8 +28,8 @@ class BaseModel extends Model
         return with(new static)->getTable();
     }
 
-    public static function formatingCarbonAttribute($value)
+    public static function formattingCarbonAttribute($value)
     {
-        return Carbon::parse($value)->format(BaseModel::FORMAT_DATETIME);
+        return $value ? Carbon::parse($value)->format(BaseModel::FORMAT_DATETIME) : null;
     }
 }

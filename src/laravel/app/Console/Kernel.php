@@ -31,7 +31,7 @@ class Kernel extends ConsoleKernel
 
             // $schedule->command('inspire')->hourly();
             # check uptime server
-            $schedule->command('monitor:uptime')->hourly();
+            $schedule->command('monitor:uptime')->everyFourHours();
 
             # Horizon includes a metrics dashboard
             $schedule->command('horizon:snapshot')->everyFiveMinutes();

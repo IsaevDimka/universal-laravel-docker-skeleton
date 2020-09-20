@@ -8,15 +8,15 @@ $config = [
     'locale'      => app()->getLocale(),
     'locales'     => config('app.locales'),
     'githubAuth'  => config('services.github.client_id'),
+    'csrf_token'  => csrf_token(),
 ];
 @endphp
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name') }}</title>
 
     <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
@@ -37,6 +37,9 @@ $config = [
     <meta name="msapplication-TileImage" content="/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
     <link href="{{ mix('dist/css/app.css') }}" type="text/css" rel="stylesheet" />
+    @env('production')
+        @include('partials.analytics')
+    @endenv
 </head>
 <body>
 
@@ -54,5 +57,6 @@ $config = [
 <script src="{{ mix('dist/js/vendor.js') }}"></script>
 <script src="{{ mix('dist/js/manifest.js') }}"></script>
 <script src="{{ mix('dist/js/app.js') }}"></script>
+<script src="https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit" async defer></script>
 </body>
 </html>

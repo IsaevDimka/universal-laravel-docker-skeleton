@@ -53,12 +53,12 @@ class OpcacheService
 
             // Get files in these paths
             $files = collect(Finder::create()->in(config('opcache.directories'))
-                                   ->name('*.php')
-                                   ->ignoreUnreadableDirs()
-                                   ->notContains('#!/usr/bin/env php')
-                                   ->exclude(config('opcache.exclude'))
-                                   ->files()
-                                   ->followLinks());
+                ->name('*.php')
+                ->ignoreUnreadableDirs()
+                ->notContains('#!/usr/bin/env php')
+                ->exclude(config('opcache.exclude'))
+                ->files()
+                ->followLinks());
 
             // optimized files
             $files->each(function ($file) use (&$compiled) {

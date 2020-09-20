@@ -9,7 +9,7 @@ const excelRoutes = {
   meta: {
     title: 'excel',
     icon: 'excel',
-    permissions: ['view menu excel'],
+    roles: ['root'],
   },
   children: [
     {

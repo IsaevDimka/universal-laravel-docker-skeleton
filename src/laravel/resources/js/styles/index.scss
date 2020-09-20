@@ -7,7 +7,11 @@
 @import 'sidebar';
 @import 'btn';
 @import 'main';
-
+//@import "normalize";
+@import "bootstrap-grid";
+@import "bootstrap-utilities";
+@import "bootstrap-reboot";
+@import "normalize";
 body {
   height: 100%;
   -moz-osx-font-smoothing: grayscale;

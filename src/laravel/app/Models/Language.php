@@ -26,11 +26,13 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Language whereUpdatedAt($value)
  * @mixin \Illuminate\Database\Eloquent\
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Language active()
+ * @property bool $isActive
  */
 class Language extends BaseModel
 {
     protected $table = 'languages';
     protected $primaryKey = 'id';
+    public $timestamps = false;
 
     protected $fillable = [
         'short',

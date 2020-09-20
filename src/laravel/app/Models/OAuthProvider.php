@@ -28,6 +28,12 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OAuthProvider whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OAuthProvider whereUserId($value)
  * @mixin \Eloquent
+ * @property int $userId
+ * @property string $providerUserId
+ * @property string|null $accessToken
+ * @property string|null $refreshToken
+ * @property \Illuminate\Support\Carbon|null $createdAt
+ * @property \Illuminate\Support\Carbon|null $updatedAt
  */
 class OAuthProvider extends Model
 {

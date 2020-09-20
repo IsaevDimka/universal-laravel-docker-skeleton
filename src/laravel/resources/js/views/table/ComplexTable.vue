@@ -147,7 +147,7 @@
 </template>
 
 <script>
-import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/article';
+import { fetchList, fetchPv, createNews, updateNews } from '@/api/news';
 import waves from '@/directive/waves'; // Waves directive
 import { parseTime } from '@/utils';
 import Pagination from '@/components/Pagination'; // Secondary package based on el-pagination
@@ -288,7 +288,7 @@ export default {
         if (valid) {
           this.temp.id = parseInt(Math.random() * 100) + 1024; // mock a id
           this.temp.author = 'laravue';
-          createArticle(this.temp).then(() => {
+          createNews(this.temp).then(() => {
             this.list.unshift(this.temp);
             this.dialogFormVisible = false;
             this.$notify({
@@ -315,7 +315,7 @@ export default {
         if (valid) {
           const tempData = Object.assign({}, this.temp);
           tempData.timestamp = +new Date(tempData.timestamp); // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
-          updateArticle(tempData).then(() => {
+          updateNews(tempData).then(() => {
             for (const v of this.list) {
               if (v.id === this.temp.id) {
                 const index = this.list.indexOf(v);

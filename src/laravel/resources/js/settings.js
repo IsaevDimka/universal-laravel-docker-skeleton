@@ -4,32 +4,32 @@ export default {
   /**
    * @type {String}
    */
-  title: 'Laravel Vue Admin',
+  title: process.env.MIX_SETTING_TITLE ?? 'Laravel',
   theme: variables.theme,
 
   /**
    * @type {boolean} true | false
    * @description Whether show the settings right-panel
    */
-  showSettings: true,
+  showSettings: process.env.MIX_SETTING_SHOW_SETTINGS_PANEL ?? true,
 
   /**
    * @type {boolean} true | false
    * @description Whether need tagsView
    */
-  tagsView: true,
+  tagsView: process.env.MIX_SETTING_TAGSVIEW ?? true,
 
   /**
    * @type {boolean} true | false
    * @description Whether fix the header
    */
-  fixedHeader: false,
+  fixedHeader: process.env.MIX_SETTING_FIXEDHEADER ?? false,
 
   /**
    * @type {boolean} true | false
    * @description Whether show the logo in sidebar
    */
-  sidebarLogo: false,
+  sidebarLogo: process.env.MIX_SETTING_SIDEBARLOGO ?? false,
 
   /**
    * @type {string | array} 'production' | ['production','development']

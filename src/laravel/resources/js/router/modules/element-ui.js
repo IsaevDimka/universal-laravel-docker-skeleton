@@ -8,7 +8,7 @@ const elementUiRoutes = {
   meta: {
     title: 'elementUi',
     icon: 'layout',
-    permissions: ['view menu element ui'],
+    roles: ['root'],
   },
   children: [
     {

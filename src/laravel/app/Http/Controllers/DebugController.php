@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-//use BeyondCode\ServerTiming\Facades\ServerTiming;
 use App\Models\Language;
 use App\Models\User;
 use App\Traits\PhoneNumberFormattingTrait;

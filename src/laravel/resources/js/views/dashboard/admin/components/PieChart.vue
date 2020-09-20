@@ -61,7 +61,7 @@ export default {
         calculable: true,
         series: [
           {
-            name: 'WEEKLY WRITE ARTICLES',
+            name: 'WEEKLY WRITE NEWS',
             type: 'pie',
             roseType: 'radius',
             radius: [15, 95],

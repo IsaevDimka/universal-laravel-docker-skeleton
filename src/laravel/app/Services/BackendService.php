@@ -213,17 +213,17 @@ class BackendService
             /**
              * Check RoadRunner
              */
-            //            try{
-            //                $roadrunner                   = Http::get(env('ROADRUNNER_HOST').':'.env('ROADRUNNER_HTTP_PORT'));
-            //                $this->services['RoadRunner'] = $roadrunner->ok() ? self::SERVICE_OPERATIONAL : self::SERVICE_DOWN;
-            //            } catch(\Illuminate\Http\Client\ConnectionException $e){
-            //                $this->services['RoadRunner'] = self::SERVICE_DOWN;
-            //                array_push($this->errors, 'RoadRunner service is experiencing some issues but our ninja developers are on it and should be back shortly!');
-            //            }
-            //
-            //            if(!empty($this->errors)) {
-            //                throw new RuntimeException('Some services unavailable', 500);
-            //            }
+//            try{
+//                $roadrunner                   = Http::get(env('ROADRUNNER_HOST').':'.env('ROADRUNNER_HTTP_PORT'));
+//                $this->services['RoadRunner'] = $roadrunner->ok() ? self::SERVICE_OPERATIONAL : self::SERVICE_DOWN;
+//            } catch(\Illuminate\Http\Client\ConnectionException $e){
+//                $this->services['RoadRunner'] = self::SERVICE_DOWN;
+//                array_push($this->errors, 'RoadRunner service is experiencing some issues but our ninja developers are on it and should be back shortly!');
+//            }
+//
+//            if(!empty($this->errors)) {
+//                throw new RuntimeException('Some services unavailable', 500);
+//            }
 
             $this->status  = 200;
             $this->message = 'Operational';

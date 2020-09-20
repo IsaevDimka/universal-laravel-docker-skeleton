@@ -5,9 +5,14 @@ import NProgress from 'nprogress'; // progress bar
 import 'nprogress/nprogress.css'; // progress bar style
 import { getToken } from '@/utils/auth';
 import getPageTitle from '@/utils/get-page-title';
+import defaultSettings from "@/settings";
 
 NProgress.configure({ showSpinner: false }); // NProgress Configuration
 
+// NProgress.set(0.3); // установка конкретного процента
+NProgress.inc(); // увеличение прогресса на случайный процент
+NProgress.configure({ ease: 'ease', speed: 500 }); // конфигурация скорости загрузки и CSS easing
+NProgress.configure({ trickleRate: 0.02, trickleSpeed: 800 });
 
 function keyExists(key, search) {
   if (!search || (search.constructor !== Array && search.constructor !== Object)) {
@@ -26,26 +31,35 @@ const whiteList = [
   'login',
   'auth_redirect',
   'redirect',
-  'landing',
   'page_404',
   'page_401',
   'not_found',
+
+  'landing',
+  'about',
+  'register',
+  'feedback',
+  'news',
+  'news_list',
+  'news_view',
+  'test',
 ];
 
 router.beforeEach(async(to, from, next) => {
+
   // start progress bar
   NProgress.start();
   // set page title
   document.title = getPageTitle(to.meta.title);
 
-// determine whether the user has logged in
-  const hasToken = getToken()
+  console.log('Current vue route | to: ', to);
 
+  // determine whether the user has logged in
+  const hasToken = getToken()
   if (hasToken) {
-    if (to.path === '/login') {
+    if (to.name === 'login') {
       // if is logged in, redirect to the home page
       next({ path: '/backend' });
-      NProgress.done();
     } else {
       // determine whether the user has obtained his permission roles through getInfo
       const hasRoles = store.getters.roles && store.getters.roles.length > 0;
@@ -67,7 +81,6 @@ router.beforeEach(async(to, from, next) => {
           await store.dispatch('user/resetToken');
           Message.error(error.message || 'Has Error');
           next(`/login?redirect=${to.path}`);
-          NProgress.done();
         }
       }
     }
@@ -76,26 +89,24 @@ router.beforeEach(async(to, from, next) => {
 
     if(!to.name)
     {
-      // alert('go 404');
       next('/404');
-      NProgress.done();
       return;
     }
 
     if (keyExists(to.name, whiteList)) {
-      // alert(`go whitelist ${to.name} | ${keyExists(to.name, whiteList)}`);
+      //whiteList.indexOf(to.path) !== -1
       next();
-      NProgress.done();
       return;
     }
       // other pages that do not have permission to access are redirected to the login page.
-      // alert('go login');
       next(`/login?redirect=${to.path}`);
-      NProgress.done();
     }
 });
 
-router.afterEach(() => {
+router.afterEach((to, from) => {
+  // set title
+  const { title } = defaultSettings;
+  document.title = to.meta.title ? `${to.meta.title} | ${title}` : title;
   // finish progress bar
   NProgress.done();
 });

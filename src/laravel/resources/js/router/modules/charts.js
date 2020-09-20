@@ -9,7 +9,7 @@ const chartsRoutes = {
   meta: {
     title: 'charts',
     icon: 'chart',
-    permissions: ['view menu charts'],
+    roles: ['root'],
   },
   children: [
     {

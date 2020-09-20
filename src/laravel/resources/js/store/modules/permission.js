@@ -73,7 +73,7 @@ const actions = {
       let accessedRoutes;
 
       /**
-       * @todo: fixed
+       * @todo: fixed roles
        */
       if (roles.includes('root')) {
         accessedRoutes = asyncRoutes || [];

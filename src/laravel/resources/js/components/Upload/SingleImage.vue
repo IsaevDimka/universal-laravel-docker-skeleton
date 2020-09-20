@@ -4,15 +4,17 @@
       :data="additionalData"
       :multiple="false"
       :show-file-list="false"
-      :on-success="handleImageSuccess"
       class="image-uploader"
       drag
-      action="https://httpbin.org/post"
+      action="/api/v1/storages/store"
+      :on-preview="handleUploadPreview"
+      :on-remove="handleUploadRemove"
+      :on-success="handleUploadSuccess"
+      :before-upload="beforeUpload"
     >
       <i class="el-icon-upload" />
-      <div class="el-upload__text">
-        Drag files here or <em>Click to upload</em>
-      </div>
+      <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
+      <div class="el-upload__tip" slot="tip">jpg/png files with a size less than 2mb</div>
     </el-upload>
     <div class="image-preview image-app-preview">
       <div v-show="imageUrl.length>1" class="image-preview-wrapper">
@@ -30,11 +32,21 @@
         </div>
       </div>
     </div>
+    <div v-if="imageUrl">
+      <el-input v-model="imageUrl" style="width:400px;max-width:100%;margin-top: 1rem;" disabled/>
+      <el-button v-clipboard:copy="imageUrl" v-clipboard:success="clipboardSuccess" type="primary" icon="document">
+        copy
+      </el-button>
+    </div>
   </div>
 </template>
 
 <script>
+import clipboard from '@/directive/clipboard/index.js'; // use clipboard by v-directive
 export default {
+  directives: {
+    clipboard,
+  },
   name: 'SingleImageUpload3',
   props: {
     value: {
@@ -60,8 +72,39 @@ export default {
     emitInput(val) {
       this.$emit('input', val);
     },
-    handleImageSuccess(file) {
-      this.emitInput(file.files.file);
+    // for upload
+    handleUploadRemove(file, fileList) {
+      console.log('handleUploadRemove', file, fileList);
+    },
+    handleUploadPreview(file) {
+      console.log('handleUploadPreview', file);
+    },
+    handleUploadSuccess(res, file) {
+      file.name = res.data.filename;
+      file.url = res.data.url;
+      this.value = res.data.url;
+      console.log('handleUploadSuccess', file);
+      this.emitInput(file);
+    },
+    beforeUpload(file) {
+      console.log('beforeUpload', file);
+      const isJPG = file.type === 'image/jpeg';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error('Avatar picture must be JPG format!');
+      }
+      if (!isLt2M) {
+        this.$message.error('Avatar picture size can not exceed 2MB!');
+      }
+      return isJPG && isLt2M;
+    },
+    clipboardSuccess() {
+      this.$message({
+        message: 'Copy successfully',
+        type: 'success',
+        duration: 1500,
+      });
     },
   },
 };
@@ -99,7 +142,6 @@ export default {
       height: 100%;
       left: 0;
       top: 0;
-      cursor: default;
       text-align: center;
       color: #fff;
       opacity: 0;
@@ -107,7 +149,6 @@ export default {
       background-color: rgba(0, 0, 0, .5);
       transition: opacity .3s;
       cursor: pointer;
-      text-align: center;
       line-height: 200px;
       .el-icon-delete {
         font-size: 36px;

@@ -7,12 +7,9 @@
       </pan-thumb>
       <github-corner style="position: absolute; top: 0px; border: 0; right: 0;" />
       <div class="info-container">
-        <span class="display_name">{{ username }}</span>
+        <span class="display_name">{{ user.email }}</span>
         <span style="font-size:20px;padding-top:20px;display:inline-block;">{{ roles.join('|') }}'s editor Dashboard</span>
       </div>
-    </div>
-    <div>
-      <img :src="emptyGif" class="emptyGif">
     </div>
   </div>
 </template>
@@ -27,12 +24,11 @@ export default {
   components: { PanThumb, GithubCorner },
   data() {
     return {
-      emptyGif: 'https://media.giphy.com/media/Ai8iZqHx2i0fK/giphy.gif',
     };
   },
   computed: {
     ...mapGetters([
-      'username',
+      'user',
       'avatar',
       'roles',
     ]),
@@ -41,12 +37,6 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-  .emptyGif {
-    display: block;
-    width: 45%;
-    margin: 0 auto;
-  }
-
   .dashboard-editor-container {
     background-color: #e3e3e3;
     min-height: 100vh;

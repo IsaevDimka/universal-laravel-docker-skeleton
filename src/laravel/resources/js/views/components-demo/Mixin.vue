@@ -103,7 +103,7 @@
             <span>Share</span>
           </div>
           <div class="component-item" style="height:420px;">
-            <dropdown-menu :items="articleList" style="margin:0 auto;" title="Article list" />
+            <dropdown-menu :items="newsList" style="margin:0 auto;" title="News list" />
           </div>
         </el-card>
       </el-col>
@@ -144,8 +144,8 @@ export default {
       demoRules: {
         title: [{ required: true, trigger: 'change', validator: validate }],
       },
-      articleList: [
-        { title: 'Basic article', href: 'https://dev.to/tuandm/laravel--vuejs--laravue---a-beautiful-dashboard-for-laravel-3h11' },
+      newsList: [
+        { title: 'Basic news', href: 'https://dev.to/tuandm/laravel--vuejs--laravue---a-beautiful-dashboard-for-laravel-3h11' },
         { title: 'Login permission', href: 'https://doc.laravue.dev/guide/essentials/permission.html' },
         { title: 'laravue-core', href: 'https://dev.to/tuandm/laravue-core---a-laravel-package-to-build-a-beautiful-dashboard-5aia' },
         { title: 'Github', href: 'https://github.com/tuandm/laravue' },

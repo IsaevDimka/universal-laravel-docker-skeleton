@@ -3,7 +3,7 @@
     <a class="document-btn" target="_blank" href="https://laravel.com/docs/5.8">{{ $t('documentation.laravel') }}</a>
     <a class="document-btn" target="_blank" href="https://vuejs.org/">VueJS</a>
     <a class="document-btn" target="_blank" href="https://github.com/tuandm/laravue/">{{ $t('documentation.github') }}</a>
-    <dropdown-menu :items="articleList" style="float:left;margin-left:50px;" title="Components" />
+    <dropdown-menu :items="newsList" style="float:left;margin-left:50px;" title="Components" />
   </div>
 </template>
 <script>
@@ -14,7 +14,7 @@ export default {
   components: { DropdownMenu },
   data() {
     return {
-      articleList: [
+      newsList: [
         { title: 'Laravel Envoy', href: 'https://laravel.com/docs/5.8/envoy' },
         { title: 'Vuex', href: 'https://vuex.vuejs.org/' },
         { title: 'Vue Router', href: 'https://router.vuejs.org/' },

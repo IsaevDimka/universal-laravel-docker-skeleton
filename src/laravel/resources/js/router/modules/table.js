@@ -8,7 +8,7 @@ const tableRoutes = {
   meta: {
     title: 'table',
     icon: 'table',
-    permissions: ['view menu table'],
+    roles: ['root'],
   },
   children: [
     {

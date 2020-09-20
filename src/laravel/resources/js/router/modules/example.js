@@ -9,6 +9,7 @@ const exampleRoutes = {
   meta: {
     title: 'example',
     icon: 'example',
+    roles: ['root'],
   },
   children: [
     {

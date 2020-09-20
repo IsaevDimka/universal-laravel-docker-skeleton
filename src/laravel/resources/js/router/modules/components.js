@@ -10,7 +10,7 @@ const componentRoutes = {
   meta: {
     title: 'components',
     icon: 'component',
-    permissions: ['view menu components'],
+    roles: ['root'],
   },
   children: [
     {

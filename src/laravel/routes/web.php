@@ -19,3 +19,5 @@ Route::group(['prefix' => 'debug', 'as' => 'debug.'], function () {
     Route::get('/', 'DebugController@index')->name('index');
     Route::get('renderView', 'DebugController@renderView')->name('renderView');
 });
+
+//Auth::routes(['verify' => true]);

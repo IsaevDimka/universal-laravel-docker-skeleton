@@ -14,11 +14,16 @@ class DatabaseSeeder extends Seeder
     {
          $this->call([
              RolesAndPermissionsSeeder::class,
-             UserSeeder::class,
              LocaleSeeder::class,
              LanguageSeeder::class,
              CurrencySeeder::class,
              TimezoneSeeder::class,
+             AreaSeeder::class,
+             RegionSeeder::class,
+             CitySeeder::class,
+             UserSeeder::class,
+             NewsSeeder::class,
+             ElectionSeeder::class,
          ]);
     }
 }

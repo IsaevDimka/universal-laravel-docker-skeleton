@@ -1,4 +1,5 @@
 export default {
+  under_construction: 'В разработке',
   route: {
     dashboard: 'Панель управления',
     introduction: 'Введение',
@@ -87,7 +88,8 @@ export default {
     any: 'любой',
     thirdparty: 'Или войдите с помощью',
     thirdpartyTips: 'Can not be simulated on local, so please combine you own business simulation! ! !',
-    email: 'Email',
+    email: 'Эл. почта',
+    phone: 'Телефон',
   },
   documentation: {
     documentation: 'Документация',

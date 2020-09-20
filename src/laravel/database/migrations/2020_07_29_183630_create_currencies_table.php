@@ -18,9 +18,6 @@ class CreateCurrenciesTable extends Migration
             $table->string('name');
             $table->string('sign', 3)->unique()->index();
             $table->boolean('is_active')->default(true);
-
-            $table->timestamps();
-            $table->softDeletes();
         });
     }
 

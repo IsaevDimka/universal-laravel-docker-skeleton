@@ -25,7 +25,7 @@ return array(
     |
     */
 
-    'include_fluent' => false,
+    'include_fluent' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -37,7 +37,7 @@ return array(
     |
     */
 
-    'include_factory_builders' => false,
+    'include_factory_builders' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -63,7 +63,7 @@ return array(
     |
     */
 
-    'write_eloquent_model_mixins' => false,
+    'write_eloquent_model_mixins' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -75,7 +75,7 @@ return array(
     |
     */
 
-    'include_helpers' => false,
+    'include_helpers' => true,
 
     'helper_files' => array(
         base_path().'/vendor/laravel/framework/src/Illuminate/Support/helpers.php',
@@ -219,6 +219,6 @@ return array(
     | magic methods and properties.
     |
     */
-    'include_class_docblocks' => false,
+    'include_class_docblocks' => true,
 
 );

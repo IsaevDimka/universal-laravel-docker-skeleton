@@ -14,6 +14,14 @@ const service = axios.create({
 service.interceptors.request.use(
     config => {
 
+        // const { csrf_token } = window.config;
+        // if (csrf_token) {
+        //     config.headers['X-CSRF-TOKEN'] = csrf_token
+        //     console.log('csrf_token', csrf_token)
+        // } else {
+        //     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+        // }
+
         if (store.getters.token) {
             // let each request carry token
             // ['X-Token'] is a custom headers key
@@ -66,21 +74,36 @@ service.interceptors.response.use(
                     })
                 })
             }
-
             return Promise.reject(new Error(res.data.message || 'Error'))
         } else {
+            if (process.env.NODE_ENV !== 'production') {
+                const { debug } = res.data;
+                Message({
+                    showClose: true,
+                    message: `ENV: ${process.env.NODE_ENV} | ${JSON.stringify(debug)}`,
+                    offset: 73,
+                    duration: 5 * 1000,
+                });
+            }
             return res
         }
     },
     error => {
-        console.log('requestError: ' + error.response.data) // for debug
         if (error.response && error.response.data) {
+
+            // debug
+            if (process.env.NODE_ENV !== 'production') {
+                Object.keys(error.response.data.errors).map((key) => {
+                    console.log(`${key} : ${error.response.data.errors[key]}`);
+                });
+            }
+
             Message({
-                message: `[${error.response.data.status ?? error.response.status}] ${error.response.data.message}`,
+                message: `${error.response.data.message ?? 'Error'} (${error.response.data.status ?? error.response.status})`,
                 type: 'error',
                 duration: 5 * 1000
             })
-            return Promise.reject(error.response.data);
+            return Promise.reject(error);
         }
         Message({
             message: error.message,

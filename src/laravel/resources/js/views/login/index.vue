@@ -5,11 +5,27 @@
         {{ $t('login.title') }}
       </h3>
       <lang-select class="set-language" />
-      <el-form-item prop="email">
+      <el-form-item prop="email" v-if="loginForm.auth_type === 'email'">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
         <el-input v-model="loginForm.email" name="email" type="text" auto-complete="on" :placeholder="$t('login.email')" />
+        <el-tooltip content="Change register type" placement="top">
+          <span class="show-pwd" @click="changeAuthType">
+            <i class="el-icon-s-promotion" />
+          </span>
+        </el-tooltip>
+      </el-form-item>
+      <el-form-item prop="phone" v-if="loginForm.auth_type === 'phone'">
+        <span class="svg-container">
+          <svg-icon icon-class="user" />
+        </span>
+        <el-input v-model="loginForm.phone" name="phone" type="text" auto-complete="on" :placeholder="$t('login.phone')" />
+        <el-tooltip content="Изменить тип логина" placement="top">
+          <span class="show-pwd" @click="changeAuthType">
+            <i class="el-icon-phone" />
+          </span>
+        </el-tooltip>
       </el-form-item>
       <el-form-item prop="password">
         <span class="svg-container">
@@ -20,7 +36,7 @@
           :type="pwdType"
           name="password"
           auto-complete="on"
-          placeholder="password"
+          :placeholder="$t('login.password')"
           @keyup.enter.native="handleLogin"
         />
         <span class="show-pwd" @click="showPwd">
@@ -29,13 +45,13 @@
       </el-form-item>
       <el-form-item>
         <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="handleLogin">
-          Sign in
+          {{ $t('login.logIn') }}
         </el-button>
       </el-form-item>
-      <div class="tips">
-        <span style="margin-right:20px;">Email: isaevdimka@gmail.com</span>
-        <span>Password: isaevdimka</span>
-      </div>
+<!--      <div class="tips">-->
+<!--        <span style="margin-right:20px;">Email: isaevdimka@gmail.com</span>-->
+<!--        <span>Password: isaevdimka</span>-->
+<!--      </div>-->
     </el-form>
   </div>
 </template>
@@ -49,6 +65,7 @@ export default {
   name: 'Login',
   components: { LangSelect },
   data() {
+    const validatePhoneRegexp = /^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/gm;
     const validateEmail = (rule, value, callback) => {
       if (!validEmail(value)) {
         callback(new Error('Please enter the correct email'));
@@ -56,8 +73,17 @@ export default {
         callback();
       }
     };
+    const validatePhone = (rule, value, callback) => {
+      if (value != null && value.length < 4) {
+        callback(new Error('Phone cannot be less than 4 digits'));
+      }else if (!value.match(validatePhoneRegexp)){
+        callback(new Error('Phone number invalid'));
+      } else {
+        callback();
+      }
+    };
     const validatePass = (rule, value, callback) => {
-      if (value.length < 4) {
+      if (value != null && value.length < 4) {
         callback(new Error('Password cannot be less than 4 digits'));
       } else {
         callback();
@@ -65,11 +91,14 @@ export default {
     };
     return {
       loginForm: {
-        email: 'isaevdimka@gmail.com',
-        password: 'isaevdimka',
+        auth_type: 'phone', //email, phone
+        phone: '',
+        email: '',
+        password: '',
       },
       loginRules: {
-        email: [{ required: true, trigger: 'blur', validator: validateEmail }],
+        phone: [{ required: this.auth_type === 'phone', trigger: 'blur', validator: validatePhone }],
+        email: [{ required: this.auth_type === 'email', trigger: 'blur', validator: validateEmail }],
         password: [{ required: true, trigger: 'blur', validator: validatePass }],
       },
       loading: false,
@@ -98,25 +127,33 @@ export default {
         this.pwdType = 'password';
       }
     },
+
+    changeAuthType()
+    {
+      if (this.loginForm.auth_type === 'email') {
+        this.loginForm.auth_type = 'phone';
+      } else {
+        this.loginForm.auth_type = 'email';
+      }
+    },
+
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          this.loading = true;
-          login(this.loginForm).then(() => {
-            this.$store.dispatch('user/login', this.loginForm)
+          this.loading = true
+          this.$store.dispatch('user/login', this.loginForm)
               .then(() => {
-                this.$router.push({ path: this.redirect || '/backend', query: this.otherQuery }, onAbort => {});
-                this.loading = false;
+                this.$router.push({ path: this.redirect || '/backend', query: this.otherQuery })
+                this.loading = false
               })
               .catch(() => {
-                this.loading = false;
-              }).finally(() => (this.loading = false));
-          });
+                this.loading = false
+              })
         } else {
-          console.log('error submit!!');
-          return false;
+          console.log('error submit!!')
+          return false
         }
-      });
+      })
     },
     getOtherQuery(query) {
       return Object.keys(query).reduce((acc, cur) => {

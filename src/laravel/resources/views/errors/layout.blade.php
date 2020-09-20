@@ -44,6 +44,9 @@
                 padding: 20px;
             }
         </style>
+        @env('production')
+            @include('partials.analytics')
+        @endenv
     </head>
     <body>
         <div class="flex-center position-ref full-height">

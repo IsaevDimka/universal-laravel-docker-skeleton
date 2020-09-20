@@ -1,9 +1,9 @@
 import request from '@/utils/request';
 
-export function userSearch(name) {
+export function userSearch(query) {
   return request({
-    url: '/search/user',
+    url: '/users',
     method: 'get',
-    params: { name },
+    params: { query },
   });
 }

@@ -21,7 +21,7 @@ class OAuthController extends ApiController
     public function __construct()
     {
         config([
-            'services.github.redirect' => route('oauth.callback', 'github'),
+            'services.github.redirect' => route('api.v1.oauth.callback', 'github'),
         ]);
     }
 

@@ -42,7 +42,6 @@ class QueryLoggerServiceProvider extends ServiceProvider
             if (count($bindings) > 0) {
                 $realSql = vsprintf($sqlWithPlaceholders, array_map([$pdo, 'quote'], $bindings));
             }
-
             Log::channel('querylog')->debug(sprintf('[%s] %s | %s: %s', $duration, $realSql, request()->method(), request()->getRequestUri()));
         });
     }
