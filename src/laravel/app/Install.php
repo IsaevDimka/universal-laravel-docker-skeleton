@@ -26,16 +26,6 @@ class Install
 
     public function local(Runner $run)
     {
-        /**
-         * composer install
-         * php artisan key:generate --force
-         * php artisan jwt:secret --force
-         * php artisan storage:link
-         * npm install
-         * npm run dev
-         * php artisan horizon:install
-         * php artisan geoip:update
-         */
         $run
             ->external('composer', 'install')
             ->artisan('key:generate', ['--force' => true])

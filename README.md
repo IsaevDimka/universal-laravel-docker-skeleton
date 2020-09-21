@@ -20,7 +20,6 @@
 + `roadrunner` — php:7.4-cli & spiral/roadrunner v1.8.1
 + `clickhouse-server` — yandex/clickhouse-server
 
-
 ## Features
 
 - Laravel 7
@@ -36,6 +35,7 @@
 + `git clone <this repo>`
 + `make build`
 + `make install`
+
 ## Commands
 
 Maintenance mode
