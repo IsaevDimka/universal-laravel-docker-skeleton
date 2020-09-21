@@ -229,7 +229,7 @@ class BackendService
             $this->message = 'Operational';
         } catch(Throwable $e){
             $this->message = $e->getMessage();
-            $this->status  = $e->getCode();
+            $this->status  = 500;
         }
 
         return [
