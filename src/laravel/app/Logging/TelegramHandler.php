@@ -45,7 +45,7 @@ class TelegramHandler extends AbstractProcessingHandler
                         $message .= '```json' . PHP_EOL . $record['message'] . PHP_EOL . '```';
                         if ($record['context']) {
                             $message .= 'Context: ' . PHP_EOL;
-                            $message .= '```json' . PHP_EOL . json_encode($record['context'], JSON_PRETTY_PRINT) . PHP_EOL . '```';
+                            $message .= '```json' . PHP_EOL . json_encode($record['context'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . PHP_EOL . '```';
                         }
                         break;
                     case 'clear':
@@ -53,7 +53,7 @@ class TelegramHandler extends AbstractProcessingHandler
                         $message .= '```json' . PHP_EOL . $record['message'] . PHP_EOL . '```';
                         if ($record['context']) {
                             $message .= 'Context: ' . PHP_EOL;
-                            $message .= '```json' . PHP_EOL . json_encode($record['context'], JSON_PRETTY_PRINT) . PHP_EOL . '```';
+                            $message .= '```json' . PHP_EOL . json_encode($record['context'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . PHP_EOL . '```';
                         }
                         break;
                     case 'message':

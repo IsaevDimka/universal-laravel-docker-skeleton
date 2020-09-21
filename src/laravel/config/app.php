@@ -69,7 +69,7 @@ return [
     |
     */
 
-    'timezone' => env('APP_TIMEZONE', 'Asia/Ho_Chi_Minh'),
+    'timezone' => env('APP_TIMEZONE', 'Europe/Moscow'),
 
     /*
     |--------------------------------------------------------------------------
@@ -82,7 +82,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'ru',
 
     'locales' => [
         'en' => 'English',
@@ -186,6 +186,7 @@ return [
         App\Providers\ValidatorServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
         App\Providers\QueueServiceProvider::class,
+        App\Providers\CarbonServiceProvider::class,
 
         /*
          * Package Service Providers...

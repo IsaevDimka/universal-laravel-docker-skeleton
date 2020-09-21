@@ -65,11 +65,11 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
         ],
 
-        'sftp-jino-server' => [
+        'sftp-server' => [
             'driver' => 'sftp',
-            'host' => 'isaevdimka.myjino.ru',
-            'username' => 'isaevdimka_swiftcoin',
-            'password' => 'Wgwvd3ct4ud*kgrC',
+            'host' => '',
+            'username' => '',
+            'password' => '',
             // Optional FTP Settings...
             // 'port' => 21,
             'root' => '/',

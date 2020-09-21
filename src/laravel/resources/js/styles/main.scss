@@ -1,0 +1,79 @@
+.box-center {
+    margin: 0 auto;
+    display: table;
+}
+.text-muted {
+    color: #777;
+}
+.pull-right {
+    float: right !important;
+}
+
+.permissions-container {
+  .block {
+    .el-form-item__label {
+      padding-left: 24px;
+    }
+  }
+}
+
+.dev-drawer {
+  pre {
+    margin: 0;
+    padding: 0;
+    font-family: Ubuntu,monospace;
+    font-size: 12px;
+  }
+}
+.dev-panel {
+  height: 50px !important;
+  padding: .5rem 1rem;
+  background: rgba(255, 255, 0, 0.3);
+}
+
+.mt-0 {
+  margin-top: 0 !important;
+}
+
+.mb-0 {
+  margin-top: 0 !important;
+}
+
+.mt-1 {
+  margin-top: 1rem!important;
+}
+
+.mb-1 {
+  margin-bottom: 1rem!important;
+}
+
+.mt-2 {
+  margin-top: 2rem!important;
+}
+
+.mb-2 {
+  margin-bottom: 2rem!important;
+}
+
+.mt-3 {
+  margin-top: 3rem!important;
+}
+
+.mb-3 {
+  margin-bottom: 3rem!important;
+}
+
+pre {
+  margin: 0;
+  padding: 0;
+  font-family: Ubuntu,monospace;
+  font-size: 12px;
+}
+
+.el-select .el-input {
+  width: 100%;
+}
+
+.el-select {
+  width: 100%;
+}

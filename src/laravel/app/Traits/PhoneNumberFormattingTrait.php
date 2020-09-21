@@ -12,7 +12,7 @@ trait PhoneNumberFormattingTrait
      *
      * @return array
      */
-    public function phoneNumberFormatting($phone, $country_iso_code)
+    public function phoneNumberFormatting($phone = null, $country_iso_code = 'RU')
     {
         $cleanup_phonenumber = $phone;
 

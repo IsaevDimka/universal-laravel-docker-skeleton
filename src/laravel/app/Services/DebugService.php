@@ -3,10 +3,7 @@
 
 namespace App\Services;
 
-use App\Helpers\HelperTime;
-use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Debug service
@@ -34,11 +31,15 @@ class DebugService
         DB::enableQueryLog();
     }
 
-    private function setMicrotimeStart()
-    {
-    }
-
-    final public static function result() : array
+    final public static function result($includes = [
+        'app_version',
+        'latest_release',
+        'laravel_version',
+        'environment',
+        'locale',
+        'queryLogs',
+        'durations',
+    ]) : array
     {
         $durations = [
             'laravel' => formatDuration((microtime(true) - LARAVEL_START)),
@@ -69,6 +70,6 @@ class DebugService
         $app_version = $version->format();
         $latest_release = \Carbon\Carbon::create($version->format('timestamp-datetime'))->toDateTimeString();
 
-        return compact( 'app_version', 'latest_release', 'laravel_version', 'environment', 'locale', 'queryLogs', 'durations');
+        return compact($includes);
     }
 }

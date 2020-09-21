@@ -18,7 +18,6 @@ class CreateTimezonesTable extends Migration
             $table->string('name');
             $table->string('offset');
             $table->string('diff');
-            $table->timestamps();
         });
     }
 

@@ -1,53 +1,74 @@
-const path = require('path')
-const fs = require('fs-extra')
-const mix = require('laravel-mix')
-require('laravel-mix-versionhash')
-// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const config = require('./webpack.config');
+const mix = require('laravel-mix');
+require('laravel-mix-eslint');
+
+function resolve(dir) {
+    return path.join(
+        __dirname,
+        '/resources/js',
+        dir
+    );
+}
+
+Mix.listen('configReady', webpackConfig => {
+    // Add "svg" to image loader test
+    const imageLoaderConfig = webpackConfig.module.rules.find(
+        rule =>
+            String(rule.test) ===
+            String(/(\.(png|jpe?g|gif|webp)$|^((?!font).)*\.svg$)/)
+    );
+    imageLoaderConfig.exclude = resolve('icons');
+});
+
+mix.webpackConfig(config);
+
+/*
+ |--------------------------------------------------------------------------
+ | Mix Asset Management
+ |--------------------------------------------------------------------------
+ |
+ | Mix provides a clean, fluent API for defining some Webpack build steps
+ | for your Laravel application. By default, we are compiling the Sass
+ | file for the application as well as bundling up all the JS files.
+ |
+ */
 
 mix
     .js('resources/js/app.js', 'public/dist/js')
-    .sass('resources/sass/app.scss', 'public/dist/css')
-
-    .disableNotifications()
+    .extract([
+        'vue',
+        'axios',
+        'vuex',
+        'vue-router',
+        'vue-i18n',
+        'element-ui',
+        'echarts',
+        'highlight.js',
+        'sortablejs',
+        'dropzone',
+        'xlsx',
+        'tui-editor',
+        'codemirror',
+    ])
+    .options({
+        processCssUrls: false,
+    })
+    .sass('resources/js/styles/index.scss', 'public/dist/css/app.css', {
+        implementation: require('node-sass'),
+    });
 
 if (mix.inProduction()) {
-    mix
-        // .extract() // Disabled until resolved: https://github.com/JeffreyWay/laravel-mix/issues/1889
-        // .version() // Use `laravel-mix-versionhash` for the generating correct Laravel Mix manifest file.
-        .versionHash()
+    // mix.version();
+    require('laravel-mix-versionhash');
+    mix.versionHash();
 } else {
-    mix.sourceMaps()
-}
-
-mix.webpackConfig({
-    plugins: [
-        // new BundleAnalyzerPlugin()
-    ],
-    resolve: {
-        extensions: ['.js', '.json', '.vue'],
-        alias: {
-            '~': path.join(__dirname, './resources/js')
-        }
-    },
-    output: {
-        chunkFilename: 'dist/js/[chunkhash].js',
-        path: mix.config.hmr ? '/' : path.resolve(__dirname, './public/build')
+    if (process.env.VUE_USE_ESLINT === 'true') {
+        mix.eslint();
     }
-})
-
-mix.then(() => {
-    if (!mix.config.hmr) {
-        process.nextTick(() => publishAseets())
-    }
-})
-
-function publishAseets () {
-    const publicDir = path.resolve(__dirname, './public')
-
-    if (mix.inProduction()) {
-        fs.removeSync(path.join(publicDir, 'dist'))
-    }
-
-    fs.copySync(path.join(publicDir, 'build', 'dist'), path.join(publicDir, 'dist'))
-    fs.removeSync(path.join(publicDir, 'build'))
+    // Development settings
+    mix
+        .sourceMaps()
+        .webpackConfig({
+            devtool: 'cheap-eval-source-map', // Fastest for development
+        });
 }

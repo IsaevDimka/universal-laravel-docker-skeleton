@@ -20,3 +20,15 @@ _ide_helper_models.php
 laravel.app.js
 /public/status.json
 /public/dist
+
+/public/js
+/public/css/*.css
+/public/css/*.map
+/public/css/*.gz
+/public/images/*
+/public/images/*.gif
+/public/fonts/
+/public/stats.html
+/public/*.js
+/public/*.js.map
+

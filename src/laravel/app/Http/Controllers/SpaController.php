@@ -7,7 +7,7 @@ class SpaController extends Controller
     /**
      * Get the SPA view.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
     public function __invoke()
     {

@@ -69,8 +69,55 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\OAuthProvider[] $oauthProviders
  * @property-read int|null $oauth_providers_count
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereTelegramChatId($value)
+ * @property string|null $firstName
+ * @property string|null $lastName
+ * @property string|null $telegramChatId
+ * @property \Illuminate\Support\Carbon|null $emailVerifiedAt
+ * @property \Illuminate\Support\Carbon|null $lastVisitAt
+ * @property bool $isActive
+ * @property string|null $rememberToken
+ * @property \Illuminate\Support\Carbon|null $createdAt
+ * @property \Illuminate\Support\Carbon|null $updatedAt
+ * @property-read int|null $notificationsCount
+ * @property-read int|null $oauthProvidersCount
+ * @property-read int|null $permissionsCount
+ * @property-read int|null $rolesCount
+ * @property string|null $fio
+ * @property string|null $type
+ * @property string|null $typeSearchIzbirkom
+ * @property string|null $uikNumber
+ * @property bool $phoneIsVerify
+ * @property mixed|null $birthdate
+ * @property bool $isObserver
+ * @property int|null $areaId
+ * @property int|null $regionId
+ * @property int|null $cityId
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereAreaId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereBirthdate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereCityId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereFio($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereIsObserver($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePhoneIsVerify($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereRegionId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereTypeSearchIzbirkom($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereUikNumber($value)
+ * @property-read \App\Models\Area|null $area
+ * @property-read \App\Models\City|null $city
+ * @property-read \App\Models\Region|null $region
+ * @property string|null $registrationType
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereRegistrationType($value)
+ * @property string|null $registration_type
+ * @property string|null $type_search_izbirkom
+ * @property string|null $uik_number
+ * @property bool $phone_is_verify
+ * @property bool $is_observer
+ * @property int|null $area_id
+ * @property int|null $region_id
+ * @property int|null $city_id
  */
-class User extends Authenticatable implements MustVerifyEmail, HasLocalePreference, JWTSubject
+class User extends Authenticatable implements HasLocalePreference, JWTSubject
+//    ,MustVerifyEmail
 {
     use Notifiable;
     use HasRoles;
@@ -84,17 +131,16 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
      */
     protected $fillable = [
         'username',
-        'first_name',
-        'last_name',
         'email',
         'phone',
+        'phone_is_verify',
         'telegram_chat_id',
         'email_verified_at',
         'last_visit_at',
-        'password',
         'is_active',
         'locale',
         'options',
+        'password',
     ];
 
     protected $dates = [
@@ -123,7 +169,14 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         'is_active'         => 'boolean',
         'options'           => Json::class,
         'locale'            => Locale::class,
+        'phone_is_verify'   => 'boolean',
     ];
+
+    /**
+     * Set permissions guard to API by default
+     * @var string
+     */
+//    protected $guard_name = 'api';
 
     public static function boot()
     {
@@ -131,10 +184,10 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
 
         static::creating(function(User $model) {
             $model->password = \Illuminate\Support\Facades\Hash::make($model->password);
+            $model->email = strtolower($model->email);
         });
         static::updating(function(User $model) {
-            $model->username = strtolower($model->username);
-            $model->email    = strtolower($model->email);
+            $model->email = strtolower($model->email);
         });
     }
 
@@ -179,7 +232,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     }
 
     /**
-     * Определяем, был ли пользователь approved
      * @return bool
      */
     public function isActive() : bool
@@ -188,7 +240,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     }
 
     /**
-     * Определяем, что пользователь не approved
      * @return bool
      */
     public function isNotActive() : bool
@@ -323,21 +374,50 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
 
     public function getCreatedAtAttribute($value)
     {
-        return BaseModel::formatingCarbonAttribute($value);
+        return BaseModel::formattingCarbonAttribute($value);
     }
 
     public function getUpdatedAtAttribute($value)
     {
-        return BaseModel::formatingCarbonAttribute($value);
+        return BaseModel::formattingCarbonAttribute($value);
     }
 
     public function getLastVisitAtAttribute($value)
     {
-        return BaseModel::formatingCarbonAttribute($value);
+        return BaseModel::formattingCarbonAttribute($value);
     }
 
     public function getEmailVerifiedAtAttribute($value)
     {
-        return BaseModel::formatingCarbonAttribute($value);
+        return BaseModel::formattingCarbonAttribute($value);
     }
+
+    /**
+     * Check whether current role is admin
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return $this->hasRole(Role::ROLE_ADMIN);
+    }
+
+    /**
+     * Check whether current role is root
+     * @return bool
+     */
+    public function isRoot(): bool
+    {
+        return $this->hasRole(Role::ROLE_ROOT);
+    }
+
+    /**
+     * Check whether current role is visitor
+     *
+     * @return bool
+     */
+    public function isClient() : bool
+    {
+        return $this->hasRole(Role::ROLE_CLIENT);
+    }
+
 }

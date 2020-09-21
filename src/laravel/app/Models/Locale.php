@@ -22,6 +22,7 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Locale whereUpdatedAt($value)
  * @mixin \Illuminate\Database\Eloquent\
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Locale active()
+ * @property bool $isActive
  */
 class Locale extends BaseModel
 {

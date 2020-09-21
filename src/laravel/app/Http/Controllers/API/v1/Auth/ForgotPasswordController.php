@@ -29,7 +29,7 @@ class ForgotPasswordController extends ApiController
      */
     protected function sendResetLinkResponse(Request $request, $response)
     {
-        return ['status' => trans($response)];
+        return api()->ok(trans($response));
     }
 
     /**
@@ -41,6 +41,6 @@ class ForgotPasswordController extends ApiController
      */
     protected function sendResetLinkFailedResponse(Request $request, $response)
     {
-        return response()->json(['email' => trans($response)], 400);
+        return api()->validation('Failed password reset link', ['email' => trans($response)]);
     }
 }

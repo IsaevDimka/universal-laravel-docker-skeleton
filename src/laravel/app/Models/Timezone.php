@@ -28,6 +28,8 @@ class Timezone extends BaseModel
 
     protected $primaryKey = 'id';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'name',
         'offset',

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\v1\Auth;
 use App\Http\Controllers\API\ApiController;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Resources\UserResource;
 
 class UserController extends ApiController
 {
@@ -18,10 +19,6 @@ class UserController extends ApiController
     {
         /** @var User $user */
         $user = $request->user();
-        $roles = $user->getRoleNames()->toArray();
-        $permissions = $user->getPermissionNames()->toArray();
-
-        $user_data = array_merge($user->toArray(), compact('roles', 'permissions'));
-        return response()->json($user_data);
+        return api()->ok(null, (new UserResource($user)));
     }
 }

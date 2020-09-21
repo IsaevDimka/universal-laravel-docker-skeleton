@@ -45,7 +45,7 @@ class ClickHouseBuildCommand extends Command
                 env('DB_CLICKHOUSE_HOST'),
                 env('DB_CLICKHOUSE_PORT'),
                 env('DB_CLICKHOUSE_DATABASE'),
-                env('default'),
+                env('DB_CLICKHOUSE_USERNAME'),
                 '');
             $serverProvider = (new \Tinderbox\Clickhouse\ServerProvider())->addServer($server);
             $client = new \Tinderbox\Clickhouse\Client($serverProvider);

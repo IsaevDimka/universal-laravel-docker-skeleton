@@ -455,6 +455,9 @@
                 }
             }
         </style>
+        @env('production')
+            @include('partials.analytics')
+        @endenv
     </head>
     <body class="antialiased font-sans">
         <div class="md:flex min-h-screen">

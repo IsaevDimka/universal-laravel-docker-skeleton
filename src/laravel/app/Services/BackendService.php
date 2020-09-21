@@ -122,9 +122,7 @@ class BackendService
                 $this->services['PostgresSQL'] = self::SERVICE_OPERATIONAL;
             } catch(\Illuminate\Database\QueryException $e){
                 $this->services['PostgresSQL'] = self::SERVICE_DOWN;
-                array_push($this->errors, 'Database ' . $this->database_manager->connection()
-                                                                               ->getName() . ' database: ' . $this->database_manager->connection()
-                                                                                                                                    ->getDatabaseName() . ' does not works as expected. Error: ' . (string) $e->getMessage());
+                array_push($this->errors, 'Database ' . $this->database_manager->connection()->getName() . ' database: ' . $this->database_manager->connection()->getDatabaseName() . ' does not works as expected. Error: ' . (string) $e->getMessage());
             }
 
             /**
@@ -132,7 +130,7 @@ class BackendService
              */
             try{
                 $redis_cli_ping = Redis::connection()
-                                       ->command('PING');;
+                                       ->command('PING');
                 $this->services['Redis'] = self::SERVICE_OPERATIONAL;
             } catch(\Predis\Connection\ConnectionException $e){
                 $this->services['Redis'] = self::SERVICE_DOWN;

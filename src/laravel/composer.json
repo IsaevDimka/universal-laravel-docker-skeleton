@@ -9,6 +9,8 @@
     "license": "MIT",
     "require": {
         "php": "^7.4",
+        "anhskohbo/no-captcha": "^3.2",
+        "arcanedev/log-viewer": "^7.0",
         "beyondcode/laravel-self-diagnosis": "^1.4",
         "fideloper/proxy": "4.4.0",
         "fruitcake/laravel-cors": "2.0.1",
@@ -33,6 +35,7 @@
         "sentry/sentry-laravel": "1.8.0",
         "spatie/laravel-backup": "^6.11",
         "spatie/laravel-permission": "3.13.0",
+        "spatie/laravel-responsecache": "^6.6",
         "spatie/laravel-schedule-monitor": "^1.0",
         "spatie/laravel-translatable": "^4.4",
         "spatie/opening-hours": "^2.8",

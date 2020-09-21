@@ -20,7 +20,6 @@ class CreateLanguagesTable extends Migration
             $table->string('english');
             $table->string('native');
             $table->boolean('is_active')->default(false);
-            $table->timestamps();
         });
     }
 

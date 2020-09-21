@@ -1,6 +1,6 @@
 # Universal laravel docker skeleton
 
-[![Changelog badge][changelog-badge]][changelog] [![Version 1.1.0 Badge][version-badge]][changelog] [![MIT License Badge][license-badge]][license]
+[![Changelog badge][changelog-badge]][changelog] [![Version 1.0.0 Badge][version-badge]][changelog] [![MIT License Badge][license-badge]][license]
 
 ## Requirements
 
@@ -20,7 +20,6 @@
 + `roadrunner` — php:7.4-cli & spiral/roadrunner v1.8.1
 + `clickhouse-server` — yandex/clickhouse-server
 
-
 ## Features
 
 - Laravel 7
@@ -29,13 +28,12 @@
 - Login, register, email verification and password reset
 - Authentication with JWT
 - Socialite integration
-- Bootstrap 4 + Font Awesome 5
+- Element UI
 
 ## Installation
 
 + `git clone <this repo>`
 + `make build`
-+ `make mongodb-install`
 + `make install`
 
 ## Commands
@@ -100,7 +98,7 @@ Thank you for your help improving software one changelog at a time!
 ## License
 MIT License (MIT). Please see [`LICENSE`](./LICENSE) for more information. Maintained by [IsaevDimka](https://github.com/IsaevDimka).
 
-[version-badge]: https://img.shields.io/badge/alpha-0.1.0-blue.svg
+[version-badge]: https://img.shields.io/badge/alpha-1.0.0-blue.svg
 [changelog]: ./CHANGELOG.md
 [changelog-badge]: https://img.shields.io/badge/changelog-docker%20skeleton-%23E05735
 [license]: ./LICENSE

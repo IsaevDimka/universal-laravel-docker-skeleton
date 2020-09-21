@@ -73,24 +73,24 @@ interface ApiInterface
     public function validation($message = null, $errors = [], ...$extraData);
 
     /**
-     * Create Validation (422) API response.
+     * Create forbidden (403) API response.
      *
      * @param string|null $message
-     * @param array       $data
+     * @param array       $errors
      * @param array       $extraData
      *
      * @return JsonResponse
      */
-    public function forbidden($message = null, $data = [], ...$extraData);
+    public function forbidden($message = null, $errors = [], ...$extraData);
 
     /**
      * Create Server error (500) API response.
      *
      * @param string|null $message
-     * @param array       $data
+     * @param array       $errors
      * @param array       $extraData
      *
      * @return JsonResponse
      */
-    public function error($message = null, $data = [], ...$extraData);
+    public function error($message = null, $errors = [], ...$extraData);
 }

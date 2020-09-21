@@ -14,9 +14,15 @@ return [
     'debug' => env('API_DEBUG', false),
 
     /*
+     * Notify when response code 429 HTTP_TOO_MANY_REQUESTS
+     */
+    'notify_too_many_requests' => true,
+
+
+    /*
      * Turn to string the status code in the json response's body.
      */
-    'stringify' => true,
+    'stringify' => false,
 
     /*
      * Set the status code from the json response to be the same as the status code

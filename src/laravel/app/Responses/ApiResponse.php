@@ -69,9 +69,24 @@ class ApiResponse implements ApiInterface
             $json  = array_merge($json, compact('debug'));
         }
 
+        if (config('api.notify_too_many_requests') && $status == ResponseStatus::HTTP_TOO_MANY_REQUESTS) {
+            $request = \request();
+            $ip = $request->ip();
+            $ua = $request->userAgent();
+            $token = $request->bearerToken();
+            $method = $request->getMethod();
+            $fullUrl = $request->fullUrl();
+            $data = $request->toArray();
+            $user_id = \auth()->id();
+            $hit = compact('ip', 'ua', 'token', 'fullUrl', 'method', 'data', 'user_id');
+            $json = array_merge($json, compact('hit'));
+            logger()->channel('telegram')->warning($message, $json);
+            logger()->warning($message, $json);
+        }
+
         return (config('api.match_status'))
-            ? response()->json($json, $status)->withHeaders($this->headers)
-            : response()->json($json)->withHeaders($this->headers);
+            ? response()->json($json, $status, [])->setEncodingOptions(JSON_UNESCAPED_UNICODE)->withHeaders($this->headers)
+            : response()->json($json)->setEncodingOptions(JSON_UNESCAPED_UNICODE)->withHeaders($this->headers);
     }
 
     /**
@@ -121,7 +136,7 @@ class ApiResponse implements ApiInterface
             $message = config('api.messages.bad');
         }
 
-        return $this->response(ResponseStatus::HTTP_BAD_REQUEST, $message, $errors, ...$extraData);
+        return $this->response(ResponseStatus::HTTP_BAD_REQUEST, $message, [], compact('errors'), ...$extraData);
     }
 
     /**
@@ -155,42 +170,42 @@ class ApiResponse implements ApiInterface
             $message = config('api.messages.validation');
         }
 
-        return $this->response(ResponseStatus::HTTP_UNPROCESSABLE_ENTITY, $message, $errors, ...$extraData);
+        return $this->response(ResponseStatus::HTTP_UNPROCESSABLE_ENTITY, $message, [], compact('errors'), ...$extraData);
     }
 
     /**
-     * Create Validation (422) API response.
+     * Create forbidden (403) API response.
      *
      * @param string|null $message
-     * @param array       $data
+     * @param array       $errors
      * @param array       $extraData
      *
      * @return JsonResponse
      */
-    public function forbidden($message = null, $data = [], ...$extraData)
+    public function forbidden($message = null, $errors = [], ...$extraData)
     {
         if(is_null($message)) {
             $message = config('api.messages.forbidden');
         }
 
-        return $this->response(ResponseStatus::HTTP_FORBIDDEN, $message, $data, ...$extraData);
+        return $this->response(ResponseStatus::HTTP_FORBIDDEN, $message, [], compact('errors'), ...$extraData);
     }
 
     /**
      * Create Server error (500) API response.
      *
      * @param string|null $message
-     * @param array       $data
+     * @param array       $errors
      * @param array       $extraData
      *
      * @return JsonResponse
      */
-    public function error($message = null, $data = [], ...$extraData)
+    public function error($message = null, $errors = [], ...$extraData)
     {
         if(is_null($message)) {
             $message = config('api.messages.error');
         }
 
-        return $this->response(ResponseStatus::HTTP_INTERNAL_SERVER_ERROR, $message, $data, ...$extraData);
+        return $this->response(ResponseStatus::HTTP_INTERNAL_SERVER_ERROR, $message, [], compact('errors'), ...$extraData);
     }
 }
