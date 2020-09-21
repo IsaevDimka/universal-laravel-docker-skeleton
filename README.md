@@ -36,6 +36,10 @@
 + `make build`
 + `make install`
 
+__Quick setup for local develop__
+
++ set `./docker-containers/app/opcache.ini` values `*enabled*` to `0` and save file.
+
 ## Commands
 
 Maintenance mode
@@ -87,7 +91,6 @@ Edit `.env` and set `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` with the keys 
 For other providers you may need to set the appropriate keys in `config/services.php` and redirect url in `OAuthController.php`.
 
 ## Dependencies
-
 
 ## Contribute
 
