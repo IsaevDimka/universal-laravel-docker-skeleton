@@ -90,7 +90,10 @@
     "vuex": "3.1.1",
     "xlsx": "^0.15.6",
     "vue-easy-lightbox": "^0.14.0",
-    "vue-select": "^3.10.8"
+    "vue-select": "^3.10.8",
+    "laravel-echo": "^1.8.0",
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.0"
   },
   "browserslist": [
     "last 2 version",

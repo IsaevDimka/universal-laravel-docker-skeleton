@@ -371,3 +371,29 @@ export function removeClass(ele, cls) {
     ele.className = ele.className.replace(reg, ' ');
   }
 }
+
+export function sec2time(timeInSeconds) {
+  const pad = (num, size) => ('000' + num).slice(size * -1)
+  const time = parseFloat(timeInSeconds).toFixed(3)
+  const hours = Math.floor(time / 60 / 60)
+  const minutes = Math.floor(time / 60) % 60
+  const seconds = Math.floor(time - minutes * 60)
+  // const milliseconds = time.slice(-3)
+  let str
+  if (pad(hours, 2) > 0) {
+    str = pad(hours, 2) + ':' + pad(minutes, 2) + ':' + pad(seconds, 2)
+  } else {
+    str = pad(minutes, 2) + ':' + pad(seconds, 2)
+  }
+  return str
+}
+
+export function uniqueArray(arr) {
+  const result = []
+  for (const str of arr) {
+    if (!result.includes(str)) {
+      result.push(str)
+    }
+  }
+  return result
+}

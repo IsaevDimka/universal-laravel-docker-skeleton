@@ -16,6 +16,7 @@ const getters = {
   permissions: state => state.user.permissions,
   permissionRoutes: state => state.permission.routes,
   addRoutes: state => state.permission.addRoutes,
-  errorLogs: state => state.errorLog.logs
+  errorLogs: state => state.errorLog.logs,
+  socketStatus: state => state.echo.socketStatus
 };
 export default getters;

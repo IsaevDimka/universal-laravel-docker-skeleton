@@ -17,6 +17,8 @@ Route::group(['namespace' => 'API\v1', 'prefix' => 'v1', 'as' => 'api.v1.'], fun
     Route::get('localization/{locale}', 'LocalizationController')->where(['locale' => '[a-zA-Z]{2}'])->name('localization');
     Route::get('status', 'StatusController')->name('status');
 
+    Route::get('webhook/test', 'WebhookController@test')->name('webhook.test');
+
     Route::apiResource('countries', 'CountryController')->only(['index']);
     Route::apiResource('storages', 'StorageController')->only([
         'index', 'show', 'store'

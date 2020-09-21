@@ -20,12 +20,12 @@ class UserSeeder extends Seeder
 
         /** @var User $user_1 */
         $user_root = User::create([
-            'username'          => 'root',
-            'email'             => 'root@laravel.local',
+            'username'          => 'isaevdimka',
+            'email'             => 'isaevdimka@laravel.local',
             'phone'             => '+79300000000',
             'email_verified_at' => $now,
             'last_visit_at'     => $now,
-            'password'          => 'rootroot',
+            'password'          => 'isaevdimka',
             'is_active'         => true,
             'locale'            => 'en',
             'options'           => null,
