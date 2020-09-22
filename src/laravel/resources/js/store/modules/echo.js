@@ -5,22 +5,22 @@ window.io = require('socket.io-client')
 const state = {
   socketStatus: false
 }
-
 const mutations = {
   SET_SOCKET_STATUS: (state, payload) => {
     state.socketStatus = payload
   }
 }
-
 const actions = {
   connect({ commit, rootState }) {
-    const token = rootState.user.token
+    const token = rootState.user.token;
+
     const options = {
       broadcaster: 'socket.io',
-      host: 'ws://localhost:6001/',
+      // host: 'ws://localhost:6001/',
+      host: window.location.hostname + ':6001',
       auth: {
         headers: {
-          authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`
         }
       }
     }

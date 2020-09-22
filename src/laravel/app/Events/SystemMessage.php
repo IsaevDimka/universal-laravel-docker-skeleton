@@ -5,21 +5,22 @@ namespace App\Events;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class SystemMessage implements ShouldBroadcast
+class SystemMessage implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $message = 'System message';
+    public string $message;
 
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param string $message
      */
-    public function __construct($message = '')
+    public function __construct(string $message = 'System message')
     {
         $this->message = $message;
     }

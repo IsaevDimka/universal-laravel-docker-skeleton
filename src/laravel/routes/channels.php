@@ -19,6 +19,7 @@ Broadcast::channel('private-events', function (\App\Models\User $user) {
     if(in_array($user->id, [1])){
         return true;
     }
+    logger()->debug('Broadcast-private-events', ['status' => false, 'user' => $user->id]);
     return false;
 });
 

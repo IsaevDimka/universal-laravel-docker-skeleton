@@ -157,8 +157,8 @@ class BackendService
                                                                     ->getMongoDB()
                                                                     ->listCollections();
                 $this->services['MongoDB'] = self::SERVICE_OPERATIONAL;
-            } catch(\MongoDB\Driver\Exception\ConnectionTimeoutException $e){
-                $this->services['ClickHouse'] = self::SERVICE_DOWN;
+            } catch(\MongoDB\Driver\Exception\ConnectionTimeoutException | \MongoDB\Driver\Exception\AuthenticationException $e){
+                $this->services['MongoDB'] = self::SERVICE_DOWN;
                 array_push($this->errors, 'Database MongoDB does not works as expected. Error: ' . (string) $e->getMessage());
             }
 

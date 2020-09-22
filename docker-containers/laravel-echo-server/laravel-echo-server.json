@@ -2,16 +2,13 @@
   "authHost": "http://laravel-nginx:80",
   "authEndpoint": "/api/v1/broadcasting/auth",
   "clients": [
-    {
-      "appId": "laravel",
-      "key": "fbd409051989f45a45ea93a26f57d8cb"
-    }
   ],
   "database": "redis",
   "databaseConfig": {
     "redis": {
       "host" : "laravel-redis",
-      "password" : "Z4E9W!zB8JGnPMpT"
+      "password" : "Z4E9W!zB8JGnPMpT",
+      "keyPrefix": "laravel_database_"
     },
     "sqlite": {
       "databasePath": "/database/laravel-echo-server.sqlite"
@@ -33,7 +30,7 @@
   },
   "apiOriginAllow": {
     "allowCors" : true,
-    "allowOrigin" : "http://127.0.0.1",
+    "allowOrigin" : "*",
     "allowMethods" : "GET, POST",
     "allowHeaders" : "Origin, Content-Type, X-Auth-Token, X-Requested-With, Accept, Authorization, X-CSRF-TOKEN, X-Socket-Id, X-Token"
   }

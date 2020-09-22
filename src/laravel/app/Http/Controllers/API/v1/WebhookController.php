@@ -12,10 +12,12 @@ class WebhookController extends Controller
 
     public function test(Request $request)
     {
-        event(new SystemMessage('Test socket io public channel'));
-        event(new PrivateMessage($request->get('m', 'Test socket io private channel')));
+        event(new SystemMessage('Test socket io SystemMessage'));
+        event(new PrivateMessage($request->get('m', 'Test socket io PrivateMessage')));
+
         return api()->ok('Socket.io webhook', [
-            'request'               => $request->toArray(),
+            'request' => $request->toArray(),
+            'user'    => $request->user(),
         ]);
     }
 }

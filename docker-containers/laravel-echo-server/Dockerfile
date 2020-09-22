@@ -10,7 +10,9 @@ RUN apk add --update \
     python \
     python-dev \
     py-pip \
-    build-base
+    build-base \
+    nano \
+    mc
 
 # Bundle app source
 COPY laravel-echo-server.json /usr/src/app/laravel-echo-server.json

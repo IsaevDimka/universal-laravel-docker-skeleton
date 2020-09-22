@@ -47,17 +47,31 @@ export default {
   },
   watch: {
     socketStatus(to, from) {
+      this.$message({
+        showClose: true,
+        message: `socketStatus: ${to} | ${from}`,
+        type: 'success',
+        offset: 73,
+        duration: 5000,
+      });
       console.log(to, from)
     }
   },
   mounted() {
-    this.connect()
+    this.connect();
   },
   beforeDestroy() {
     this.disconnect()
   },
   methods: {
     connect() {
+      this.$message({
+        showClose: true,
+        message: `connect`,
+        type: 'success',
+        offset: 73,
+        duration: 5000,
+      });
       if (!this.socketStatus) {
         this.loading = true
         this.$store.dispatch('echo/connect')
@@ -71,24 +85,47 @@ export default {
       }
     },
     disconnect() {
+      this.$message({
+        showClose: true,
+        message: `disconnect`,
+        type: 'success',
+        offset: 73,
+        duration: 5000,
+      });
       this.$echo.connector.socket.disconnect()
-      this.channels = []
+      this.channels = [];
     },
     init() {
-      this.$echo.channel('system-name').listen('SystemMessage', e => {
-        console.log(e);
+      this.$message({
+        showClose: true,
+        message: `init`,
+        type: 'success',
+        offset: 73,
+        duration: 5000,
+      });
+      this.$echo.channel('system-name').listen('.App\\Events\\SystemMessage', e => {
+        console.log('system-name', e);
+        this.messages.push(e)
       })
 
-      this.$echo.private('events').listen('PrivateMessage', e => {
+      this.$echo.private('private-events').listen('.App\\Events\\PrivateMessage', e => {
+        console.log('private-events', e);
         this.messages.push(e)
       })
       this.channels = Object.keys(this.$echo.connector.channels)
     },
     sendMessage() {
+      this.$message({
+        showClose: true,
+        message: `sendMessage`,
+        type: 'success',
+        offset: 73,
+        duration: 5000,
+      });
       fetch('http://localhost/api/v1/webhook/test', {
         method: 'GET',
         headers: {
-          authorization: `Bearer ${this.token}`
+          Authorization: `Bearer ${this.token}`
         }
       })
         .then(response => {
@@ -100,7 +137,7 @@ export default {
 
       this.$store.dispatch('echo/sendMessage')
       // this.$echo.connector.socket.emit('Hello world')
-      this.$echo.connector.socket.emit('Hello world private-events', 'private-events')
+      // this.$echo.connector.socket.emit('Hello world private-events', 'private-events')
     }
   }
 }
