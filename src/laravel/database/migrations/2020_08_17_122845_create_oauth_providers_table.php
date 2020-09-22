@@ -13,20 +13,20 @@ class CreateOauthProvidersTable extends Migration
      */
     public function up()
     {
-//        Schema::create('oauth_providers', function (Blueprint $table) {
-//            $table->id();
-//            $table->bigInteger('user_id')->unsigned();
-//            $table->string('provider');
-//            $table->string('provider_user_id')->index();
-//            $table->string('access_token')->nullable();
-//            $table->string('refresh_token')->nullable();
-//            $table->timestamps();
-//
-//            $table->foreign('user_id')
-//                ->references('id')
-//                ->on('users')
-//                ->onDelete('cascade');
-//        });
+        Schema::create('oauth_providers', function (Blueprint $table) {
+            $table->id();
+            $table->bigInteger('user_id')->unsigned();
+            $table->string('provider');
+            $table->string('provider_user_id')->index();
+            $table->string('access_token')->nullable();
+            $table->string('refresh_token')->nullable();
+            $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+        });
     }
 
     /**

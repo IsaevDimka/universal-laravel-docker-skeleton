@@ -15,9 +15,10 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id('id');
-            $table->string('username');
+            $table->string('username')->nullable();
+            $table->string('name')->nullable();
             $table->string('email')->unique()->nullable();
-            $table->string('phone')->unique();
+            $table->string('phone')->unique()->nullable();
             $table->boolean('phone_is_verify')->default(false);
             $table->string('telegram_chat_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();

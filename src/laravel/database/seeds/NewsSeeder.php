@@ -12,7 +12,7 @@ class NewsSeeder extends Seeder
     public function run()
     {
         if(app()->environment('local')) {
-            factory(\App\Models\News::class, 100)->create();
+//            factory(\App\Models\News::class, 100)->create();
         }
     }
 }

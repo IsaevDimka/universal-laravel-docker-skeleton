@@ -29,3 +29,11 @@ export function register(data) {
     data: data,
   });
 }
+
+export function oauthCallback(driver, query) {
+  return request({
+    url: `/oauth/${driver}/callback`,
+    method: 'get',
+    params: query,
+  });
+}

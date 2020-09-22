@@ -1,4 +1,4 @@
-import {login, logout, getInfo} from '@/api/auth';
+import {login, logout, getInfo, oauthCallback} from '@/api/auth';
 import {getToken, setToken, removeToken} from '@/utils/auth';
 import router, {resetRouter} from '@/router';
 import store from '@/store';
@@ -45,8 +45,23 @@ const actions = {
                 });
         });
     },
-
-    // get user info
+    oauthCallback({commit}, data)
+    {
+        const {driver, query } = data;
+        return new Promise((resolve, reject) => {
+            oauthCallback(driver, query)
+                .then(response => {
+                    const { token } = response.data.data;
+                    setToken(token)
+                    commit('SET_TOKEN', token)
+                    resolve();
+                })
+                .catch(error => {
+                    console.log(error);
+                    reject(error);
+                });
+        });
+    },
     getInfo({ commit, state }) {
         return new Promise((resolve, reject) => {
             getInfo(state.token).then(response => {

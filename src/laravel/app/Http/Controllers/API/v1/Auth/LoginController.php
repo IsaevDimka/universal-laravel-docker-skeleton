@@ -95,7 +95,7 @@ class LoginController extends ApiController
     protected function sendLoginResponse(Request $request)
     {
         $this->clearLoginAttempts($request);
-        $token = (string) $this->guard()->getToken();
+        $token      = (string) $this->guard()->getToken();
         $expiration = $this->guard()->getPayload()->get('exp');
         /** @var User $user */
         $user = $request->user();
@@ -104,7 +104,6 @@ class LoginController extends ApiController
             'token_type' => 'bearer',
             'expires_in' => $expiration - time(),
             'locale'     => $user->locale,
-            'test' => $request->all(),
         ]);
     }
 

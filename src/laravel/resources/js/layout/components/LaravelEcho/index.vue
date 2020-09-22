@@ -107,7 +107,6 @@ export default {
         console.log('system-name', e);
         this.messages.push(e)
       })
-
       this.$echo.private('private-events').listen('.App\\Events\\PrivateMessage', e => {
         console.log('private-events', e);
         this.messages.push(e)

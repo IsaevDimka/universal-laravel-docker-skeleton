@@ -126,3 +126,18 @@ getip: ## get IP address
 	echo $(IP_ADDRESS)
 
 ---------------: ##  ---------------
+
+app-version-major: app-version-timestamp ## update major version UP.Y.Z
+	${docker_bin} exec -it $(DOCKER_PREFIX)-app sh -c "(cd /var/www/laravel && php artisan version:major)"
+
+app-version-minor: app-version-timestamp  ## update minor version X.UP.Z
+	${docker_bin} exec -it $(DOCKER_PREFIX)-app sh -c "(cd /var/www/laravel php artisan version:minor)"
+
+app-version-patch: app-version-timestamp  ## update minor version X.Y.UP
+	${docker_bin} exec -it $(DOCKER_PREFIX)-app sh -c "(cd /var/www/laravel && php artisan version:patch)"
+
+app-version-timestamp: ## update version timestamp
+	${docker_bin} exec -it $(DOCKER_PREFIX)-app sh -c "(cd /var/www/laravel && php artisan version:timestamp)"
+
+app-version-show: ## update version timestamp
+	${docker_bin} exec -it $(DOCKER_PREFIX)-app sh -c "(cd /var/www/laravel && php artisan version:show)"
