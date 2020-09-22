@@ -55,3 +55,7 @@ export function truncate(text, limit, suffix) {
   }
   return text + suffix || '...';
 }
+
+export function toPercent(value) {
+  return parseFloat(value) + ' %'
+}

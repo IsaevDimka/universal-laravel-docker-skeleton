@@ -8,6 +8,7 @@
         <tags-view v-if="needTagsView" />
       </div>
       <app-main />
+      <laravel-echo />
       <right-panel v-if="showSettings">
         <settings />
       </right-panel>
@@ -18,7 +19,7 @@
 
 <script>
 import RightPanel from '@/components/RightPanel';
-import { Navbar, Sidebar, AppMain, TagsView, Settings, Footer } from './components';
+import { Navbar, Sidebar, AppMain, TagsView, Settings, Footer, LaravelEcho } from './components';
 import ResizeMixin from './mixin/resize-handler.js';
 import { mapState } from 'vuex';
 
@@ -32,6 +33,7 @@ export default {
     Settings,
     Sidebar,
     TagsView,
+    LaravelEcho
   },
   mixins: [ResizeMixin],
   computed: {

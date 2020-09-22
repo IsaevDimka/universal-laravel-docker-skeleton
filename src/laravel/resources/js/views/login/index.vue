@@ -48,11 +48,26 @@
           {{ $t('login.logIn') }}
         </el-button>
       </el-form-item>
-<!--      <div class="tips">-->
-<!--        <span style="margin-right:20px;">Email: isaevdimka@gmail.com</span>-->
-<!--        <span>Password: isaevdimka</span>-->
-<!--      </div>-->
+
+      <div class="tips">
+        <span style="margin-right:20px;">Email: isaevdimka@laravel.local</span>
+        <span>Password: isaevdimka</span>
+      </div>
+
+      <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
+        Or connect with
+      </el-button>
+
     </el-form>
+
+    <el-dialog title="Or connect with" :visible.sync="showDialog">
+      Can not be simulated on local, so please combine you own business simulation! ! !
+      <br>
+      <br>
+      <br>
+      <social-sign />
+    </el-dialog>
+
   </div>
 </template>
 
@@ -60,10 +75,11 @@
 import LangSelect from '@/components/LangSelect';
 import { validEmail } from '@/utils/validate';
 import { login } from '@/api/auth';
+import SocialSign from './components/SocialSignin'
 
 export default {
   name: 'Login',
-  components: { LangSelect },
+  components: { LangSelect, SocialSign },
   data() {
     const validatePhoneRegexp = /^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/gm;
     const validateEmail = (rule, value, callback) => {
@@ -91,10 +107,10 @@ export default {
     };
     return {
       loginForm: {
-        auth_type: 'phone', //email, phone
+        auth_type: 'email', //email, phone
         phone: '',
-        email: '',
-        password: '',
+        email: 'isaevdimka@laravel.local',
+        password: 'isaevdimka',
       },
       loginRules: {
         phone: [{ required: this.auth_type === 'phone', trigger: 'blur', validator: validatePhone }],
@@ -105,6 +121,7 @@ export default {
       pwdType: 'password',
       redirect: undefined,
       otherQuery: {},
+      showDialog: false,
     };
   },
   watch: {

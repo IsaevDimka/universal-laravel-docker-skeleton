@@ -18,7 +18,7 @@
         "guzzlehttp/guzzle": "6.5.5",
         "hisorange/browser-detect": "4.2.2",
         "jenssegers/mongodb": "4.0.0-alpha.1",
-        "laravel/framework": "7.22.4",
+        "laravel/framework": "7.28.0",
         "laravel/helpers": "1.2.0",
         "laravel/horizon": "4.3.3",
         "laravel/socialite": "^4.4",

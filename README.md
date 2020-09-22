@@ -1,6 +1,6 @@
 # Universal laravel docker skeleton
 
-[![Changelog badge][changelog-badge]][changelog] [![Version 1.0.0 Badge][version-badge]][changelog] [![MIT License Badge][license-badge]][license]
+[![Changelog badge][changelog-badge]][changelog] [![Version 1.0.1 Badge][version-badge]][changelog] [![MIT License Badge][license-badge]][license]
 
 ## Requirements
 
@@ -9,7 +9,8 @@
 
 ## 🐳 Docker containers
 
-+ `php` — php:7.4-fpm | Laravel v7.22.x | Socket.io 
++ `php` — php:7.4-fpm | Laravel v7.28.x
++ `laravel-echo-server` — node:alpine + laravel-echo-server 
 + `nginx` — nginx:1.19.0-alpine
 + `postgres` — postgres:12.3-alpine
 + `memcached` — memcached:1.6.6-alpine
@@ -35,6 +36,10 @@
 + `git clone <this repo>`
 + `make build`
 + `make install`
+
+__Quick setup for local develop__
+
++ set `./docker-containers/app/opcache.ini` values `*enabled*` to `0` and save file.
 
 ## Commands
 
@@ -88,7 +93,6 @@ For other providers you may need to set the appropriate keys in `config/services
 
 ## Dependencies
 
-
 ## Contribute
 
 Please do contribute! Issues and pull requests are welcome.
@@ -98,7 +102,7 @@ Thank you for your help improving software one changelog at a time!
 ## License
 MIT License (MIT). Please see [`LICENSE`](./LICENSE) for more information. Maintained by [IsaevDimka](https://github.com/IsaevDimka).
 
-[version-badge]: https://img.shields.io/badge/alpha-1.0.0-blue.svg
+[version-badge]: https://img.shields.io/badge/alpha-1.0.1-blue.svg
 [changelog]: ./CHANGELOG.md
 [changelog-badge]: https://img.shields.io/badge/changelog-docker%20skeleton-%23E05735
 [license]: ./LICENSE

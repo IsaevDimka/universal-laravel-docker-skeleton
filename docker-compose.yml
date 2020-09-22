@@ -27,7 +27,6 @@ services:
     ports:
       - ${APP_PORT}:9000
       - ${APP_SUPERVISOR_PORT}:9001
-      - ${APP_WEBSOCKET_PORT}:6001
       - ${APP_XDEBUG_PORT}:9003
     working_dir: /var/www/laravel
     volumes:
@@ -63,7 +62,27 @@ services:
       - ./docker-containers/nginx/letsencrypt:/etc/letsencrypt
       - ./logs:/var/log/nginx
     links:
+      - laravel-echo-server
       - laravel-app
+    networks:
+      - laravel-network
+
+  # Laravel Echo Server
+  laravel-echo-server:
+    build:
+      context: ./docker-containers/laravel-echo-server
+      args:
+        TIMEZONE: ${TIMEZONE}
+    container_name: laravel-echo-server
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - ./docker-containers/laravel-echo-server/laravel-echo-server.json:/app/laravel-echo-server.json:ro
+      - ./docker-containers/nginx/letsencrypt:/etc/letsencrypt
+    ports:
+      - ${APP_WEBSOCKET_PORT}:6001
+    links:
+      - laravel-redis
     networks:
       - laravel-network
 

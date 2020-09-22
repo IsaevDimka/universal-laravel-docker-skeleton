@@ -106,6 +106,8 @@ rabbitmq-shell: ## Start shell into clickhouse container
 mongodb-install: ## Install database mongodb
 	${docker_bin} exec $(DOCKER_PREFIX)-mongodb mongo laravel_logs ./build/create-mongo-log-user.js -u admin -p $(MONGO_INITDB_ROOT_PASSWORD) --authenticationDatabase admin
 
+socket-shell: ## Start shell into echo-server container
+	$(docker_compose_bin) exec $(DOCKER_PREFIX)-echo-server sh
 ---------------: ##  ---------------
 
 rr-shell: ## Start shell into RoadRunner container
