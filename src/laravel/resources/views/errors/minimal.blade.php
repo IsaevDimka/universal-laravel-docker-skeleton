@@ -15,8 +15,9 @@
             html, body {
                 background-color: #fff;
                 color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 100;
+                font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
+                sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+                font-weight: 200;
                 height: 100vh;
                 margin: 0;
             }

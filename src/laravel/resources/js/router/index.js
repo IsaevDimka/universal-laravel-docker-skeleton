@@ -84,6 +84,12 @@ export const constantRoutes = [
     component: () => import('@/views/error-page/401'),
     hidden: true,
   },
+  {
+    path: '/status',
+    name: 'status',
+    component: () => import('@/views/status/index'),
+    hidden: true,
+  },
   landingRoutes,
   {
     path: '/backend',
