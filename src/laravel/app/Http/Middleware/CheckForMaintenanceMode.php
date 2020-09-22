@@ -19,7 +19,7 @@ class CheckForMaintenanceMode extends Middleware
         'backend/*'
     ];
 
-    protected $excludedNames = [
+    protected $exceptRoutes = [
         'debug.index',
         'api.v1.status'
     ];
@@ -60,7 +60,7 @@ class CheckForMaintenanceMode extends Middleware
             $route = $request->route();
 
             if ($route instanceof Route) {
-                if (in_array($route->getName(), $this->excludedNames)) {
+                if (in_array($route->getName(), $this->exceptRoutes)) {
                     return $response;
                 }
             }
@@ -74,11 +74,6 @@ class CheckForMaintenanceMode extends Middleware
         }
 
         return $next($request);
-    }
-
-    private function isBackendRequest($request)
-    {
-        return ($request->is('backend/*') or $request->is('debug') or $request->is('status') or $request->is('api/*'));
     }
 
 }

@@ -59,3 +59,10 @@ export function truncate(text, limit, suffix) {
 export function toPercent(value) {
   return parseFloat(value) + ' %'
 }
+
+export function uppercaseFirstCamelCase(string = '') {
+  if (!string) {
+    return '';
+  }
+  return (string.charAt(0).toUpperCase() + string.slice(1)).replaceAll('_', ' ');
+}

@@ -1,15 +1,16 @@
 @php
-$config = [
-    'environment' => config('app.env'),
-    'timezone'    => config('app.timezone'),
-    'debug'       => config('app.debug'),
-    'version'     => Version::format('compact'),
-    'appName'     => config('app.name'),
-    'locale'      => app()->getLocale(),
-    'locales'     => config('app.locales'),
-    'githubAuth'  => config('services.github.client_id'),
-    'csrf_token'  => csrf_token(),
-];
+    $config = [
+        'environment' => config('app.env'),
+        'timezone'    => config('app.timezone'),
+        'debug'       => config('app.debug'),
+        'version'     => Version::format('compact'),
+        'appName'     => config('app.name'),
+        'locale'      => app()->getLocale(),
+        'locales'     => config('app.locales'),
+        'githubAuth'  => config('services.github.client_id'),
+        'csrf_token'  => csrf_token(),
+        'latest_release' => \Carbon\Carbon::create(Version::format('timestamp-datetime'))->toDateTimeString(),
+    ];
 @endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -49,7 +50,7 @@ $config = [
 
 {{-- Global configuration object --}}
 <script>
-    window.config = @json($config);
+    window.config = @json($config, JSON_UNESCAPED_UNICODE);
 </script>
 
 {{-- Load the application scripts --}}

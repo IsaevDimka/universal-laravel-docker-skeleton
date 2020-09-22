@@ -34,6 +34,7 @@ const whiteList = [
   'page_404',
   'page_401',
   'not_found',
+   'status',
 
   'landing',
   'about',
