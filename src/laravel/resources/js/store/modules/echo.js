@@ -37,7 +37,7 @@ const actions = {
     })
   },
   sendMessage(ctx) {
-    console.log(ctx)
+    console.log('sendMessage', ctx)
   }
 }
 

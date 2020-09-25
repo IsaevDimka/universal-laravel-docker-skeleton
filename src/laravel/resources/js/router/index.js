@@ -104,7 +104,12 @@ export const constantRoutes = [
       },
     ],
   },
-
+  {
+    path: '/oauth/:driver/callback',
+    name: 'oauth_callback',
+    component: () => import('@/views/oauth/callback'),
+    hidden: true,
+  },
   {
     path: '/backend/profile',
     component: Layout,
@@ -269,7 +274,7 @@ export const asyncRoutes = [
 ];
 
 const createRouter = () => new Router({
-  mode: 'hash', // require service support | history, hash
+  mode: 'history', // require service support | history, hash
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes,
 });

@@ -17,11 +17,11 @@
 <!--            Новости-->
 <!--          </router-link>-->
 <!--        </el-menu-item>-->
-<!--        <el-menu-item index="/test">-->
-<!--          <router-link :to="{ name: 'test' }">-->
-<!--            test-->
-<!--          </router-link>-->
-<!--        </el-menu-item>-->
+        <el-menu-item index="/test">
+          <router-link :to="{ name: 'test' }">
+            test
+          </router-link>
+        </el-menu-item>
 <!--        <el-submenu index="2">-->
 <!--          <template slot="title">Menu</template>-->
 <!--          <el-menu-item index="2-1">item one</el-menu-item>-->
