@@ -1,38 +1,61 @@
 <template>
-  <div class="social-signup-container">
-    <div class="sign-btn" @click="wechatHandleClick('wechat')">
+  <div class="social-signup-container" v-loading="loading">
+    <div class="sign-btn" @click="googleHandleClick('google')">
       <span class="wx-svg-container"><svg-icon icon-class="wechat" class="icon" /></span>
-      WeChat
+      Google
     </div>
     <div class="sign-btn" @click="tencentHandleClick('tencent')">
       <span class="qq-svg-container"><svg-icon icon-class="qq" class="icon" /></span>
-      QQ
+      Github
     </div>
   </div>
 </template>
-
 <script>
-// import openWindow from '@/utils/open-window'
-
+import openWindow from '@/utils/open-window'
+import request from "@/utils/request";
 export default {
   name: 'SocialSignin',
+  data () {
+    return {
+      loading: false,
+      callback_url: '',
+    };
+  },
   methods: {
-    wechatHandleClick(thirdpart) {
-      alert('ok')
-      // this.$store.commit('SET_AUTH_TYPE', thirdpart)
-      // const appid = 'xxxxx'
-      // const redirect_uri = encodeURIComponent('xxx/redirect?redirect=' + window.location.origin + '/auth-redirect')
-      // const url = 'https://open.weixin.qq.com/connect/qrconnect?appid=' + appid + '&redirect_uri=' + redirect_uri + '&response_type=code&scope=snsapi_login#wechat_redirect'
-      // openWindow(url, thirdpart, 540, 540)
+    googleHandleClick(thirdpart) {
+        this.loading = true;
+        request({
+          url: '/oauth/google',
+          method: 'post',
+        }).then(response => {
+          const { url } = response.data.data;
+          this.callback_url = url;
+          window.location = url;
+          this.$message({
+            showClose: true,
+            message: response.data.message,
+            type: 'success',
+            offset: 73,
+            duration: 5000,
+          });
+        }).catch(error => {
+          this.$message({
+            showClose: true,
+            message: error.response.message,
+            type: 'error',
+            offset: 73,
+            duration: 5000,
+          });
+        }).finally(() => (this.loading = false));
     },
     tencentHandleClick(thirdpart) {
-      alert('ok')
+      // alert('ok');
       // this.$store.commit('SET_AUTH_TYPE', thirdpart)
       // const client_id = 'xxxxx'
       // const redirect_uri = encodeURIComponent('xxx/redirect?redirect=' + window.location.origin + '/auth-redirect')
       // const url = 'https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=' + client_id + '&redirect_uri=' + redirect_uri
       // openWindow(url, thirdpart, 540, 540)
-    }
+    },
   }
 }
 </script>

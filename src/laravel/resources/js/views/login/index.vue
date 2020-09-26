@@ -144,7 +144,6 @@ export default {
         this.pwdType = 'password';
       }
     },
-
     changeAuthType()
     {
       if (this.loginForm.auth_type === 'email') {
@@ -153,7 +152,6 @@ export default {
         this.loginForm.auth_type = 'email';
       }
     },
-
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
