@@ -7,7 +7,6 @@
         'appName'     => config('app.name'),
         'locale'      => app()->getLocale(),
         'locales'     => config('app.locales'),
-        'githubAuth'  => config('services.github.client_id'),
         'csrf_token'  => csrf_token(),
         'latest_release' => \Carbon\Carbon::create(Version::format('timestamp-datetime'))->toDateTimeString(),
     ];

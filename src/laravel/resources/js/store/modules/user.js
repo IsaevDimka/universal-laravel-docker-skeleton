@@ -70,7 +70,6 @@ const actions = {
                 if (!data) {
                     reject('Verification failed, please Login again.')
                 }
-
                 const user = data.data;
 
                 // roles must be a non-empty array

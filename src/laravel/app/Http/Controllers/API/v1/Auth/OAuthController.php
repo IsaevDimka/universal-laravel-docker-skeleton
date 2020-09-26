@@ -20,9 +20,6 @@ class OAuthController extends ApiController
      */
     public function __construct()
     {
-        config([
-            'services.github.redirect' => route('api.v1.oauth.callback', 'github'),
-        ]);
     }
 
     /**
@@ -46,7 +43,13 @@ class OAuthController extends ApiController
      */
     public function handleProviderCallback($provider)
     {
-        $user = Socialite::driver($provider)->stateless()->user();
+        try{
+            $user = Socialite::driver($provider)->stateless()->user();
+        }catch(\Throwable $exception)
+        {
+            return api()->validation($exception->getMessage());
+        }
+
         $user = $this->findOrCreateUser($provider, $user);
 
         $this->guard()->setToken($token = $this->guard()->login($user));
@@ -104,6 +107,7 @@ class OAuthController extends ApiController
             'username'          => $sUser->getNickname(),
             'email'             => $sUser->getEmail(),
             'email_verified_at' => now(),
+            'avatar'            => $sUser->getAvatar(),
             'locale'            => config('app.fallback_locale'),
             'is_active'         => true,
             'options'           => null,

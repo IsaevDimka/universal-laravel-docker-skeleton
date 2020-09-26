@@ -1,12 +1,16 @@
 <template>
   <div class="social-signup-container" v-loading="loading">
-    <div class="sign-btn" @click="googleHandleClick('google')">
-      <span class="wx-svg-container"><svg-icon icon-class="wechat" class="icon" /></span>
+    <div class="sign-btn" @click="handleAuth('google')">
+      <span class="wx-svg-container"><i class="el-icon-connection"></i></span>
       Google
     </div>
-    <div class="sign-btn" @click="tencentHandleClick('tencent')">
-      <span class="qq-svg-container"><svg-icon icon-class="qq" class="icon" /></span>
+    <div class="sign-btn" @click="handleAuth('github')">
+      <span class="qq-svg-container"><i class="el-icon-connection"></i></span>
       Github
+    </div>
+    <div class="sign-btn" @click="handleAuth('facebook')">
+      <span class="qq-svg-container"><i class="el-icon-connection"></i></span>
+      Facebook
     </div>
   </div>
 </template>
@@ -22,10 +26,10 @@ export default {
     };
   },
   methods: {
-    googleHandleClick(thirdpart) {
+    handleAuth(thirdpart) {
         this.loading = true;
         request({
-          url: '/oauth/google',
+          url: '/oauth/'+thirdpart,
           method: 'post',
         }).then(response => {
           const { url } = response.data.data;
@@ -48,7 +52,7 @@ export default {
           });
         }).finally(() => (this.loading = false));
     },
-    tencentHandleClick(thirdpart) {
+    testHandleClick(thirdpart) {
       // alert('ok');
       // this.$store.commit('SET_AUTH_TYPE', thirdpart)
       // const client_id = 'xxxxx'
