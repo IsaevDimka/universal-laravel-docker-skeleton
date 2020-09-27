@@ -22,7 +22,7 @@
 
       <el-form-item style="margin-top: 1rem!important;">
         <el-button type="primary" @click="onSubmitFormFeedback" :loading="loading">
-          Отправить
+          Send
         </el-button>
       </el-form-item>
     </el-form>
@@ -50,8 +50,8 @@ name: "Feedback",
         recaptcha: null,
       },
       formRules: {
-        message: [{ required: true, trigger: 'blur', min:10, message: 'Введите сообщение! Минимальная длина 10 символов.' }],
-        recaptcha: [{required: true, trigger: 'blur', message: 'Введите каптчу!'}],
+        message: [{ required: true, trigger: 'blur', min:10, message: 'Enter your message! Minimum length 10 characters.' }],
+        recaptcha: [{required: true, trigger: 'blur', message: 'Enter captcha!'}],
       },
     };
   },

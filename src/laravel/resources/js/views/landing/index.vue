@@ -4,12 +4,12 @@
       <el-menu :default-active="$route.path" class="el-menu-demo" mode="horizontal" :router="true">
         <el-menu-item index="/about">
           <router-link :to="{ name: 'about' }">
-            О проекте
+            About
           </router-link>
         </el-menu-item>
         <el-menu-item index="/register">
           <router-link :to="{ name: 'register' }">
-            Регистрация
+            Register
           </router-link>
         </el-menu-item>
 <!--        <el-menu-item>-->
@@ -19,7 +19,7 @@
 <!--        </el-menu-item>-->
         <el-menu-item index="/test">
           <router-link :to="{ name: 'test' }">
-            test
+            Test page
           </router-link>
         </el-menu-item>
 <!--        <el-submenu index="2">-->
@@ -30,12 +30,27 @@
 <!--        </el-submenu>-->
         <el-menu-item index="/login">
           <router-link :to="{ path: '/redirect/login' }">
-            {{ checkAuth ? 'В кабинет' : 'Войти' }}
+            {{ checkAuth ? 'Backend' : 'Войти' }}
           </router-link>
         </el-menu-item>
         <el-menu-item index="/feedback">
           <router-link :to="{ name: 'feedback' }">
-            Написать нам
+            Feedback
+          </router-link>
+        </el-menu-item>
+        <el-menu-item index="/privacy-policy">
+          <router-link :to="{ name: 'privacy_policy' }">
+            Privacy Policy
+          </router-link>
+        </el-menu-item>
+        <el-menu-item index="/terms">
+          <router-link :to="{ name: 'terms' }">
+            Terms of service
+          </router-link>
+        </el-menu-item>
+        <el-menu-item index="/changelog">
+          <router-link :to="{ name: 'changelog' }">
+            Changelog
           </router-link>
         </el-menu-item>
         <div class="el-menu-item">
