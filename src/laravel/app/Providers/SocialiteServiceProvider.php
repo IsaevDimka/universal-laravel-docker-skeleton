@@ -23,10 +23,11 @@ class SocialiteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->bootTelegramSocialite();
+        $this->bootTelegramDriver();
+        $this->bootVkontakteDriver();
     }
 
-    private function bootTelegramSocialite()
+    private function bootTelegramDriver()
     {
         $socialite = $this->app->make('Laravel\Socialite\Contracts\Factory');
         $socialite->extend(
@@ -34,6 +35,18 @@ class SocialiteServiceProvider extends ServiceProvider
             function ($app) use ($socialite) {
                 $config = $app['config']['services.telegram'];
                 return $socialite->buildProvider(\App\Providers\Socialite\TelegramServiceProvider::class, $config);
+            }
+        );
+    }
+
+    private function bootVkontakteDriver()
+    {
+        $socialite = $this->app->make('Laravel\Socialite\Contracts\Factory');
+        $socialite->extend(
+            'vkontakte',
+            function ($app) use ($socialite) {
+                $config = $app['config']['services.vkontakte'];
+                return $socialite->buildProvider(\SocialiteProviders\VKontakte\Provider::class, $config);
             }
         );
     }

@@ -6,12 +6,6 @@
       {{ driver | uppercaseFirst }}
     </div>
 
-    <!-- Callback mode -->
-<!--    <vue-telegram-login-->
-<!--        mode="callback"-->
-<!--        telegram-login="cpatrackerSpaceBot"-->
-<!--        @callback="yourCallbackFunction" />-->
-
     <!-- Redirect mode -->
     <vue-telegram-login
         mode="redirect"
@@ -38,6 +32,7 @@ export default {
           'google',
           'github',
           'facebook',
+          'vkontakte'
       ]
     };
   },

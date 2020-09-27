@@ -54,9 +54,16 @@ return [
     ],
 
     'telegram' => [
-        'bot'           => env('TELEGRAM_BOT_NAME'), // The bot's username
+        'bot'           => env('TELEGRAM_BOT_NAME'),
+        // The bot's username
         'client_id'     => null,
         'client_secret' => env('TELEGRAM_TOKEN'),
         'redirect'      => env('TELEGRAM_REDIRECT'),
+    ],
+
+    'vkontakte' => [
+        'client_id'     => env('VKONTAKTE_CLIENT_ID'),
+        'client_secret' => env('VKONTAKTE_CLIENT_SECRET'),
+        'redirect'      => env('VKONTAKTE_REDIRECT')
     ],
 ];
