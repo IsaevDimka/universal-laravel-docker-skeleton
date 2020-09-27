@@ -10,10 +10,11 @@ class EmailTakenException extends Exception
      * Render the exception as an HTTP response.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
     public function render($request)
     {
-        return response()->view('oauth.emailTaken', [], 400);
+        return api()->validation('Email already taken');
     }
 }
