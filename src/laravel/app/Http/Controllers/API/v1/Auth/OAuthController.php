@@ -31,7 +31,13 @@ class OAuthController extends ApiController
      */
     public function redirectToProvider($provider)
     {
-        return api()->ok(null, ['url' => Socialite::driver($provider)->stateless()->redirect()->getTargetUrl(),]);
+        try{
+            $url = Socialite::driver($provider)->stateless()->redirect()->getTargetUrl();
+        }catch(\Throwable $e)
+        {
+            return api()->validation($e->getMessage());
+        }
+        return api()->ok(null, compact('url'));
     }
 
     /**
@@ -45,9 +51,10 @@ class OAuthController extends ApiController
     {
         try{
             $user = Socialite::driver($provider)->stateless()->user();
-        }catch(\Throwable $exception)
+        }catch(\Throwable $e)
         {
-            return api()->validation($exception->getMessage());
+            throw new \Exception($e);
+            return api()->validation($e->getMessage());
         }
 
         $user = $this->findOrCreateUser($provider, $user);

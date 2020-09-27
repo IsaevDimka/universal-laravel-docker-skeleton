@@ -41,6 +41,8 @@ __Quick setup for local develop__
 
 + set `./docker-containers/app/opcache.ini` values `*enabled*` to `0` and save file.
 
++ `php -d memory_limit=-1 /usr/local/bin/composer install`
+
 ## Commands
 
 Maintenance mode

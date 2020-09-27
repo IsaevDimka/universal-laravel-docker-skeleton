@@ -53,4 +53,10 @@ return [
         'redirect'      => env('FACEBOOK_REDIRECT'),
     ],
 
+    'telegram' => [
+        'bot'           => env('TELEGRAM_BOT_NAME'), // The bot's username
+        'client_id'     => null,
+        'client_secret' => env('TELEGRAM_TOKEN'),
+        'redirect'      => env('TELEGRAM_REDIRECT'),
+    ],
 ];

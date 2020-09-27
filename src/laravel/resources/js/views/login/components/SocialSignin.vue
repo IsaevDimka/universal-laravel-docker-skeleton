@@ -1,31 +1,53 @@
 <template>
   <div class="social-signup-container" v-loading="loading">
-    <div class="sign-btn" @click="handleAuth('google')">
+    <div v-for="(driver, index) in drivers" :key="driver"
+        class="sign-btn" @click="handleAuth(driver)">
       <span class="wx-svg-container"><i class="el-icon-connection"></i></span>
-      Google
+      {{ driver | uppercaseFirst }}
     </div>
-    <div class="sign-btn" @click="handleAuth('github')">
-      <span class="qq-svg-container"><i class="el-icon-connection"></i></span>
-      Github
-    </div>
-    <div class="sign-btn" @click="handleAuth('facebook')">
-      <span class="qq-svg-container"><i class="el-icon-connection"></i></span>
-      Facebook
-    </div>
+
+    <!-- Callback mode -->
+<!--    <vue-telegram-login-->
+<!--        mode="callback"-->
+<!--        telegram-login="cpatrackerSpaceBot"-->
+<!--        @callback="yourCallbackFunction" />-->
+
+    <!-- Redirect mode -->
+    <vue-telegram-login
+        mode="redirect"
+        telegram-login="cpatrackerSpaceBot"
+        redirect-url="https://cpatracker.space/oauth/telegram/callback" />
+
   </div>
 </template>
 <script>
 import openWindow from '@/utils/open-window'
+import {vueTelegramLogin} from 'vue-telegram-login'
+
 import request from "@/utils/request";
 export default {
   name: 'SocialSignin',
+  components:{
+    vueTelegramLogin
+  },
   data () {
     return {
       loading: false,
       callback_url: '',
+      drivers: [
+          'google',
+          'github',
+          'facebook',
+      ]
     };
   },
   methods: {
+    yourCallbackFunction (user) {
+      // gets user as an input
+      // id, first_name, last_name, username,
+      // photo_url, auth_date and hash
+      console.log(user)
+    },
     handleAuth(thirdpart) {
         this.loading = true;
         request({

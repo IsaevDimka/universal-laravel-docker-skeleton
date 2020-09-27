@@ -191,6 +191,9 @@ return [
         /*
          * Package Service Providers...
          */
+        Laravel\Socialite\SocialiteServiceProvider::class,
+        App\Providers\SocialiteServiceProvider::class,
+//        SocialiteProviders\Manager\ServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Propaganistas\LaravelPhone\PhoneServiceProvider::class,
         Jenssegers\Mongodb\MongodbServiceProvider::class,
@@ -253,6 +256,7 @@ return [
         'Excel'        => Maatwebsite\Excel\Facades\Excel::class,
         'Opcache'      => App\Facades\Opcache::class,
         'API'          => App\Facades\Api::class,
+        'Socialite'    => Laravel\Socialite\Facades\Socialite::class,
 
     ],
 
