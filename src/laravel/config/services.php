@@ -79,4 +79,10 @@ return [
         'redirect'      => env('GITLAB_REDIRECT_URI')
     ],
 
+    'zalo' => [
+        'client_id'     => env('ZALO_CLIENT_ID'),
+        'client_secret' => env('ZALO_CLIENT_SECRET'),
+        'redirect'      => env('ZALO_REDIRECT_URI')
+    ],
+
 ];

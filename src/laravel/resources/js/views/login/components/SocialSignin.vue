@@ -35,6 +35,7 @@ export default {
           'vkontakte',
           // 'twitter',
           'gitlab',
+          'zalo',
       ]
     };
   },

@@ -18,8 +18,8 @@ class CreateOauthProvidersTable extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->string('provider');
             $table->string('provider_user_id')->index();
-            $table->string('access_token')->nullable();
-            $table->string('refresh_token')->nullable();
+            $table->string('access_token', 512)->nullable();
+            $table->string('refresh_token', 512)->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')
