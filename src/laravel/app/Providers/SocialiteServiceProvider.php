@@ -25,6 +25,7 @@ class SocialiteServiceProvider extends ServiceProvider
     {
         $this->bootTelegramDriver();
         $this->bootVkontakteDriver();
+        $this->bootGitlabDriver();
     }
 
     private function bootTelegramDriver()
@@ -46,7 +47,19 @@ class SocialiteServiceProvider extends ServiceProvider
             'vkontakte',
             function ($app) use ($socialite) {
                 $config = $app['config']['services.vkontakte'];
-                return $socialite->buildProvider(\SocialiteProviders\VKontakte\Provider::class, $config);
+                return $socialite->buildProvider(\App\Providers\Socialite\VkontakteServiceProvider::class, $config);
+            }
+        );
+    }
+
+    private function bootGitlabDriver()
+    {
+        $socialite = $this->app->make('Laravel\Socialite\Contracts\Factory');
+        $socialite->extend(
+            'gitlab',
+            function ($app) use ($socialite) {
+                $config = $app['config']['services.gitlab'];
+                return $socialite->buildProvider(\App\Providers\Socialite\GitLabServiceProvider::class, $config);
             }
         );
     }

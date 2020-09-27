@@ -30,27 +30,27 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
-    'github' => [
-        'client_id'     => env('GITHUB_CLIENT_ID'),
-        'client_secret' => env('GITHUB_CLIENT_SECRET'),
-        'redirect'      => env('GITHUB_REDIRECT')
-    ],
-
     'recaptcha' => [
         'key'    => env('RECAPTCHA_SITE_KEY'),
         'secret' => env('RECAPTCHA_SECRET'),
     ],
 
+    'github' => [
+        'client_id'     => env('GITHUB_CLIENT_ID'),
+        'client_secret' => env('GITHUB_CLIENT_SECRET'),
+        'redirect'      => env('GITHUB_REDIRECT_URI')
+    ],
+
     'google' => [
         'client_id'     => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect'      => env('GOOGLE_REDIRECT'),
+        'redirect'      => env('GOOGLE_REDIRECT_URI'),
     ],
 
     'facebook' => [
         'client_id'     => env('FACEBOOK_APP_ID'),
         'client_secret' => env('FACEBOOK_APP_SECRET'),
-        'redirect'      => env('FACEBOOK_REDIRECT'),
+        'redirect'      => env('FACEBOOK_REDIRECT_URI'),
     ],
 
     'telegram' => [
@@ -58,12 +58,25 @@ return [
         // The bot's username
         'client_id'     => null,
         'client_secret' => env('TELEGRAM_TOKEN'),
-        'redirect'      => env('TELEGRAM_REDIRECT'),
+        'redirect'      => env('TELEGRAM_REDIRECT_URI'),
     ],
 
     'vkontakte' => [
         'client_id'     => env('VKONTAKTE_CLIENT_ID'),
         'client_secret' => env('VKONTAKTE_CLIENT_SECRET'),
-        'redirect'      => env('VKONTAKTE_REDIRECT')
+        'redirect'      => env('VKONTAKTE_REDIRECT_URI')
     ],
+
+    'twitter' => [
+        'client_id'     => env('TWITTER_CLIENT_ID'),
+        'client_secret' => env('TWITTER_CLIENT_SECRET'),
+        'redirect'      => env('TWITTER_REDIRECT_URI')
+    ],
+
+    'gitlab' => [
+        'client_id'     => env('GITLAB_CLIENT_ID'),
+        'client_secret' => env('GITLAB_CLIENT_SECRET'),
+        'redirect'      => env('GITLAB_REDIRECT_URI')
+    ],
+
 ];

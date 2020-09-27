@@ -32,7 +32,9 @@ export default {
           'google',
           'github',
           'facebook',
-          'vkontakte'
+          'vkontakte',
+          // 'twitter',
+          'gitlab',
       ]
     };
   },
