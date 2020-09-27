@@ -85,4 +85,16 @@ return [
         'redirect'      => env('ZALO_REDIRECT_URI')
     ],
 
+    'bitbucket' => [
+        'client_id'     => env('BITBUCKET_CLIENT_ID'),
+        'client_secret' => env('BITBUCKET_CLIENT_SECRET'),
+        'redirect'      => env('BITBUCKET_REDIRECT_URI')
+    ],
+
+    'yandex' => [
+        'client_id'     => env('YANDEX_CLIENT_ID'),
+        'client_secret' => env('YANDEX_CLIENT_SECRET'),
+        'redirect'      => env('YANDEX_REDIRECT_URI')
+    ],
+
 ];
