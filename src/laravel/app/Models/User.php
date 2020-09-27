@@ -134,6 +134,7 @@ class User extends Authenticatable implements HasLocalePreference, JWTSubject
         'email',
         'phone',
         'phone_is_verify',
+        'avatar',
         'telegram_chat_id',
         'email_verified_at',
         'last_visit_at',
