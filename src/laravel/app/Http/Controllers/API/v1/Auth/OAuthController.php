@@ -53,7 +53,6 @@ class OAuthController extends ApiController
             $user = Socialite::driver($provider)->stateless()->user();
         }catch(\Throwable $e)
         {
-            throw new \Exception($e);
             return api()->validation($e->getMessage());
         }
 

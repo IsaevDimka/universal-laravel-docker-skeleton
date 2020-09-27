@@ -2,6 +2,7 @@
 
 namespace App\Providers\Socialite;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use InvalidArgumentException;
 use SocialiteProviders\Manager\OAuth2\AbstractProvider;
