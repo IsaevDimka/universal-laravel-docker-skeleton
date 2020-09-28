@@ -32,6 +32,9 @@ mix.webpackConfig(config);
  | file for the application as well as bundling up all the JS files.
  |
  */
+mix.js('resources/js/app.js', 'public/js');
+
+const tailwindcss = require('tailwindcss')
 
 mix
     .js('resources/js/app.js', 'public/dist/js')
@@ -52,6 +55,7 @@ mix
     ])
     .options({
         processCssUrls: false,
+        postCss: [ tailwindcss('tailwind.config.js') ],
     })
     .sass('resources/js/styles/index.scss', 'public/dist/css/app.css', {
         implementation: require('node-sass'),

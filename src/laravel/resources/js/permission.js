@@ -38,7 +38,7 @@ const whiteList = [
     'oauth_callback',
 
     'landing',
-    'about',
+    'home',
     'register',
     'feedback',
     'news',
