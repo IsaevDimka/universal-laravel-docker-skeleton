@@ -4,7 +4,7 @@ current:
   label: v
   major: 1
   minor: 0
-  patch: 14
+  patch: 15
   prerelease: stable
   buildmetadata: 2
   commit: 10001a
@@ -13,8 +13,8 @@ current:
     month: 9
     day: 29
     hour: 0
-    minute: 27
-    second: 34
+    minute: 55
+    second: 8
     timezone: Asia/Ho_Chi_Minh
 commit:
   mode: increment
