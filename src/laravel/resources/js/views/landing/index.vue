@@ -30,7 +30,7 @@
 <!--        </el-submenu>-->
         <el-menu-item index="/login">
           <router-link :to="{ path: '/redirect/login' }">
-            {{ checkAuth ? 'Backend' : 'Войти' }}
+            {{ checkAuth ? 'Backend' : 'Sign in' }}
           </router-link>
         </el-menu-item>
         <el-menu-item index="/feedback">
