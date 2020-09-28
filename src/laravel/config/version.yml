@@ -6,7 +6,7 @@ current:
   minor: 0
   patch: 12
   prerelease: stable
-  buildmetadata: 0
+  buildmetadata: 2
   commit: 10001a
   timestamp:
     year: 2020
