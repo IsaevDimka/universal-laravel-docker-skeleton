@@ -99,12 +99,12 @@ return [
     */
 
     'trim' => [
-        'recent' => 60,
-        'pending' => 60,
-        'completed' => 60,
-        'recent_failed' => 10080,
-        'failed' => 10080,
-        'monitored' => 10080,
+        'recent'        => 120,     # 2 hours
+        'pending'       => 1440,    # 1 days
+        'completed'     => 1,       # 1 minutes
+        'recent_failed' => 1440,    # 1 days
+        'failed'        => 1440,    # 1 days
+        'monitored'     => 1440,    # 1 days
     ],
 
     /*
