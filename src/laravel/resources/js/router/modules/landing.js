@@ -4,14 +4,14 @@ const landingRoutes = {
     component: () => import('@/views/landing/index'),
     hidden: false,
     alwaysShow: false,
-    redirect: '/about',
+    redirect: '/',
     meta: {title: 'Home', icon: 'nested', noCache: true},
     children: [
         {
-            path: '/about',
-            component: () => import('@/views/landing/AboutPage'),
-            name: 'about',
-            meta: { title: 'About', noCache: true, breadcrumb: false},
+            path: '/',
+            component: () => import('@/views/landing/HomePage'),
+            name: 'home',
+            meta: { title: 'Home page', noCache: true, breadcrumb: false},
         },
         {
             path: '/register',

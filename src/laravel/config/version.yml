@@ -4,17 +4,17 @@ current:
   label: v
   major: 1
   minor: 0
-  patch: 12
+  patch: 16
   prerelease: stable
   buildmetadata: 2
   commit: 10001a
   timestamp:
     year: 2020
     month: 9
-    day: 27
-    hour: 22
-    minute: 0
-    second: 41
+    day: 29
+    hour: 1
+    minute: 3
+    second: 37
     timezone: Asia/Ho_Chi_Minh
 commit:
   mode: increment

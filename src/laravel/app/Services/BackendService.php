@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Cache\CacheManager;
 use Illuminate\Database\DatabaseManager;
@@ -9,7 +10,9 @@ use Illuminate\Session\Store as SessionStore;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+use PragmaRX\Version\Package\Version;
 use RuntimeException;
+use Spatie\SslCertificate\SslCertificate;
 use Throwable;
 use Illuminate\Support\Facades\Redis;
 use Laravel\Horizon\Contracts\MasterSupervisorRepository;
@@ -47,6 +50,7 @@ class BackendService
     protected $environment;
     protected $locale;
     protected $version;
+    protected $latest_release;
     protected $laravel_version;
 
     protected SessionStore $session_store;
@@ -60,10 +64,13 @@ class BackendService
         DatabaseManager $database_manager,
         MasterSupervisorRepository $horizon
     ) {
+        $version = (new Version());
+
         $this->environment      = app()->environment();
         $this->locale           = app()->getLocale();
         $this->laravel_version  = app()->version();
-        $this->version          = (new \PragmaRX\Version\Package\Version())->format();
+        $this->version          = $version->format();
+        $this->latest_release   = Carbon::create($version->format('timestamp-datetime'))->toDateTimeString();
         $this->session_store    = $session_store;
         $this->cache_manager    = $cache_manager;
         $this->database_manager = $database_manager;
@@ -92,10 +99,10 @@ class BackendService
             /**
              * Check memcached working
              */
-            $this->cache_manager->store()
-                                ->set($key = Str::random(), $value = Str::random(), 3);
-            if($this->cache_manager->store()
-                                   ->get($key) !== $value) {
+            $random_cache_key = Str::random();
+            $random_cache_value = Str::random();
+            $this->cache_manager->store()->set($random_cache_key, $random_cache_value, 60);
+            if($this->cache_manager->store()->get($random_cache_key) !== $random_cache_value) {
                 $this->services['Memcached'] = self::SERVICE_DOWN;
                 array_push($this->errors, 'Cache driver ' . $this->cache_manager->getDefaultDriver() . ' does not works as expected');
             }else{
@@ -117,20 +124,20 @@ class BackendService
              * Check default database PostgresSQL connection
              */
             try{
-                $database                      = $this->database_manager->connection()
-                                                                        ->unprepared('SELECT 1');
+                $database                      = $this->database_manager->connection()->unprepared('SELECT 1');
                 $this->services['PostgresSQL'] = self::SERVICE_OPERATIONAL;
             } catch(\Illuminate\Database\QueryException $e){
                 $this->services['PostgresSQL'] = self::SERVICE_DOWN;
-                array_push($this->errors, 'Database ' . $this->database_manager->connection()->getName() . ' database: ' . $this->database_manager->connection()->getDatabaseName() . ' does not works as expected. Error: ' . (string) $e->getMessage());
+                array_push($this->errors, 'Database ' . $this->database_manager->connection()
+                                                                               ->getName() . ' database: ' . $this->database_manager->connection()
+                                                                                                                                    ->getDatabaseName() . ' does not works as expected. Error: ' . (string) $e->getMessage());
             }
 
             /**
              * Check Redis
              */
             try{
-                $redis_cli_ping = Redis::connection()
-                                       ->command('PING');
+                $redis_cli_ping          = Redis::connection()->command('PING');
                 $this->services['Redis'] = self::SERVICE_OPERATIONAL;
             } catch(\Predis\Connection\ConnectionException $e){
                 $this->services['Redis'] = self::SERVICE_DOWN;
@@ -141,8 +148,7 @@ class BackendService
              * Check Yandex Clickhouse
              */
             try{
-                $clickhouse                   = DB::connection('clickhouse')
-                                                  ->select("SELECT 1");
+                $clickhouse                   = DB::connection('clickhouse')->select("SELECT 1");
                 $this->services['ClickHouse'] = self::SERVICE_OPERATIONAL;
             } catch(\Tinderbox\Clickhouse\Exceptions\TransportException $e){
                 $this->services['ClickHouse'] = self::SERVICE_DOWN;
@@ -153,9 +159,7 @@ class BackendService
              * Check MongoDB connection
              */
             try{
-                $mongodb                   = $this->database_manager->connection('mongodb')
-                                                                    ->getMongoDB()
-                                                                    ->listCollections();
+                $mongodb                   = $this->database_manager->connection('mongodb')->getMongoDB()->listCollections();
                 $this->services['MongoDB'] = self::SERVICE_OPERATIONAL;
             } catch(\MongoDB\Driver\Exception\ConnectionTimeoutException | \MongoDB\Driver\Exception\AuthenticationException $e){
                 $this->services['MongoDB'] = self::SERVICE_DOWN;
@@ -212,18 +216,51 @@ class BackendService
 
             /**
              * Check RoadRunner
+             */ //            try{
+            //                $roadrunner                   = Http::get(env('ROADRUNNER_HOST').':'.env('ROADRUNNER_HTTP_PORT'));
+            //                $this->services['RoadRunner'] = $roadrunner->ok() ? self::SERVICE_OPERATIONAL : self::SERVICE_DOWN;
+            //            } catch(\Illuminate\Http\Client\ConnectionException $e){
+            //                $this->services['RoadRunner'] = self::SERVICE_DOWN;
+            //                array_push($this->errors, 'RoadRunner service is experiencing some issues but our ninja developers are on it and should be back shortly!');
+            //            }
+            //
+            //            if(!empty($this->errors)) {
+            //                throw new RuntimeException('Some services unavailable', 500);
+            //            }
+
+            /**
+             * Ssl
              */
-//            try{
-//                $roadrunner                   = Http::get(env('ROADRUNNER_HOST').':'.env('ROADRUNNER_HTTP_PORT'));
-//                $this->services['RoadRunner'] = $roadrunner->ok() ? self::SERVICE_OPERATIONAL : self::SERVICE_DOWN;
-//            } catch(\Illuminate\Http\Client\ConnectionException $e){
-//                $this->services['RoadRunner'] = self::SERVICE_DOWN;
-//                array_push($this->errors, 'RoadRunner service is experiencing some issues but our ninja developers are on it and should be back shortly!');
-//            }
-//
-//            if(!empty($this->errors)) {
-//                throw new RuntimeException('Some services unavailable', 500);
-//            }
+            $check_ssl_url             = env('APP_URL', '');
+            $check_ssl_expiration_days = 7;
+            try{
+                $certificate      = SslCertificate::createForHostName($check_ssl_url);
+                $check_ssl_result = [
+                    'url'                       => $check_ssl_url,
+                    'domain'                    => $certificate->getDomain(),
+                    'isValidUntil'              => $certificate->isValidUntil(now()->addDays($check_ssl_expiration_days)),
+                    'AdditionalDomains'         => $certificate->getAdditionalDomains(),
+                    'Issuer'                    => $certificate->getIssuer(),
+                    'isValid'                   => $certificate->isValid(),
+                    'validFromDate'             => $certificate->validFromDate()->format('Y-m-d H:i:s'),
+                    'expirationDate'            => $certificate->expirationDate()->format('Y-m-d H:i:s'),
+                    'expirationDate_diffInDays' => $certificate->expirationDate()->diffInDays(),
+                    'SignatureAlgorithm'        => $certificate->getSignatureAlgorithm(),
+                    'isExpired'                 => $certificate->isExpired(),
+                ];
+                if($check_ssl_result['isValidUntil'] === false) {
+                    $this->services['Https'] = self::SERVICE_DOWN;
+                    array_push($this->errors, " Checking certificate of {$check_ssl_result['domain']}: is valid until {$check_ssl_expiration_days} days");
+                }
+                if($check_ssl_result['isExpired'] === true) {
+                    $this->services['Https'] = self::SERVICE_DOWN;
+                    array_push($this->errors, " Checking certificate of {$check_ssl_result['domain']}: Certificate is is expired");
+                }
+                $this->services['Https'] = self::SERVICE_OPERATIONAL;
+            } catch(\Spatie\SslCertificate\Exceptions\CouldNotDownloadCertificate $e){
+                $this->services['Https'] = self::SERVICE_DOWN;
+                array_push($this->errors, "Checking certificate of {$check_ssl_url}: " . (string) $e->getMessage());
+            }
 
             $this->status  = 200;
             $this->message = 'Operational';
@@ -240,6 +277,7 @@ class BackendService
             'environment'     => $this->environment,
             'locale'          => $this->locale,
             'version'         => $this->version,
+            'latest_release'  => $this->latest_release,
             'laravel_version' => $this->laravel_version,
             'uptime'          => $this->uptime(),
             'now'             => now()->toDateTimeString(),

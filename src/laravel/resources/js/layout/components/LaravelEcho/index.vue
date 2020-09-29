@@ -67,7 +67,7 @@ export default {
     connect() {
       this.$message({
         showClose: true,
-        message: `connect`,
+        message: `connect socket.io`,
         type: 'success',
         offset: 73,
         duration: 5000,
@@ -87,7 +87,7 @@ export default {
     disconnect() {
       this.$message({
         showClose: true,
-        message: `disconnect`,
+        message: `disconnect socket.io`,
         type: 'success',
         offset: 73,
         duration: 5000,
@@ -98,7 +98,7 @@ export default {
     init() {
       this.$message({
         showClose: true,
-        message: `init`,
+        message: `init socket.io`,
         type: 'success',
         offset: 73,
         duration: 5000,
@@ -116,7 +116,7 @@ export default {
     sendMessage() {
       this.$message({
         showClose: true,
-        message: `sendMessage`,
+        message: `sendMessage socket.io`,
         type: 'success',
         offset: 73,
         duration: 5000,
@@ -134,7 +134,7 @@ export default {
           console.error(err)
         })
 
-      this.$store.dispatch('echo/sendMessage')
+      // this.$store.dispatch('echo/sendMessage')
       // this.$echo.connector.socket.emit('Hello world')
       // this.$echo.connector.socket.emit('Hello world private-events', 'private-events')
     }
