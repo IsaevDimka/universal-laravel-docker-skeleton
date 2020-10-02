@@ -2,6 +2,10 @@
 
 [![Changelog badge][changelog-badge]][changelog] [![Version 1.0.1 Badge][version-badge]][changelog] [![MIT License Badge][license-badge]][license]
 
+[![Build Status](https://img.shields.io/github/workflow/status/IsaevDimka/universal-laravel-docker-skeleton/CI)](https://github.com/IsaevDimka/universal-laravel-docker-skeleton/actions)
+
+## Introduction
+
 ## Requirements
 
 + Host OS — Win/Linux/UNIX/Mac
