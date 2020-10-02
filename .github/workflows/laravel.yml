@@ -13,10 +13,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Validate composer.json and composer.lock
+        run: (cd ./src/laravel && composer validate)
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
       - name: Copy .env
         run: (cd ./src/laravel && composer run-script post-root-package-install)
-      - name: Composer diagnose
-        run: (cd ./src/laravel && composer diagnose)
       - name: Install Dependencies
         run: (cd ./src/laravel && composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist)
       - name: Generate key
