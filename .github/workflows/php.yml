@@ -15,7 +15,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Validate composer.json and composer.lock
-      run: composer validate
+      run: (cd /src/laravel && composer validate)
 
     - name: Cache Composer packages
       id: composer-cache
@@ -28,7 +28,7 @@ jobs:
 
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: /src/laravel/composer install --prefer-dist --no-progress --no-suggest
+      run: (cd /src/laravel && composer install --prefer-dist --no-progress --no-suggest)
 
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
