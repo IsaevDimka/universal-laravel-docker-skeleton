@@ -16,7 +16,7 @@
 
 ## 🐳 Docker containers
 
-+ `php` — php:7.4-fpm | Laravel v7.28.x
++ `php` — php:7.4-fpm | Laravel v8.7.1
 + `laravel-echo-server` — node:alpine + laravel-echo-server 
 + `nginx` — nginx:1.19.0-alpine
 + `postgres` — postgres:12.3-alpine
@@ -30,13 +30,18 @@
 
 ## Features
 
-- Laravel 7
+- Laravel 8
 - Vue + VueRouter + Vuex + VueI18n + ESlint
 - Pages with dynamic import and custom layouts
 - Login, register, email verification and password reset
 - Authentication with JWT
-- Socialite integration
-- Element UI
+- Socialite integration support drivers: github, google, facebook, telegram, vkontakte, twitter, gitlab, zalo, bitbucket, yandex
+- Element UI for backend
+- Tailwind CSS for landing pages
+- Universal api facade
+- Helper DebugService
+- Telegram webhook support
+- Helper OpcacheService
 
 ## Installation
 
@@ -90,16 +95,6 @@ php artisan version:commit
 php artisan version:timestamp
 ```
 
-## Socialite
-
-This project comes with GitHub as an example for [Laravel Socialite](https://laravel.com/docs/5.8/socialite).
-
-To enable the provider create a new GitHub application and use `https://example.com/api/oauth/github/callback` as the Authorization callback URL.
-
-Edit `.env` and set `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` with the keys form your GitHub application.
-
-For other providers you may need to set the appropriate keys in `config/services.php` and redirect url in `OAuthController.php`.
-
 ## Dependencies
 
 ## Contribute
@@ -111,7 +106,7 @@ Thank you for your help improving software one changelog at a time!
 ## License
 MIT License (MIT). Please see [`LICENSE`](./LICENSE) for more information. Maintained by [IsaevDimka](https://github.com/IsaevDimka).
 
-[version-badge]: https://img.shields.io/badge/alpha-1.0.18-blue.svg
+[version-badge]: https://img.shields.io/badge/alpha-1.0.19-blue.svg
 [changelog]: ./CHANGELOG.md
 [changelog-badge]: https://img.shields.io/badge/changelog-docker%20skeleton-%23E05735
 [license]: ./LICENSE
