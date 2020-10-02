@@ -1,0 +1,25 @@
+name: Laravel
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  laravel-tests:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Composer diagnose
+        run: (cd ./src/laravel && composer diagnose)
+      - name: Install Dependencies
+        run: (cd ./src/laravel && composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist)
+      - name: App install
+        run: (cd ./src/laravel && composer run-script app-install)
+      - name: Clear cache
+        run: (cd ./src/laravel && composer run-script clear)
+      - name: Execute tests (Unit and Feature tests) via PHPUnit
+        run: (cd ./src/laravel && php artisan test)
