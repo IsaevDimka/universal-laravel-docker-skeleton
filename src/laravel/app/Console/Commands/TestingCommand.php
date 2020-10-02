@@ -125,9 +125,19 @@ class TestingCommand extends Command
                     'weight'     => $weight,
                     'realWeight' => $realWeight,
                 ];
-                break;
             }
             $rand -= $realWeight;
+        }
+    }
+
+    private function sendMail()
+    {
+        $this->alert(__FUNCTION__);
+        try{
+            $recipient = 'isaevdimka@gmail.com';
+            \Illuminate\Support\Facades\Mail::to($recipient)->send(new \App\Mail\WelcomeMail());
+        }catch(\Throwable $e){
+            dd($e->getMessage());
         }
     }
 }

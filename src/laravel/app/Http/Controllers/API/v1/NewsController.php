@@ -22,7 +22,8 @@ class NewsController extends ApiController
 
         /** @var \App\Models\User $user */
         $user = $request->user();
-        if (\request('withTrashed') && $user->hasAnyRole([\App\Models\Role::ROLE_ADMIN, \App\Models\Role::ROLE_MANAGER, \App\Models\Role::ROLE_ROOT])) {
+
+        if (!is_null($request->get('withTrashed', null)) && $user->hasAnyRole([\App\Models\Role::ROLE_ADMIN, \App\Models\Role::ROLE_CLIENT, \App\Models\Role::ROLE_ROOT])) {
             $queryBuilder = News::withTrashed()->orderBy('created_at', 'DESC');
         }else{
             $queryBuilder = News::withoutTrashed()->orderBy('created_at', 'DESC');
