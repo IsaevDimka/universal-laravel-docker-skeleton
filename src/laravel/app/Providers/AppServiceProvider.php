@@ -19,8 +19,6 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->isLocal()) {
             # Laravel IDE helper
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
-            # Laravel Debugbar
-            $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
 //            # Telescope
 //            $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
 //            $this->app->register(TelescopeServiceProvider::class);
