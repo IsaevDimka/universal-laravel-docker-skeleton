@@ -91,9 +91,7 @@
     "prefer-stable": true,
     "scripts": {
         "post-update-cmd": [
-            "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-            "@php artisan ide-helper:generate",
-            "@php artisan ide-helper:meta"
+            "Illuminate\\Foundation\\ComposerScripts::postUpdate"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
@@ -132,6 +130,10 @@
             "@php artisan optimize:clear -n --ansi",
             "@composer dump-autoload --optimize -n --ansi",
             "@composer run-script post-autoload-dump --ansi"
+        ],
+        "ide-helper-update": [
+            "@php artisan ide-helper:generate",
+            "@php artisan ide-helper:meta"
         ]
     }
 }
