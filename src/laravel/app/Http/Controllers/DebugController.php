@@ -175,12 +175,6 @@ class DebugController extends Controller
         $clickhouse = "clickhouse";
     }
 
-    private function dumpServer()
-    {
-        dump(\request()->all());
-        return "php artisan dump-server";
-    }
-
     private function datatables()
     {
         $data = Language::query();
