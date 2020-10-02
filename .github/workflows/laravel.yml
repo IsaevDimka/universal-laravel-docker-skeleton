@@ -31,10 +31,10 @@ jobs:
         run: (cd ./src/laravel && php artisan key:generate)
       - name: Create Database
         run: |
-          mkdir -p database
-          touch database/database.sqlite
+          (cd ./src/laravel && mkdir -p database)
+          (cd ./src/laravel && touch database/database.sqlite)
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         env:
           DB_CONNECTION: sqlite
-          DB_DATABASE: database/database.sqlite
+          DB_DATABASE: ./src/laravel/database/database.sqlite
         run: (cd ./src/laravel && php artisan test)
