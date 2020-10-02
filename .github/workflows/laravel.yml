@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Copy .env
-        run: (cd ./src/laravel && composer run-script post-root-package-install)"
+        run: (cd ./src/laravel && composer run-script post-root-package-install)
       - name: Composer diagnose
         run: (cd ./src/laravel && composer diagnose)
       - name: Install Dependencies
