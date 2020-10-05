@@ -2,12 +2,12 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode as Middleware;
+use Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance as Middleware;
 use Closure;
 use Illuminate\Foundation\Application;
 use Illuminate\Routing\Route;
 
-class CheckForMaintenanceMode extends Middleware
+class PreventRequestsDuringMaintenance extends Middleware
 {
     /**
      * The URIs that should be reachable while maintenance mode is enabled.
@@ -15,7 +15,7 @@ class CheckForMaintenanceMode extends Middleware
      * @var array
      */
     protected $except = [
-//        'api/*',
+        //        'api/*',
         'backend/*'
     ];
 
