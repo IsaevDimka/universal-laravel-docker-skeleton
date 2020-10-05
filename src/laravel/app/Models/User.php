@@ -8,6 +8,7 @@ use App\Notifications\ResetPassword;
 use App\Notifications\VerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Translation\HasLocalePreference;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -117,10 +118,11 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property int|null $city_id
  */
 class User extends Authenticatable implements HasLocalePreference, JWTSubject
-//    ,MustVerifyEmail
+    //    ,MustVerifyEmail
 {
     use Notifiable;
     use HasRoles;
+    use HasFactory;
 
     const FORMAT_DATETIME = 'Y-m-d H:i:s';
 
@@ -177,7 +179,7 @@ class User extends Authenticatable implements HasLocalePreference, JWTSubject
      * Set permissions guard to API by default
      * @var string
      */
-//    protected $guard_name = 'api';
+    //    protected $guard_name = 'api';
 
     public static function boot()
     {

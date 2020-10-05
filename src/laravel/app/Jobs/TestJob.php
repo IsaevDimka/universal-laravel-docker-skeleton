@@ -41,7 +41,7 @@ class TestJob implements ShouldQueue
      * The number of seconds to wait before retrying the job
      * @var int
      */
-    public $retryAfter = 3;
+    public $backoff = 3;
 
     /**
      * The number of seconds to delay the execution of a queued job
