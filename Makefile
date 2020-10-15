@@ -100,7 +100,7 @@ mongodb-shell: ## Start shell into mongo container
 clickhouse-shell: ## Start shell into clickhouse container
 	$(docker_compose_bin) exec $(DOCKER_PREFIX)-clickhouse bash
 
-rabbitmq-shell: ## Start shell into clickhouse container
+rabbitmq-shell: ## Start shell into rabbitmq container
 	$(docker_compose_bin) exec $(DOCKER_PREFIX)-rabbitmq bash
 
 mongodb-install: ## Install database mongodb

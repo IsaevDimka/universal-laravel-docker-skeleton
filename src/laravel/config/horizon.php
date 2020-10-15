@@ -101,7 +101,7 @@ return [
     'trim' => [
         'recent'        => 120,     # 2 hours
         'pending'       => 1440,    # 1 days
-        'completed'     => 1,       # 1 minutes
+        'completed'     => 120,     # 2 hours
         'recent_failed' => 1440,    # 1 days
         'failed'        => 1440,    # 1 days
         'monitored'     => 1440,    # 1 days

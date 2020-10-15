@@ -4,14 +4,14 @@ current:
   label: v
   major: 1
   minor: 0
-  patch: 20
+  patch: 21
   prerelease: stable
   buildmetadata: 1
   commit: 10001a
   timestamp:
     year: 2020
     month: 10
-    day: 2
+    day: 15
     hour: 15
     minute: 58
     second: 4

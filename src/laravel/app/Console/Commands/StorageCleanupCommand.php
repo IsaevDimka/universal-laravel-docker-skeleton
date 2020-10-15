@@ -60,7 +60,7 @@ class StorageCleanupCommand extends Command
                 break;
         }
 
-        $this->info('Duration: '.formatDuration(microtime(true) - $duration_start));
+        $this->info('Duration: '.format_duration(microtime(true) - $duration_start));
     }
 
     private function cleanupLocal()

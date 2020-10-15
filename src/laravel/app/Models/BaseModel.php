@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class BaseModel extends Model
 {
-    public const FORMAT_DATETIME = 'Y-m-d H:i:s';
+    public const FORMAT_DATETIME = Carbon::DEFAULT_TO_STRING_FORMAT;
 
     /**
      * Get table name

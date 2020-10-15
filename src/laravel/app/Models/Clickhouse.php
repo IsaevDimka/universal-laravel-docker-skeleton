@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Support\Facades\DB;
+use Throwable;
+use App\Exceptions\ClickhouseException;
+use \Tinderbox\Clickhouse\Exceptions\TransportException as TinderboxTransportException;
 
 class Clickhouse
 {
@@ -33,41 +36,56 @@ class Clickhouse
 
     public static function builder()
     {
-        $server = new \Tinderbox\Clickhouse\Server(
-            env('DB_CLICKHOUSE_HOST'),
-            env('DB_CLICKHOUSE_PORT'),
-            env('DB_CLICKHOUSE_DATABASE'),
-            env('DB_CLICKHOUSE_USERNAME'),
-            env('DB_CLICKHOUSE_PASSWORD')
-        );
-        $serverProvider = (new \Tinderbox\Clickhouse\ServerProvider())->addServer($server);
-        $client         = new \Tinderbox\Clickhouse\Client($serverProvider);
-        return new \Tinderbox\ClickhouseBuilder\Query\Builder($client);
-    }
-
-    public static function dropTableIfExists(string $tableName = '')
-    {
-        $builder = self::builder();
-        $builder->dropTableIfExists($tableName);
-    }
-
-    public static function createTableIfNotExists(string $tableName = '', string $engine = '', array $columns = [])
-    {
-        $builder = self::builder();
-        $builder->createTableIfNotExists($tableName, $engine, $columns);
-    }
-
-    public static function insert(
-        string $tableName = '',
-        array $data = []
-    ) {
         try{
+            $server = new \Tinderbox\Clickhouse\Server(
+                env('DB_CLICKHOUSE_HOST'),
+                env('DB_CLICKHOUSE_PORT'),
+                env('DB_CLICKHOUSE_DATABASE'),
+                env('DB_CLICKHOUSE_USERNAME'),
+                env('DB_CLICKHOUSE_PASSWORD')
+            );
+            $serverProvider = (new \Tinderbox\Clickhouse\ServerProvider())->addServer($server);
+            $client         = new \Tinderbox\Clickhouse\Client($serverProvider);
+            return new \Tinderbox\ClickhouseBuilder\Query\Builder($client);
+        } catch(TinderboxTransportException | Throwable $e)
+        {
+            throw new ClickhouseException($e->getMessage(), $e->getCode());
+        }
+    }
+
+    public static function dropTableIfExists(string $tableName = null)
+    {
+        try{
+            $builder = self::builder();
+            throw_if(!$tableName, ClickhouseException::class);
+            $builder->dropTableIfExists($tableName);
+        }catch(Throwable $e)
+        {
+            throw new ClickhouseException($e->getMessage(), $e->getCode());
+        }
+    }
+
+    public static function createTableIfNotExists(string $tableName = null, string $engine = null, array $columns = [])
+    {
+        $builder = self::builder();
+        try{
+            throw_if((!$tableName || !$engine || !$engine), ClickhouseException::class, 'Too few arguments', 500);
+            $builder->createTableIfNotExists($tableName, $engine, $columns);
+        }catch(TinderboxTransportException | Throwable $e)
+        {
+            throw new ClickhouseException($e->getMessage(), $e->getCode());
+        }
+    }
+
+    public static function insert(string $tableName = null, array $data = [])
+    {
+        try{
+            throw_if((!$tableName || !$data), ClickhouseException::class, 'Too few arguments');
             $clickhouse = DB::connection(self::CONNECTION)->table($tableName);
             $clickhouse->insert($data);
-        } catch(\Tinderbox\Clickhouse\Exceptions\TransportException $exception)
+        } catch(TinderboxTransportException | Throwable $e)
         {
-            logger()->error((string) $exception->getMessage());
+            throw new ClickhouseException($e->getMessage(), $e->getCode());
         }
-
     }
 }

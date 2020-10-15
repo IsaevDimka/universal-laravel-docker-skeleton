@@ -3,7 +3,7 @@
 namespace App\Console\Commands\Opcache;
 
 use Illuminate\Console\Command;
-use App\Facades\Opcache as Opcache;
+use App\Facades\Opcache;
 
 class Status extends Command
 {
@@ -38,7 +38,8 @@ class Status extends Command
      */
     public function handle()
     {
-        if ($opcache = Opcache::getStatus()) {
+        $opcache = Opcache::getStatus();
+        if ($opcache) {
             $this->displayTables($opcache);
         } else {
             $this->error('OPcache not configured');
@@ -51,7 +52,7 @@ class Status extends Command
      *
      * @param $data
      */
-    protected function displayTables($data)
+    private function displayTables($data)
     {
         $general = $data;
 
@@ -87,7 +88,7 @@ class Status extends Command
      *
      * @return array
      */
-    protected function parseTable($input)
+    private function parseTable($input)
     {
         $input = (array) $input;
         $bytes = ['used_memory', 'free_memory', 'wasted_memory', 'buffer_size'];

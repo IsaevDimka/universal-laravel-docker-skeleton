@@ -14,6 +14,7 @@ class CreateScheduleMonitorTables extends Migration
             $table->string('name');
             $table->string('type')->nullable();
             $table->string('cron_expression');
+            $table->string('timezone')->nullable();
             $table->string('ping_url')->nullable();
 
             $table->dateTime('last_started_at')->nullable();
@@ -47,11 +48,6 @@ class CreateScheduleMonitorTables extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('monitored_scheduled_task_log_items');

@@ -114,14 +114,17 @@ services:
     container_name: laravel-clickhouse
     build:
       context: ./docker-containers/clickhouse
-      args:
-        TIMEZONE: ${TIMEZONE}
     restart: unless-stopped
+    environment:
+      CLICKHOUSE_DB: ${CLICKHOUSE_DB}
+      CLICKHOUSE_USER: ${CLICKHOUSE_USER}
+      CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD}
+      TZ: ${TIMEZONE}
     volumes:
       - laravel-clickhouse-data:/var/lib/clickhouse
       - ./logs:/var/log/clickhouse-server
     ports:
-      - ${DB_CLICKHOUSE_PORT}:8123
+      - ${CLICKHOUSE_PORT}:8123
     networks:
       - laravel-network
 
