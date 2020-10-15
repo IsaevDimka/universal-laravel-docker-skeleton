@@ -102,7 +102,7 @@
             "@php artisan key:generate --ansi"
         ],
         "app-install": [
-            "@composer install",
+            "php -d memory_limit=-1 /usr/local/bin/composer install",
             "@composer run-script post-root-package-install",
             "@php artisan app:install -v"
         ],
