@@ -9,7 +9,6 @@ class Install
     public function production(Runner $run)
     {
         $run
-//            ->external('composer', 'install', '--no-dev', '--prefer-dist', '--optimize-autoloader')
             ->artisan('key:generate', ['--force' => true])
             ->artisan('jwt:secret', ['--force'=> true])
             ->artisan('migrate', ['--force' => true])
@@ -17,17 +16,15 @@ class Install
             ->artisan('storage:link')
             ->external('npm', 'install', '--production')
             ->external('npm', 'run', 'production')
-            ->artisan('horizon:install')
+            ->external('horizon:install')
             ->artisan('geoip:update')
-            ->artisan('route:cache')
-            ->artisan('config:cache')
-            ->artisan('event:cache');
+            ->external('composer clear')
+            ->external('composer build');
     }
 
     public function local(Runner $run)
     {
         $run
-            ->external('composer', 'install')
             ->artisan('key:generate', ['--force' => true])
             ->artisan('jwt:secret', ['--force'=> true])
             ->artisan('migrate', ['--force' => true])
@@ -37,16 +34,15 @@ class Install
             ->external('npm', 'run', 'development')
             ->artisan('horizon:install')
             ->artisan('geoip:update')
-            ->artisan('route:cache')
-            ->artisan('config:cache')
-            ->artisan('event:cache');
+            ->external('composer clear')
+            ->external('composer build');
     }
 
     public function productionRoot(Runner $run)
     {
         $run
-//            ->dispatch(new MakeQueueSupervisorConfig)
-//            ->dispatch(new MakeSocketSupervisorConfig)
+            //            ->dispatch(new MakeQueueSupervisorConfig)
+            //            ->dispatch(new MakeSocketSupervisorConfig)
             ->external('supervisorctl', 'reread')
             ->external('supervisorctl', 'update');
     }
