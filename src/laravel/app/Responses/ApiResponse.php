@@ -64,7 +64,7 @@ class ApiResponse implements ApiInterface
 
         if(config('api.debug')) {
             $debug = [
-                'duration' => formatDuration((microtime(true) - LARAVEL_START)),
+                'duration' => format_duration((microtime(true) - LARAVEL_START)),
             ];
             $json  = array_merge($json, compact('debug'));
         }

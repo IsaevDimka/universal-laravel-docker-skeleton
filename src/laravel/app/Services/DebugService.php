@@ -42,8 +42,8 @@ class DebugService
     ]) : array
     {
         $durations = [
-            'laravel' => formatDuration((microtime(true) - LARAVEL_START)),
-            'this'    => formatDuration((microtime(true) - self::$debug_start_microtime)),
+            'laravel' => format_duration((microtime(true) - LARAVEL_START)),
+            'this'    => format_duration((microtime(true) - self::$debug_start_microtime)),
         ];
 
         $queryExecuted = DB::getQueryLog();
@@ -53,7 +53,7 @@ class DebugService
             $sqlWithPlaceholders = str_replace(['%', '?'], ['%%', '%s'], $query['query']);
             $bindings = $query['bindings'];
             $realSql = $sqlWithPlaceholders;
-            $duration = formatDuration($query['time'] / 1000);
+            $duration = format_duration($query['time'] / 1000);
 
             if (count($bindings) > 0) {
                 $realSql = vsprintf($sqlWithPlaceholders, $bindings);

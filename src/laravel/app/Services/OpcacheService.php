@@ -1,15 +1,15 @@
 <?php
 
 namespace App\Services;
+use App\Contracts\OpcacheInterface;
 use Symfony\Component\Finder\Finder;
 
-class OpcacheService
+class OpcacheService implements OpcacheInterface
 {
-
     /**
      * Clear OPcache.
      */
-    public function clear()
+    public static function clear()
     {
         if (function_exists('opcache_reset')) {
             return opcache_reset();
@@ -19,7 +19,7 @@ class OpcacheService
     /**
      * Get configuration values.
      */
-    public function getConfig()
+    public static function getConfig()
     {
         if (function_exists('opcache_get_configuration')) {
             return opcache_get_configuration();
@@ -29,7 +29,7 @@ class OpcacheService
     /**
      * Get status info.
      */
-    public function getStatus()
+    public static function getStatus()
     {
         if (function_exists('opcache_get_status')) {
             return opcache_get_status(false);
@@ -42,7 +42,7 @@ class OpcacheService
      * @param bool $force
      * @return array
      */
-    public function compile($force = false)
+    public static function compile($force = false) : array
     {
         if (! ini_get('opcache.dups_fix') && ! $force) {
             return ['message' => 'opcache.dups_fix must be enabled, or run with --force'];
@@ -53,12 +53,12 @@ class OpcacheService
 
             // Get files in these paths
             $files = collect(Finder::create()->in(config('opcache.directories'))
-                ->name('*.php')
-                ->ignoreUnreadableDirs()
-                ->notContains('#!/usr/bin/env php')
-                ->exclude(config('opcache.exclude'))
-                ->files()
-                ->followLinks());
+                                   ->name('*.php')
+                                   ->ignoreUnreadableDirs()
+                                   ->notContains('#!/usr/bin/env php')
+                                   ->exclude(config('opcache.exclude'))
+                                   ->files()
+                                   ->followLinks());
 
             // optimized files
             $files->each(function ($file) use (&$compiled) {
@@ -78,9 +78,8 @@ class OpcacheService
             ];
         }
     }
-    /**  */
 
-    public function size_for_humans($bytes)
+    public function size_for_humans($bytes) : string
     {
         if ($bytes > 1048576) {
             return sprintf("%.2f&nbsp;MB", $bytes/1048576);

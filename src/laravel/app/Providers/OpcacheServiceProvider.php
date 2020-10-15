@@ -2,19 +2,20 @@
 
 namespace App\Providers;
 
+use App\Contracts\OpcacheInterface;
 use App\Services\OpcacheService;
 use Illuminate\Support\ServiceProvider;
 
 class OpcacheServiceProvider extends ServiceProvider
 {
     /**
-     * Register services.
+     * Register Opcache services.
      *
      * @return void
      */
     public function register()
     {
-        $this->app->bind('opcache',function(){
+        $this->app->bind(OpcacheInterface::class, function(){
             return new OpcacheService();
         });
     }

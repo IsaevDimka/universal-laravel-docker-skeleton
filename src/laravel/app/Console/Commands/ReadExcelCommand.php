@@ -48,6 +48,6 @@ class ReadExcelCommand extends Command
             $count_izbirkom = (int) $item['count'];
         }
 
-        $this->comment("Duration: ".formatDuration((microtime(true) - $start_microtime)));
+        $this->comment("Duration: ".format_duration((microtime(true) - $start_microtime)));
     }
 }

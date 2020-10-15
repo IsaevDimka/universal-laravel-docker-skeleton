@@ -43,20 +43,45 @@ class TestingCommand extends Command
     {
         \App\Services\DebugService::start();
 
-//        $this->line("<fg=green>GREEN</fg=green>\t");
-//        $this->line("<fg=red>RED</fg=red>\t");
-//        $this->line("<fg=yellow>YELLOW</fg=yellow>\t");
-//        $this->line("<fg=white>white</fg=white>");
+        //        $this->line("<fg=green>GREEN</fg=green>\t");
+        //        $this->line("<fg=red>RED</fg=red>\t");
+        //        $this->line("<fg=yellow>YELLOW</fg=yellow>\t");
+        //        $this->line("<fg=white>white</fg=white>");
 
-        if (method_exists($this, $f = Str::studly($this->option('f') ?? null))) {
+        if(method_exists($this, $f = Str::studly($this->option('f') ?? null))) {
+            $this->alert('Running function: ' . $f);
             $this->{$f}();
         }else{
             $this->error("Testing method not found!");
             return 2;
         }
 
-        $meta = \App\Services\DebugService::result(['durations', 'queryLogs']);
+        $meta = \App\Services\DebugService::result([
+            'durations',
+            'queryLogs'
+        ]);
         $this->comment(\json_encode($meta, JSON_PRETTY_PRINT));
+    }
+
+    private function settingsJson()
+    {
+        dd(config('settings.key'));
+    }
+
+    private function arrayValuesToInt()
+    {
+        $array = [
+            "1", 2, "3"
+        ];
+        dd($array, array_values_to_int($array));
+    }
+
+    private function arrayValuesToString()
+    {
+        $array = [
+            "1", 2, "3"
+        ];
+        dd($array, array_values_to_string($array));
     }
 
     private function filewrite()
@@ -83,7 +108,7 @@ class TestingCommand extends Command
         $progressBar->start();
 
         $moon = [];
-        for ($i = 1; $i <= $count_items; $i++) {
+        for($i = 1; $i <= $count_items; $i++){
             sleep(1);
             $moon[] = $i;
             $progressBar->advance();
@@ -92,19 +117,19 @@ class TestingCommand extends Command
         $progressBar->finish();
 
         $this->info("\n");
-        $this->info('Count elements in array: '. count($moon));
-        $this->info('Duration: ' . formatDuration(microtime(true) - $duration_start));
+        $this->info('Count elements in array: ' . count($moon));
+        $this->info('Duration: ' . format_duration(microtime(true) - $duration_start));
     }
 
     private function notify()
     {
         $channel = 'mail';
-        $route = 'isaevdimka@gmail.com';
-        $data = [
+        $route   = 'isaevdimka@gmail.com';
+        $data    = [
             'subject'      => $subject ?? 'Спасибо за регистрацию',
             'replyTo'      => $replyTo ?? null,
             'line_1'       => $line_1 ?? 'Ваша логин: ',
-            'line_2'       => $line_2 ?? 'Ваш пароль: '.$route,
+            'line_2'       => $line_2 ?? 'Ваш пароль: ' . $route,
             'action_label' => $action_label ?? 'Перейти на сайт',
             'action_url'   => $action_url ?? url()->to('/'),
             'line_3'       => $line_3 ?? null,
@@ -113,12 +138,12 @@ class TestingCommand extends Command
                                                 ->notify(new \App\Notifications\MailMessageNotification());
     }
 
-    private function getNodeByWeights(array $weights = []) : array
+    private function getNodeByWeights(array $weights = []): array
     {
         $rand = mt_rand(0, 1000);
-        foreach ($weights as $node => $weight) {
+        foreach($weights as $node => $weight){
             $realWeight = $weight * 10;
-            if ($rand >= 0 && $rand <= $realWeight) {
+            if($rand >= 0 && $rand <= $realWeight) {
                 return [
                     'node'       => $node,
                     'rand'       => $rand,
@@ -136,8 +161,28 @@ class TestingCommand extends Command
         try{
             $recipient = 'isaevdimka@gmail.com';
             \Illuminate\Support\Facades\Mail::to($recipient)->send(new \App\Mail\WelcomeMail());
-        }catch(\Throwable $e){
+        } catch(\Throwable $e){
             dd($e->getMessage());
         }
+    }
+
+    private function testLogToMongoDB()
+    {
+        logger()->channel('mongodb')->error('Test message', [
+            'collection' => 'TestCollection',
+            'data'       => ['key' => 'value'],
+        ]);
+    }
+
+    private function testLogToTelegram()
+    {
+        $data = [
+            'key' => 'value',
+        ];
+        $type = null; # without param type or clear or message
+        logger()->channel('telegram')->error("test message", [
+            'type' => $type,
+            'data' => $data,
+        ]);
     }
 }

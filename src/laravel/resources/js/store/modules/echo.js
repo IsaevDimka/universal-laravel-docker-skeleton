@@ -16,8 +16,7 @@ const actions = {
 
     const options = {
       broadcaster: 'socket.io',
-      host: 'ws://localhost:6001/',
-      // host: window.location.hostname + ':6001',
+      host: 'http://'+ window.location.hostname + ':6001',
       auth: {
         headers: {
           Authorization: `Bearer ${token}`
