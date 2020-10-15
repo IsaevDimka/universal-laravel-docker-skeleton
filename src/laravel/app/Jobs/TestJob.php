@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -10,7 +11,7 @@ use Illuminate\Queue\SerializesModels;
 
 class TestJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
      * The number of times the job may be attempted
@@ -57,9 +58,8 @@ class TestJob implements ShouldQueue
      * @param array  $payload
      * @param string $queue
      */
-    public function __construct(array $payload = [], string $queue = 'default')
+    public function __construct(array $payload = [])
     {
-        $this->queue    = $queue;
         $this->payload  = $payload;
     }
 
@@ -75,7 +75,7 @@ class TestJob implements ShouldQueue
      */
     public function handle()
     {
-        logger()->channel('telegram')->debug('Running TestJob',
+        logger()->channel('telegram')->debug('Running TestJob...',
             [
                 'type'       => 'clear',
                 'payload'    => $this->payload,

@@ -9,15 +9,14 @@
     <!-- Redirect mode -->
     <vue-telegram-login
         mode="redirect"
-        telegram-login="cpatrackerSpaceBot"
-        redirect-url="https://cpatracker.space/oauth/telegram/callback"/>
+        :telegram-login="telegram_bot_name"
+        :redirect-url="telegram_redirect_uri"/>
 
   </div>
 </template>
 <script>
-import openWindow from '@/utils/open-window'
-import {vueTelegramLogin} from 'vue-telegram-login'
-
+import openWindow from '@/utils/open-window';
+import {vueTelegramLogin} from 'vue-telegram-login';
 import request from "@/utils/request";
 
 export default {
@@ -41,6 +40,14 @@ export default {
         'yandex',
       ]
     };
+  },
+  computed : {
+    telegram_bot_name() {
+      return process.env.MIX_TELEGRAM_BOT_NAME;
+    },
+    telegram_redirect_uri(){
+      return process.env.MIX_TELEGRAM_REDIRECT_URI;
+    },
   },
   methods: {
     yourCallbackFunction(user) {

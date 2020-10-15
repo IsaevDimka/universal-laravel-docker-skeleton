@@ -82,7 +82,7 @@ class ClickhouseQueryTestingCommand extends Command
             $rows = $queryResult->getRows();
             $this->table($selects, $rows);
 
-            $this->comment(PHP_EOL . "Duration: " . formatDuration((microtime(true) - $start_microtime)));
+            $this->comment(PHP_EOL . "Duration: " . format_duration((microtime(true) - $start_microtime)));
         } catch(\Tinderbox\Clickhouse\Exceptions\TransportException $exception)
         {
             $this->error((string) $exception->getMessage()." | ".(int) $exception->getCode());

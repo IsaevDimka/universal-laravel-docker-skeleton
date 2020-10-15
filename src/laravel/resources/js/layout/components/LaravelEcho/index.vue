@@ -3,18 +3,18 @@
     <el-row>
       <el-col>
         <el-button
-          :loading="loading"
-          :type="socketStatus ? 'danger' : 'success'"
-          size="mini"
-          @click="connect"
+            :loading="loading"
+            :type="socketStatus ? 'danger' : 'success'"
+            size="mini"
+            @click="connect"
         >
           {{ socketStatus ? 'Disconnect' : 'Connect' }} socket
         </el-button>
         <el-button
-          v-if="socketStatus"
-          type="primary"
-          size="mini"
-          @click="sendMessage"
+            v-if="socketStatus"
+            type="primary"
+            size="mini"
+            @click="sendMessage"
         >
           Send message
         </el-button>
@@ -33,6 +33,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import request from "@/utils/request";
 export default {
   data: () => ({
     loading: false,
@@ -75,11 +76,11 @@ export default {
       if (!this.socketStatus) {
         this.loading = true
         this.$store.dispatch('echo/connect')
-          .then(() => this.init())
-          .catch(e => console.log(e))
-          .finally(() => {
-            this.loading = false
-          })
+            .then(() => this.init())
+            .catch(e => console.log(e))
+            .finally(() => {
+              this.loading = false
+            })
       } else {
         this.disconnect()
       }
@@ -121,18 +122,16 @@ export default {
         offset: 73,
         duration: 5000,
       });
-      fetch('http://localhost/api/v1/webhook/test', {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${this.token}`
-        }
+      request({
+        url: '/webhook/test',
+        method: 'get',
       })
-        .then(response => {
-          console.log(response)
-        })
-        .catch(err => {
-          console.error(err)
-        })
+          .then(response => {
+            console.log(response)
+          })
+          .catch(err => {
+            console.error(err)
+          })
 
       // this.$store.dispatch('echo/sendMessage')
       // this.$echo.connector.socket.emit('Hello world')

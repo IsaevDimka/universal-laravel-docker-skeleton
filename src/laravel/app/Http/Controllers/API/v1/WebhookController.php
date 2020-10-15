@@ -10,6 +10,18 @@ use Illuminate\Http\Request;
 class WebhookController extends Controller
 {
 
+    public function any(Request $request)
+    {
+        return api()->ok(null, [
+            'post'    => $request->post(),
+            'query'   => $request->getQueryString(),
+            'headers' => $request->headers->all(),
+            'method'  => $request->getMethod(),
+            'ip'      => $request->ip(),
+            'ua'      => $request->userAgent(),
+        ]);
+    }
+
     public function test(Request $request)
     {
         event(new SystemMessage('Test socket io SystemMessage'));

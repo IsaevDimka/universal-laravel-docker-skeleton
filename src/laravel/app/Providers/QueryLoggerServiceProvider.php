@@ -37,7 +37,7 @@ class QueryLoggerServiceProvider extends ServiceProvider
             $bindings = $query->connection->prepareBindings($query->bindings);
             $pdo = $query->connection->getPdo();
             $realSql = $sqlWithPlaceholders;
-            $duration = formatDuration($query->time / 1000);
+            $duration = format_duration($query->time / 1000);
 
             if (count($bindings) > 0) {
                 $realSql = vsprintf($sqlWithPlaceholders, array_map([$pdo, 'quote'], $bindings));
