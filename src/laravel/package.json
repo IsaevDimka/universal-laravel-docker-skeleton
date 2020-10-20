@@ -76,7 +76,7 @@
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
     "path-to-regexp": "^6.2.0",
-    "screenfull": "^4.2.1",
+    "screenfull": "^5.0.2",
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.0",
     "sortablejs": "^1.10.2",
