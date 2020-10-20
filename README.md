@@ -1,7 +1,7 @@
 # Universal laravel docker skeleton
 
 [![Changelog badge][changelog-badge]][changelog] 
-[![Version 1.0.22 Badge][version-badge]][changelog] 
+[![Version 1.0.23 Badge][version-badge]][changelog] 
 [![MIT License Badge][license-badge]][license]
 ![Docker build CI](https://github.com/IsaevDimka/universal-laravel-docker-skeleton/workflows/Docker%20build%20CI/badge.svg)
 ![Laravel](https://github.com/IsaevDimka/universal-laravel-docker-skeleton/workflows/Laravel/badge.svg)
@@ -16,17 +16,17 @@
 
 ## 🐳 Docker containers
 
-+ `php` — php:7.4-fpm | Laravel v8.7.1
++ `php` — php:7.4-fpm | Laravel 8.10.0
 + `laravel-echo-server` — node:alpine + laravel-echo-server 
-+ `nginx` — nginx:1.19.0-alpine
-+ `postgres` — postgres:12.3-alpine
-+ `memcached` — memcached:1.6.6-alpine
-+ `redis` — redis:6.0.5-alpine
-+ `mongodb` — mongo:4.2.8
++ `nginx` — nginx:1.19.3-alpine
++ `postgres` — postgres:13.0-alpine
++ `memcached` — memcached:1.6.7-alpine
++ `redis` — redis:6.0.8-alpine
++ `mongodb` — mongo:4.2.10
 + `adminer` — adminer:latest
-+ `rabbitmq` — rabbitmq:3.8.5-management
-+ `roadrunner` — php:7.4-cli & spiral/roadrunner v1.8.1
-+ `clickhouse-server` — yandex/clickhouse-server
++ `rabbitmq` — rabbitmq:3.8.9-management-alpine
++ `roadrunner` — php:7.4-cli & spiral/roadrunner v1.8.3
++ `clickhouse-server` — yandex/clickhouse-server v20.9.3.45
 
 ## Features
 
@@ -106,7 +106,7 @@ Thank you for your help improving software one changelog at a time!
 ## License
 MIT License (MIT). Please see [`LICENSE`](./LICENSE) for more information. Maintained by [IsaevDimka](https://github.com/IsaevDimka).
 
-[version-badge]: https://img.shields.io/badge/alpha-1.0.22-blue.svg
+[version-badge]: https://img.shields.io/badge/alpha-1.0.23-blue.svg
 [changelog]: ./CHANGELOG.md
 [changelog-badge]: https://img.shields.io/badge/changelog-docker%20skeleton-%23E05735
 [license]: ./LICENSE
