@@ -246,4 +246,3 @@ services:
       - ./docker-containers/nginx/letsencrypt:/etc/letsencrypt
     networks:
       - laravel-network
-

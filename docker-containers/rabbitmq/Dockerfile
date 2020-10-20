@@ -1,4 +1,4 @@
-FROM rabbitmq:3.8.5-management
+FROM rabbitmq:3.8.9-management-alpine
 
 MAINTAINER Dmitriy Isaev <isaevdimka@gmail.com>
 LABEL Description="RabbitMQ + management container"

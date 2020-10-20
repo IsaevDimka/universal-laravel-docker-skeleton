@@ -1,4 +1,4 @@
-FROM redis:6.0.5-alpine
+FROM redis:6.0.8-alpine
 
 MAINTAINER Dmitriy Isaev <isaevdimka@gmail.com>
 LABEL Description="Redis container"

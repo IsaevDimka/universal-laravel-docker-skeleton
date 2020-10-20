@@ -20,7 +20,7 @@
         "jenssegers/mongodb": "3.8.*",
         "laravel/framework": "8.10.0",
         "laravel/helpers": "1.3.0",
-        "laravel/horizon": "5.2.0",
+        "laravel/horizon": "5.2.1",
         "laravel/socialite": "v5.0.1",
         "laravel/tinker": "v2.4.2",
         "laravel/ui": "3.0.0",
@@ -32,7 +32,7 @@
         "predis/predis": "1.1.6",
         "propaganistas/laravel-phone": "4.2.5",
         "rap2hpoutre/fast-excel": "^2.1",
-        "sentry/sentry-laravel": "2.0",
+        "sentry/sentry-laravel": "2.1.1",
         "socialiteproviders/manager": "^3.6",
         "spatie/laravel-backup": "^6.11",
         "spatie/laravel-permission": "3.17.0",
@@ -41,8 +41,9 @@
         "spatie/laravel-translatable": "^4.4",
         "spatie/opening-hours": "^2.9",
         "spatie/regex": "^1.4",
-        "spatie/ssl-certificate": "^1.19",
-        "the-tinderbox/clickhouse-builder": "^3.0",
+        "spatie/ssl-certificate": "^1.21",
+        "the-tinderbox/clickhouse-builder": "^4.0",
+        "bavix/laravel-clickhouse": "^2.1",
         "torann/geoip": "3.0.1",
         "tymon/jwt-auth": "^1.0",
         "vladimir-yuldashev/laravel-queue-rabbitmq": "v11.0.2",
@@ -132,6 +133,9 @@
         "ide-helper-update": [
             "@php artisan ide-helper:generate",
             "@php artisan ide-helper:meta"
+        ],
+        "check-update": [
+            "@composer outdated"
         ]
     }
 }

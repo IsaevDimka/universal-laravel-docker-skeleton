@@ -1,4 +1,4 @@
-FROM postgres:12.3-alpine
+FROM postgres:13.0-alpine
 
 MAINTAINER Dmitriy Isaev <isaevdimka@gmail.com>
 LABEL Description="PostgresSQL database container"
