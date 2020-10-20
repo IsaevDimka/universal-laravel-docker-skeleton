@@ -77,6 +77,7 @@ Route::group(['namespace' => 'API\v1', 'prefix' => 'v1', 'as' => 'api.v1.'], fun
     });
 
     Route::group(['prefix' => 'telegram', 'as' => 'telegram.'], function(){
-        Route::any('webhook', 'TelegramWebhookController')->name('webhook');
+        Route::any('webhook', 'TelegramWebhookController@webhook')->name('webhook');
+        Route::get('webhook/get', 'TelegramWebhookController@get')->name('webhook');
     });
 });

@@ -105,11 +105,11 @@ return [
             'driver' => 'clickhouse',
             'servers' => [
                 [
-                    'host' => env('DB_CLICKHOUSE_HOST', '178.128.212.222'),
+                    'host' => env('DB_CLICKHOUSE_HOST', 'laravel-clickhouse'),
                     'port' => env('DB_CLICKHOUSE_PORT', '8123'),
-                    'database' => env('DB_CLICKHOUSE_DATABASE', 'trackings'),
+                    'database' => env('DB_CLICKHOUSE_DATABASE', 'default'),
                     'username' => env('DB_CLICKHOUSE_USERNAME', 'default'),
-                    'password' => env('DB_CLICKHOUSE_PASSWORD', '00000000'),
+                    'password' => env('DB_CLICKHOUSE_PASSWORD', ''),
                     'options' => [
                         'timeout' => 10,
                         'protocol' => 'http'
@@ -117,6 +117,22 @@ return [
                 ],
             ],
         ],
+        'bavix::clickhouse' => [
+            'driver' => 'bavix::clickhouse',
+            'servers' => [
+                [
+                    'host' => env('DB_CLICKHOUSE_HOST', 'laravel-clickhouse'),
+                    'port' => env('DB_CLICKHOUSE_PORT', '8123'),
+                    'database' => env('DB_CLICKHOUSE_DATABASE', 'default'),
+                    'username' => env('DB_CLICKHOUSE_USERNAME', 'default'),
+                    'password' => env('DB_CLICKHOUSE_PASSWORD', ''),
+                    'options' => [
+                        'timeout' => 10,
+                        'protocol' => 'http'
+                    ],
+                ],
+            ]
+        ]
 
     ],
 

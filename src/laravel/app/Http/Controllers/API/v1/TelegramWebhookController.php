@@ -4,13 +4,13 @@ namespace App\Http\Controllers\API\v1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Clickhouse;
+use App\Models\TelegramWebhookLogs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class TelegramWebhookController extends Controller
 {
-
-    public function __invoke(Request $request)
+    public function webhook(Request $request)
     {
         \App\Services\DebugService::start();
         $debug = \App\Services\DebugService::result();
@@ -36,5 +36,11 @@ class TelegramWebhookController extends Controller
             'debug'                 => $debug,
             'telegram_webhook_logs' => $telegram_webhook_logs,
         ]);
+    }
+
+    public function get(Request $request)
+    {
+        $items = TelegramWebhookLogs::all();
+        return api()->ok(null, ['items' => $items->toArray(), 'total' => $items->count()]);
     }
 }

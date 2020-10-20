@@ -216,50 +216,53 @@ class BackendService
 
             /**
              * Check RoadRunner
-             */ //            try{
-            //                $roadrunner                   = Http::get(env('ROADRUNNER_HOST').':'.env('ROADRUNNER_HTTP_PORT'));
-            //                $this->services['RoadRunner'] = $roadrunner->ok() ? self::SERVICE_OPERATIONAL : self::SERVICE_DOWN;
-            //            } catch(\Illuminate\Http\Client\ConnectionException $e){
-            //                $this->services['RoadRunner'] = self::SERVICE_DOWN;
-            //                array_push($this->errors, 'RoadRunner service is experiencing some issues but our ninja developers are on it and should be back shortly!');
-            //            }
-            //
-            //            if(!empty($this->errors)) {
-            //                throw new RuntimeException('Some services unavailable', 500);
-            //            }
+             */
+            try{
+                $roadrunner                   = Http::get(env('ROADRUNNER_HOST').':'.env('ROADRUNNER_HTTP_PORT'));
+                $this->services['RoadRunner'] = $roadrunner->ok() ? self::SERVICE_OPERATIONAL : self::SERVICE_DOWN;
+            } catch(\Illuminate\Http\Client\ConnectionException $e){
+                $this->services['RoadRunner'] = self::SERVICE_DOWN;
+                array_push($this->errors, 'RoadRunner service is experiencing some issues but our ninja developers are on it and should be back shortly!');
+            }
+
+            if(!empty($this->errors)) {
+                throw new RuntimeException('Some services unavailable', 500);
+            }
 
             /**
              * Ssl
              */
-            $check_ssl_url             = env('APP_URL', '');
-            $check_ssl_expiration_days = 7;
-            try{
-                $certificate      = SslCertificate::createForHostName($check_ssl_url);
-                $check_ssl_result = [
-                    'url'                       => $check_ssl_url,
-                    'domain'                    => $certificate->getDomain(),
-                    'isValidUntil'              => $certificate->isValidUntil(now()->addDays($check_ssl_expiration_days)),
-                    'AdditionalDomains'         => $certificate->getAdditionalDomains(),
-                    'Issuer'                    => $certificate->getIssuer(),
-                    'isValid'                   => $certificate->isValid(),
-                    'validFromDate'             => $certificate->validFromDate()->format('Y-m-d H:i:s'),
-                    'expirationDate'            => $certificate->expirationDate()->format('Y-m-d H:i:s'),
-                    'expirationDate_diffInDays' => $certificate->expirationDate()->diffInDays(),
-                    'SignatureAlgorithm'        => $certificate->getSignatureAlgorithm(),
-                    'isExpired'                 => $certificate->isExpired(),
-                ];
-                if($check_ssl_result['isValidUntil'] === false) {
+            if (! app()->environment('local')) {
+                $check_ssl_url             = env('APP_URL', '');
+                $check_ssl_expiration_days = 7;
+                try{
+                    $certificate      = SslCertificate::createForHostName($check_ssl_url);
+                    $check_ssl_result = [
+                        'url'                       => $check_ssl_url,
+                        'domain'                    => $certificate->getDomain(),
+                        'isValidUntil'              => $certificate->isValidUntil(now()->addDays($check_ssl_expiration_days)),
+                        'AdditionalDomains'         => $certificate->getAdditionalDomains(),
+                        'Issuer'                    => $certificate->getIssuer(),
+                        'isValid'                   => $certificate->isValid(),
+                        'validFromDate'             => $certificate->validFromDate()->format('Y-m-d H:i:s'),
+                        'expirationDate'            => $certificate->expirationDate()->format('Y-m-d H:i:s'),
+                        'expirationDate_diffInDays' => $certificate->expirationDate()->diffInDays(),
+                        'SignatureAlgorithm'        => $certificate->getSignatureAlgorithm(),
+                        'isExpired'                 => $certificate->isExpired(),
+                    ];
+                    if($check_ssl_result['isValidUntil'] === false) {
+                        $this->services['Https'] = self::SERVICE_DOWN;
+                        array_push($this->errors, " Checking certificate of {$check_ssl_result['domain']}: is valid until {$check_ssl_expiration_days} days");
+                    }
+                    if($check_ssl_result['isExpired'] === true) {
+                        $this->services['Https'] = self::SERVICE_DOWN;
+                        array_push($this->errors, " Checking certificate of {$check_ssl_result['domain']}: Certificate is is expired");
+                    }
+                    $this->services['Https'] = self::SERVICE_OPERATIONAL;
+                } catch(\Spatie\SslCertificate\Exceptions\CouldNotDownloadCertificate $e){
                     $this->services['Https'] = self::SERVICE_DOWN;
-                    array_push($this->errors, " Checking certificate of {$check_ssl_result['domain']}: is valid until {$check_ssl_expiration_days} days");
+                    array_push($this->errors, "Checking certificate of {$check_ssl_url}: " . (string) $e->getMessage());
                 }
-                if($check_ssl_result['isExpired'] === true) {
-                    $this->services['Https'] = self::SERVICE_DOWN;
-                    array_push($this->errors, " Checking certificate of {$check_ssl_result['domain']}: Certificate is is expired");
-                }
-                $this->services['Https'] = self::SERVICE_OPERATIONAL;
-            } catch(\Spatie\SslCertificate\Exceptions\CouldNotDownloadCertificate $e){
-                $this->services['Https'] = self::SERVICE_DOWN;
-                array_push($this->errors, "Checking certificate of {$check_ssl_url}: " . (string) $e->getMessage());
             }
 
             $this->status  = 200;

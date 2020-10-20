@@ -1,4 +1,4 @@
-FROM mongo:4.2.8
+FROM mongo:4.2.10
 
 MAINTAINER Dmitriy Isaev <isaevdimka@gmail.com>
 LABEL Description="MongoDB container"
