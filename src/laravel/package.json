@@ -96,7 +96,7 @@
     "vue-telegram-login": "^2.1.0",
     "vuedraggable": "^2.23.0",
     "vuex": "3.5.1",
-    "xlsx": "^0.15.6"
+    "xlsx": "^0.16.8"
   },
   "browserslist": [
     "last 2 version",
