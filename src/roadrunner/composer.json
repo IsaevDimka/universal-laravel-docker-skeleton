@@ -12,7 +12,7 @@
   ],
   "require": {
     "php": "^7.3",
-    "spiral/roadrunner": "1.8.2",
+    "spiral/roadrunner": "1.8.3",
     "zendframework/zend-diactoros": "^2.0"
   },
   "scripts": {
