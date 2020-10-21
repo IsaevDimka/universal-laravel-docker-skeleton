@@ -166,12 +166,6 @@ COPY ./docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 RUN ln -s /usr/local/bin/docker-entrypoint.sh /
 
-#####################################
-# Laravel Echo Server:
-#####################################
-#RUN npm install -g laravel-echo-server
-#COPY laravel-echo-server.conf /etc/supervisor/conf.d
-
 ###########################################################################
 # pgsql client | pg_dump
 ###########################################################################
@@ -187,7 +181,7 @@ RUN if [ ${INSTALL_PG_CLIENT} = true ]; then \
     bash -c "echo deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main >> /etc/apt/sources.list.d/pgdg.list" && \
     wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
     apt-get update && \
-    apt-get install -y postgresql-client-12 && \
+    apt-get install -y postgresql-client-13 && \
     if [ ${INSTALL_POSTGIS} = true ]; then \
       apt-get install -y postgis; \
     fi \
@@ -250,7 +244,6 @@ COPY ./xhprof.ini /usr/local/etc/php/conf.d
 RUN if [ ${INSTALL_XHPROF} = false ]; then \
     rm /usr/local/etc/php/conf.d/xhprof.ini \
 ;fi
-
 
 #####################################
 # Supervisor consumers:

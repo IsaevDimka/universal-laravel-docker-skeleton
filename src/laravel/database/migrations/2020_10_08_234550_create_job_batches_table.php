@@ -13,7 +13,7 @@ class CreateJobBatchesTable extends Migration
      */
     public function up()
     {
-        Schema::create('job_batches', function (Blueprint $table) {
+        Schema::create(config('queue.batching.table'), function (Blueprint $table) {
             $table->string('id')->primary();
             $table->string('name');
             $table->integer('total_jobs');
@@ -34,6 +34,6 @@ class CreateJobBatchesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('job_batches');
+        Schema::dropIfExists(config('queue.batching.table'));
     }
 }

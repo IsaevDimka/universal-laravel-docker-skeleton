@@ -11,16 +11,9 @@ use Illuminate\Support\Facades\Route;
 class RouteServiceProvider extends ServiceProvider
 {
     /**
-     * This namespace is applied to your controller routes.
-     *
-     * In addition, it is set as the URL generator's root namespace.
-     *
-     * @var string
-     */
-    protected $namespace = 'App\Http\Controllers';
-
-    /**
      * The path to the "home" route for your application.
+     *
+     * This is used by Laravel authentication to redirect users after login.
      *
      * @var string
      */
@@ -33,23 +26,19 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
-        parent::boot();
-    }
-
-    /**
-     * Define the routes for the application.
-     *
-     * @return void
-     */
-    public function map()
-    {
         $this->configureRateLimiting();
-        $this->mapApiRoutes();
-        $this->mapWebRoutes();
-        $this->mapBackendRoutes();
-        $this->mapSpaRoutes();
+
+        $this->routes(function () {
+            Route::prefix('api')
+                 ->middleware('api')
+                 ->group(base_path('routes/api.php'));
+
+            Route::middleware('web')
+                 ->group(base_path('routes/web.php'));
+
+            Route::middleware('spa')
+                 ->group(base_path('routes/spa.php'));
+        });
     }
 
     /**
@@ -60,67 +49,13 @@ class RouteServiceProvider extends ServiceProvider
     protected function configureRateLimiting()
     {
         RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(600);
+            return Limit::perMinute(60);
         });
-    }
 
-    /**
-     * Define the "web" routes for the application.
-     *
-     * These routes all receive session state, CSRF protection, etc.
-     *
-     * @return void
-     */
-    protected function mapWebRoutes()
-    {
-        Route::middleware('web')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/web.php'));
-    }
-
-    /**
-     * Define the "api" routes for the application.
-     *
-     * These routes are typically stateless.
-     *
-     * @return void
-     */
-    protected function mapApiRoutes()
-    {
-        Route::prefix('api')
-             ->middleware('api')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/api.php'));
-    }
-
-    /**
-     * Define the "backend" routes for the application.
-     *
-     * These routes are typically stateless.
-     *
-     * @return void
-     */
-    protected function mapBackendRoutes()
-    {
-        Route::prefix('backend')
-             ->middleware(['web', 'auth','role:root'])
-             ->namespace($this->namespace.'\Frontend\Backend')
-             ->prefix('backend')
-             ->as('backend.')
-             ->group(base_path('routes/backend.php'));
-    }
-
-    /**
-     * Define the "spa" routes for the application.
-     *
-     * These routes are typically stateless.
-     *
-     * @return void
-     */
-    protected function mapSpaRoutes()
-    {
-        Route::middleware('spa')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/spa.php'));
+        RateLimiter::for('storages', function (Request $request) {
+            return $request->user()->hasRole('root', 'admin')
+                ? Limit::none()
+                : Limit::perMinute(100)->by($request->ip());
+        });
     }
 }

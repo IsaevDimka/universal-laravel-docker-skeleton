@@ -13,6 +13,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get(env('VUE_PATH', '/'), 'SpaController')->where('any', '.*')->name('spa');
-
-Route::get('{path}', 'SpaController')->where('path', '(.*)')->name('spa');
+Route::get('{path}', App\Http\Controllers\SpaController::class)->where('path', '(.*)')->name('spa');

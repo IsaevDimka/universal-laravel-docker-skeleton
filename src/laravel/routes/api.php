@@ -14,51 +14,48 @@ use Illuminate\Support\Facades\Route;
 */
 Route::group(['namespace' => 'API\v1', 'prefix' => 'v1', 'as' => 'api.v1.'], function() {
 
-    Route::get('localization/{locale}', 'LocalizationController')->where(['locale' => '[a-zA-Z]{2}'])->name('localization');
-    Route::get('status', 'StatusController')->name('status');
+    Route::get('localization/{locale}', [App\Http\Controllers\API\v1\LocalizationController::class])->where(['locale' => '[a-zA-Z]{2}'])->name('localization');
+    Route::get('status', App\Http\Controllers\API\v1\StatusController::class)->name('status');
 
-    Route::any('webhook', 'WebhookController@any')->name('webhook.any');
-    Route::get('webhook/test', 'WebhookController@test')->name('webhook.test');
+    Route::any('webhook', [App\Http\Controllers\API\v1\WebhookController::class, 'any'])->name('webhook.any');
+    Route::get('webhook/test', [App\Http\Controllers\API\v1\WebhookController::class, 'test'])->name('webhook.test');
 
-    Route::apiResource('countries', 'CountryController')->only(['index']);
-    Route::apiResource('storages', 'StorageController')->only([
-        'index', 'show', 'store'
-    ]);
-    Route::apiResource('news', 'NewsController')->only(['index', 'show']);
-
-    Route::apiResource('feedback', 'FeedbackController')->only(['store']);
+    Route::apiResource('countries', App\Http\Controllers\API\v1\CountryController::class)->only(['index']);
+    Route::apiResource('storages', App\Http\Controllers\API\v1\StorageController::class)->only(['index', 'show', 'store']);
+    Route::apiResource('news', App\Http\Controllers\API\v1\NewsController::class)->only(['index', 'show']);
+    Route::apiResource('feedback', App\Http\Controllers\API\v1\FeedbackController::class)->only(['store']);
 
     Route::group(['middleware' => ['guest:api', 'throttle:60,1']], function () {
         Route::group(['prefix' => 'auth'], function () {
-            Route::post('login', 'Auth\LoginController@login');
-            Route::post('register', 'Auth\RegisterController');
+            Route::post('login', [App\Http\Controllers\API\v1\Auth\LoginController::class, 'login']);
+            Route::post('register', App\Http\Controllers\API\v1\Auth\RegisterController::class);
 
-            Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
-            Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+            Route::post('password/email', [App\Http\Controllers\API\v1\Auth\ForgotPasswordController::class, 'sendResetLinkEmail']);
+            Route::post('password/reset', [App\Http\Controllers\API\v1\Auth\ResetPasswordController::class, 'reset']);
 
-            Route::post('email/verify/{user}', 'Auth\VerificationController@verify')->name('verification.verify');
-            Route::post('email/resend', 'Auth\VerificationController@resend');
+            Route::post('email/verify/{user}', [App\Http\Controllers\API\v1\Auth\VerificationController::class, 'verify'])->name('verification.verify');
+            Route::post('email/resend', [App\Http\Controllers\API\v1\Auth\VerificationController::class, 'resend']);
         });
 
-        Route::post('oauth/{driver}', 'Auth\OAuthController@redirectToProvider');
-        Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
+        Route::post('oauth/{driver}', [App\Http\Controllers\API\v1\Auth\OAuthController::class, 'redirectToProvider']);
+        Route::get('oauth/{driver}/callback', [App\Http\Controllers\API\v1\Auth\OAuthController::class, 'handleProviderCallback'])->name('oauth.callback');
     });
 
     Route::group(['middleware' => 'auth:api'], function() {
         Route::group(['prefix' => 'auth'], function () {
-            Route::get('user', 'Auth\UserController@current');
-            Route::post('logout', 'Auth\LoginController@logout');
+            Route::get('user', [App\Http\Controllers\API\v1\Auth\UserController::class, 'current']);
+            Route::post('logout', [App\Http\Controllers\API\v1\Auth\LoginController::class, 'logout']);
         });
 //        Route::patch('settings/profile', 'Settings\ProfileController@update');
 //        Route::patch('settings/password', 'Settings\PasswordController@update');
         Route::group(['middleware' => 'role:root|admin'], function() {
-            Route::apiResource('roles', 'RoleController');
-            Route::apiResource('users', 'UserController');
-            Route::apiResource('permissions', 'PermissionController');
-            Route::put('users/{user}', 'UserController@update');
-            Route::get('users/{user}/permissions', 'UserController@permissions');
-            Route::put('users/{user}/permissions', 'UserController@updatePermissions');
-            Route::get('roles/{role}/permissions', 'RoleController@permissions');
+            Route::apiResource('roles', App\Http\Controllers\API\v1\RoleController::class);
+            Route::apiResource('users', App\Http\Controllers\API\v1\UserController::class);
+            Route::apiResource('permissions', App\Http\Controllers\API\v1\PermissionController::class);
+            Route::put('users/{user}', [App\Http\Controllers\API\v1\UserController::class, 'update']);
+            Route::get('users/{user}/permissions', [App\Http\Controllers\API\v1\UserController::class, 'permissions']);
+            Route::put('users/{user}/permissions', [App\Http\Controllers\API\v1\UserController::class, 'updatePermissions']);
+            Route::get('roles/{role}/permissions', [App\Http\Controllers\API\v1\RoleController::class, 'permissions']);
         });
 
     });
@@ -73,11 +70,11 @@ Route::group(['namespace' => 'API\v1', 'prefix' => 'v1', 'as' => 'api.v1.'], fun
      * Debug & testing controller
      */
     Route::group(['prefix' => 'debug', 'as' => 'debug.', 'middleware' => ['token']], function() {
-        Route::match(['GET', 'POST'], '/', 'DebugController@index')->name('index');
+        Route::match(['GET', 'POST'], '/', [App\Http\Controllers\API\v1\DebugController::class, 'index'])->name('index');
     });
 
     Route::group(['prefix' => 'telegram', 'as' => 'telegram.'], function(){
-        Route::any('webhook', 'TelegramWebhookController@webhook')->name('webhook');
-        Route::get('webhook/get', 'TelegramWebhookController@get')->name('webhook');
+        Route::any('webhook', [App\Http\Controllers\API\v1\TelegramWebhookController::class, 'webhook'])->name('webhook');
+        Route::get('webhook/get', [App\Http\Controllers\API\v1\TelegramWebhookController::class, 'get'])->name('webhook');
     });
 });

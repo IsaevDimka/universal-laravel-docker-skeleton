@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Clickhouse;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Console\Command;

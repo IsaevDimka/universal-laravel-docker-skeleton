@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Clickhouse;
 
 use App\Models\Clickhouse;
 use Illuminate\Console\Command;
@@ -58,7 +58,7 @@ class ClickHouseBuildCommand extends Command
             'event_date'      => 'DEFAULT toDate(event_time)',
         ];
         Clickhouse::createTableIfNotExists($this->table_name, $engine, $columns);
-        //        Clickhouse::createTableIfNotExists();
+//        Clickhouse::createTableIfNotExists();
 
         $this->comment($this->table_name);
     }

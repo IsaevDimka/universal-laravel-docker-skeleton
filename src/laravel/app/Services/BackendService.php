@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Cache\CacheManager;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Session\Store as SessionStore;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use PragmaRX\Version\Package\Version;
@@ -124,7 +123,7 @@ class BackendService
              * Check default database PostgresSQL connection
              */
             try{
-                $database                      = $this->database_manager->connection()->unprepared('SELECT 1');
+                $database = $this->database_manager->connection('pgsql')->unprepared('SELECT 1');
                 $this->services['PostgresSQL'] = self::SERVICE_OPERATIONAL;
             } catch(\Illuminate\Database\QueryException $e){
                 $this->services['PostgresSQL'] = self::SERVICE_DOWN;
@@ -148,7 +147,7 @@ class BackendService
              * Check Yandex Clickhouse
              */
             try{
-                $clickhouse                   = DB::connection('clickhouse')->select("SELECT 1");
+                $clickhouse                   = $this->database_manager->connection('clickhouse')->select("SELECT 1");
                 $this->services['ClickHouse'] = self::SERVICE_OPERATIONAL;
             } catch(\Tinderbox\Clickhouse\Exceptions\TransportException $e){
                 $this->services['ClickHouse'] = self::SERVICE_DOWN;
@@ -284,6 +283,9 @@ class BackendService
             'laravel_version' => $this->laravel_version,
             'uptime'          => $this->uptime(),
             'now'             => now()->toDateTimeString(),
+
+            'average_cpu_usage' => $this->getCPUUsagePercentage(),
+            'disk_space_enough' => $this->getDiskUsage(),
         ];
     }
 
@@ -294,5 +296,23 @@ class BackendService
     {
         $data = json_encode($this->getStatus(), JSON_PRETTY_PRINT);
         File::put(public_path(self::STATUS_FILE_NAME), $data);
+    }
+
+    protected function getCPUUsagePercentage()
+    {
+        $cpu = shell_exec("grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage}'");
+
+        return round((float) $cpu, 2).'%';
+    }
+
+    protected function getDiskUsage()
+    {
+        $totalSpace = disk_total_space(base_path());
+        $freeSpace  = disk_free_space(base_path());
+        $usedSpace  = $totalSpace - $freeSpace;
+
+        $percentage = round(($usedSpace / $totalSpace) * 100);
+
+        return $percentage.'%';
     }
 }

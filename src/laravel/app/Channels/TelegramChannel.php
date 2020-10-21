@@ -3,7 +3,7 @@
 
 namespace App\Channels;
 
-use App\User;
+use App\Models\User;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -39,7 +39,7 @@ class TelegramChannel
     /**
      * Send the given notification.
      *
-     * @param \Illuminate\Notifications\AnonymousNotifiable|\App\User $notifiable
+     * @param \Illuminate\Notifications\AnonymousNotifiable|\App\Models\User $notifiable
      * @param Notification                                            $notification
      *
      * @return void

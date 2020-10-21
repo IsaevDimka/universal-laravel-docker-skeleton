@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Clickhouse;
 
 use App\Models\Clickhouse;
 use Illuminate\Console\Command;
@@ -12,7 +12,7 @@ class ClickhouseQueryTestingCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'testing:clickhouse';
+    protected $signature = 'clickhouse:testing';
 
     /**
      * The console command description.
