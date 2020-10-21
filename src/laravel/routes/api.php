@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::group(['namespace' => 'API\v1', 'prefix' => 'v1', 'as' => 'api.v1.'], function() {
+Route::group(['prefix' => 'v1', 'as' => 'api.v1.'], function() {
 
     Route::get('localization/{locale}', [App\Http\Controllers\API\v1\LocalizationController::class])->where(['locale' => '[a-zA-Z]{2}'])->name('localization');
     Route::get('status', App\Http\Controllers\API\v1\StatusController::class)->name('status');
