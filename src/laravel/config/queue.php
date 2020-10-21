@@ -128,4 +128,8 @@ return [
         'table' => 'failed_jobs',
     ],
 
+    'batching' => [
+        'table' => 'job_batches'
+    ],
+
 ];

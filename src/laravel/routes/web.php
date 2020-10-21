@@ -13,11 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/', 'MainController@index')->name('index');
-
 Route::group(['prefix' => 'debug', 'as' => 'debug.'], function () {
-    Route::get('/', 'DebugController@index')->name('index');
-    Route::get('renderView', 'DebugController@renderView')->name('renderView');
+    Route::get('/', [App\Http\Controllers\DebugController::class , 'index'])->name('index')->middleware('env:local|develop');
+    Route::get('renderView', [App\Http\Controllers\DebugController::class, 'renderView'])->name('renderView');
 });
-
-//Auth::routes(['verify' => true]);

@@ -185,4 +185,21 @@ class TestingCommand extends Command
             'data' => $data,
         ]);
     }
+
+    private function versions()
+    {
+        $database_manager = app(\Illuminate\Database\DatabaseManager::class);
+
+        $postgres_version = object_get(array_first((array) $database_manager->connection('pgsql')->select("SELECT version();")), 'version');
+        $clickhouse_version = array_first(array_first($database_manager->connection('clickhouse')->select("SELECT version()")));
+        $app_version = (new \PragmaRX\Version\Package\Version())->format();
+        $laravel_version = app()->version();
+
+        $this->comment(\json_encode(compact(
+            'postgres_version',
+            'clickhouse_version',
+            'app_version',
+            'laravel_version'
+        ), JSON_PRETTY_PRINT));
+    }
 }
