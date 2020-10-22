@@ -1,7 +1,7 @@
 # Universal laravel docker skeleton
 
 [![Changelog badge][changelog-badge]][changelog] 
-[![Version 1.0.25 Badge][version-badge]][changelog] 
+[![Version 1.0.26 Badge][version-badge]][changelog] 
 [![MIT License Badge][license-badge]][license]
 ![Docker build CI](https://github.com/IsaevDimka/universal-laravel-docker-skeleton/workflows/Docker%20build%20CI/badge.svg)
 ![Laravel](https://github.com/IsaevDimka/universal-laravel-docker-skeleton/workflows/Laravel/badge.svg)
@@ -25,7 +25,7 @@
 + `mongodb` — mongo:4.2.10
 + `adminer` — adminer:latest
 + `rabbitmq` — rabbitmq:3.8.9-management-alpine
-+ `roadrunner` — php:7.4-cli & spiral/roadrunner v1.8.3
++ `roadrunner` — php:7.4-cli & spiral/roadrunner v1.8.4
 + `clickhouse-server` — yandex/clickhouse-server v20.9.3.45
 
 ## Features
@@ -106,7 +106,7 @@ Thank you for your help improving software one changelog at a time!
 ## License
 MIT License (MIT). Please see [`LICENSE`](./LICENSE) for more information. Maintained by [IsaevDimka](https://github.com/IsaevDimka).
 
-[version-badge]: https://img.shields.io/badge/alpha-1.0.25-blue.svg
+[version-badge]: https://img.shields.io/badge/stable-1.0.26-blue.svg
 [changelog]: ./CHANGELOG.md
 [changelog-badge]: https://img.shields.io/badge/changelog-docker%20skeleton-%23E05735
 [license]: ./LICENSE
