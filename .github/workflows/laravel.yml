@@ -23,6 +23,8 @@ jobs:
           key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-php-
+      - name: Install Composer 'hirak/prestissimo' package
+        run: composer global require hirak/prestissimo --update-no-dev --ansi
       - name: Copy .env
         run: (cd ./src/laravel && composer run-script post-root-package-install)
       - name: Install Dependencies
