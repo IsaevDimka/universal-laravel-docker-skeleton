@@ -114,6 +114,8 @@ services:
     container_name: laravel-clickhouse
     build:
       context: ./docker-containers/clickhouse
+      args:
+        version: ${CLICKHOUSE_VERSION}
     restart: unless-stopped
     environment:
       CLICKHOUSE_DB: ${CLICKHOUSE_DB}

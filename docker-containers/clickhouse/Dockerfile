@@ -1,8 +1,8 @@
 FROM ubuntu:20.04
 
 ARG repository="deb https://repo.clickhouse.tech/deb/stable/ main/"
-ARG version=20.9.3.45
 ARG gosu_ver=1.10
+ARG version
 
 RUN apt-get update \
     && apt-get install --yes --no-install-recommends \
