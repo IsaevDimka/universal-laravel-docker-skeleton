@@ -106,7 +106,7 @@ RUN curl -s http://getcomposer.org/installer | php && \
     echo "export PATH=${PATH}:/var/www/laravel/vendor/bin" >> ~/.bashrc && \
     mv composer.phar /usr/local/bin/composer
 
-RUN composer global require 'hirak/prestissimo' --no-interaction --no-suggest --prefer-dist
+#RUN composer global require 'hirak/prestissimo' --no-interaction --no-suggest --prefer-dist
 # Source the bash
 RUN . ~/.bashrc
 
