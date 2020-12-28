@@ -1,0 +1,51 @@
+{
+    "name": "isaevdimka/laravel-debug-service",
+    "description": "Laravel debug helper service",
+    "keywords": [
+        "isaevdimka",
+        "laravel",
+        "debug"
+    ],
+    "homepage": "https://github.com/IsaevDimka/laravel-debug-service",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dmitriy Isaev",
+            "email": "isaevdimka@gmail.com",
+            "homepage": "https://github.com/IsaevDimka",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "illuminate/support": "^8.0",
+        "pragmarx/version": "^1.2"
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Services\\": "src"
+        },
+        "aliases": {
+            "DebugService": "Services\\DebugService"
+        }
+    },
+    "autoload-dev": {
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/IsaevDimka"
+        },
+        {
+            "type": "other",
+            "url": "https://github.com/swiftcloud-space"
+        }
+    ]
+}

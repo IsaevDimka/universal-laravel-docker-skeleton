@@ -1,0 +1,46 @@
+{
+    "name": "isaevdimka/laravel-telegram-logging",
+    "description": "Send logs to Telegram chat via Telegram bot",
+    "keywords": [
+        "isaevdimka",
+        "laravel",
+        "monolog",
+        "logger"
+    ],
+    "homepage": "https://github.com/IsaevDimka/laravel-telegram-logging",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dmitriy Isaev",
+            "email": "isaevdimka@gmail.com",
+            "homepage": "https://github.com/IsaevDimka",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "illuminate/support": "^8.0",
+        "pragmarx/version": "^1.2",
+        "monolog/monolog": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Logger\\" : "src"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/IsaevDimka"
+        },
+        {
+            "type": "other",
+            "url": "https://github.com/swiftcloud-space"
+        }
+    ]
+}
