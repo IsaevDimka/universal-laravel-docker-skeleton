@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property int $id
  * @property string $name
- * @property string $sign
+ * @property string $iso_code
  * @property bool $is_active
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -24,7 +24,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Currency whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Currency whereIsActive($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Currency whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Currency whereSign($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Currency whereIsoCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Currency whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Currency withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Currency withoutTrashed()
@@ -35,7 +35,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Currency extends BaseModel
 {
-
     protected $table = 'currencies';
 
     protected $primaryKey = 'id';
@@ -44,9 +43,13 @@ class Currency extends BaseModel
     protected $fillable = [
         'id',
         'name',
-        'sign',
+        'iso_code',
         'is_active',
     ];
+
+    public function getRouteKeyName() {
+        return 'iso_code';
+    }
 
     protected $casts = [
         'is_active'  => 'boolean',
@@ -58,18 +61,18 @@ class Currency extends BaseModel
      *
      * @param $value
      */
-    public function setSignAttribute($value)
+    public function setIsoCodeAttribute($value)
     {
-        $this->attributes['sign'] = \mb_strtoupper($value);
+        $this->attributes['iso_code'] = \mb_strtoupper($value);
     }
 
     public function getCreatedAtAttribute($value)
     {
-        return BaseModel::formattingCarbonAttribute($value);
+        return self::formattingCarbonAttribute($value);
     }
 
     public function getUpdatedAtAttribute($value)
     {
-        return BaseModel::formattingCarbonAttribute($value);
+        return self::formattingCarbonAttribute($value);
     }
 }

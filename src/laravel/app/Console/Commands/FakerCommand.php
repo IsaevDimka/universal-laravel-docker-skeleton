@@ -38,7 +38,7 @@ class FakerCommand extends Command
      */
     public function handle()
     {
-        \App\Services\DebugService::start();
+        \Services\DebugService::start();
 
         $method = $this->option('method');
         $limit = $this->option('limit') ?? 10;
@@ -50,7 +50,7 @@ class FakerCommand extends Command
             default: $this->error('method not found'); break;
         endswitch;
 
-        $meta = \App\Services\DebugService::result();
+        $meta = \Services\DebugService::result();
         $this->line('Duration: '.$meta['durations']['this']);
         $this->line(\json_encode($meta, JSON_PRETTY_PRINT));
     }

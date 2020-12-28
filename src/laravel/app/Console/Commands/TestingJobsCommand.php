@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\Jobs\TestJob;
 use Illuminate\Console\Command;
-use Illuminate\Support\Str;
 
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\Bus;
@@ -12,6 +11,7 @@ use Throwable;
 
 class TestingJobsCommand extends Command
 {
+
     /**
      * The name and signature of the console command.
      *

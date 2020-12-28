@@ -1,0 +1,48 @@
+{
+    "name": "isaevdimka/laravel-mongodb-logging",
+    "description": "Send logs to MongoDB collection via MongoDB",
+    "keywords": [
+        "isaevdimka",
+        "laravel",
+        "monolog",
+        "logger",
+        "mongodb"
+    ],
+    "homepage": "https://github.com/IsaevDimka/laravel-mongodb-logging",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dmitriy Isaev",
+            "email": "isaevdimka@gmail.com",
+            "homepage": "https://github.com/IsaevDimka",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "illuminate/support": "^8.0",
+        "pragmarx/version": "^1.2",
+        "monolog/monolog": "^2.0",
+        "jenssegers/mongodb": "3.8.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Logger\\" : "src"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/IsaevDimka"
+        },
+        {
+            "type": "other",
+            "url": "https://github.com/swiftcloud-space"
+        }
+    ]
+}

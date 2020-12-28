@@ -16,7 +16,9 @@ class Install
             ->artisan('storage:link')
             ->external('npm', 'install', '--production')
             ->external('npm', 'run', 'production')
-            ->external('horizon:install')
+            ->artisan('horizon:install')
+            ->artisan('telescope:publish')
+            ->artisan('gauge:install')
             ->artisan('geoip:update')
             ->external('composer clear')
             ->external('composer build');
@@ -33,6 +35,8 @@ class Install
             ->external('npm', 'install')
             ->external('npm', 'run', 'development')
             ->artisan('horizon:install')
+            ->artisan('telescope:publish')
+            ->artisan('gauge:install')
             ->artisan('geoip:update')
             ->external('composer clear')
             ->external('composer build');
@@ -41,8 +45,8 @@ class Install
     public function productionRoot(Runner $run)
     {
         $run
-            //            ->dispatch(new MakeQueueSupervisorConfig)
-            //            ->dispatch(new MakeSocketSupervisorConfig)
+//            ->dispatch(new MakeQueueSupervisorConfig)
+//            ->dispatch(new MakeSocketSupervisorConfig)
             ->external('supervisorctl', 'reread')
             ->external('supervisorctl', 'update');
     }

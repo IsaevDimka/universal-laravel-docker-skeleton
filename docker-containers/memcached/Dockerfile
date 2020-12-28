@@ -1,4 +1,3 @@
-FROM memcached:1.6.7-alpine
+FROM memcached:1.6.9-alpine
 
-MAINTAINER Dmitriy Isaev <isaevdimka@gmail.com>
 LABEL Description="Memcahed container"

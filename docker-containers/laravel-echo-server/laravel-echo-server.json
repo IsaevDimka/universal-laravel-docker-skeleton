@@ -7,11 +7,8 @@
   "databaseConfig": {
     "redis": {
       "host" : "laravel-redis",
-      "password" : "Z4E9W!zB8JGnPMpT",
+      "password" : "i9Nfr&GynUGUwRda",
       "keyPrefix": "laravel_database_"
-    },
-    "sqlite": {
-      "databasePath": "/database/laravel-echo-server.sqlite"
     }
   },
   "devMode": true,
@@ -19,8 +16,8 @@
   "port": "6001",
   "protocol": "http",
   "socketio": {},
-  "sslCertPath": "",
-  "sslKeyPath": "",
+  "sslCertPath": "/etc/letsencrypt/fullchain.pem",
+  "sslKeyPath": "/etc/letsencrypt/privkey.pem",
   "secureOptions": 67108864,
   "sslCertChainPath": "",
   "sslPassphrase": "",

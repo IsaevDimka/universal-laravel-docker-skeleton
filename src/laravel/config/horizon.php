@@ -70,7 +70,10 @@ return [
     |
     */
 
-    'middleware' => ['web'],
+    'middleware' => [
+        'api',
+        'auth:api',
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -151,7 +154,7 @@ return [
     |
     */
 
-    'memory_limit' => 512,
+    'memory_limit' => 1024,
 
     /*
     |--------------------------------------------------------------------------
@@ -176,7 +179,7 @@ return [
             ],
             'supervisor-2' => [
                 'connection' => 'redis',
-                'queue' => ['external', 'worker'],
+                'queue' => ['high'],
                 'balance' => 'auto',
                 'minProcesses' => 1,
                 'maxProcesses' => 3,
@@ -203,7 +206,7 @@ return [
             ],
             'supervisor-2' => [
                 'connection' => 'redis',
-                'queue' => ['external', 'worker'],
+                'queue' => ['high'],
                 'balance' => 'auto',
                 'minProcesses' => 1,
                 'maxProcesses' => 1,

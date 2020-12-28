@@ -6,21 +6,20 @@ use Illuminate\Contracts\Validation\Rule;
 
 class Decimal implements Rule
 {
+    protected array $parameters = [];
+
     /**
      * Create a new rule instance.
      *
-     * @return void
+     * @param array $parameters
      */
-    public function __construct()
+    public function __construct(array $parameters = [])
     {
-        //
+        $this->parameters = $parameters;
     }
 
     /**
      * Generate an example value that satisifies the validation rule.
-     *
-     * @param none.
-     * @return string.
      *
      **/
     public function example()
@@ -51,7 +50,6 @@ class Decimal implements Rule
     /**
      * Get the validation error message.
      *
-     * @param none.
      * @return string.
      *
      **/

@@ -722,8 +722,14 @@ func TestHandler_FormData_POST_Overwrite(t *testing.T) {
 
 	form := url.Values{}
 
-	form.Add("key", "value1")
-	form.Add("key", "value2")
+	form.Add("key", "value")
+	form.Add("name[]", "name1")
+	form.Add("name[]", "name2")
+	form.Add("name[]", "name3")
+	form.Add("arr[x][y][z]", "y")
+	form.Add("arr[x][y][e]", "f")
+	form.Add("arr[c]p", "l")
+	form.Add("arr[c]z", "")
 
 	req, err := http.NewRequest("POST", "http://localhost"+hs.Addr, strings.NewReader(form.Encode()))
 	assert.NoError(t, err)
@@ -746,7 +752,7 @@ func TestHandler_FormData_POST_Overwrite(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, 200, r.StatusCode)
 
-	assert.Equal(t, `{"key":"value2","arr":{"x":{"y":null}}}`, string(b))
+	assert.Equal(t, `{"arr":{"c":{"p":"l","z":""},"x":{"y":{"e":"f","z":"y"}}},"key":"value","name":["name1","name2","name3"]}`, string(b))
 }
 
 func TestHandler_FormData_POST_Form_UrlEncoded_Charset(t *testing.T) {
@@ -846,7 +852,7 @@ func TestHandler_FormData_PUT(t *testing.T) {
 	assert.NoError(t, h.rr.Start())
 	defer h.rr.Stop()
 
-	hs := &http.Server{Addr: ":8084", Handler: h}
+	hs := &http.Server{Addr: ":18084", Handler: h}
 	defer func() {
 		err := hs.Shutdown(context.Background())
 		if err != nil {

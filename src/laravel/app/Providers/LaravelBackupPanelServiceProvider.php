@@ -16,10 +16,8 @@ class LaravelBackupPanelServiceProvider extends LaravelBackupPanelApplicationSer
      */
     protected function gate()
     {
-        Gate::define('viewLaravelBackupPanel', function ($user) {
-            return in_array($user->email, [
-                // 'admin@your-site.com'
-            ]);
+        Gate::define('viewLaravelBackupPanel', function (\App\Models\User $user) {
+            return $user->hasRole('root');
         });
     }
 }

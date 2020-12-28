@@ -19,7 +19,6 @@ class DatabaseSeeder extends Seeder
              CurrencySeeder::class,
              TimezoneSeeder::class,
              UserSeeder::class,
-             NewsSeeder::class,
          ]);
     }
 }

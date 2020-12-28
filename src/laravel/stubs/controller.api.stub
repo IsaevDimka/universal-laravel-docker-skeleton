@@ -2,10 +2,10 @@
 
 namespace {{ namespace }};
 
-use {{ rootNamespace }}Http\Controllers\Controller;
+use {{ rootNamespace }}\Http\Controllers\API\ApiController;
 use Illuminate\Http\Request;
 
-class {{ class }} extends Controller
+class {{ class }} extends ApiController
 {
     /**
      * Display a listing of the resource.

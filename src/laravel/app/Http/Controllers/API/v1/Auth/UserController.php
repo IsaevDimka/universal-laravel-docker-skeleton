@@ -3,24 +3,28 @@
 namespace App\Http\Controllers\API\v1\Auth;
 
 use App\Http\Controllers\API\ApiController;
+use App\Jobs\UserLoginActivityStoreJob;
+use App\Jobs\UserUpdateLastVisitAt;
 use App\Models\User;
-use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
-use Illuminate\Support\Facades\Cache;
+use \Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends ApiController
 {
     /**
      * Get authenticated user.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
      */
     public function current(Request $request)
     {
-        /** @var User $user */
-        $user = $request->user();
-        $this->dispatch(new \App\Jobs\UserUpdateLastVisitAt($user->id));
-        return api()->ok(null, (new UserResource($user)));
+        $user_id = $request->user()->id;
+
+        dispatch(new UserUpdateLastVisitAt($user_id));
+        dispatch(new UserLoginActivityStoreJob($user_id, $request->getClientIp(), $request->userAgent()));
+
+        $expiration = Auth::guard()->getPayload()->get('exp');
+        $expires_in = $expiration - time();
+
+        return api()->ok(null, UserResource::make(User::find($user_id)), ['token' => compact('expires_in')]);
     }
 }

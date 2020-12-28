@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class WebhookController extends Controller
 {
-
     public function any(Request $request)
     {
         return api()->ok(null, [

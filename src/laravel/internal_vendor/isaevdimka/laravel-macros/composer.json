@@ -1,0 +1,43 @@
+{
+    "name": "isaevdimka/laravel-macros",
+    "description": "Provides backwards compatibility for macros in the latest Laravel release",
+    "keywords": [
+        "isaevdimka",
+        "laravel",
+        "helpers"
+    ],
+    "homepage": "https://github.com/IsaevDimka/laravel-macros",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dmitriy Isaev",
+            "email": "isaevdimka@gmail.com",
+            "homepage": "https://github.com/IsaevDimka",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "illuminate/support": "^8.0"
+    },
+    "autoload": {
+        "files": [
+            "src/macros.php"
+        ]
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/IsaevDimka"
+        },
+        {
+            "type": "other",
+            "url": "https://github.com/swiftcloud-space"
+        }
+    ]
+}

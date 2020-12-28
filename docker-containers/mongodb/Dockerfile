@@ -1,6 +1,5 @@
-FROM mongo:4.2.10
+FROM mongo:4.4.2
 
-MAINTAINER Dmitriy Isaev <isaevdimka@gmail.com>
 LABEL Description="MongoDB container"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \

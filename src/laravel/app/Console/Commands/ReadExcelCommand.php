@@ -20,7 +20,7 @@ class ReadExcelCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Example read excel';
 
     /**
      * Create a new command instance.
@@ -45,7 +45,7 @@ class ReadExcelCommand extends Command
         $collection = (new FastExcel())->import($path);
         foreach($collection as $key => $item)
         {
-            $count_izbirkom = (int) $item['count'];
+            $this->line("key: {$key} | item: ".\json_encode($item));
         }
 
         $this->comment("Duration: ".format_duration((microtime(true) - $start_microtime)));

@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Monitor;
 
+use App\Services\BackendService;
 use Illuminate\Console\Command;
 
 class ServerMonitorDiskUsage extends Command
@@ -20,13 +21,16 @@ class ServerMonitorDiskUsage extends Command
      */
     protected $description = 'Disk space enough';
 
+    protected BackendService $backendService;
+
     /**
      * Create a new command instance.
      *
-     * @return void
+     * @param BackendService $backendService
      */
-    public function __construct()
+    public function __construct(BackendService $backendService)
     {
+        $this->backendService = $backendService;
         parent::__construct();
     }
 
@@ -37,11 +41,7 @@ class ServerMonitorDiskUsage extends Command
      */
     public function handle()
     {
-        $totalSpace = disk_total_space(base_path());
-        $freeSpace  = disk_free_space(base_path());
-        $usedSpace  = $totalSpace - $freeSpace;
-
-        $percentage = round(($usedSpace / $totalSpace) * 100);
+        $percentage = $this->backendService->getDiskUsage();
 
         $message = "Server monitor disk usage at {$percentage}%";
 

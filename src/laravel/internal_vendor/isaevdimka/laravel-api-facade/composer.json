@@ -1,0 +1,62 @@
+{
+    "name": "isaevdimka/laravel-api-facade",
+    "description": "Pretty laravel api response facade",
+    "keywords": [
+        "isaevdimka",
+        "laravel",
+        "api",
+        "response"
+    ],
+    "homepage": "https://github.com/IsaevDimka/laravel-api-facade",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dmitriy Isaev",
+            "email": "isaevdimka@gmail.com",
+            "homepage": "https://github.com/IsaevDimka",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "illuminate/support": "^8.0",
+        "pragmarx/version": "^1.2"
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Api\\": "src"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Api\\ApiServiceProvider"
+            ],
+            "aliases": {
+                "Api": "Api\\ApiFacade"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/IsaevDimka"
+        },
+        {
+            "type": "other",
+            "url": "https://github.com/swiftcloud-space"
+        }
+    ]
+}

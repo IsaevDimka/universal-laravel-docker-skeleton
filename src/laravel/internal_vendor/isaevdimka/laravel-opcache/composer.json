@@ -1,0 +1,53 @@
+{
+    "name": "isaevdimka/laravel-opcache",
+    "description": "Opcache helper service",
+    "keywords": [
+        "isaevdimka",
+        "laravel",
+        "opcache"
+    ],
+    "homepage": "https://github.com/IsaevDimka/laravel-opcache",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dmitriy Isaev",
+            "email": "isaevdimka@gmail.com",
+            "homepage": "https://github.com/IsaevDimka",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "illuminate/support": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Opcache\\": "src"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Opcache\\OpcacheServiceProvider"
+            ],
+            "aliases": {
+                "Opcache": "Opcache\\OpcacheFacade"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/IsaevDimka"
+        },
+        {
+            "type": "other",
+            "url": "https://github.com/swiftcloud-space"
+        }
+    ]
+}

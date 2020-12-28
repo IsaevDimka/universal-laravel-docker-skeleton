@@ -12,8 +12,8 @@ class TelegramWebhookController extends Controller
 {
     public function webhook(Request $request)
     {
-        \App\Services\DebugService::start();
-        $debug = \App\Services\DebugService::result();
+        \Services\DebugService::start();
+        $debug = \Services\DebugService::result();
 
         $telegram_webhook_logs = [
             'uuid'            => (string) Str::uuid(),
@@ -38,9 +38,9 @@ class TelegramWebhookController extends Controller
         ]);
     }
 
-    public function get(Request $request)
+    public function get()
     {
-        $items = TelegramWebhookLogs::all();
+        $items = TelegramWebhookLogs::all()->filter(fn($i) => $i['raw'] = \json_decode($i['raw']));
         return api()->ok(null, ['items' => $items->toArray(), 'total' => $items->count()]);
     }
 }

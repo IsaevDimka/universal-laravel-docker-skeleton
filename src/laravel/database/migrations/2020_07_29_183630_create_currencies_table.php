@@ -16,7 +16,7 @@ class CreateCurrenciesTable extends Migration
         Schema::create('currencies', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('sign', 3)->unique()->index();
+            $table->char('iso_code', 3)->unique()->index();
             $table->boolean('is_active')->default(true);
         });
     }

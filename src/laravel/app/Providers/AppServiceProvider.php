@@ -36,5 +36,10 @@ class AppServiceProvider extends ServiceProvider
 
         //        \URL::forceScheme('https');
         Schema::defaultStringLength(256);
+        
+        if (file_exists(config_path('settings.json'))) {
+            $settings = \json_decode(file_get_contents(config_path('settings.json')), true);
+            config(['settings' => $settings]);
+        }
     }
 }

@@ -51,21 +51,34 @@ class TestJob implements ShouldQueue
     //    public $delay = 2;
 
     private array $payload;
+    private bool $failed;
 
     /**
      * Create a new job instance.
      *
-     * @param array  $payload
-     * @param string $queue
+     * @param array $payload
+     * @param bool  $failed
      */
-    public function __construct(array $payload = [])
+    public function __construct(array $payload = [], bool $failed = false)
     {
         $this->payload  = $payload;
+        $this->failed = $failed;
     }
 
     public function tags()
     {
         return ['connection:'.$this->connection, 'delay:'.$this->delay];
+    }
+
+    public function retryAfter()
+    {
+        /**
+         * Exponential backward formula
+         * Delay versus attempts
+         */
+        return now()->addSeconds(
+            (int) round(((2 ** $this->attempts()) - 1 ) / 2)
+        );
     }
 
     /**
@@ -79,9 +92,13 @@ class TestJob implements ShouldQueue
             [
                 'type'       => 'clear',
                 'payload'    => $this->payload,
+                'failed'     => $this->failed,
                 'queue'      => $this->queue,
                 'connection' => $this->connection,
                 'tags'       => $this->tags(),
             ]);
+        if ($this->failed) {
+            throw new \Exception('Job failed!');
+        }
     }
 }

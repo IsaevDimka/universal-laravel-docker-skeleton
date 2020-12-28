@@ -9,7 +9,7 @@ class Update
     public function production(Runner $run)
     {
         $run
-            ->external('php -d memory_limit=-1 /usr/local/bin/composer update')
+            ->external('composer update')
             ->artisan('down')
             ->external('npm', 'install')
             ->external('npm', 'run', 'production')
@@ -22,7 +22,7 @@ class Update
     public function local(Runner $run)
     {
         $run
-            ->external('php -d memory_limit=-1 /usr/local/bin/composer update')
+            ->external('composer update')
             ->artisan('down')
             ->external('npm', 'install')
             ->external('npm', 'run', 'development')

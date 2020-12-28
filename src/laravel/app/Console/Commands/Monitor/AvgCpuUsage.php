@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Monitor;
 
+use App\Services\BackendService;
 use Illuminate\Console\Command;
 
 class AvgCpuUsage extends Command
@@ -20,13 +21,16 @@ class AvgCpuUsage extends Command
      */
     protected $description = 'Average CPU usage';
 
+    protected BackendService $backendService;
+
     /**
      * Create a new command instance.
      *
-     * @return void
+     * @param BackendService $backendService
      */
-    public function __construct()
+    public function __construct(BackendService $backendService)
     {
+        $this->backendService = $backendService;
         parent::__construct();
     }
 
@@ -37,7 +41,7 @@ class AvgCpuUsage extends Command
      */
     public function handle()
     {
-        $percentage = round($this->getCPUUsagePercentage(), 2);
+        $percentage = $this->backendService->getCPUUsagePercentage();
 
         $message = "Average CPU usage at {$percentage}%";
 
@@ -47,23 +51,12 @@ class AvgCpuUsage extends Command
         ]);
 
         if($percentage >= $thresholds['fail']) {
-            logger()
-                ->channel('telegram')
-                ->emergency($message, ['type' => 'clear']);
+            logger()->channel('telegram')->emergency($message, ['type' => 'clear']);
         }
         if($percentage >= $thresholds['warning']) {
-            logger()
-                ->channel('telegram')
-                ->warning($message, ['type' => 'clear']);
+            logger()->channel('telegram')->warning($message, ['type' => 'clear']);
         }
 
         $this->info($message);
-    }
-
-    protected function getCPUUsagePercentage()
-    {
-        $cpu = shell_exec("grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage}'");
-
-        return (float) $cpu;
     }
 }

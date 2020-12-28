@@ -13,7 +13,7 @@
         </div>
         <div class="bullshit__info">
           Copyright by
-          <a class="link-type" href="https://swiftlead.space" target="_blank">SwiftCloud</a>
+          <a class="link-type" href="https://github.com/IsaevDimka" target="_blank">IsaevDimka</a>
         </div>
         <div class="bullshit__headline">
           {{ message }}

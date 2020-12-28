@@ -47,7 +47,7 @@ up: ## Create and start containers
 	$(call print_block, 'Adminer                          ⇒ http://$(IP_ADDRESS):$(ADMINER_PORT)')
 	$(call print_block, 'Supervisor UI                    ⇒ http://$(IP_ADDRESS):$(APP_SUPERVISOR_PORT)')
 	$(call print_block, 'RabbitMQ UI                      ⇒ http://$(IP_ADDRESS):$(RABBITMQ_MANAGEMENT_PORT)')
-	$(call print_block, 'Additional ports (available for connections) - Redis ⇒ $(REDIS_PORT); Postgres ⇒ $(POSTGRES_PORT); Memcached ⇒ $(MEMCACHED_PORT); MongoDB ⇒ $(MONGO_PORT); RabbitMQ ⇒ $(RABBITMQ_EXCHANGE_PORT); ClickHouse ⇒ $(DB_CLICKHOUSE_PORT);')
+	$(call print_block, 'Additional ports (available for connections) - Redis ⇒ $(REDIS_PORT); Postgres ⇒ $(POSTGRES_PORT); Memcached ⇒ $(MEMCACHED_PORT); MongoDB ⇒ $(MONGO_PORT); RabbitMQ ⇒ $(RABBITMQ_EXCHANGE_PORT); ClickHouse ⇒ $(CLICKHOUSE_PORT);')
 
 down: ## Stop and remove containers, networks, images, and volumes
 	$(docker_compose_bin) down -t 5
@@ -107,7 +107,7 @@ mongodb-install: ## Install database mongodb
 	${docker_bin} exec $(DOCKER_PREFIX)-mongodb mongo laravel_logs ./build/create-mongo-log-user.js -u admin -p $(MONGO_INITDB_ROOT_PASSWORD) --authenticationDatabase admin
 
 socket-shell: ## Start shell into echo-server container
-	$(docker_compose_bin) exec $(DOCKER_PREFIX)-echo-server sh
+	$(docker_compose_bin) exec $(DOCKER_PREFIX)-socket sh
 ---------------: ##  ---------------
 
 rr-shell: ## Start shell into RoadRunner container
@@ -133,7 +133,7 @@ app-version-major: app-version-timestamp ## update major version UP.Y.Z
 app-version-minor: app-version-timestamp  ## update minor version X.UP.Z
 	${docker_bin} exec -it $(DOCKER_PREFIX)-app sh -c "(cd /var/www/laravel && php artisan version:minor)"
 
-app-version-patch: app-version-timestamp  ## update minor version X.Y.UP
+app-version-patch: app-version-timestamp  ## update patch version X.Y.UP
 	${docker_bin} exec -it $(DOCKER_PREFIX)-app sh -c "(cd /var/www/laravel && php artisan version:patch)"
 
 app-version-timestamp: ## update version timestamp

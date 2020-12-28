@@ -4,14 +4,12 @@
 name: Node.js CI
 
 on:
-  push:
-    branches: [ master ]
   pull_request:
     branches: [ master ]
 
 jobs:
-  build:
-
+  build-node:
+    name: Node.js CI
     runs-on: ubuntu-latest
 
     strategy:
@@ -21,7 +19,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2.1.2
+      uses: actions/setup-node@v2.1.4
       with:
         node-version: ${{ matrix.node-version }}
     - run: (cd ./src/laravel && npm install)

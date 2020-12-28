@@ -1,6 +1,5 @@
 FROM php:7.4-fpm
 
-MAINTAINER Dmitriy Isaev <isaevdimka@gmail.com>
 LABEL Description="Application container"
 
 RUN apt-get update && \
@@ -157,9 +156,9 @@ RUN touch /var/log/cron.log
 CMD cron && tail -f /var/log/cron.log
 
 # php config
-ADD ./php.ini /usr/local/etc/php/conf.d
-ADD ./opcache.ini /usr/local/etc/php/conf.d
-ADD ./laravel.ini /usr/local/etc/php/conf.d
+COPY ./php.ini /usr/local/etc/php/conf.d
+COPY ./opcache.ini /usr/local/etc/php/conf.d
+COPY ./laravel.ini /usr/local/etc/php/conf.d
 
 COPY ./docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
@@ -206,7 +205,7 @@ RUN if [ ${INSTALL_XDEBUG} = true ]; then \
 ;fi
 
 # Copy xdebug configuration for remote debugging
-ADD ./xdebug.ini /usr/local/etc/php/conf.d
+COPY ./xdebug.ini /usr/local/etc/php/conf.d
 
 RUN sed -i "s/xdebug.remote_autostart=0/xdebug.remote_autostart=1/" /usr/local/etc/php/conf.d/xdebug.ini && \
     sed -i "s/xdebug.remote_enable=0/xdebug.remote_enable=1/" /usr/local/etc/php/conf.d/xdebug.ini && \
