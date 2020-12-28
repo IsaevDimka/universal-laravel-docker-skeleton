@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Spatie\Permission\Exceptions\UnauthorizedException;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 /**
  *  I have all of these roles!
@@ -23,7 +23,6 @@ class CheckhasAllRoles
      */
     public function handle($request, Closure $next, $role)
     {
-
         if (Auth::guest()) {
             throw UnauthorizedException::notLoggedIn();
         }

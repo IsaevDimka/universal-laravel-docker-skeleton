@@ -13,17 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::group(['prefix' => 'v1', 'as' => 'api.v1.'], function() {
-
     Route::get('localization/{locale}', [App\Http\Controllers\API\v1\LocalizationController::class])->where(['locale' => '[a-zA-Z]{2}'])->name('localization');
     Route::get('status', App\Http\Controllers\API\v1\StatusController::class)->name('status');
-
     Route::any('webhook', [App\Http\Controllers\API\v1\WebhookController::class, 'any'])->name('webhook.any');
     Route::get('webhook/test', [App\Http\Controllers\API\v1\WebhookController::class, 'test'])->name('webhook.test');
 
+    Route::apiResource('timezones', App\Http\Controllers\API\v1\TimezoneController::class)->only(['index']);
     Route::apiResource('countries', App\Http\Controllers\API\v1\CountryController::class)->only(['index']);
     Route::apiResource('storages', App\Http\Controllers\API\v1\StorageController::class)->only(['index', 'show', 'store']);
     Route::apiResource('news', App\Http\Controllers\API\v1\NewsController::class)->only(['index', 'show']);
     Route::apiResource('feedback', App\Http\Controllers\API\v1\FeedbackController::class)->only(['store']);
+    Route::apiResource('storages', App\Http\Controllers\API\v1\StorageController::class)->only(['index', 'show', 'store']);
+
 
     Route::group(['middleware' => ['guest:api', 'throttle:60,1']], function () {
         Route::group(['prefix' => 'auth'], function () {
@@ -45,8 +46,9 @@ Route::group(['prefix' => 'v1', 'as' => 'api.v1.'], function() {
         Route::group(['prefix' => 'auth'], function () {
             Route::get('user', [App\Http\Controllers\API\v1\Auth\UserController::class, 'current']);
             Route::post('logout', [App\Http\Controllers\API\v1\Auth\LoginController::class, 'logout']);
+            Route::apiResource('loginActivities', App\Http\Controllers\API\v1\Auth\UserLoginActivityController::class)->only(['index']);
         });
-//        Route::patch('settings/profile', 'Settings\ProfileController@update');
+        //        Route::patch('settings/profile', 'Settings\ProfileController@update');
 //        Route::patch('settings/password', 'Settings\PasswordController@update');
         Route::group(['middleware' => 'role:root|admin'], function() {
             Route::apiResource('roles', App\Http\Controllers\API\v1\RoleController::class);
@@ -58,6 +60,8 @@ Route::group(['prefix' => 'v1', 'as' => 'api.v1.'], function() {
             Route::get('roles/{role}/permissions', [App\Http\Controllers\API\v1\RoleController::class, 'permissions']);
         });
 
+        Route::apiResource('currencies', App\Http\Controllers\API\v1\CurrencyController::class)->only(['index', 'show']);
+        Route::get('currencies/getByIsoCode/{iso_code}', [App\Http\Controllers\API\v1\CurrencyController::class, 'getByIsoCode'])->name('currencies.getByIsoCode');
     });
 
     /**
@@ -75,6 +79,6 @@ Route::group(['prefix' => 'v1', 'as' => 'api.v1.'], function() {
 
     Route::group(['prefix' => 'telegram', 'as' => 'telegram.'], function(){
         Route::any('webhook', [App\Http\Controllers\API\v1\TelegramWebhookController::class, 'webhook'])->name('webhook');
-        Route::get('webhook/get', [App\Http\Controllers\API\v1\TelegramWebhookController::class, 'get'])->name('webhook');
+        Route::get('webhook/get', [App\Http\Controllers\API\v1\TelegramWebhookController::class, 'get'])->name('webhook.get');
     });
 });

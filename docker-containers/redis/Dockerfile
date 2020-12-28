@@ -1,6 +1,5 @@
-FROM redis:6.0.8-alpine
+FROM redis:6.0.9-alpine
 
-MAINTAINER Dmitriy Isaev <isaevdimka@gmail.com>
 LABEL Description="Redis container"
 
 RUN apk update && \

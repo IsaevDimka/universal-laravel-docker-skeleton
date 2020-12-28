@@ -19,11 +19,12 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * App\Models\User
  *
  * @property int $id
- * @property string $username
- * @property string|null $first_name
- * @property string|null $last_name
- * @property string $email
+ * @property string|null $username
+ * @property string|null $name
+ * @property string|null $email
  * @property string|null $phone
+ * @property bool $phone_is_verify
+ * @property string|null $avatar
  * @property string|null $telegram_chat_id
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property \Illuminate\Support\Carbon|null $last_visit_at
@@ -34,91 +35,42 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Passport\Client[] $clients
- * @property-read int|null $clients_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\OAuthProvider[] $oauthProviders
+ * @property-read int|null $oauth_providers_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Permission[] $permissions
  * @property-read int|null $permissions_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Role[] $roles
  * @property-read int|null $roles_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Passport\Token[] $tokens
- * @property-read int|null $tokens_count
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User permission($permissions)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User role($roles, $guard = null)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereEmailVerifiedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereFirstName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereIsActive($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereLastName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereLastVisitAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereLocale($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereOptions($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User wherePhone($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUsername($value)
- * @mixin Authenticatable
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User active()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User notActive()
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\OAuthProvider[] $oauthProviders
- * @property-read int|null $oauth_providers_count
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereTelegramChatId($value)
- * @property string|null $firstName
- * @property string|null $lastName
- * @property string|null $telegramChatId
- * @property \Illuminate\Support\Carbon|null $emailVerifiedAt
- * @property \Illuminate\Support\Carbon|null $lastVisitAt
- * @property bool $isActive
- * @property string|null $rememberToken
- * @property \Illuminate\Support\Carbon|null $createdAt
- * @property \Illuminate\Support\Carbon|null $updatedAt
- * @property-read int|null $notificationsCount
- * @property-read int|null $oauthProvidersCount
- * @property-read int|null $permissionsCount
- * @property-read int|null $rolesCount
- * @property string|null $fio
- * @property string|null $type
- * @property string|null $typeSearchIzbirkom
- * @property string|null $uikNumber
- * @property bool $phoneIsVerify
- * @property mixed|null $birthdate
- * @property bool $isObserver
- * @property int|null $areaId
- * @property int|null $regionId
- * @property int|null $cityId
- * @method static \Illuminate\Database\Eloquent\Builder|User whereAreaId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereBirthdate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereCityId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereFio($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereIsObserver($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User active()
+ * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|User notActive()
+ * @method static \Illuminate\Database\Eloquent\Builder|User permission($permissions)
+ * @method static \Illuminate\Database\Eloquent\Builder|User query()
+ * @method static \Illuminate\Database\Eloquent\Builder|User role($roles, $guard = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereAvatar($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereEmailVerifiedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereIsActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereLastVisitAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereLocale($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereOptions($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePhoneIsVerify($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereRegionId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereTypeSearchIzbirkom($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereUikNumber($value)
- * @property-read \App\Models\Area|null $area
- * @property-read \App\Models\City|null $city
- * @property-read \App\Models\Region|null $region
- * @property string|null $registrationType
- * @method static \Illuminate\Database\Eloquent\Builder|User whereRegistrationType($value)
- * @property string|null $registration_type
- * @property string|null $type_search_izbirkom
- * @property string|null $uik_number
- * @property bool $phone_is_verify
- * @property bool $is_observer
- * @property int|null $area_id
- * @property int|null $region_id
- * @property int|null $city_id
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereTelegramChatId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereUsername($value)
+ * @mixin \Illuminate\Database\Eloquent\Collection|Authenticatable
  */
 class User extends Authenticatable implements HasLocalePreference, JWTSubject
-    //    ,MustVerifyEmail
+//    ,MustVerifyEmail
 {
     use Notifiable;
     use HasRoles;
@@ -179,7 +131,7 @@ class User extends Authenticatable implements HasLocalePreference, JWTSubject
      * Set permissions guard to API by default
      * @var string
      */
-    //    protected $guard_name = 'api';
+//    protected $guard_name = 'api';
 
     public static function boot()
     {

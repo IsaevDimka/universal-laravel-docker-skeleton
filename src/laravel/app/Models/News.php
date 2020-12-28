@@ -48,8 +48,6 @@ class News extends Model
 
     protected $primaryKey = 'id';
 
-    public $timestamps = false;
-
     protected $fillable = [
         'title',
         'slug',

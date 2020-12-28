@@ -1,6 +1,33 @@
 CHANGELOG
 =========
 
+v1.9.1 (21.12.2020)
+----------
+- Add `rr --version` flag support (thanks @tarampampam)
+- Update `reload` plugin, remove unnecessary goroutines and locks.
+- Add objectives to the metrics summary.
+- Automated releases build.
+
+v1.9.0 (02.12.2020)
+-------------------
+- Update PHP minimal supported version to 7.3
+- Support PHP 8.0
+- Update Ubuntu version in GHA to 20.04
+- Update Golang version in the RR Dockerfile to 1.15.5
+
+v1.8.4 (21.10.2020)
+-------------------
+- Update Goridge go dep to 2.4.6
+
+v1.8.3 (02.09.2020)
+-------------------
+- Fix superfluous response.WriteHeader issue.
+- Proper handle of `broken pipe` error on Linux and Windows.
+- PCI DSS compliant upgrade (thanks @antonydevanchi).
+- Fix HSTS header (thanks @antonydevanchi).
+- Add Request and Response headers to static files (thanks @siad007).
+- Add user_namespaces check when running RR worker from a particular user.
+
 v1.8.2 (06.06.2020)
 -------------------
 - Bugfix release

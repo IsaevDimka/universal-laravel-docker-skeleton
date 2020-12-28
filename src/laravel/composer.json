@@ -1,5 +1,5 @@
 {
-    "name": "laravel/laravel",
+    "name": "isaevdimka/universal-laravel-docker-skeleton",
     "type": "project",
     "description": "The Laravel Framework.",
     "keywords": [
@@ -7,55 +7,128 @@
         "laravel"
     ],
     "license": "MIT",
+    "homepage": "https://github.com/IsaevDimka/universal-laravel-docker-skeleton",
+    "support": {
+        "issues": "https://github.com/IsaevDimka/universal-laravel-docker-skeleton/issues",
+        "source": "https://github.com/IsaevDimka/universal-laravel-docker-skeleton"
+    },
+    "authors": [
+        {
+            "name": "Dmitriy Isaev",
+            "email": "me@isaevdimka.com"
+        }
+    ],
+    "repositories": {
+        "laravel/laravel-api-facade": {
+            "type": "path",
+            "url": "internal_vendor/isaevdimka/laravel-api-facade",
+            "options": {
+                "symlink": true
+            }
+        },
+        "isaevdimka/laravel-telegram-logging": {
+            "type": "path",
+            "url": "internal_vendor/isaevdimka/laravel-telegram-logging",
+            "options": {
+                "symlink": true
+            }
+        },
+        "isaevdimka/laravel-mongodb-logging": {
+            "type": "path",
+            "url": "internal_vendor/isaevdimka/laravel-mongodb-logging",
+            "options": {
+                "symlink": true
+            }
+        },
+        "isaevdimka/laravel-opcache": {
+            "type": "path",
+            "url": "internal_vendor/isaevdimka/laravel-opcache",
+            "options": {
+                "symlink": true
+            }
+        },
+        "isaevdimka/laravel-debug-service": {
+            "type": "path",
+            "url": "internal_vendor/isaevdimka/laravel-debug-service",
+            "options": {
+                "symlink": true
+            }
+        },
+        "isaevdimka/laravel-helpers": {
+            "type": "path",
+            "url": "internal_vendor/isaevdimka/laravel-helpers",
+            "options": {
+                "symlink": true
+            }
+        },
+        "isaevdimka/laravel-macros": {
+            "type": "path",
+            "url": "internal_vendor/isaevdimka/laravel-macros",
+            "options": {
+                "symlink": true
+            }
+        }
+    },
     "require": {
-        "php": "^7.4",
+        "php": "^7.4|^8.0",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-openssl": "*",
         "anhskohbo/no-captcha": "^3.3",
-        "arcanedev/log-viewer": "^8.0.1",
-        "fideloper/proxy": "4.4.0",
-        "fruitcake/laravel-cors": "v2.0.2",
+        "arcanedev/log-viewer": "^8.0.3",
+        "bavix/laravel-clickhouse": "^2.1",
+        "fideloper/proxy": "4.4.1",
+        "fruitcake/laravel-cors": "v2.0.3",
         "geoip2/geoip2": "^2.10",
-        "guzzlehttp/guzzle": "^6.5.5",
-        "hisorange/browser-detect": "4.2.2",
+        "guzzlehttp/guzzle": "^7.2.0",
+        "hisorange/browser-detect": "4.3.0",
+        "isaevdimka/laravel-api-facade": "@dev",
+        "isaevdimka/laravel-debug-service": "@dev",
+        "isaevdimka/laravel-helpers": "@dev",
+        "isaevdimka/laravel-macros": "@dev",
+        "isaevdimka/laravel-mongodb-logging": "@dev",
+        "isaevdimka/laravel-opcache": "@dev",
+        "isaevdimka/laravel-telegram-logging": "@dev",
         "jenssegers/agent": "^2.6",
-        "jenssegers/mongodb": "3.8.*",
-        "laravel/framework": "8.11.2",
-        "laravel/helpers": "1.3.0",
-        "laravel/horizon": "5.2.1",
-        "laravel/socialite": "v5.0.1",
-        "laravel/tinker": "v2.4.2",
-        "laravel/ui": "3.0.0",
+        "jenssegers/mongodb": "3.8.2",
+        "laravel/framework": "8.20.1",
+        "laravel/helpers": "1.4.0",
+        "laravel/horizon": "5.6.3",
+        "laravel/socialite": "v5.1.2",
+        "laravel/tinker": "v2.5.0",
+        "laravel/ui": "3.1.0",
         "league/flysystem-sftp": "^1.0",
         "maatwebsite/excel": "^3.1",
-        "mad-web/laravel-initializer": "^3.2",
+        "mad-web/laravel-initializer": "^3.3.1",
         "pavel-mironchik/laravel-backup-panel": "^1.5",
+        "philo/artisan-remote": "^1.0",
         "pragmarx/version": "^1.2",
         "predis/predis": "1.1.6",
-        "propaganistas/laravel-phone": "4.2.5",
+        "propaganistas/laravel-phone": "4.2.7",
         "rap2hpoutre/fast-excel": "^2.1",
-        "sentry/sentry-laravel": "2.1.1",
-        "socialiteproviders/manager": "^3.6",
-        "spatie/laravel-backup": "^6.11",
-        "spatie/laravel-permission": "3.17.0",
-        "spatie/laravel-responsecache": "^6.6",
+        "sentry/sentry-laravel": "2.3.1",
+        "socialiteproviders/manager": "^4.0.0",
+        "spatie/laravel-backup": "^6.14.2",
+        "spatie/laravel-permission": "3.18.0",
         "spatie/laravel-schedule-monitor": "^2.0.0",
         "spatie/laravel-translatable": "^4.4",
-        "spatie/opening-hours": "^2.9",
-        "spatie/regex": "^1.4",
-        "spatie/ssl-certificate": "^1.21",
+        "spatie/regex": "1.4.2",
+        "spatie/ssl-certificate": "^1.22",
         "the-tinderbox/clickhouse-builder": "^4.0",
-        "bavix/laravel-clickhouse": "^2.1",
-        "torann/geoip": "3.0.1",
+        "tobiasdierich/gauge": "^0.0.5",
+        "torann/geoip": "3.0.2",
         "tymon/jwt-auth": "^1.0",
-        "vladimir-yuldashev/laravel-queue-rabbitmq": "v11.0.2",
-        "yajra/laravel-datatables-oracle": "~9.11"
+        "vladimir-yuldashev/laravel-queue-rabbitmq": "v11.1.1",
+        "yajra/laravel-datatables-oracle": "9.15.2",
+        "laravel/telescope": "^4.4"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.8",
         "facade/ignition": "^2.3.6",
-        "fzaninotto/faker": "^1.9.1",
+        "fakerphp/faker": "^1.13.0",
         "mockery/mockery": "^1.3.1",
         "nunomaduro/collision": "^5.0",
-        "phpunit/phpunit": "^9.3"
+        "phpunit/phpunit": "^9.4"
     },
     "config": {
         "optimize-autoloader": true,
@@ -77,9 +150,7 @@
             "database/seeds",
             "database/factories"
         ],
-        "files": [
-            "app/Helpers.php"
-        ]
+        "files": []
     },
     "autoload-dev": {
         "psr-4": {
@@ -103,7 +174,7 @@
             "@php artisan key:generate --ansi"
         ],
         "app-install": [
-            "php -d memory_limit=-1 /usr/local/bin/composer install",
+            "@composer update",
             "@composer run-script post-root-package-install",
             "@php artisan app:install -v"
         ],
@@ -135,7 +206,8 @@
             "@php artisan ide-helper:meta"
         ],
         "check-update": [
-            "@composer outdated"
+            "composer outdated -D | tee /var/www/laravel/storage/logs/composer-outdated-output.txt",
+            "npm outdated | tee /var/www/laravel/storage/logs/npm-outdated-output.txt"
         ]
     }
 }

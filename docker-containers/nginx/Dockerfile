@@ -1,6 +1,5 @@
-FROM nginx:1.19.3-alpine
+FROM nginx:1.19.6-alpine
 
-MAINTAINER Dmitriy Isaev <isaevdimka@gmail.com>
 LABEL Description="nginx (a little bit customized)"
 
 ARG TIMEZONE

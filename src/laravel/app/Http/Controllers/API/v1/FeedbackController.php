@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API\v1;
 
 use App\Http\Controllers\API\ApiController;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class FeedbackController extends ApiController

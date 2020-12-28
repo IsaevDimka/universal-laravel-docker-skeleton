@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use PragmaRX\Version\Package\Version;
 use RuntimeException;
+use Spatie\Regex\Regex;
 use Spatie\SslCertificate\SslCertificate;
 use Throwable;
 use Illuminate\Support\Facades\Redis;
@@ -44,6 +45,7 @@ class BackendService
         'Queue'       => null,
         'Mail'        => null,
         'Https'       => null,
+        'Socket.io'   => null,
     ];
 
     protected $environment;
@@ -74,19 +76,6 @@ class BackendService
         $this->cache_manager    = $cache_manager;
         $this->database_manager = $database_manager;
         $this->horizon          = $horizon;
-    }
-
-    /**
-     * Uptime server
-     */
-    public function uptime()
-    {
-        $data   = shell_exec('uptime -p');
-        $uptime = trim(str_replace([
-            "up",
-            "\n"
-        ], '', $data));
-        return $uptime;
     }
 
     /**
@@ -217,11 +206,22 @@ class BackendService
              * Check RoadRunner
              */
             try{
-                $roadrunner                   = Http::get(env('ROADRUNNER_HOST').':'.env('ROADRUNNER_HTTP_PORT'));
+                $roadrunner                   = Http::get(env('ROADRUNNER_HOST').':'.env('ROADRUNNER_HEALTH_CHECK_PORT'));
                 $this->services['RoadRunner'] = $roadrunner->ok() ? self::SERVICE_OPERATIONAL : self::SERVICE_DOWN;
             } catch(\Illuminate\Http\Client\ConnectionException $e){
                 $this->services['RoadRunner'] = self::SERVICE_DOWN;
                 array_push($this->errors, 'RoadRunner service is experiencing some issues but our ninja developers are on it and should be back shortly!');
+            }
+
+            /**
+             * Check Socket.io | laravel echo server
+             */
+            try{
+                $laravel_echo_server = Http::get(env('APP_URL').'/socket.io/?transport=polling');
+                $this->services['Socket.io'] = $laravel_echo_server->ok() ? self::SERVICE_OPERATIONAL : self::SERVICE_DOWN;
+            } catch(\Illuminate\Http\Client\ConnectionException $e){
+                $this->services['Socket.io'] = self::SERVICE_DOWN;
+                array_push($this->errors, 'Socket.io does not works as expected');
             }
 
             if(!empty($this->errors)) {
@@ -233,7 +233,7 @@ class BackendService
              */
             if (! app()->environment('local')) {
                 $check_ssl_url             = env('APP_URL', '');
-                $check_ssl_expiration_days = 7;
+                $check_ssl_expiration_days = config('monitor.check_certificates.expiration_days');
                 try{
                     $certificate      = SslCertificate::createForHostName($check_ssl_url);
                     $check_ssl_result = [
@@ -272,20 +272,20 @@ class BackendService
         }
 
         return [
-            'status'          => $this->status,
-            'message'         => $this->message,
-            'errors'          => $this->errors,
-            'services'        => $this->services,
-            'environment'     => $this->environment,
-            'locale'          => $this->locale,
-            'version'         => $this->version,
-            'latest_release'  => $this->latest_release,
-            'laravel_version' => $this->laravel_version,
-            'uptime'          => $this->uptime(),
-            'now'             => now()->toDateTimeString(),
-
-            'average_cpu_usage' => $this->getCPUUsagePercentage(),
-            'disk_space_enough' => $this->getDiskUsage(),
+            'status'            => $this->status,
+            'message'           => $this->message,
+            'errors'            => $this->errors,
+            'services'          => $this->services,
+            'environment'       => $this->environment,
+            'locale'            => $this->locale,
+            'version'           => $this->version,
+            'latest_release'    => $this->latest_release,
+            'laravel_version'   => $this->laravel_version,
+            'now'               => now()->toDateTimeString(),
+            'uptime_server'     => $this->uptimeServer(),
+            'uptime_docker'     => $this->uptimeDocker(),
+            'average_cpu_usage' => $this->getCPUUsagePercentage().'%',
+            'disk_space_enough' => $this->getDiskUsage().'%',
         ];
     }
 
@@ -298,21 +298,52 @@ class BackendService
         File::put(public_path(self::STATUS_FILE_NAME), $data);
     }
 
-    protected function getCPUUsagePercentage()
+    public function getCPUUsagePercentage() : float
     {
         $cpu = shell_exec("grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage}'");
 
-        return round((float) $cpu, 2).'%';
+        return round((float) $cpu, 2);
     }
 
-    protected function getDiskUsage()
+    public function getDiskUsagePercentage(string $commandOutput): int
+    {
+        return (int) Regex::match('/(\d?\d)%/', $commandOutput)->group(1);
+    }
+
+    public function getDiskUsage() : float
     {
         $totalSpace = disk_total_space(base_path());
         $freeSpace  = disk_free_space(base_path());
         $usedSpace  = $totalSpace - $freeSpace;
 
-        $percentage = round(($usedSpace / $totalSpace) * 100);
+        return round(($usedSpace / $totalSpace) * 100);
+    }
 
-        return $percentage.'%';
+    public function uptimeServer() : string
+    {
+        $shellOutput   = shell_exec('uptime -p');
+        return trim(str_replace(["up", "\n"], '', $shellOutput));
+    }
+
+    public function uptimeDocker() : string
+    {
+        $shellOutput = shell_exec('stat /proc/1/cmdline');
+        $result = Str::after($shellOutput, "Change: ");
+        $result = Str::before($result, ".");
+        $result = trim($result);
+
+        $carbon = Carbon::createFromFormat('Y-m-d H:i:s', $result);
+        $now = Carbon::now();
+        $diff = $now->diff($carbon);
+
+        $uptime = "";
+        if(($years = $diff->y) > 0) $uptime .= "$years ".trans_choice('carbon.years', $years).", ";
+        if(($months = $diff->m) > 0) $uptime .= "$months ".trans_choice('carbon.months', $months).", ";
+        if(($days = $diff->d) > 0) $uptime .= "$days ".trans_choice('carbon.days', $days).", ";
+        if(($hours = $diff->h) > 0) $uptime .= "$hours ".trans_choice('carbon.hours', $hours).", ";
+        if(($minutes = $diff->i) > 0) $uptime .= "$minutes ".trans_choice('carbon.minutes', $minutes);
+        if(($seconds = $diff->s) > 0 && $minutes < 1) $uptime .= "$seconds ".trans_choice('carbon.seconds', $seconds);
+
+        return $uptime;
     }
 }

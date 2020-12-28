@@ -1,6 +1,5 @@
-FROM postgres:13.0-alpine
+FROM postgres:13.1-alpine
 
-MAINTAINER Dmitriy Isaev <isaevdimka@gmail.com>
 LABEL Description="PostgresSQL database container"
 
 ARG TIMEZONE

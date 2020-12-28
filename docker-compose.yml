@@ -1,4 +1,4 @@
-version: '3'
+version: "3.9"
 
 # Networks
 networks:
@@ -11,7 +11,6 @@ volumes:
   laravel-mongodb-data:
   laravel-redis-data:
   laravel-rabbitmq-data:
-  laravel-clickhouse-data:
 
 # Nodes
 services:
@@ -25,9 +24,7 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - ${APP_PORT}:9000
       - ${APP_SUPERVISOR_PORT}:9001
-      - ${APP_XDEBUG_PORT}:9003
     working_dir: /var/www/laravel
     volumes:
       - ./src/laravel:/var/www/laravel:cached
@@ -62,18 +59,18 @@ services:
       - ./docker-containers/nginx/letsencrypt:/etc/letsencrypt
       - ./logs:/var/log/nginx
     links:
-      - laravel-echo-server
+      - laravel-socket
       - laravel-app
     networks:
       - laravel-network
 
   # Laravel Echo Server
-  laravel-echo-server:
+  laravel-socket:
     build:
       context: ./docker-containers/laravel-echo-server
       args:
         TIMEZONE: ${TIMEZONE}
-    container_name: laravel-echo-server
+    container_name: laravel-socket
     restart: unless-stopped
     tty: true
     volumes:
@@ -115,15 +112,20 @@ services:
     build:
       context: ./docker-containers/clickhouse
       args:
-        version: ${CLICKHOUSE_VERSION}
+        TIMEZONE: ${TIMEZONE}
     restart: unless-stopped
     environment:
       CLICKHOUSE_DB: ${CLICKHOUSE_DB}
       CLICKHOUSE_USER: ${CLICKHOUSE_USER}
       CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD}
       TZ: ${TIMEZONE}
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 262144
+        hard: 262144
     volumes:
-      - laravel-clickhouse-data:/var/lib/clickhouse
+      - ./volumes/clickhouse-data:/var/lib/clickhouse
       - ./logs:/var/log/clickhouse-server
     ports:
       - ${CLICKHOUSE_PORT}:8123
@@ -138,8 +140,6 @@ services:
     restart: always
     environment:
       MEMCACHED_CACHE_SIZE: ${MEMCACHED_CACHE_SIZE}
-    ports:
-      - ${MEMCACHED_PORT}:11211
     networks:
       - laravel-network
 
@@ -154,7 +154,6 @@ services:
       - '--include /etc/redis/redis.conf'
       - '--loglevel ${REDIS_LOGLEVEL:-notice}'
       #      - '--logfile /var/log/redis-error.log'
-      #      - '--databases 2'
       - '--maxmemory ${REDIS_MAXMEM:-1gb}'
       - '--maxmemory-policy ${REDIS_POLICY:-noeviction}'
       - '--requirepass ${REDIS_PASS:-root}'
@@ -163,8 +162,6 @@ services:
       - ./docker-containers/redis/redis.conf:/etc/redis/redis.conf
       - laravel-redis-data:/data
     #      - ./logs:/var/log/redis
-    ports:
-      - ${REDIS_PORT}:6379
     networks:
       - laravel-network
 
@@ -210,7 +207,6 @@ services:
 #        RABBITMQ_SSL_FAIL_IF_NO_PEER_CERT: ${RABBITMQ_SSL_FAIL_IF_NO_PEER_CERT}
       ports:
           - ${RABBITMQ_MANAGEMENT_PORT}:15672
-          - ${RABBITMQ_EXCHANGE_PORT}:5672
       volumes:
           - laravel-rabbitmq-data:/var/lib/rabbitmq
 #          - ./docker-containers/rabbitmq/rootCA.pem:/rootCA.pem"
@@ -231,7 +227,7 @@ services:
     networks:
       - laravel-network
 
-# RoadRunner service
+  # RoadRunner service
   laravel-roadrunner:
     build:
       context: ./docker-containers/roadrunner
@@ -243,8 +239,11 @@ services:
     ports:
       - ${ROADRUNNER_HTTP_PORT}:8082
       - ${ROADRUNNER_HTTPS_PORT}:8084
+      - ${ROADRUNNER_HEALTH_PORT}:8085
+      - ${ROADRUNNER_METRICS_POST}:8086
     volumes:
       - ./src/roadrunner/:/var/www/roadrunner
       - ./docker-containers/nginx/letsencrypt:/etc/letsencrypt
     networks:
       - laravel-network
+

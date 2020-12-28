@@ -42,6 +42,10 @@ class Locale extends BaseModel
         'is_active' => 'boolean',
     ];
 
+    public function getRouteKeyName() {
+        return 'sign';
+    }
+
     /**
      * Lowercase sign attribute
      *

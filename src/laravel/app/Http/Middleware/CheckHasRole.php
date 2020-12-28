@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Spatie\Permission\Exceptions\UnauthorizedException;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Check for a specific role

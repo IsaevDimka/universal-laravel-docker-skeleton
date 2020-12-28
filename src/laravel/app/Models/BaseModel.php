@@ -7,15 +7,17 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Models\BaseModel
+ * Class BaseModel
  *
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BaseModel newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BaseModel newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BaseModel query()
- * @mixin \Eloquent
+ * @package App\Models
+ * @mixin \Illuminate\Database\Eloquent\Model
+ * @method static \Illuminate\Database\Eloquent\Builder|BaseModel newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|BaseModel newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|BaseModel query()
  */
 class BaseModel extends Model
 {
+    public const DEFAULT_PER_PAGE = 25;
     public const FORMAT_DATETIME = Carbon::DEFAULT_TO_STRING_FORMAT;
 
     /**

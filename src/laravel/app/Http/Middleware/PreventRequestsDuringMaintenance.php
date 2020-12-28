@@ -15,8 +15,7 @@ class PreventRequestsDuringMaintenance extends Middleware
      * @var array
      */
     protected $except = [
-        //        'api/*',
-        'backend/*'
+        'artisan-remote/*'
     ];
 
     protected $exceptRoutes = [

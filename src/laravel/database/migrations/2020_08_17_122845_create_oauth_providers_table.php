@@ -15,17 +15,13 @@ class CreateOauthProvidersTable extends Migration
     {
         Schema::create('oauth_providers', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->unsigned();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('provider');
             $table->string('provider_user_id')->index();
             $table->string('access_token', 512)->nullable();
             $table->string('refresh_token', 512)->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
         });
     }
 

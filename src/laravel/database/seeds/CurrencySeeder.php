@@ -11,7 +11,7 @@ class CurrencySeeder extends Seeder
      */
     public function run()
     {
-        $currencies = [
+        $_currencies = [
             'AFN' => 'Afghan Afghani',
             'AFA' => 'Afghan Afghani (1927–2002)',
             'ALL' => 'Albanian Lek',
@@ -299,21 +299,24 @@ class CurrencySeeder extends Seeder
             'ZWL' => 'Zimbabwean Dollar (2009)',
         ];
 
+
+        $json = file_get_contents(database_path('currencies.json'));
+        $currencies = json_decode($json, true);
         $is_allowed = [
             'USD',
             'RUB',
             'VND',
-            'EUR',
         ];
-        foreach ($currencies as $sign => $name)
+
+        foreach ($currencies as $sign => $item)
         {
             $is_active = false;
             if (in_array($sign, $is_allowed)) {
                 $is_active = true;
             }
             \App\Models\Currency::create([
-                'sign' => $sign,
-                'name' => $name,
+                'name'      => $item['name'],
+                'iso_code'  => $sign,
                 'is_active' => $is_active,
             ]);
         }

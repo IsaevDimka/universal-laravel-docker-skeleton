@@ -13,7 +13,7 @@
 
 <script>
 import { generateTitle } from '@/utils/i18n';
-import pathToRegexp from 'path-to-regexp';
+const { pathToRegexp, match, parse, compile } = require("path-to-regexp");
 
 export default {
   name: 'Breadcrumb',

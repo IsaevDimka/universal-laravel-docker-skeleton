@@ -1,17 +1,53 @@
+# defines environment variables for all underlying php processes
+env:
+  debug_mode: 1
+  env: "production"
+  version: "1.0.0-alpha"
+  max_execs: 1000
+
 http:
   address: :8082
   workers:
     command: "php /var/www/roadrunner/psr-worker.php"
     pool:
-      numWorkers: 1
-      maxJobs:    1
+      # number of workers to be serving.
+      numWorkers: 4
+      # maximum jobs per worker, 0 - unlimited.
+      maxJobs:  0
+      # for how long worker is allowed to be bootstrapped.
+      allocateTimeout: 60
+      # amount of time given to the worker to gracefully destruct itself.
+      destroyTimeout:  60
+      # connection method (pipes, tcp://:9000, unix://socket.unix). default "pipes"
+      relay:    "pipes"
+
   # HTTP service provides HTTP2 transport
   http2:
     # enable HTTP/2, only with TSL, enabled by default
     enabled: true
-
     # max transfer channels, default 128
     maxConcurrentStreams: 128
+
+  # max POST request size, including file uploads in MB.
+  maxRequestSize: 64
+
+#  ssl:
+#    # force redirect to https connection
+#    redirect: false
+#    # custom https port (default 443)
+#    port:     8084
+#    # ssl cert
+#    cert:     /etc/letsencrypt/cert.pem
+#    # ssl private key
+#    key:      /etc/letsencrypt/privkey.pem
+#    # rootCA certificate path
+#    rootCa:   /etc/letsencrypt/fullchain.pem
+
+# health service configuration
+health:
+  # http host to serve health requests.
+  address: :8085
+
 # reload can reset rr servers when files change
 reload:
   # refresh internval (default 1s)
@@ -32,19 +68,14 @@ headers:
   cors:
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin
     allowedOrigin: "*"
-
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Headers
     allowedHeaders: "*"
-
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Methods
-    allowedMethods: "GET,POST,PUT,DELETE"
-
+    allowedMethods: "GET,POST"
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Credentials
     allowCredentials: true
-
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Expose-Headers
     exposedHeaders: "Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma"
-
     # Max allowed age in seconds
     maxAge: 600
 
@@ -52,3 +83,40 @@ headers:
   response:
     "X-Powered-By": "RoadRunner"
     "Content-Type": "application/json"
+
+# rpc bus allows php application and external clients to talk to rr services.
+rpc:
+  # enable rpc server
+  enable: true
+
+  # rpc connection DSN. Supported TCP and Unix sockets.
+  listen: tcp://127.0.0.1:6001
+
+# Supported types: gauge, counter, summary, histogram
+metrics:
+  address: :8086
+  collect:
+    app_metric_counter_ok:
+      type: counter
+      help: "Application counter response ok."
+    app_metric_counter_error:
+      type: counter
+      help: "Application counter error."
+
+## monitors rr server(s)
+#limit:
+#  # check worker state each second
+#  interval: 1
+#
+#  # custom watch configuration for each service
+#  services:
+#    # monitor HTTP workers
+#    http:
+#      # maximum allowed memory consumption per worker (soft)
+#      maxMemory: 512
+#      # maximum time to live for the worker (soft)
+#      TTL: 0
+#      # maximum allowed amount of time worker can spend in idle before being removed (for weak db connections, soft)
+#      idleTTL: 0
+#      # max_execution_time (brutal)
+#      execTTL: 60

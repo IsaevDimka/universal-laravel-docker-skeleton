@@ -3,18 +3,18 @@ blade-directive: version
 current:
   label: v
   major: 1
-  minor: 0
-  patch: 26
+  minor: 1
+  patch: 0
   prerelease: stable
   buildmetadata: 1
   commit: 10001a
   timestamp:
     year: 2020
-    month: 10
-    day: 22
-    hour: 19
-    minute: 10
-    second: 10
+    month: 12
+    day: 29
+    hour: 2
+    minute: 26
+    second: 11
     timezone: Asia/Ho_Chi_Minh
 commit:
   mode: increment
@@ -26,7 +26,7 @@ git:
     local: 'git rev-parse --verify HEAD'
     remote: 'git ls-remote {$repository}'
   branch: refs/heads/master
-  repository: ''
+  repository: 'https://github.com/IsaevDimka/universal-laravel-docker-skeleton'
   version:
     local: 'git describe'
     remote: 'git ls-remote {$repository} | grep tags/ | grep -v {} | cut -d / -f 3 | sort --version-sort | tail -1'
@@ -46,7 +46,7 @@ format:
   commit: '{$commit}'
   version: '{$version-only} [(?={$prerelease})]'
   version-only: '{$label}{$major}.{$minor}.{$patch}'
-  full: '{$compact} (commit {$commit})'
+  full: '{$compact}'
   compact: '{$version-only} [(?={$prerelease})] [build ?={$buildmetadata}]'
   timestamp-year: '{$timestamp.year}'
   timestamp-month: '{$timestamp.month}'

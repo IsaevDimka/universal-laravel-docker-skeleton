@@ -3,18 +3,18 @@
     <el-row>
       <el-col>
         <el-button
-            :loading="loading"
-            :type="socketStatus ? 'danger' : 'success'"
-            size="mini"
-            @click="connect"
+          :loading="loading"
+          :type="socketStatus ? 'danger' : 'success'"
+          size="mini"
+          @click="connect"
         >
           {{ socketStatus ? 'Disconnect' : 'Connect' }} socket
         </el-button>
         <el-button
-            v-if="socketStatus"
-            type="primary"
-            size="mini"
-            @click="sendMessage"
+          v-if="socketStatus"
+          type="primary"
+          size="mini"
+          @click="sendMessage"
         >
           Send message
         </el-button>
@@ -50,12 +50,12 @@ export default {
     socketStatus(to, from) {
       this.$message({
         showClose: true,
-        message: `socketStatus: ${to} | ${from}`,
+        message: `socketStatus: ${from} | ${to}`,
         type: 'success',
         offset: 73,
         duration: 5000,
       });
-      console.log(to, from)
+      console.log(from, to)
     }
   },
   mounted() {
@@ -76,11 +76,11 @@ export default {
       if (!this.socketStatus) {
         this.loading = true
         this.$store.dispatch('echo/connect')
-            .then(() => this.init())
-            .catch(e => console.log(e))
-            .finally(() => {
-              this.loading = false
-            })
+          .then(() => this.init())
+          .catch(e => console.log(e))
+          .finally(() => {
+            this.loading = false
+          })
       } else {
         this.disconnect()
       }
@@ -126,12 +126,12 @@ export default {
         url: '/webhook/test',
         method: 'get',
       })
-          .then(response => {
-            console.log(response)
-          })
-          .catch(err => {
-            console.error(err)
-          })
+        .then(response => {
+          console.log(response)
+        })
+        .catch(err => {
+          console.error(err)
+        })
 
       // this.$store.dispatch('echo/sendMessage')
       // this.$echo.connector.socket.emit('Hello world')

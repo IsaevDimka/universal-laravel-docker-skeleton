@@ -41,7 +41,7 @@ class TestingCommand extends Command
      */
     public function handle()
     {
-        \App\Services\DebugService::start();
+        \Services\DebugService::start();
 
         //        $this->line("<fg=green>GREEN</fg=green>\t");
         //        $this->line("<fg=red>RED</fg=red>\t");
@@ -56,10 +56,11 @@ class TestingCommand extends Command
             return 2;
         }
 
-        $meta = \App\Services\DebugService::result([
+        $meta = \Services\DebugService::result([
             'durations',
             'queryLogs'
         ]);
+        $this->newLine();
         $this->comment(\json_encode($meta, JSON_PRETTY_PRINT));
     }
 
@@ -201,5 +202,12 @@ class TestingCommand extends Command
             'app_version',
             'laravel_version'
         ), JSON_PRETTY_PRINT));
+    }
+
+    private function helpers()
+    {
+        $uuid = Str::uuid();
+
+        $this->comment($uuid);
     }
 }

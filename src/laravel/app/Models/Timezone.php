@@ -6,9 +6,9 @@ namespace App\Models;
  * App\Models\Timezone
  *
  * @property int $id
+ * @property string $timezone
  * @property string $name
- * @property string $offset
- * @property string $diff
+ * @property int $offset
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Timezone newModelQuery()
@@ -21,6 +21,7 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Timezone whereOffset($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Timezone whereUpdatedAt($value)
  * @mixin \Illuminate\Database\Eloquent\
+ * @method static \Illuminate\Database\Eloquent\Builder|Timezone whereTimezone($value)
  */
 class Timezone extends BaseModel
 {
@@ -31,8 +32,8 @@ class Timezone extends BaseModel
     public $timestamps = false;
 
     protected $fillable = [
+        'timezone',
         'name',
         'offset',
-        'diff',
     ];
 }

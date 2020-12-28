@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Language;
 use App\Models\User;
 use App\Traits\PhoneNumberFormattingTrait;
-use Browser;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +17,8 @@ use Yajra\DataTables\Facades\DataTables;
 class DebugController extends Controller
 {
     use PhoneNumberFormattingTrait;
-    protected $app;
+
+    protected Application $app;
 
     function __construct(Application $application)
     {
@@ -37,9 +37,7 @@ class DebugController extends Controller
 
     public function index(Request $request)
     {
-//        \BeyondCode\ServerTiming\Facades\ServerTiming::start('debug');
-
-        \App\Services\DebugService::start();
+        \Services\DebugService::start();
 
         $result = [];
         $result['environment'] = $this->app->environment();
@@ -63,11 +61,7 @@ class DebugController extends Controller
             $result[(string)$f] = $this->{$method}();
         }
 
-//        \BeyondCode\ServerTiming\Facades\ServerTiming::addMetric('User: '.$request->user()->id);
-//        \BeyondCode\ServerTiming\Facades\ServerTiming::stop('debug');
-//        $result['ServerTiming'] = round(\BeyondCode\ServerTiming\Facades\ServerTiming::getDuration('debug')) .' ms';
-
-        $result['meta'] = \App\Services\DebugService::result();
+        $result['meta'] = \Services\DebugService::result();
         return response()->json($result);
     }
 
@@ -165,11 +159,6 @@ class DebugController extends Controller
         return response()->json($timezones);
     }
 
-    private function browserDetect()
-    {
-      return Browser::detect();
-    }
-
     private function clickhouse()
     {
         $clickhouse = "clickhouse";
@@ -180,5 +169,4 @@ class DebugController extends Controller
         $data = Language::query();
         return DataTables::eloquent($data)->toJson();
     }
-
 }

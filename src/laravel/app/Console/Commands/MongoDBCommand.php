@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class MongoDBCommand extends Command
 {
@@ -54,7 +55,7 @@ class MongoDBCommand extends Command
 
     private function list()
     {
-        $mongodb = \DB::connection('mongodb')->getMongoDB()->listCollections();
+        $mongodb = DB::connection('mongodb')->getMongoDB()->listCollections();
         foreach ($mongodb as $collection) {
             $name = $collection->getName();
             $this->comment($name);
@@ -67,12 +68,12 @@ class MongoDBCommand extends Command
             $date = $this->ask('Date (Y-m-D)?');
         }
 
-        $dbmongo = \DB::connection('mongodb')->getMongoDB()->listCollections();
+        $dbmongo = DB::connection('mongodb')->getMongoDB()->listCollections();
         foreach ($dbmongo as $collection) {
             $name = $collection->getName();
             $check = strripos($name, $date);
             if($check === false){
-                \DB::connection('mongodb')->collection($name)->truncate();
+                DB::connection('mongodb')->collection($name)->truncate();
                 $this->error('Deleted collection: '.$name);
             }else{
                 $this->info('Save collection: '. $name);
@@ -83,6 +84,7 @@ class MongoDBCommand extends Command
 
     private function prune()
     {
+        /** @TODO: backup server ip address */
         $api_last_backup_time = 'http://165.22.55.105:8080/last-backup-time.json';
         /**
          * @example json format:

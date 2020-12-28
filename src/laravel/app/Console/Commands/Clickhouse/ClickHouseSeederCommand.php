@@ -45,10 +45,7 @@ class ClickHouseSeederCommand extends Command
 
 //        $this->seeder($limit);
 
-        $clickhouse = DB::connection('clickhouse')
-            ->table('trackings')
-        ;
-        dd($clickhouse->get());
+        $clickhouse = DB::connection('clickhouse')->table('trackings');
 
         try {
             $server = new \Tinderbox\Clickhouse\Server('swiftcoin-clickhouse', '8123', 'default', 'default', '');

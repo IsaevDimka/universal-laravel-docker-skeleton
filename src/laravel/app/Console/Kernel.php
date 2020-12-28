@@ -30,8 +30,9 @@ class Kernel extends ConsoleKernel
             $schedule->command('schedule-monitor:clean')->daily();
 
             // $schedule->command('inspire')->hourly();
-            # check uptime server
-            $schedule->command('monitor:uptime')->everyFourHours();
+            # check uptime
+            $schedule->command('monitor:uptime-server')->hourly();
+            $schedule->command('monitor:uptime-docker')->hourly();
 
             # Horizon includes a metrics dashboard
             $schedule->command('horizon:snapshot')->everyFiveMinutes();
@@ -47,6 +48,12 @@ class Kernel extends ConsoleKernel
             //
             # Check server disk usage
             $schedule->command('monitor:diskusage')->hourly();
+
+            # Cleanup oldest userLoginActivity data
+            $schedule->command('userLoginActivity:cleanup')->dailyAt('04:00');
+
+            $schedule->command('telescope:prune')->daily();
+            $schedule->command('gauge:prune')->daily();
 
             //            $schedule->command('backup:clean')->daily()->at('01:00');
             //            $schedule

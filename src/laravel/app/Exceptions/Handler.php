@@ -110,6 +110,10 @@ class Handler extends ExceptionHandler
             );
         }
 
+        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\HttpException && $request->expectsJson()) {
+            return api((int) $exception->getStatusCode());
+        }
+
         return parent::render($request, $exception);
     }
 

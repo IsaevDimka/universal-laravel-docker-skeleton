@@ -53,7 +53,11 @@ return [
         'attributes' => [
             'prefix'     => '/backend/log-viewer',
 
-            'middleware' => env('LOGVIEWER_MIDDLEWARE') ? explode(',', env('LOGVIEWER_MIDDLEWARE')) : null,
+            'middleware' => [
+                'api',
+                'auth:api',
+                'hasrole:root',
+            ],
         ],
     ],
 

@@ -99,6 +99,7 @@ class LoginController extends ApiController
         $expiration = $this->guard()->getPayload()->get('exp');
         /** @var User $user */
         $user = $request->user();
+
         return api()->ok(null, [
             'token'      => $token,
             'token_type' => 'bearer',
@@ -132,11 +133,9 @@ class LoginController extends ApiController
     /**
      * Log the user out of the application.
      *
-     * @param  \Illuminate\Http\Request  $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function logout(Request $request)
+    public function logout()
     {
         $this->guard()->logout();
         return api()->ok('Logout successful');

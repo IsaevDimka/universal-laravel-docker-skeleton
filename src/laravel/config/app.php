@@ -174,32 +174,33 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\GaugeServiceProvider::class,
+        App\Providers\TelescopeServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\BroadcastServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
-        App\Providers\ApiServiceProvider::class,
         App\Providers\LaravelBackupPanelServiceProvider::class,
         App\Providers\HorizonServiceProvider::class,
         App\Providers\QueryLoggerServiceProvider::class,
-        App\Providers\OpcacheServiceProvider::class,
         App\Providers\ValidatorServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
         App\Providers\QueueServiceProvider::class,
         App\Providers\CarbonServiceProvider::class,
+        App\Providers\TelescopeServiceProvider::class,
 
         /*
          * Package Service Providers...
          */
         Laravel\Socialite\SocialiteServiceProvider::class,
         App\Providers\SocialiteServiceProvider::class,
-//        SocialiteProviders\Manager\ServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Propaganistas\LaravelPhone\PhoneServiceProvider::class,
         Jenssegers\Mongodb\MongodbServiceProvider::class,
         Sentry\Laravel\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        Opcache\OpcacheServiceProvider::class,
     ],
 
     /*
@@ -254,10 +255,7 @@ return [
         'GeoIP'        => Torann\GeoIP\Facades\GeoIP::class,
         'Sentry'       => Sentry\Laravel\Facade::class,
         'Excel'        => Maatwebsite\Excel\Facades\Excel::class,
-        'Opcache'      => App\Facades\Opcache::class,
-        'API'          => App\Facades\Api::class,
         'Socialite'    => Laravel\Socialite\Facades\Socialite::class,
-
     ],
 
 ];
