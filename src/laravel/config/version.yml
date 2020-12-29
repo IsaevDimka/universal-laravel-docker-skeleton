@@ -4,9 +4,9 @@ current:
   label: v
   major: 1
   minor: 1
-  patch: 0
+  patch: 1
   prerelease: stable
-  buildmetadata: 1
+  buildmetadata: 2
   commit: 10001a
   timestamp:
     year: 2020
