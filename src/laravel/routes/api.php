@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::group(['prefix' => 'v1', 'as' => 'api.v1.'], function() {
-    Route::get('localization/{locale}', [App\Http\Controllers\API\v1\LocalizationController::class])->where(['locale' => '[a-zA-Z]{2}'])->name('localization');
+    Route::get('localization/{locale}', App\Http\Controllers\API\v1\LocalizationController::class)->where(['locale' => '[a-zA-Z]{2}'])->name('localization');
     Route::get('status', App\Http\Controllers\API\v1\StatusController::class)->name('status');
     Route::any('webhook', [App\Http\Controllers\API\v1\WebhookController::class, 'any'])->name('webhook.any');
     Route::get('webhook/test', [App\Http\Controllers\API\v1\WebhookController::class, 'test'])->name('webhook.test');

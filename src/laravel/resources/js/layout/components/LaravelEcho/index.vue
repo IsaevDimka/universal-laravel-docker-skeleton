@@ -55,7 +55,6 @@ export default {
         offset: 73,
         duration: 5000,
       });
-      console.log(from, to)
     }
   },
   mounted() {

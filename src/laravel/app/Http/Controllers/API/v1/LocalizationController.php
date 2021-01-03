@@ -7,10 +7,11 @@ use App\Http\Controllers\API\ApiController;
 class LocalizationController extends ApiController
 {
     /**
-     * @param $locale
+     * @param string $locale
      *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function __invoke($locale)
+    public function __invoke(string $locale)
     {
         if (auth()->check()) {
             auth()->user()->update(['locale' => $locale]);
