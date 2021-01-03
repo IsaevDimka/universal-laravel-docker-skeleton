@@ -101,7 +101,7 @@ services:
       - ${POSTGRES_PORT}:5432
     volumes:
       - laravel-postgres-data:/var/lib/postgresql/data:rw
-    #    - ./docker-containers/postgres/postgres.conf:/var/lib/postgresql/data/postgres.conf
+      - ./docker-containers/postgres/postgresql.conf:/var/lib/postgresql/data/postgresql.conf
     command: postgres -c shared_buffers=512MB -c effective_cache_size=1536MB -c work_mem=2621kB -c maintenance_work_mem=128MB
     networks:
       - laravel-network
@@ -118,7 +118,6 @@ services:
       CLICKHOUSE_DB: ${CLICKHOUSE_DB}
       CLICKHOUSE_USER: ${CLICKHOUSE_USER}
       CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD}
-      TZ: ${TIMEZONE}
     ulimits:
       nproc: 65535
       nofile:
@@ -126,6 +125,8 @@ services:
         hard: 262144
     volumes:
       - ./volumes/clickhouse-data:/var/lib/clickhouse
+      - ./docker-containers/clickhouse/users.xml:/etc/clickhouse-server/users.xml
+      - ./docker-containers/clickhouse/config.xml:/etc/clickhouse-server/config.xml
       - ./logs:/var/log/clickhouse-server
     ports:
       - ${CLICKHOUSE_PORT}:8123

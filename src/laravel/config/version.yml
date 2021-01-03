@@ -6,15 +6,15 @@ current:
   minor: 1
   patch: 2
   prerelease: stable
-  buildmetadata: 2
+  buildmetadata: 1
   commit: 10001a
   timestamp:
-    year: 2020
-    month: 12
-    day: 29
-    hour: 21
-    minute: 24
-    second: 18
+    year: 2021
+    month: 1
+    day: 3
+    hour: 18
+    minute: 46
+    second: 28
     timezone: Asia/Ho_Chi_Minh
 commit:
   mode: increment

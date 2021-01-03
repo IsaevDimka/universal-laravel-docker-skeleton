@@ -16,7 +16,7 @@
 
 ## 🐳 Docker containers
 
-+ `php` — php:7.4-fpm | Laravel 8.19.0
++ `php` — php:7.4-fpm | Laravel 8.20.1
 + `laravel-echo-server` — node:15-alpine + laravel-echo-server 
 + `nginx` — nginx:1.19.6-alpine
 + `postgres` — postgres:13.1-alpine
@@ -26,7 +26,7 @@
 + `adminer` — adminer:latest
 + `rabbitmq` — rabbitmq:3.8.9-management-alpine
 + `roadrunner` — php:8-cli & spiral/roadrunner v1.9.0
-+ `clickhouse-server` — yandex/clickhouse-server 20.8.9.6
++ `clickhouse-server` — yandex/clickhouse-server 20.8.11.17
 
 ## Features
 
@@ -104,7 +104,7 @@ Thank you for your help to improving software one changelog at a time!
 ## License
 MIT License (MIT). Please see [`LICENSE`](./LICENSE) for more information. Maintained by [IsaevDimka](https://github.com/IsaevDimka).
 
-[version-badge]: https://img.shields.io/badge/alpha-1.1.0-blue.svg
+[version-badge]: https://img.shields.io/badge/stable-1.1.0-blue.svg
 [changelog]: ./CHANGELOG.md
 [changelog-badge]: https://img.shields.io/badge/changelog-docker%20skeleton-%23E05735
 [license]: ./LICENSE
