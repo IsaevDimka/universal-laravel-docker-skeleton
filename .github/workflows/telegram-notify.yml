@@ -2,9 +2,11 @@ name: Telegram Notify
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - 'master'
   pull_request:
-    branches: [ master ]
+    branches:
+      - 'master'
 
 jobs:
   telegram-notify:

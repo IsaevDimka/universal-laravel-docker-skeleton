@@ -2,7 +2,14 @@ name: Docker build CI
 
 on:
   pull_request:
-    branches: [ master ]
+    branches:
+      - 'master'
+    paths:
+      - 'src/docker-containers/**'
+      - 'docker-compose.yml'
+    paths-ignore:
+      - '**.md'
+      - '**.yml'
 
 jobs:
 

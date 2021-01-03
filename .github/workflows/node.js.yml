@@ -5,7 +5,13 @@ name: Node.js CI
 
 on:
   pull_request:
-    branches: [ master ]
+    branches:
+      - 'master'
+    paths:
+      - 'src/laravel/**'
+    paths-ignore:
+      - '**.md'
+      - '**.yml'
 
 jobs:
   build-node:
