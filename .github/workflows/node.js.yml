@@ -7,10 +7,8 @@ on:
   pull_request:
     branches:
       - 'master'
-    paths:
-      - 'src/laravel/**'
-      - '!**.md'
-      - '!**.yml'
+    paths-ignore:
+      - '**.md'
 
 jobs:
   build-node:
