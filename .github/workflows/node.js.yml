@@ -9,9 +9,8 @@ on:
       - 'master'
     paths:
       - 'src/laravel/**'
-    paths-ignore:
-      - '**.md'
-      - '**.yml'
+      - '!**.md'
+      - '!**.yml'
 
 jobs:
   build-node:

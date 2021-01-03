@@ -7,9 +7,8 @@ on:
     paths:
       - 'src/docker-containers/**'
       - 'docker-compose.yml'
-    paths-ignore:
-      - '**.md'
-      - '**.yml'
+      - '!**.md'
+      - '!**.yml'
 
 jobs:
 
