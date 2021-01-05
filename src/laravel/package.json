@@ -59,7 +59,7 @@
     "element-ui": "^2.13.2",
     "file-loader": "^6.0.0",
     "file-saver": "^2.0.2",
-    "fuse.js": "^3.6.1",
+    "fuse.js": "^6.4.5",
     "js-cookie": "^2.2.1",
     "jsonlint": "^1.6.3",
     "jszip": "^3.5.0",
