@@ -101,7 +101,6 @@ services:
       - ${POSTGRES_PORT}:5432
     volumes:
       - laravel-postgres-data:/var/lib/postgresql/data:rw
-      - ./docker-containers/postgres/postgresql.conf:/var/lib/postgresql/data/postgresql.conf
     command: postgres -c shared_buffers=512MB -c effective_cache_size=1536MB -c work_mem=2621kB -c maintenance_work_mem=128MB
     networks:
       - laravel-network
