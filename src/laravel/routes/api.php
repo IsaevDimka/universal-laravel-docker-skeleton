@@ -25,7 +25,6 @@ Route::group(['prefix' => 'v1', 'as' => 'api.v1.'], function() {
     Route::apiResource('feedback', App\Http\Controllers\API\v1\FeedbackController::class)->only(['store']);
     Route::apiResource('storages', App\Http\Controllers\API\v1\StorageController::class)->only(['index', 'show', 'store']);
 
-
     Route::group(['middleware' => ['guest:api', 'throttle:60,1']], function () {
         Route::group(['prefix' => 'auth'], function () {
             Route::post('login', [App\Http\Controllers\API\v1\Auth\LoginController::class, 'login']);
