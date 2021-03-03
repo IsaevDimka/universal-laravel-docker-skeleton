@@ -16,7 +16,7 @@
     "geoip2/geoip2": "^2.11",
     "mongodb/mongodb": "^1.7",
     "monolog/monolog": "^2.2",
-    "spiral/roadrunner": "1.9.1",
+    "spiral/roadrunner": "2.0.0",
     "zendframework/zend-diactoros": "^2.0"
   },
   "autoload": {
