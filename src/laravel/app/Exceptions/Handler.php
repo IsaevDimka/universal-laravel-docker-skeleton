@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Exceptions;
 
 use Illuminate\Auth\AuthenticationException;
@@ -13,6 +15,11 @@ use Throwable;
 
 class Handler extends ExceptionHandler
 {
+    /**
+     * @var
+     */
+    public const MODELS_NAMESPACE = 'App\Models\\';
+
     /**
      * A list of the exception types that are not reported.
      *
@@ -33,21 +40,13 @@ class Handler extends ExceptionHandler
     ];
 
     /**
-     * @var
-     */
-    const MODELS_NAMESPACE = 'App\Models\\';
-
-    /**
      * Report or log an exception.
-     *
-     * @param  \Throwable  $exception
-     * @return void
      *
      * @throws \Exception
      */
     public function report(Throwable $exception)
     {
-        if (app()->environment('production', 'develop') && app()->bound('sentry') && $this->shouldReport($exception)) {
+        if (app()->environment('production', 'development') && app()->bound('sentry') && $this->shouldReport($exception)) {
             app('sentry')->captureException($exception);
         }
         parent::report($exception);
@@ -57,25 +56,24 @@ class Handler extends ExceptionHandler
      * Render an exception into an HTTP response.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Throwable  $exception
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @throws \Throwable
      */
     public function render($request, Throwable $exception)
     {
-        if($exception instanceof MaintenanceModeException){
-            if($request->expectsJson()){
+        if ($exception instanceof MaintenanceModeException) {
+            if ($request->expectsJson()) {
                 return api()->response(
                     503,
-                    !empty($exception->getMessage()) ? $exception->getMessage() : 'Service Unavailable'
+                    ! empty($exception->getMessage()) ? $exception->getMessage() : 'Service Unavailable'
                 );
             }
             throw new HttpException(Response::HTTP_SERVICE_UNAVAILABLE, $exception->getMessage());
         }
 
-        if ($exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException && $request->expectsJson()){
-            return api()->notFound('Entry for '.str_replace(self::MODELS_NAMESPACE, '', $exception->getModel()).' by ids: '.implode(',', $exception->getIds()).' not found');
+        if ($exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException && $request->expectsJson()) {
+            return api()->notFound('Entry for ' . str_replace(self::MODELS_NAMESPACE, '', $exception->getModel()) . ' by ' . app()->make($exception->getModel())->getKeyName() . ': ' . implode(',', $exception->getIds()) . ' not found');
         }
 
         if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException && $request->expectsJson()) {
@@ -102,8 +100,7 @@ class Handler extends ExceptionHandler
             return api()->forbidden((string) $exception->getMessage());
         }
 
-        if($exception instanceof \Illuminate\Http\Exceptions\ThrottleRequestsException && $request->expectsJson())
-        {
+        if ($exception instanceof \Illuminate\Http\Exceptions\ThrottleRequestsException && $request->expectsJson()) {
             return api()->response(
                 Response::HTTP_TOO_MANY_REQUESTS,
                 (string) $exception->getMessage()
@@ -119,7 +116,6 @@ class Handler extends ExceptionHandler
 
     /**
      * @param \Illuminate\Http\Request $request
-     * @param AuthenticationException $exception
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function unauthenticated($request, AuthenticationException $exception)

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,7 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => 'debug', 'as' => 'debug.'], function () {
-    Route::get('/', [App\Http\Controllers\DebugController::class , 'index'])->name('index')->middleware('env:local|develop');
+Route::group([
+    'prefix' => 'debug',
+    'as' => 'debug.',
+], function () {
+    Route::get('/', [App\Http\Controllers\DebugController::class, 'index'])->name('index')->middleware('env:local|develop');
     Route::get('renderView', [App\Http\Controllers\DebugController::class, 'renderView'])->name('renderView');
 });

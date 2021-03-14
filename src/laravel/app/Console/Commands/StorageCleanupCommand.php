@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -25,8 +27,6 @@ class StorageCleanupCommand extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -44,8 +44,7 @@ class StorageCleanupCommand extends Command
 
         $disk = $this->option('disk');
 
-        switch ($disk)
-        {
+        switch ($disk) {
             # local
             default:
                 $this->cleanupLocal();
@@ -60,14 +59,14 @@ class StorageCleanupCommand extends Command
                 break;
         }
 
-        $this->info('Duration: '.format_duration(microtime(true) - $duration_start));
+        $this->info('Duration: ' . format_duration(microtime(true) - $duration_start));
     }
 
     private function cleanupLocal()
     {
         $exclude_files = [
             '.gitignore',
-            'laravel-'.now()->format('Y-m-d').'.log',
+            'laravel-' . now()->format('Y-m-d') . '.log',
         ];
 
         $storage_directories = [
@@ -76,13 +75,10 @@ class StorageCleanupCommand extends Command
         ];
 
         # clean local storage
-        foreach ($storage_directories as $directory)
-        {
+        foreach ($storage_directories as $directory) {
             $files = File::allFiles(storage_path($directory));
-            foreach ($files as $file)
-            {
-                if(! str_is($exclude_files, $file->getBasename()))
-                {
+            foreach ($files as $file) {
+                if (! str_is($exclude_files, $file->getBasename())) {
                     File::delete($file->getPathname());
                 }
             }
@@ -91,27 +87,26 @@ class StorageCleanupCommand extends Command
         $this->line('Cleanup storage disk local successful');
     }
 
-    /** @todo need improve */
+    /**
+     * @todo need improve
+     */
     private function cleanupRemoteBackup()
     {
         $storage_directories = [
             'mongodb/',
-            'postgres/'
+            'postgres/',
         ];
         $exclude_files = [
         ];
 
         # clean sftp-backup storage
-        foreach ($storage_directories as $directory)
-        {
+        foreach ($storage_directories as $directory) {
             $files = Storage::disk('sftp-backup-server')->allFiles($directory);
             //            dd($files);
-            foreach ($files as $file)
-            {
+            foreach ($files as $file) {
                 $filename = str_replace($storage_directories, '', $file);
                 $this->line($filename);
             }
-
         }
         $this->line('Cleanup storage disk sftp-backup successful');
     }

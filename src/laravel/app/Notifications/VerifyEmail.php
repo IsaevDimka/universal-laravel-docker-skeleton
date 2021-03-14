@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Notifications;
 
 use App\Notifications\Traits\setTagsForHorizonQueueNotificationTrait;
 use Carbon\Carbon;
 use Illuminate\Auth\Notifications\VerifyEmail as Notification;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\URL;
 
 class VerifyEmail extends Notification implements ShouldQueue
 {
@@ -41,7 +43,11 @@ class VerifyEmail extends Notification implements ShouldQueue
     protected function verificationUrl($notifiable)
     {
         $url = URL::temporarySignedRoute(
-            'verification.verify', Carbon::now()->addMinutes(60), ['user' => $notifiable->id]
+            'verification.verify',
+            Carbon::now()->addMinutes(60),
+            [
+                'user' => $notifiable->id,
+            ]
         );
 
         return str_replace('/api', '', $url);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Casts\Json;
@@ -31,6 +33,7 @@ use App\Casts\Json;
  * @method static \Illuminate\Database\Eloquent\Builder|UserLoginActivity whereUserAgent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UserLoginActivity whereUserId($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperUserLoginActivity
  */
 class UserLoginActivity extends BaseModel
 {
@@ -48,8 +51,8 @@ class UserLoginActivity extends BaseModel
     ];
 
     protected $casts = [
-        'is_current'       => 'boolean',
-        'geoip'            => Json::class,
+        'is_current' => 'boolean',
+        'geoip' => Json::class,
         'parse_user_agent' => Json::class,
     ];
 

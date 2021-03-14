@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Logger;
 
 use Monolog\Logger;
@@ -8,10 +10,6 @@ class TelegramLogger
 {
     /**
      * Create a custom Monolog instance.
-     *
-     * @param array $config
-     *
-     * @return \Monolog\Logger
      */
     public function __invoke(array $config): Logger
     {

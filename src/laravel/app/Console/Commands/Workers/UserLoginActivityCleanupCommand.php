@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands\Workers;
 
 use App\Models\UserLoginActivity;
@@ -24,8 +26,6 @@ class UserLoginActivityCleanupCommand extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -39,12 +39,12 @@ class UserLoginActivityCleanupCommand extends Command
      */
     public function handle()
     {
-        $offset = $this->option('offset');
-        $this->comment("offset: $offset days");
+        $offset = (int) $this->option('offset');
+        $this->comment("offset: ${offset} days");
 
         $past = Carbon::now()->subDays($offset);
         $oldest = UserLoginActivity::where('updated_at', '<=', $past);
-        $this->comment('oldest deleted count: '.$oldest->count());
+        $this->comment('oldest deleted count: ' . $oldest->count());
 
         $oldest->delete();
     }

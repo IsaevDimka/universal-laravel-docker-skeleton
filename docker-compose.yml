@@ -190,28 +190,28 @@ services:
 
   # RabbitMQ
   laravel-rabbitmq:
-      build:
-        context: ./docker-containers/rabbitmq
-        args:
-          TIMEZONE: ${TIMEZONE}
-      container_name: laravel-rabbitmq
-      restart: unless-stopped
-      environment:
-        RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
-        RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
-        RABBITMQ_DEFAULT_VHOST: ${RABBITMQ_DEFAULT_VHOST}
-#        RABBITMQ_SSL_CACERTFILE: ${RABBITMQ_SSL_CACERTFILE}
-#        RABBITMQ_SSL_CERTFILE: ${RABBITMQ_SSL_CERTFILE}
-#        RABBITMQ_SSL_KEYFILE: ${RABBITMQ_SSL_KEYFILE}
-#        RABBITMQ_SSL_VERIFY: ${RABBITMQ_SSL_VERIFY}
-#        RABBITMQ_SSL_FAIL_IF_NO_PEER_CERT: ${RABBITMQ_SSL_FAIL_IF_NO_PEER_CERT}
-      ports:
-          - ${RABBITMQ_MANAGEMENT_PORT}:15672
-      volumes:
-          - laravel-rabbitmq-data:/var/lib/rabbitmq
-#          - ./docker-containers/rabbitmq/rootCA.pem:/rootCA.pem"
-#          - ./docker-containers/rabbitmq/rootCA.key:/rootCA.key"
-      networks:
+    build:
+      context: ./docker-containers/rabbitmq
+      args:
+        TIMEZONE: ${TIMEZONE}
+    container_name: laravel-rabbitmq
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+      RABBITMQ_DEFAULT_VHOST: ${RABBITMQ_DEFAULT_VHOST}
+    #        RABBITMQ_SSL_CACERTFILE: ${RABBITMQ_SSL_CACERTFILE}
+    #        RABBITMQ_SSL_CERTFILE: ${RABBITMQ_SSL_CERTFILE}
+    #        RABBITMQ_SSL_KEYFILE: ${RABBITMQ_SSL_KEYFILE}
+    #        RABBITMQ_SSL_VERIFY: ${RABBITMQ_SSL_VERIFY}
+    #        RABBITMQ_SSL_FAIL_IF_NO_PEER_CERT: ${RABBITMQ_SSL_FAIL_IF_NO_PEER_CERT}
+    ports:
+      - ${RABBITMQ_MANAGEMENT_PORT}:15672
+    volumes:
+      - laravel-rabbitmq-data:/var/lib/rabbitmq
+    #          - ./docker-containers/rabbitmq/rootCA.pem:/rootCA.pem"
+    #          - ./docker-containers/rabbitmq/rootCA.key:/rootCA.key"
+    networks:
       - laravel-network
 
   # Adminer
@@ -242,8 +242,7 @@ services:
       - ${ROADRUNNER_HEALTH_PORT}:8085
       - ${ROADRUNNER_METRICS_POST}:8086
     volumes:
-      - ./src/roadrunner/:/var/www/roadrunner
-      - ./docker-containers/nginx/letsencrypt:/etc/letsencrypt
+      - ./src/roadrunner/:/var/www/roadrunner:cached
+      - ./docker-containers/nginx/letsencrypt:/etc/letsencrypt:cached
     networks:
       - laravel-network
-

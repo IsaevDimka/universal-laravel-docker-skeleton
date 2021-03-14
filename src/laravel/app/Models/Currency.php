@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Models;
+declare(strict_types=1);
 
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\SoftDeletes;
+namespace App\Models;
 
 /**
  * App\Models\Currency
  *
- * @property int $id
- * @property string $name
- * @property string $iso_code
- * @property bool $is_active
+ * @property int                             $id
+ * @property string                          $name
+ * @property string                          $iso_code
+ * @property bool                            $is_active
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -29,16 +28,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Currency withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Currency withoutTrashed()
  * @mixin \Illuminate\Database\Eloquent\
- * @property bool $isActive
- * @property-read mixed $createdAt
- * @property-read mixed $updatedAt
+ * @property bool                            $isActive
+ * @property-read mixed                      $createdAt
+ * @property-read mixed                      $updatedAt
+ * @mixin IdeHelperCurrency
  */
 class Currency extends BaseModel
 {
+    public $timestamps = false;
+
     protected $table = 'currencies';
 
     protected $primaryKey = 'id';
-    public $timestamps = false;
 
     protected $fillable = [
         'id',
@@ -47,13 +48,14 @@ class Currency extends BaseModel
         'is_active',
     ];
 
-    public function getRouteKeyName() {
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
+
+    public function getRouteKeyName()
+    {
         return 'iso_code';
     }
-
-    protected $casts = [
-        'is_active'  => 'boolean',
-    ];
 
     /**
      * Приведение sign к верхнему регистру
@@ -74,5 +76,14 @@ class Currency extends BaseModel
     public function getUpdatedAtAttribute($value)
     {
         return self::formattingCarbonAttribute($value);
+    }
+
+    public static function rules(): array
+    {
+        return [
+            'name' => ['nullable', 'string'],
+            'iso_code' => ['nullable', 'string'],
+            'is_active' => ['nullable', 'boolean'],
+        ];
     }
 }

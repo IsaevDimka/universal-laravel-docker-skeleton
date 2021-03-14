@@ -1,21 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
 class Decimal implements Rule
 {
-    protected array $parameters = [];
+    protected array $digits = [];
 
     /**
      * Create a new rule instance.
-     *
-     * @param array $parameters
      */
-    public function __construct(array $parameters = [])
+    public function __construct(array $digits = [])
     {
-        $this->parameters = $parameters;
+        $this->digits = $digits;
     }
 
     /**
@@ -24,8 +24,8 @@ class Decimal implements Rule
      **/
     public function example()
     {
-        return mt_rand(1, (int) str_repeat('9', $this->parameters[0])) . '.' .
-            mt_rand(1, (int) str_repeat('9', $this->parameters[1]));
+        return mt_rand(1, (int) str_repeat('9', $this->digits[0])) . '.' .
+            mt_rand(1, (int) str_repeat('9', $this->digits[1]));
     }
 
     /**
@@ -35,15 +35,14 @@ class Decimal implements Rule
      * 1. The maximum number of digits before the decimal point.
      * 2. The maximum number of digits after the decimal point.
      *
-     * @param string $attribute.
-     * @param mixed $value.
      * @return bool.
      *
      **/
     public function passes($attribute, $value)
     {
         return preg_match(
-            "/^[0-9]{1,{$this->parameters[0]}}(\.[0-9]{1,{$this->parameters[1]}})$/", $value
+            "/^[0-9]{1,{$this->digits[0]}}(\.[0-9]{1,{$this->digits[1]}})$/",
+            $value
         );
     }
 
@@ -57,5 +56,4 @@ class Decimal implements Rule
     {
         return 'The :attribute must be an appropriately formatted decimal e.g. ' . $this->example();
     }
-
 }

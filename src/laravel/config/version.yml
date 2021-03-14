@@ -3,19 +3,19 @@ blade-directive: version
 current:
   label: v
   major: 1
-  minor: 1
-  patch: 2
+  minor: 2
+  patch: 0
   prerelease: stable
   buildmetadata: 1
   commit: 10001a
   timestamp:
     year: 2021
-    month: 1
-    day: 3
-    hour: 18
-    minute: 46
-    second: 28
-    timezone: Asia/Ho_Chi_Minh
+    month: 3
+    day: 14
+    hour: 21
+    minute: 17
+    second: 31
+    timezone: Europe/Moscow
 commit:
   mode: increment
   length: 6

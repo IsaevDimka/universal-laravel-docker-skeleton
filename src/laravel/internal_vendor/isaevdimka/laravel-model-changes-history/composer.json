@@ -1,0 +1,50 @@
+{
+  "name": "isaevdimka/laravel-model-changes-history",
+  "description": "Model changes history for laravel",
+  "license": "MIT",
+  "type": "library",
+  "version": "1.0",
+  "keywords": [
+    "laravel",
+    "framework",
+    "model",
+    "history",
+    "changes"
+  ],
+  "homepage": "https://github.com/IsaevDimka/laravel-model-changes-history",
+  "authors": [
+    {
+      "name": "Dmitriy Isaev",
+      "email": "isaevdimka@gmail.com",
+      "homepage": "https://github.com/IsaevDimka",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.4",
+    "laravel/framework": ">=5.8",
+    "predis/predis": "^1.1",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "ModelChangesHistory\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "ModelChangesHistory\\Providers\\ModelChangesHistoryServiceProvider"
+      ],
+      "aliases": {
+        "ChangesHistory": "ModelChangesHistory\\Facade\\HistoryChanges",
+        "HistoryStorage": "ModelChangesHistory\\Facade\\HistoryStorage"
+      }
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 /**
@@ -23,26 +25,28 @@ namespace App\Models;
  * @mixin \Illuminate\Database\Eloquent\
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Locale active()
  * @property bool $isActive
+ * @mixin IdeHelperLocale
  */
 class Locale extends BaseModel
 {
+    public $timestamps = false;
+
     protected $table = 'locales';
 
     protected $primaryKey = 'id';
 
-    public $timestamps = false;
-
     protected $fillable = [
         'name',
         'sign',
-        'is_active'
+        'is_active',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
     ];
 
-    public function getRouteKeyName() {
+    public function getRouteKeyName()
+    {
         return 'sign';
     }
 

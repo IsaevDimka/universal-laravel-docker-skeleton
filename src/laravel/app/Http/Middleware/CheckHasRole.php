@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Middleware;
 
 use Closure;
-use Spatie\Permission\Exceptions\UnauthorizedException;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 /**
  * Check for a specific role
@@ -17,7 +19,6 @@ class CheckHasRole
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
      * @return mixed
      */
     public function handle($request, Closure $next, $role)

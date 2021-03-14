@@ -1,11 +1,6 @@
 <?php
-/**
- * File UserController.php
- *
- * @author Tuan Duong <bacduong@gmail.com>
- * @package Laravue
- * @version 1.0
- */
+
+declare(strict_types=1);
 
 namespace App\Http\Controllers\API\v1;
 
@@ -19,7 +14,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class UserController
@@ -28,48 +23,38 @@ use Validator;
  */
 class UserController extends ApiController
 {
-    const ITEM_PER_PAGE = 15;
-
     /**
      * Display a listing of the user resource.
-     *
-     * @param  \Illuminate\Http\Request  $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request)
     {
         $searchParams = $request->all();
-        $userQuery = User::query();
-        $limit = Arr::get($searchParams, 'limit', static::ITEM_PER_PAGE);
-        $role = Arr::get($searchParams, 'role', '');
-        $permission = Arr::get($searchParams, 'permission', '');
-        $keyword = Arr::get($searchParams, 'keyword', '');
+        $queryBuilder = User::query();
+        $role = Arr::get($searchParams, 'role', null);
+        $permission = Arr::get($searchParams, 'permission', null);
+        $keyword = Arr::get($searchParams, 'keyword', null);
 
-        if (!empty($role)) {
-            $userQuery->whereHas('roles', function($q) use ($role) { $q->where('name', $role); });
-        }
+        $queryBuilder->when(! empty($role), fn ($q) => $q->whereHas('roles', fn ($q) => $q->where('name', $role)));
 
-        if (!empty($permission)) {
-            $userQuery->whereHas('permissions', function($q) use ($permission) { $q->where('name', $permission); });
-        }
+        $queryBuilder->when(! empty($permission), fn ($q) => $q->whereHas('permissions', fn ($q) => $q->where('name', $permission)));
 
-        if (!empty($keyword)) {
-            $userQuery->orWhere('username', 'LIKE', '%' . $keyword . '%');
-            $userQuery->orWhere('email', 'LIKE', '%' . $keyword . '%');
-            $userQuery->orWhere('first_name', 'LIKE', '%' . $keyword . '%');
-            $userQuery->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
-        }
+        $queryBuilder->when(
+            ! empty($keyword),
+            fn ($q) =>
+            $q->orWhere('username', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('email', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('first_name', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('last_name', 'LIKE', '%' . $keyword . '%')
+        );
 
-        $total = $userQuery->count();
-
-        return api()->ok('', UserResource::collection($userQuery->paginate($limit))->toArray($request), compact('total'));
+        $items = UserResource::items($queryBuilder->paginate($request->get('limit')));
+        return api()->ok(null, compact('items'));
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -80,66 +65,66 @@ class UserController extends ApiController
             array_merge(
                 $this->getValidationRules(),
                 [
-                    'password'          => ['required', 'min:6'],
-                    'confirm_password'  => 'same:password',
+                    'password' => ['required', 'min:6'],
+                    'confirm_password' => 'same:password',
                 ]
             )
         );
 
         if ($validator->fails()) {
             return api()->validation('', $validator->errors()->toArray());
-        } else {
-            $params = $request->all();
-            /** @var User $user */
-            $user = User::create([
-                'username' => $params['username'],
-                'email'    => $params['email'],
-                'password' => $params['password'],
-            ]);
-
-            $role = Role::findByName($params['role']);
-            $user->syncRoles($role);
-
-            if ($params['permission']) {
-                $permission = Permission::findByName($params['permission']);
-                $user->syncPermissions($permission);
-            }
-
-            return api()->ok('', (new UserResource($user)));
         }
+        $params = $request->all();
+        /** @var User $user */
+        $user = User::create([
+            'username' => $params['username'],
+            'email' => $params['email'],
+            'password' => $params['password'],
+        ]);
+
+        $role = Role::findByName($params['role']);
+        $user->syncRoles($role);
+
+        if ($params['permission']) {
+            $permission = Permission::findByName($params['permission']);
+            $user->syncPermissions($permission);
+        }
+
+        return api()->ok('', (new UserResource($user)));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  User $user
      * @return UserResource|\Illuminate\Http\JsonResponse
      */
     public function show(User $user)
     {
-        return new UserResource($user);
+        return api()->ok(null, UserResource::make($user));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param User    $user
      * @return UserResource|\Illuminate\Http\JsonResponse
      */
     public function update(Request $request, User $user)
     {
         if ($user === null) {
-            return response()->json(['error' => 'User not found'], 404);
+            return response()->json([
+                'error' => 'User not found',
+            ], 404);
         }
         if ($user->isAdmin()) {
-            return response()->json(['error' => 'Admin can not be modified'], 403);
+            return response()->json([
+                'error' => 'Admin can not be modified',
+            ], 403);
         }
 
         $currentUser = Auth::user();
-        if (!$currentUser->isAdmin()
+        if (! $currentUser->isAdmin()
             && $currentUser->id !== $user->id
-            && !$currentUser->hasPermission(\App\Laravue\Acl::PERMISSION_USER_MANAGE)
+            && ! $currentUser->hasPermission(Permission::MANAGE_USERS)
         ) {
             return api()->forbidden('Permission denied');
         }
@@ -147,25 +132,22 @@ class UserController extends ApiController
         $validator = Validator::make($request->all(), $this->getValidationRules(false));
         if ($validator->fails()) {
             return api()->validation('', $validator->errors()->toArray());
-        } else {
-            $email = $request->get('email');
-            $found = User::where('email', $email)->first();
-            if ($found && $found->id !== $user->id) {
-                return api()->forbidden('Email has been taken');
-            }
-
-            $user->name = $request->get('name');
-            $user->email = $email;
-            $user->save();
-            return api()->ok('', new UserResource($user));
         }
+        $email = $request->get('email');
+        $found = User::where('email', $email)->first();
+        if ($found && $found->id !== $user->id) {
+            return api()->forbidden('Email has been taken');
+        }
+
+        $user->name = $request->get('name');
+        $user->email = $email;
+        $user->save();
+        return api()->ok('', new UserResource($user));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param User    $user
      * @return UserResource|\Illuminate\Http\JsonResponse
      */
     public function updatePermissions(Request $request, User $user)
@@ -180,10 +162,9 @@ class UserController extends ApiController
 
         $permissionIds = $request->get('permissions', []);
         $rolePermissionIds = array_map(
-            function($permission) {
+            function ($permission) {
                 return $permission['id'];
             },
-
             $user->getPermissionsViaRoles()->toArray()
         );
 
@@ -197,18 +178,20 @@ class UserController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  User $user
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(User $user)
     {
         if ($user->isAdmin()) {
-            return api()->forbidden('', [], ['error' => 'Ehhh! Can not delete admin user']);
+            return api()->forbidden('', [], [
+                'error' => 'Ehhh! Can not delete admin user',
+            ]);
         }
 
         if ($user->isRoot()) {
-            return api()->forbidden('', [], ['error' => 'Ehhh! Can not delete root user']);
+            return api()->forbidden('', [], [
+                'error' => 'Ehhh! Can not delete root user',
+            ]);
         }
 
         try {
@@ -222,8 +205,6 @@ class UserController extends ApiController
 
     /**
      * Get permissions from role
-     *
-     * @param User $user
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -250,11 +231,11 @@ class UserController extends ApiController
             'email' => $isNew ? 'required|email|unique:users' : 'required|email',
             'roles' => [
                 'required',
-                'array'
+                'array',
             ],
             'permissions' => [
                 'nullable',
-                'array'
+                'array',
             ],
         ];
     }

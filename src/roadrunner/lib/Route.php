@@ -1,6 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lib;
+
+use Lib\Exceptions\MethodNotAllowedHttpException;
+use Lib\Exceptions\NotFoundHttpException;
 
 class Route
 {
@@ -8,22 +13,23 @@ class Route
 
     private static array $routes = [];
 
-    public static function add($expression, $function, $method = 'GET') : void {
+    public static function add($expression, $function, $method = 'GET'): void
+    {
         array_push(self::$routes, [
-            'expression' => self::ROUTE_PREFIX.$expression,
-            'function'   => $function,
-            'method'     => $method
+            'expression' => self::ROUTE_PREFIX . $expression,
+            'function' => $function,
+            'method' => $method,
         ]);
     }
 
     public static function run(string $basepath = '/')
     {
         // Parse current url
-        $parsed_url = parse_url($_SERVER['REQUEST_URI']);//Parse Uri
+        $parsed_url = parse_url($_SERVER['REQUEST_URI']); //Parse Uri
 
-        if(isset($parsed_url['path'])) {
+        if (isset($parsed_url['path'])) {
             $path = $parsed_url['path'];
-        }else{
+        } else {
             $path = '/';
         }
 
@@ -34,12 +40,12 @@ class Route
 
         $route_match_found = false;
 
-        foreach(self::$routes as $route){
+        foreach (self::$routes as $route) {
 
             // If the method matches check the path
 
             // Add basepath to matching string
-            if($basepath != '' && $basepath != '/') {
+            if ($basepath != '' && $basepath != '/') {
                 $route['expression'] = '(' . $basepath . ')' . $route['expression'];
             }
 
@@ -50,17 +56,15 @@ class Route
             $route['expression'] = $route['expression'] . '$';
 
             // Check path match
-            if(preg_match('#' . $route['expression'] . '#', $path, $matches)) {
-
+            if (preg_match('#' . $route['expression'] . '#', $path, $matches)) {
                 $path_match_found = true;
 
                 // Check method match
-                if(strtolower($method) == strtolower($route['method'])) {
+                if (strtolower($method) == strtolower($route['method'])) {
+                    array_shift($matches); // Always remove first element. This contains the whole string
 
-                    array_shift($matches);// Always remove first element. This contains the whole string
-
-                    if($basepath != '' && $basepath != '/') {
-                        array_shift($matches);// Remove basepath
+                    if ($basepath != '' && $basepath != '/') {
+                        array_shift($matches); // Remove basepath
                     }
 
                     call_user_func_array($route['function'], $matches);
@@ -74,14 +78,12 @@ class Route
         }
 
         // No matching route was found
-        if(!$route_match_found) {
+        if (! $route_match_found) {
             // But a matching path exists
-            if($path_match_found) {
+            if ($path_match_found) {
                 throw new MethodNotAllowedHttpException('405 Method Not Allowed', 405);
-            }else{
-                throw new NotFoundHttpException('404 Not Found', 404);
             }
+            throw new NotFoundHttpException('404 Not Found', 404);
         }
-
     }
 }

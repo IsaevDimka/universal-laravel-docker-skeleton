@@ -1,11 +1,11 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Traits;
 
 trait checkAuthAdmin
 {
-
     public function checkAuthAdmin()
     {
         if (! app()->environment(['local', 'develop'])) {
@@ -20,6 +20,5 @@ trait checkAuthAdmin
                 return api()->forbidden();
             }
         }
-
     }
 }

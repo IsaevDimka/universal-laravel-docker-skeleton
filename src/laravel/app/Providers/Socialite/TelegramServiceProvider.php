@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers\Socialite;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use InvalidArgumentException;
 use SocialiteProviders\Manager\OAuth2\AbstractProvider;
@@ -13,7 +14,7 @@ class TelegramServiceProvider extends AbstractProvider
     /**
      * Unique Provider Identifier.
      */
-    const IDENTIFIER = 'TELEGRAM';
+    public const IDENTIFIER = 'TELEGRAM';
 
     /**
      * @return array
@@ -25,54 +26,14 @@ class TelegramServiceProvider extends AbstractProvider
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function getAuthUrl($state)
-    {
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getTokenUrl()
-    {
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getUserByToken($token)
-    {
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function mapUserToObject(array $user)
-    {
-        return (new User())->setRaw($user)->map([
-            'id'        => $user['id'],
-            'nickname'  => $user['username'],
-            'name'      => $user['first_name'].' '.$user['last_name'],
-            'avatar'    => $user['photo_url'],
-        ]);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function user()
     {
         $this->config = config('services.telegram');
 
         $validator = Validator::make($this->request->all(), [
-            'id'        => 'required|numeric',
+            'id' => 'required|numeric',
             'auth_date' => 'required|date_format:U|before:1 day',
-            'hash'      => 'required|size:64',
+            'hash' => 'required|size:64',
         ]);
 
         throw_if($validator->fails(), InvalidArgumentException::class);
@@ -80,7 +41,7 @@ class TelegramServiceProvider extends AbstractProvider
         $auth_data = $this->request->except('token', 'hash');
         $dataToHash = collect($auth_data)
             ->transform(function ($val, $key) {
-                return "$key=$val";
+                return "${key}=${val}";
             })
             ->sort()
             ->join("\n");
@@ -99,5 +60,30 @@ class TelegramServiceProvider extends AbstractProvider
         );
 
         return $this->mapUserToObject($this->request->except(['auth_date', 'hash']));
+    }
+
+    protected function getAuthUrl($state)
+    {
+        return null;
+    }
+
+    protected function getTokenUrl()
+    {
+        return null;
+    }
+
+    protected function getUserByToken($token)
+    {
+        return null;
+    }
+
+    protected function mapUserToObject(array $user)
+    {
+        return (new User())->setRaw($user)->map([
+            'id' => $user['id'],
+            'nickname' => $user['username'],
+            'name' => $user['first_name'] . ' ' . $user['last_name'],
+            'avatar' => $user['photo_url'],
+        ]);
     }
 }

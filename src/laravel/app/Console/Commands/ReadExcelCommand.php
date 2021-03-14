@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
-use App\Models\Area;
 use Illuminate\Console\Command;
 use Rap2hpoutre\FastExcel\FastExcel;
 
@@ -24,8 +25,6 @@ class ReadExcelCommand extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -43,11 +42,10 @@ class ReadExcelCommand extends Command
 
         $path = database_path('example.xlsx');
         $collection = (new FastExcel())->import($path);
-        foreach($collection as $key => $item)
-        {
-            $this->line("key: {$key} | item: ".\json_encode($item));
+        foreach ($collection as $key => $item) {
+            $this->line("key: {$key} | item: " . \json_encode($item));
         }
 
-        $this->comment("Duration: ".format_duration((microtime(true) - $start_microtime)));
+        $this->comment('Duration: ' . format_duration((microtime(true) - $start_microtime)));
     }
 }

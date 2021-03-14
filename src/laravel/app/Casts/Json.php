@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Casts;
 
@@ -19,7 +20,7 @@ class Json implements CastsAttributes
      */
     public function get($model, $key, $value, $attributes)
     {
-        return json_decode($value, true) ?? [];
+        return $value ? json_decode($value, true) : [];
     }
 
     /**
@@ -34,6 +35,6 @@ class Json implements CastsAttributes
      */
     public function set($model, $key, $value, $attributes)
     {
-        return json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        return $value ? json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : [];
     }
 }

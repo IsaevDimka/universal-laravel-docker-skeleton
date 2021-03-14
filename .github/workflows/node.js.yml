@@ -20,10 +20,10 @@ jobs:
         node-version: [14.x]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2.1.4
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: (cd ./src/laravel && npm install)
-    - run: (cd ./src/laravel && npm run production)
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: (cd ./src/laravel && npm install)
+      - run: (cd ./src/laravel && npm run production)

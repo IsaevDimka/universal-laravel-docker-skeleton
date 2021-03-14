@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Http\Controllers\API\v1\Auth;
 
 use App\Http\Controllers\API\ApiController;
-use App\Models\UserLoginActivity;
 use App\Http\Resources\UserLoginActivityResource;
+use App\Models\UserLoginActivity;
 use Illuminate\Http\Request;
 
 class UserLoginActivityController extends ApiController

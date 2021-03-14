@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands\Monitor;
 
 use App\Models\MonitorEndpoint;
@@ -24,8 +26,6 @@ class CheckEndpointsCommand extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -40,13 +40,12 @@ class CheckEndpointsCommand extends Command
     public function handle()
     {
         $endpoints = MonitorEndpoint::all();
-        $output = "";
+        $output = '';
         $total = 0;
         $good = 0;
         $bad = 0;
 
-        foreach ($endpoints as $endpoint)
-        {
+        foreach ($endpoints as $endpoint) {
             $total++;
             try {
                 $status = Http::get($endpoint->url)->status();
@@ -54,29 +53,33 @@ class CheckEndpointsCommand extends Command
                 $status = 500;
             }
 
-            if ((int)$status > 204){
-                $emoji = "❌";
+            if ((int) $status > 204) {
+                $emoji = '❌';
                 $bad++;
             } else {
-                $emoji = "✅";
+                $emoji = '✅';
                 $good++;
             }
 
-            $endpoint->update(['latest_http_code' => $status]);
+            $endpoint->update([
+                'latest_http_code' => $status,
+            ]);
 
-            $output .= "app: ".$endpoint->app . PHP_EOL .
-                "name: ".$endpoint->name . PHP_EOL .
-                "url: ".$endpoint->url . PHP_EOL .
-                "status: ". $status . $emoji . PHP_EOL . PHP_EOL;
+            $output .= 'app: ' . $endpoint->app . PHP_EOL .
+                'name: ' . $endpoint->name . PHP_EOL .
+                'url: ' . $endpoint->url . PHP_EOL .
+                'status: ' . $status . $emoji . PHP_EOL . PHP_EOL;
         }
 
-        $output = "Total: " . $total . "  " . PHP_EOL .
-            $good . " ✅  ". PHP_EOL .
-            $bad . " ❌  ". PHP_EOL .
+        $output = 'Total: ' . $total . '  ' . PHP_EOL .
+            $good . ' ✅  ' . PHP_EOL .
+            $bad . ' ❌  ' . PHP_EOL .
             PHP_EOL . $output;
 
         $this->comment($output);
 
-        logger()->channel('telegram')->info($output, ['type' => 'clear']);
+        logger()->channel('telegram')->info($output, [
+            'type' => 'clear',
+        ]);
     }
 }

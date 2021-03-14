@@ -1,4 +1,4 @@
-FROM php:8.0-cli
+FROM php:8.0.2-cli
 
 LABEL Description="high-performance PHP application server, load balancer and process manager"
 
@@ -52,18 +52,14 @@ RUN apt-get install -y \
   && docker-php-ext-enable mongodb
 
 # Install Composer
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-  && php -r "if (hash_file('SHA384', 'composer-setup.php') === rtrim(file_get_contents('https://composer.github.io/installer.sig'))) { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" \
-  && php composer-setup.php \
-  && php -r "unlink('composer-setup.php');" \
-  && mv composer.phar /usr/local/bin/composer
+COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
 # Download and install RoadRunner
 ARG RR_VERSION
 RUN mkdir /tmp/rr \
   && cd /tmp/rr \
   && echo "{\"require\":{\"spiral/roadrunner\":\"${RR_VERSION}\"}}" >> composer.json \
-  && composer update \
+  && composer install --no-dev --ignore-platform-reqs \
   && vendor/bin/rr get-binary -l /usr/local/bin \
   && rm -rf /tmp/rr
 

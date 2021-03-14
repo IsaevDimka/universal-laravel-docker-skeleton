@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands\Monitor;
 
 use App\Services\BackendService;
@@ -25,8 +27,6 @@ class AvgCpuUsage extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @param BackendService $backendService
      */
     public function __construct(BackendService $backendService)
     {
@@ -47,14 +47,18 @@ class AvgCpuUsage extends Command
 
         $thresholds = config('cpu_usage_percentage_threshold', [
             'warning' => 70,
-            'fail'    => 90,
+            'fail' => 90,
         ]);
 
-        if($percentage >= $thresholds['fail']) {
-            logger()->channel('telegram')->emergency($message, ['type' => 'clear']);
+        if ($percentage >= $thresholds['fail']) {
+            logger()->channel('telegram')->emergency($message, [
+                'type' => 'clear',
+            ]);
         }
-        if($percentage >= $thresholds['warning']) {
-            logger()->channel('telegram')->warning($message, ['type' => 'clear']);
+        if ($percentage >= $thresholds['warning']) {
+            logger()->channel('telegram')->warning($message, [
+                'type' => 'clear',
+            ]);
         }
 
         $this->info($message);

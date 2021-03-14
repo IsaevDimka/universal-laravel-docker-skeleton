@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\API\v1;
 
 use App\Http\Controllers\API\ApiController;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class FeedbackController extends ApiController
 {
@@ -16,7 +18,7 @@ class FeedbackController extends ApiController
     public function store(Request $request)
     {
         $validator = Validator::make($request->only('email', 'message', 'recaptcha'), [
-            'message'   => ['required', 'string'],
+            'message' => ['required', 'string'],
             'recaptcha' => ['required'],
         ]);
 
@@ -34,16 +36,15 @@ class FeedbackController extends ApiController
         $payload['GeoIP'] = $geoip->toArray();
 
         logger()->channel('telegram')->info($payload['message'], [
-            'issue'   => 'Сообщение с формы написать нам',
+            'issue' => 'Сообщение с формы написать нам',
             'country' => $geoip->country ?? 'Unknown',
-            'city'    => $geoip->city ?? 'Unknown',
+            'city' => $geoip->city ?? 'Unknown',
         ]);
         logger()->channel('mongodb')->info('Сообщение с формы написать нам:', [
             'collection' => 'feedback',
-            'payload'    => $payload,
+            'payload' => $payload,
         ]);
 
         return api()->ok('Ваше сообщение успешно отправлено.', compact('payload'));
     }
-
 }

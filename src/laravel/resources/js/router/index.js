@@ -18,7 +18,6 @@ import elementUiRoutes from './modules/element-ui';
 import componentRoutes from './modules/components';
 import chartsRoutes from './modules/charts';
 import tableRoutes from './modules/table';
-import adminRoutes from './modules/admin';
 import nestedRoutes from './modules/nested';
 import errorRoutes from './modules/error';
 import excelRoutes from './modules/excel';
@@ -132,7 +131,6 @@ export const asyncRoutes = [
   elementUiRoutes,
   nestedRoutes,
   tableRoutes,
-  adminRoutes,
   {
     path: '/backend/documentation',
     component: Layout,
@@ -214,7 +212,7 @@ export const asyncRoutes = [
     path: '/backend/pdf',
     component: Layout,
     redirect: '/pdf/index',
-    meta: { title: 'pdf', icon: 'pdf', permissions: ['view menu pdf'], roles: ['root'] },
+    meta: { title: 'pdf', icon: 'pdf', roles: ['root'] },
     children: [
       {
         path: 'index',

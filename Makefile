@@ -125,6 +125,10 @@ rr-watch: ## Watch PHP source code change and reload PHP workers
 getip: ## get IP address
 	echo $(IP_ADDRESS)
 
+app-self-stop: ## Stop not use docker containers for production
+	$(docker_bin) container stop $(DOCKER_PREFIX)-clickhouse
+	$(docker_bin) container stop $(DOCKER_PREFIX)-adminer
+	$(docker_bin) container stop $(DOCKER_PREFIX)-roadrunner
 ---------------: ##  ---------------
 
 app-version-major: app-version-timestamp ## update major version UP.Y.Z

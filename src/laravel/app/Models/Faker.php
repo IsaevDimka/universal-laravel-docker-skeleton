@@ -1,14 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 final class Faker
 {
     /**
      * Return random string with $length
-     *
-     * @param int $length
-     * @return string
      */
     public static function randomString(int $length = 0): string
     {
@@ -26,9 +25,6 @@ final class Faker
         return $randomString;
     }
 
-    /**
-     * @return \DateTime
-     */
     public static function randomDateTime(): \DateTime
     {
         $dateTime = new \DateTime();
@@ -47,9 +43,6 @@ final class Faker
         return $array[array_rand($array)];
     }
 
-    /**
-     * @return bool
-     */
     public static function randomBoolean(): bool
     {
         return (bool) mt_rand(0, 1);

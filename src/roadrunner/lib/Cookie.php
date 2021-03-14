@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lib;
 
 final class Cookie
@@ -10,6 +12,7 @@ final class Cookie
      * @var string
      */
     private $name = '';
+
     /**
      * The value of the cookie. This value is stored on the clients computer; do not store sensitive
      * information.
@@ -17,6 +20,7 @@ final class Cookie
      * @var string|null
      */
     private $value = null;
+
     /**
      * Cookie lifetime. This value specified in seconds and declares period of time in which cookie
      * will expire relatively to current time() value.
@@ -24,6 +28,7 @@ final class Cookie
      * @var int|null
      */
     private $lifetime = null;
+
     /**
      * The path on the server in which the cookie will be available on.
      *
@@ -35,6 +40,7 @@ final class Cookie
      * @var string|null
      */
     private $path = null;
+
     /**
      * The domain that the cookie is available. To make the cookie available on all subdomains of
      * example.com then you'd set it to '.example.com'. The . is not required but makes it
@@ -44,6 +50,7 @@ final class Cookie
      * @var string|null
      */
     private $domain = null;
+
     /**
      * Indicates that the cookie should only be transmitted over a secure HTTPS connection from the
      * client. When set to true, the cookie will only be set if a secure connection exists.
@@ -54,6 +61,7 @@ final class Cookie
      * @var bool|null
      */
     private $secure = null;
+
     /**
      * When true the cookie will be made accessible only through the HTTP protocol. This means that
      * the cookie won't be accessible by scripting languages, such as JavaScript. This setting can
@@ -120,10 +128,13 @@ final class Cookie
         $this->httpOnly = $httpOnly;
     }
 
+    public function __toString(): string
+    {
+        return $this->createHeader();
+    }
+
     /**
      * The name of the cookie.
-     *
-     * @return string
      */
     public function getName(): string
     {
@@ -193,8 +204,6 @@ final class Cookie
      * On the server-side, it's on the programmer to send this kind of cookie only on secure
      * connection
      * (e.g. with respect to $_SERVER["HTTPS"]).
-     *
-     * @return bool
      */
     public function isSecure(): bool
     {
@@ -206,8 +215,6 @@ final class Cookie
      * the cookie won't be accessible by scripting languages, such as JavaScript. This setting can
      * effectively help to reduce identity theft through XSS attacks (although it is not supported
      * by all browsers).
-     *
-     * @return bool
      */
     public function isHttpOnly(): bool
     {
@@ -216,8 +223,6 @@ final class Cookie
 
     /**
      * Get new cookie with altered value. Original cookie object should not be changed.
-     *
-     * @param string $value
      *
      * @return Cookie
      */
@@ -233,21 +238,20 @@ final class Cookie
      * Convert cookie instance to string.
      *
      * @link http://www.w3.org/Protocols/rfc2109/rfc2109
-     * @return string
      */
     public function createHeader(): string
     {
         $header = [
-            rawurlencode($this->name) . '=' . rawurlencode($this->value)
+            rawurlencode($this->name) . '=' . rawurlencode($this->value),
         ];
         if ($this->lifetime !== null) {
             $header[] = 'Expires=' . gmdate(\DateTime::COOKIE, $this->getExpires());
             $header[] = 'Max-Age=' . $this->lifetime;
         }
-        if (!empty($this->path)) {
+        if (! empty($this->path)) {
             $header[] = 'Path=' . $this->path;
         }
-        if (!empty($this->domain)) {
+        if (! empty($this->domain)) {
             $header[] = 'Domain=' . $this->domain;
         }
         if ($this->secure) {
@@ -311,13 +315,5 @@ final class Cookie
         bool $httpOnly = true
     ): self {
         return new self($name, $value, $lifetime, $path, $domain, $secure, $httpOnly);
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString(): string
-    {
-        return $this->createHeader();
     }
 }

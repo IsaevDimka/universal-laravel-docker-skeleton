@@ -4,6 +4,7 @@ env:
   env: "production"
   version: "1.0.0-alpha"
   max_execs: 1000
+  timezone: "Europe/Moscow"
 
 http:
   address: :8082

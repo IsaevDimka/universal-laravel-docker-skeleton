@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Middleware;
 
 use Closure;
@@ -13,29 +15,29 @@ class CheckApiToken
     {
         $this->ipWhiteList = config('api.ipWhiteList');
     }
+
     /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        if(in_array($request->token, config('api.tokens'))
+        if (in_array($request->token, config('api.tokens'))
             or in_array($request->getClientIP(), $this->ipWhiteList)
-        ){
+        ) {
             logger()->channel('mongodb')->debug(__METHOD__, [
-                'collection'    => 'API_v1_middleware_CheckApiToken_successful',
-                'token'         => $request->token,
+                'collection' => 'API_v1_middleware_CheckApiToken_successful',
+                'token' => $request->token,
             ]);
             return $next($request);
         }
 
         logger()->channel('mongodb')->error(__METHOD__, [
-            'collection'    => 'API_v1_middleware_CheckApiToken_error',
-            'token'         => $request->token,
+            'collection' => 'API_v1_middleware_CheckApiToken_error',
+            'token' => $request->token,
         ]);
-        throw new AuthenticationException;
+        throw new AuthenticationException();
     }
 }

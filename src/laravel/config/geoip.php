@@ -1,7 +1,8 @@
 <?php
 
-return [
+declare(strict_types=1);
 
+return [
     /*
     |--------------------------------------------------------------------------
     | Logging Configuration
@@ -82,14 +83,14 @@ return [
         ],
 
         'ipdata' => [
-            'class'  => \Torann\GeoIP\Services\IPData::class,
-            'key'    => env('IPDATA_API_KEY'),
+            'class' => \Torann\GeoIP\Services\IPData::class,
+            'key' => env('IPDATA_API_KEY'),
             'secure' => true,
         ],
 
         'ipfinder' => [
-            'class'  => \Torann\GeoIP\Services\IPFinder::class,
-            'key'    => env('IPFINDER_API_KEY'),
+            'class' => \Torann\GeoIP\Services\IPFinder::class,
+            'key' => env('IPFINDER_API_KEY'),
             'secure' => true,
             'locales' => ['en'],
         ],
@@ -147,19 +148,18 @@ return [
     */
 
     'default_location' => [
-        'ip'          => null,
-        'iso_code'    => null,
-        'country'     => null,
-        'city'        => null,
-        'state'       => null,
-        'state_name'  => null,
+        'ip' => null,
+        'iso_code' => null,
+        'country' => null,
+        'city' => null,
+        'state' => null,
+        'state_name' => null,
         'postal_code' => null,
-        'lat'         => null,
-        'lon'         => null,
-        'timezone'    => null,
-        'continent'   => null,
-        'default'     => true,
-        'currency'    => null,
+        'lat' => null,
+        'lon' => null,
+        'timezone' => null,
+        'continent' => null,
+        'default' => true,
+        'currency' => null,
     ],
-
 ];

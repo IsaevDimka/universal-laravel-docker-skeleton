@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands\Telegram;
 
 use App\Services\TelegramService;
@@ -24,10 +26,7 @@ class SetWebhook extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
-
     protected TelegramService $telegramService;
 
     public function __construct(TelegramService $telegramService)

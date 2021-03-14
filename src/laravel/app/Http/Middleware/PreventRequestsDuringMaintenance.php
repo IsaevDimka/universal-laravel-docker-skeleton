@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Middleware;
 
-use Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance as Middleware;
 use Closure;
 use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance as Middleware;
 use Illuminate\Routing\Route;
 
 class PreventRequestsDuringMaintenance extends Middleware
@@ -15,12 +17,12 @@ class PreventRequestsDuringMaintenance extends Middleware
      * @var array
      */
     protected $except = [
-        'artisan-remote/*'
+        'artisan-remote/*',
     ];
 
     protected $exceptRoutes = [
         'debug.index',
-        'api.v1.status'
+        'api.v1.status',
     ];
 
     protected $excludedIPs = [];
@@ -30,21 +32,6 @@ class PreventRequestsDuringMaintenance extends Middleware
     public function __construct(Application $app)
     {
         $this->app = $app;
-    }
-
-    protected function shouldPassThrough($request)
-    {
-        foreach ($this->except as $except) {
-            if ($except !== '/') {
-                $except = trim($except, '/');
-            }
-
-            if ($request->is($except)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     public function handle($request, Closure $next)
@@ -64,8 +51,7 @@ class PreventRequestsDuringMaintenance extends Middleware
                 }
             }
 
-            if ($this->shouldPassThrough($request))
-            {
+            if ($this->shouldPassThrough($request)) {
                 return $response;
             }
 
@@ -75,4 +61,18 @@ class PreventRequestsDuringMaintenance extends Middleware
         return $next($request);
     }
 
+    protected function shouldPassThrough($request)
+    {
+        foreach ($this->except as $except) {
+            if ($except !== '/') {
+                $except = trim($except, '/');
+            }
+
+            if ($request->is($except)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

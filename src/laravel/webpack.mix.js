@@ -56,8 +56,8 @@ mix
             require('autoprefixer'),
         ],
     }).sass('resources/js/styles/index.scss', 'public/dist/css/app.css', {
-        implementation: require('node-sass'),
-    });
+    implementation: require('node-sass'),
+});
 
 if (mix.inProduction()) {
     mix.version();

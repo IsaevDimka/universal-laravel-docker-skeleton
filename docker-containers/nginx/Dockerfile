@@ -7,4 +7,3 @@ RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} >
 
 RUN apk update && \
     apk add nano mc htop wget
-

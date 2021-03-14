@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Str;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Database Connection Name
@@ -91,15 +92,16 @@ return [
             'prefix_indexes' => true,
         ],
         'mongodb' => [
-            'driver'   => 'mongodb',
-            'host'     => env('DB_MONGODB_HOST', 'laravel-mongodb'),
-            'port'     => env('DB_MONGODB_PORT', 27017),
+            'driver' => 'mongodb',
+            'host' => env('DB_MONGODB_HOST', 'laravel-mongodb'),
+            'port' => env('DB_MONGODB_PORT', 27017),
             'database' => env('DB_MONGODB_DATABASE'),
             'username' => env('DB_MONGODB_USERNAME'),
             'password' => env('DB_MONGODB_PASSWORD'),
-            'options'  => [
-                'database' => 'laravel_logs' // sets the authentication database required by mongo 3
-            ]
+            'options' => [
+                'database' => 'laravel_logs',
+                // sets the authentication database required by mongo 3
+            ],
         ],
         'clickhouse' => [
             'driver' => 'clickhouse',
@@ -112,8 +114,8 @@ return [
                     'password' => env('DB_CLICKHOUSE_PASSWORD', ''),
                     'options' => [
                         'timeout' => 10,
-                        'protocol' => 'http'
-                    ]
+                        'protocol' => 'http',
+                    ],
                 ],
             ],
         ],
@@ -128,11 +130,11 @@ return [
                     'password' => env('DB_CLICKHOUSE_PASSWORD', ''),
                     'options' => [
                         'timeout' => 10,
-                        'protocol' => 'http'
+                        'protocol' => 'http',
                     ],
                 ],
-            ]
-        ]
+            ],
+        ],
 
     ],
 
@@ -166,7 +168,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'predis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_'),
         ],
 
         'default' => [
@@ -186,5 +188,4 @@ return [
         ],
 
     ],
-
 ];

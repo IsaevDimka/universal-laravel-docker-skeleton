@@ -1,6 +1,7 @@
 <?php
-return [
 
+declare(strict_types=1);
+return [
     'backup' => [
 
         /*
@@ -94,7 +95,7 @@ return [
             /*
              * The filename prefix used for the backup zip file.
              */
-            'filename_prefix' => env('APP_NAME', 'laravel').'_',
+            'filename_prefix' => env('APP_NAME', 'laravel') . '_',
 
             /*
              * The disk names on which the backups will be stored.
@@ -231,5 +232,4 @@ return [
             'delete_oldest_backups_when_using_more_megabytes_than' => 5000,
         ],
     ],
-
 ];

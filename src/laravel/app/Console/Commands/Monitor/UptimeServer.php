@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands\Monitor;
 
 use App\Services\BackendService;
@@ -23,8 +25,6 @@ class UptimeServer extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     private BackendService $backendService;
 
@@ -41,8 +41,10 @@ class UptimeServer extends Command
      */
     public function handle()
     {
-        $uptime = "Uptime server: ".$this->backendService->uptimeServer();
+        $uptime = 'Uptime server: ' . $this->backendService->uptimeServer();
         $this->comment($uptime);
-        logger()->channel('telegram')->info($uptime, ['type' => 'clear']);
+        logger()->channel('telegram')->info($uptime, [
+            'type' => 'clear',
+        ]);
     }
 }

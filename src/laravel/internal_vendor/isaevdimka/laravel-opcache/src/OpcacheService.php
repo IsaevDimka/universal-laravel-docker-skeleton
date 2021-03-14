@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Opcache;
 
 use Symfony\Component\Finder\Finder;
@@ -40,12 +42,13 @@ class OpcacheService implements OpcacheInterface
      * Pre-compile php scripts.
      *
      * @param bool $force
-     * @return array
      */
-    public static function compile($force = false) : array
+    public static function compile($force = false): array
     {
         if (! ini_get('opcache.dups_fix') && ! $force) {
-            return ['message' => 'opcache.dups_fix must be enabled, or run with --force'];
+            return [
+                'message' => 'opcache.dups_fix must be enabled, or run with --force',
+            ];
         }
 
         if (function_exists('opcache_compile_file')) {
@@ -74,19 +77,18 @@ class OpcacheService implements OpcacheInterface
 
             return [
                 'total_files_count' => $files->count(),
-                'compiled_count'    => $compiled,
+                'compiled_count' => $compiled,
             ];
         }
     }
 
-    public function size_for_humans($bytes) : string
+    public function size_for_humans($bytes): string
     {
         if ($bytes > 1048576) {
-            return sprintf("%.2f&nbsp;MB", $bytes/1048576);
+            return sprintf('%.2f&nbsp;MB', $bytes / 1048576);
         } elseif ($bytes > 1024) {
-            return sprintf("%.2f&nbsp;kB", $bytes/1024);
-        } else {
-            return sprintf("%d&nbsp;bytes", $bytes);
+            return sprintf('%.2f&nbsp;kB', $bytes / 1024);
         }
+        return sprintf('%d&nbsp;bytes', $bytes);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -23,8 +25,6 @@ class MongoDBCommand extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -40,7 +40,7 @@ class MongoDBCommand extends Command
     {
         $duration_start = microtime(true);
         $type = $this->argument('type');
-        switch ($type){
+        switch ($type) {
             default:
                 break;
 
@@ -49,8 +49,7 @@ class MongoDBCommand extends Command
             case 'prune': $this->prune(); break;
         }
 
-
-        $this->line(round(microtime(true) - $duration_start, 2).' sec.');
+        $this->line(round(microtime(true) - $duration_start, 2) . ' sec.');
     }
 
     private function list()
@@ -64,7 +63,7 @@ class MongoDBCommand extends Command
 
     private function delete($date = null)
     {
-        if(! $date){
+        if (! $date) {
             $date = $this->ask('Date (Y-m-D)?');
         }
 
@@ -72,14 +71,16 @@ class MongoDBCommand extends Command
         foreach ($dbmongo as $collection) {
             $name = $collection->getName();
             $check = strripos($name, $date);
-            if($check === false){
+            if ($check === false) {
                 DB::connection('mongodb')->collection($name)->truncate();
-                $this->error('Deleted collection: '.$name);
-            }else{
-                $this->info('Save collection: '. $name);
+                $this->error('Deleted collection: ' . $name);
+            } else {
+                $this->info('Save collection: ' . $name);
             }
         }
-        logger()->channel('telegram')->info('Deleted all collection MongoDB without '.$date, ['type' => 'clear']);
+        logger()->channel('telegram')->info('Deleted all collection MongoDB without ' . $date, [
+            'type' => 'clear',
+        ]);
     }
 
     private function prune()
@@ -98,23 +99,24 @@ class MongoDBCommand extends Command
         try {
             $response = $client->get($api_last_backup_time);
             $response_code = $response->getStatusCode();
-            if($response_code !== 200)
-            {
-                throw new \RuntimeException('Backup server error: '.$api_last_backup_time, $response_code);
+            if ($response_code !== 200) {
+                throw new \RuntimeException('Backup server error: ' . $api_last_backup_time, $response_code);
             }
             $last_backup_time = \json_decode($response->getBody()->getContents());
-            if($last_backup_time->date === now()->format('Y-m-d')){
+            if ($last_backup_time->date === now()->format('Y-m-d')) {
                 $this->delete($last_backup_time->date);
-            }else{
-                throw new \RuntimeException('Last backup time error: '.$last_backup_time->date, $response_code);
+            } else {
+                throw new \RuntimeException('Last backup time error: ' . $last_backup_time->date, $response_code);
             }
-        }catch (\Throwable $exception){
+        } catch (\Throwable $exception) {
             logger()->channel('mongodb')->error('Error', [
-                'collection'    => 'Artisan_failed',
-                'command'       => 'mongodb prune',
-                'errorMessage'  => $exception->getMessage()
+                'collection' => 'Artisan_failed',
+                'command' => 'mongodb prune',
+                'errorMessage' => $exception->getMessage(),
             ]);
-            logger()->channel('telegram')->error($exception->getMessage(), ['type' => 'clear']);
+            logger()->channel('telegram')->error($exception->getMessage(), [
+                'type' => 'clear',
+            ]);
             $this->error($exception->getMessage());
         }
     }

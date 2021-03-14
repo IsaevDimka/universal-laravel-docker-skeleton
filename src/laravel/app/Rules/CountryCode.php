@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Spatie\ValidationRules\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
@@ -8,10 +10,14 @@ use League\ISO3166\ISO3166;
 
 class CountryCode implements Rule
 {
-    /** @var bool */
+    /**
+     * @var bool
+     */
     protected $required;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $attribute;
 
     public function __construct(bool $required = true)

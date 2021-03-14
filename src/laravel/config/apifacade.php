@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     /*
      * Api Debug Mode
@@ -41,10 +43,10 @@ return [
     /*
      * Json response's body labels.
      */
-    'keys'      => [
-        'status'     => 'status',
-        'message'    => 'message',
-        'data'       => 'data',
+    'keys' => [
+        'status' => 'status',
+        'message' => 'message',
+        'data' => 'data',
         'data_count' => 'data_count',
     ],
 
@@ -52,11 +54,11 @@ return [
      * Response default messages.
      */
     'messages' => [
-        'success'    => 'Process is successfully completed',
-        'bad'        => 'Bad Request',
-        'notfound'   => 'Sorry no results query for your request',
+        'success' => 'Process is successfully completed',
+        'bad' => 'Bad Request',
+        'notfound' => 'Sorry no results query for your request',
         'validation' => 'Validation Failed please check the request attributes and try again',
-        'forbidden'  => 'You don\'t have permission to access this content',
-        'error'      => 'Server error, please try again later',
+        'forbidden' => 'You don\'t have permission to access this content',
+        'error' => 'Server error, please try again later',
     ],
 ];

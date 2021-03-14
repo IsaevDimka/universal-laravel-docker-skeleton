@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -34,6 +36,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $refreshToken
  * @property \Illuminate\Support\Carbon|null $createdAt
  * @property \Illuminate\Support\Carbon|null $updatedAt
+ * @mixin IdeHelperOAuthProvider
  */
 class OAuthProvider extends Model
 {

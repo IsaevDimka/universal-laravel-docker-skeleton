@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\API\v1\Settings;
 
 use App\Http\Controllers\API\ApiController;
@@ -10,15 +12,13 @@ class PasswordController extends ApiController
     /**
      * Update the user's password.
      *
-     * @param  \Illuminate\Http\Request $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request)
     {
         $this->validate($request, [
             'current_password' => 'required',
-            'password'         => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
         $user = $request->user();

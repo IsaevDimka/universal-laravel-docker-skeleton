@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Gate;
-use TobiasDierich\Gauge\IncomingEntry;
 use TobiasDierich\Gauge\Gauge;
 use TobiasDierich\Gauge\GaugeApplicationServiceProvider;
 
@@ -11,8 +12,6 @@ class GaugeServiceProvider extends GaugeApplicationServiceProvider
 {
     /**
      * Register any application services.
-     *
-     * @return void
      */
     public function register()
     {
@@ -21,8 +20,6 @@ class GaugeServiceProvider extends GaugeApplicationServiceProvider
 
     /**
      * Prevent sensitive request details from being logged by Gauge.
-     *
-     * @return void
      */
     protected function hideSensitiveRequestDetails()
     {
@@ -43,8 +40,6 @@ class GaugeServiceProvider extends GaugeApplicationServiceProvider
      * Register the Gauge gate.
      *
      * This gate determines who can access Gauge in non-local environments.
-     *
-     * @return void
      */
     protected function gate()
     {

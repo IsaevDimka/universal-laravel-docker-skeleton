@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs;
 
 use App\Services\UserService;
@@ -11,7 +13,10 @@ use Illuminate\Queue\SerializesModels;
 
 class UserUpdateLastVisitAt implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     public $tries = 1;
 
@@ -31,8 +36,6 @@ class UserUpdateLastVisitAt implements ShouldQueue
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
     public function handle()
     {

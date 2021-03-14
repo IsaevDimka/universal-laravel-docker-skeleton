@@ -7,7 +7,7 @@ import { getToken } from '@/utils/auth'
 const service = axios.create({
     baseURL: process.env.MIX_BASE_API, // url = base url + request url
     // withCredentials: true, // send cookies when cross-domain requests
-    timeout: 5000 // request timeout
+    timeout: 60 * 1 * 1000, // request timeout, 1 min
 })
 
 // request interceptor
@@ -76,7 +76,7 @@ service.interceptors.response.use(
             }
             return Promise.reject(new Error(res.data.message || 'Error'))
         } else {
-            if (process.env.NODE_ENV !== 'production') {
+            if (store.getters.devDrawer) {
                 const { debug } = res.data;
                 Message({
                     showClose: true,
@@ -92,10 +92,13 @@ service.interceptors.response.use(
         if (error.response && error.response.data) {
 
             // debug
-            if (process.env.NODE_ENV !== 'production') {
-                Object.keys(error.response.data.errors).map((key) => {
-                    console.log(`${key} : ${error.response.data.errors[key]}`);
-                });
+            if (store.getters.devDrawer) {
+                if (error.response.data.errors !== undefined)
+                {
+                    Object.keys(error.response.data.errors).map((key) => {
+                        console.log(`${key} : ${error.response.data.errors[key]}`);
+                    });
+                }
             }
 
             Message({

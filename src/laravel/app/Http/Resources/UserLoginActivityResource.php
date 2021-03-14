@@ -1,25 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
-
-/**
- * Class LoginActivityResource
- *
- * @package App\Http\Resources
- * @mixin \App\Models\UserLoginActivity
- */
-class UserLoginActivityResource extends JsonResource
+/** @mixin \App\Models\UserLoginActivity */
+class UserLoginActivityResource extends ModelResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
-     */
-    public function toArray($request)
+    public function transformTo(): array
     {
-        return parent::toArray($request);
+        return [];
     }
 }

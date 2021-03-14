@@ -1,0 +1,7 @@
+parameters:
+    reportUnmatchedIgnoredErrors: false
+    paths:
+        - lib
+    # The level 8 is the highest level
+    level: 0
+    checkMissingIterableValueType: false

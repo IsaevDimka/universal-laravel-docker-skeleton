@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 /**
  * App\Models\Timezone
  *
- * @property int $id
- * @property string $timezone
- * @property string $name
- * @property int $offset
+ * @property int                             $id
+ * @property string                          $timezone
+ * @property string                          $name
+ * @property int                             $offset
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Timezone newModelQuery()
@@ -22,18 +24,29 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Timezone whereUpdatedAt($value)
  * @mixin \Illuminate\Database\Eloquent\
  * @method static \Illuminate\Database\Eloquent\Builder|Timezone whereTimezone($value)
+ * @mixin IdeHelperTimezone
  */
 class Timezone extends BaseModel
 {
+    public $timestamps = false;
+
+    protected $perPage = 25;
+
     protected $table = 'timezones';
 
     protected $primaryKey = 'id';
-
-    public $timestamps = false;
 
     protected $fillable = [
         'timezone',
         'name',
         'offset',
     ];
+
+    public static function rules(): array
+    {
+        return [
+            'timezone' => ['nullable', 'string'],
+            'name' => ['nullable', 'string'],
+        ];
+    }
 }

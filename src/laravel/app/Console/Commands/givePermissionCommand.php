@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
+use App\Models\User;
 use Illuminate\Console\Command;
 use Spatie\Permission\Models\Permission;
-use App\Models\User;
 
 class givePermissionCommand extends Command
 {
@@ -24,8 +26,6 @@ class givePermissionCommand extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -42,10 +42,10 @@ class givePermissionCommand extends Command
         $username = $this->choice('User ?', User::all()->pluck('username', 'id')->toArray());
         $permission = $this->choice('Permission ?', Permission::all()->pluck('name')->toArray());
 
-        if ($this->confirm('Give permission "'.$permission.'"? to "'.$username.'"')) {
+        if ($this->confirm('Give permission "' . $permission . '"? to "' . $username . '"')) {
             $user = User::where('username', $username)->first();
             $user->givePermissionTo($permission);
-            $this->info('User: "'.$username.'" give permission "'.$permission.'"');
+            $this->info('User: "' . $username . '" give permission "' . $permission . '"');
             $this->info($user);
         }
     }

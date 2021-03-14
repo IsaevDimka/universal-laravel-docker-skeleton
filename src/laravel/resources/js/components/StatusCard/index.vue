@@ -1,7 +1,7 @@
 <template>
   <el-card class="box-card" v-loading="loading">
     <div slot="header" class="clearfix">
-      <span>{{ message }} | {{ config.version }}</span>
+      <span>{{ message }} | {{ config.version }} | environment: {{ node_env }}</span>
       <span style="float: right; padding: 3px 0" type="text" v-if="uptime">Uptime: <i>{{ uptime }}</i></span>
     </div>
     <div v-for="(error, index) in errors" :key="index" class="text item mt-1 mb-1">
@@ -52,6 +52,9 @@ export default {
   computed: {
     config() {
       return window.config;
+    },
+    node_env(){
+      return process.env.NODE_ENV;
     }
   },
   created() {
@@ -61,7 +64,7 @@ export default {
     getStatus() {
       this.loading = true;
       request({
-        url: '/status',
+        url: '/health',
         method: 'get',
       }).then(response => {
         const {status, message, errors, services, uptime} = response.data;

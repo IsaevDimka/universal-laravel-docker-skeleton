@@ -17,14 +17,14 @@ export default {
   directives: { clipboard },
   props: {
     copy: {
-      type: String,
-      required: true,
-      default: () => ('')
+      type: [String, Number],
+      required: false,
+      default: null,
     }
   },
   computed: {
     isDisabled() {
-      return !this.copy.length
+      return !this.copy
     }
   },
   methods: {

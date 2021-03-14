@@ -1,7 +1,7 @@
 # Universal laravel docker skeleton
 
 [![Changelog badge][changelog-badge]][changelog] 
-[![Version 1.1.0 Badge][version-badge]][changelog] 
+[![Version 1.2.0 Badge][version-badge]][changelog] 
 [![MIT License Badge][license-badge]][license]
 ![Docker build CI](https://github.com/IsaevDimka/universal-laravel-docker-skeleton/workflows/Docker%20build%20CI/badge.svg)
 ![Laravel](https://github.com/IsaevDimka/universal-laravel-docker-skeleton/workflows/Laravel/badge.svg)
@@ -16,17 +16,17 @@
 
 ## 🐳 Docker containers
 
-+ `php` — php:7.4-fpm | Laravel 8.20.1
-+ `laravel-echo-server` — node:15-alpine + laravel-echo-server 
++ `php` — php:7.4.15-fpm | Laravel 8.x.x
++ `laravel-echo-server` — node:15-alpine + laravel-echo-server
 + `nginx` — nginx:1.19.6-alpine
-+ `postgres` — postgres:13.1-alpine
++ `postgres` — postgres:13.2-alpine
 + `memcached` — memcached:1.6.9-alpine
-+ `redis` — redis:6.0.9-alpine
-+ `mongodb` — mongo:4.4.2
++ `redis` — redis:6.0.10-alpine
++ `mongodb` — mongo:4.4.3
 + `adminer` — adminer:latest
-+ `rabbitmq` — rabbitmq:3.8.9-management-alpine
-+ `roadrunner` — php:8-cli & spiral/roadrunner v1.9.0
-+ `clickhouse-server` — yandex/clickhouse-server 20.8.11.17
++ `rabbitmq` — rabbitmq:3.8.11-management-alpine
++ `roadrunner` — php:8.0.2-cli & spiral/roadrunner v1.9.2
++ `clickhouse-server` — yandex/clickhouse-server 20.8.12.2
 
 ## Features
 
@@ -59,7 +59,7 @@ __Quick setup for local develop__
 Maintenance mode
 ``` shell
 php artisan up
-php artisan down --message="Upgrading Database" --allow=127.0.0.1 --retry=60 --secret="1630542a-246b-4b66-afa1-dd72a4c43515"
+php artisan down
 ```
 
 Clear OPcache:
@@ -93,6 +93,12 @@ php artisan version:commit
 php artisan version:timestamp
 ```
 
+## Perf
+
+__phpstan analyse:__
+`./linter.sh`
+`./phpstan.sh`
+
 ## Dependencies
 
 ## Contribute
@@ -104,7 +110,7 @@ Thank you for your help to improving software one changelog at a time!
 ## License
 MIT License (MIT). Please see [`LICENSE`](./LICENSE) for more information. Maintained by [IsaevDimka](https://github.com/IsaevDimka).
 
-[version-badge]: https://img.shields.io/badge/stable-1.1.0-blue.svg
+[version-badge]: https://img.shields.io/badge/stable-1.2.0-blue.svg
 [changelog]: ./CHANGELOG.md
 [changelog-badge]: https://img.shields.io/badge/changelog-docker%20skeleton-%23E05735
 [license]: ./LICENSE

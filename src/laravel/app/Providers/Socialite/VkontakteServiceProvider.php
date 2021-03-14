@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Providers\Socialite;
 
@@ -10,90 +11,33 @@ use SocialiteProviders\Manager\OAuth2\User;
 
 class VkontakteServiceProvider extends AbstractProvider
 {
+    /**
+     * Unique Provider Identifier.
+     */
+    public const IDENTIFIER = 'VKONTAKTE';
+
+    /**
+     * Last API version.
+     */
+    public const VERSION = '5.92';
+
     protected $fields = [
         'id',
         'email',
         'first_name',
         'last_name',
         'screen_name',
-        'photo_200'
+        'photo_200',
     ];
 
-    /**
-     * Unique Provider Identifier.
-     */
-    const IDENTIFIER = 'VKONTAKTE';
-
-    /**
-     * {@inheritdoc}
-     */
     protected $stateless = true;
 
-    /**
-     * {@inheritdoc}
-     */
     protected $scopes = ['email'];
 
-    /**
-     * Last API version.
-     */
-    const VERSION = '5.92';
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getAuthUrl($state)
-    {
-        return $this->buildAuthUrlFromBase('https://oauth.vk.com/authorize', $state);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getTokenUrl()
-    {
-        return 'https://oauth.vk.com/access_token';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getUserByToken($token)
-    {
-        $from_token = [];
-        if(is_array($token)) {
-            $from_token["email"] = isset($token["email"]) ? $token["email"] : null;
-
-            $token = $token["access_token"];
-        }
-
-        $params = http_build_query([
-            'access_token' => $token,
-            'fields'       => implode(',', $this->fields),
-            'lang'         => $this->getConfig('lang', 'en'),
-            'v'            => self::VERSION,
-        ]);
-
-        $response = $this->getHttpClient()->get('https://api.vk.com/method/users.get?' . $params);
-
-        $contents = $response->getBody()->getContents();
-
-        $response = json_decode($contents, true);
-
-        if(!is_array($response) || !isset($response['response'][0])) {
-            throw new \RuntimeException(sprintf('Invalid JSON response from VK: %s', $contents));
-        }
-
-        return array_merge($from_token, $response['response'][0]);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function user()
     {
-        if($this->hasInvalidState()) {
-            throw new InvalidStateException;
+        if ($this->hasInvalidState()) {
+            throw new InvalidStateException();
         }
 
         $response = $this->getAccessTokenResponse($this->getCode());
@@ -102,7 +46,7 @@ class VkontakteServiceProvider extends AbstractProvider
 
         $this->credentialsResponseBody = $response;
 
-        if($user instanceof User) {
+        if ($user instanceof User) {
             $user->setAccessTokenResponseBody($this->credentialsResponseBody);
         }
 
@@ -110,8 +54,61 @@ class VkontakteServiceProvider extends AbstractProvider
     }
 
     /**
-     * {@inheritdoc}
+     * Set the user fields to request from Vkontakte.
+     *
+     * @return $this
      */
+    public function fields(array $fields)
+    {
+        $this->fields = $fields;
+
+        return $this;
+    }
+
+    public static function additionalConfigKeys()
+    {
+        return ['lang'];
+    }
+
+    protected function getAuthUrl($state)
+    {
+        return $this->buildAuthUrlFromBase('https://oauth.vk.com/authorize', $state);
+    }
+
+    protected function getTokenUrl()
+    {
+        return 'https://oauth.vk.com/access_token';
+    }
+
+    protected function getUserByToken($token)
+    {
+        $from_token = [];
+        if (is_array($token)) {
+            $from_token['email'] = isset($token['email']) ? $token['email'] : null;
+
+            $token = $token['access_token'];
+        }
+
+        $params = http_build_query([
+            'access_token' => $token,
+            'fields' => implode(',', $this->fields),
+            'lang' => $this->getConfig('lang', 'en'),
+            'v' => self::VERSION,
+        ]);
+
+        $response = $this->getHttpClient()->get('https://api.vk.com/method/users.get?' . $params);
+
+        $contents = $response->getBody()->getContents();
+
+        $response = json_decode($contents, true);
+
+        if (! is_array($response) || ! isset($response['response'][0])) {
+            throw new \RuntimeException(sprintf('Invalid JSON response from VK: %s', $contents));
+        }
+
+        return array_merge($from_token, $response['response'][0]);
+    }
+
     protected function mapUserToObject(array $user)
     {
         return (new User())->setRaw($user)->map([
@@ -123,35 +120,10 @@ class VkontakteServiceProvider extends AbstractProvider
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getTokenFields($code)
     {
         return array_merge(parent::getTokenFields($code), [
             'grant_type' => 'authorization_code',
         ]);
-    }
-
-    /**
-     * Set the user fields to request from Vkontakte.
-     *
-     * @param array $fields
-     *
-     * @return $this
-     */
-    public function fields(array $fields)
-    {
-        $this->fields = $fields;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function additionalConfigKeys()
-    {
-        return ['lang'];
     }
 }

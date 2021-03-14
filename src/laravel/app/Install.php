@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App;
 
 use MadWeb\Initializer\Contracts\Runner;
@@ -9,10 +11,18 @@ class Install
     public function production(Runner $run)
     {
         $run
-            ->artisan('key:generate', ['--force' => true])
-            ->artisan('jwt:secret', ['--force'=> true])
-            ->artisan('migrate', ['--force' => true])
-            ->artisan('db:seed', ['--force' => true])
+            ->artisan('key:generate', [
+                '--force' => true,
+            ])
+            ->artisan('jwt:secret', [
+                '--force' => true,
+            ])
+            ->artisan('migrate', [
+                '--force' => true,
+            ])
+            ->artisan('db:seed', [
+                '--force' => true,
+            ])
             ->artisan('storage:link')
             ->external('npm', 'install', '--production')
             ->external('npm', 'run', 'production')
@@ -27,9 +37,15 @@ class Install
     public function local(Runner $run)
     {
         $run
-            ->artisan('key:generate', ['--force' => true])
-            ->artisan('jwt:secret', ['--force'=> true])
-            ->artisan('migrate', ['--force' => true])
+            ->artisan('key:generate', [
+                '--force' => true,
+            ])
+            ->artisan('jwt:secret', [
+                '--force' => true,
+            ])
+            ->artisan('migrate', [
+                '--force' => true,
+            ])
             ->artisan('db:seed')
             ->artisan('storage:link')
             ->external('npm', 'install')

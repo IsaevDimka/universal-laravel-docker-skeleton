@@ -1,40 +1,40 @@
 <?php
 
-namespace App\Listeners;
+declare(strict_types=1);
 
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
+namespace App\Listeners;
 
 class UserEventSubscriber
 {
     /**
      * Handle user login events.
      */
-    public function handleUserLogin($event) {
+    public function handleUserLogin($event)
+    {
     }
 
     /**
      * Handle user logout events.
      */
-    public function handleUserLogout($event) {
+    public function handleUserLogout($event)
+    {
     }
 
     /**
      * Register the listeners for the subscriber.
      *
      * @param  \Illuminate\Events\Dispatcher  $events
-     * @return void
      */
     public function subscribe($events)
     {
         $events->listen(
             'Illuminate\Auth\Events\Login',
-            [UserEventSubscriber::class, 'handleUserLogin']
+            [self::class, 'handleUserLogin']
         );
 
         $events->listen(
             'Illuminate\Auth\Events\Logout',
-            [UserEventSubscriber::class, 'handleUserLogout']
+            [self::class, 'handleUserLogout']
         );
     }
 }

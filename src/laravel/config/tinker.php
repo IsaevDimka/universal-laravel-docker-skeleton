@@ -1,7 +1,8 @@
 <?php
 
-return [
+declare(strict_types=1);
 
+return [
     /*
     |--------------------------------------------------------------------------
     | Console Commands
@@ -46,5 +47,4 @@ return [
     'dont_alias' => [
         'App\Nova',
     ],
-
 ];

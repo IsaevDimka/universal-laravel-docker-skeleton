@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\API\v1\Settings;
 
 use App\Http\Controllers\API\ApiController;
@@ -9,8 +11,6 @@ class ProfileController extends ApiController
 {
     /**
      * Update the user's profile information.
-     *
-     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
      */
@@ -22,11 +22,11 @@ class ProfileController extends ApiController
          * TODO: Make request
          */
         $this->validate($request, [
-            'username'         => 'required|string|max:256|unique:users,username,' . $user->id,
-            'first_name'       => 'nullable||string|max:256',
-            'last_name'        => 'nullable||string|max:256',
-            'email'            => 'required|email|unique:users,email,' . $user->id,
-            'phone'            => 'nullable|string|max:256',
+            'username' => 'required|string|max:256|unique:users,username,' . $user->id,
+            'first_name' => 'nullable||string|max:256',
+            'last_name' => 'nullable||string|max:256',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'phone' => 'nullable|string|max:256',
             'telegram_chat_id' => 'nullable|string|max:256',
         ]);
 

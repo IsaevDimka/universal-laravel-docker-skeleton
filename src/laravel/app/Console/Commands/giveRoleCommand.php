@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
+use App\Models\User;
 use Illuminate\Console\Command;
 use Spatie\Permission\Models\Role;
-use App\Models\User;
 
 class giveRoleCommand extends Command
 {
@@ -24,8 +26,6 @@ class giveRoleCommand extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -42,11 +42,11 @@ class giveRoleCommand extends Command
         $username = $this->choice('User ?', User::all()->pluck('username', 'id')->toArray());
         $role = $this->choice('Role ?', Role::all()->pluck('name')->toArray());
 
-        if ($this->confirm('Assign role "'.$role.'"? to "'.$username.'"')) {
+        if ($this->confirm('Assign role "' . $role . '"? to "' . $username . '"')) {
             /** @var User $user */
             $user = User::where('username', $username)->first();
             $user->assignRole($role);
-            $this->info('User: "'.$username.'" assign Role "'.$role.'"');
+            $this->info('User: "' . $username . '" assign Role "' . $role . '"');
             $this->info($user);
         }
     }

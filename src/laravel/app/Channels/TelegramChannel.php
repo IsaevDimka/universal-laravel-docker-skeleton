@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Channels;
 
@@ -18,31 +19,46 @@ use Illuminate\Notifications\Notification;
 class TelegramChannel
 {
     private const mongo_collection_processed = 'TelegramChannel_Processed';
+
     private const mongo_collection_failed = 'TelegramChannel_Failed';
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $apiBaseUri = 'https://api.telegram.org';
-    /** @var string */
+
+    /**
+     * @var string
+     */
     private $endpoint = 'sendMessage';
-    /** @var array */
+
+    /**
+     * @var array
+     */
     private $headers = [
-        'Content-type' => 'application/json'
+        'Content-type' => 'application/json',
     ];
 
-    /** @var string $bot_key */
+    /**
+     * @var string
+     */
     private $bot_key;
-    /** @var string $chat_id */
+
+    /**
+     * @var string
+     */
     private $chat_id;
-    /** @var array $payload */
+
+    /**
+     * @var array
+     */
     private $payload = [];
 
     /**
      * Send the given notification.
      *
      * @param \Illuminate\Notifications\AnonymousNotifiable|\App\Models\User $notifiable
-     * @param Notification                                            $notification
      *
-     * @return void
      * @throws Exception
      */
     public function send($notifiable, Notification $notification)
@@ -64,17 +80,17 @@ class TelegramChannel
         $decoded_text = $this->entity_decoder($text);
 
         $this->payload = [
-            'chat_id'                  => $this->chat_id,
-            'text'                     => $decoded_text,
-            'parse_mode'               => 'Markdown',
+            'chat_id' => $this->chat_id,
+            'text' => $decoded_text,
+            'parse_mode' => 'Markdown',
             'disable_web_page_preview' => true,
         ];
 
-        if (!empty($links = $notification->getLinks())) {
+        if (! empty($links = $notification->getLinks())) {
             $this->payload = array_merge($this->payload, [
                 'reply_markup' => [
                     'inline_keyboard' => [
-                        $links
+                        $links,
                     ],
                 ],
             ]);
@@ -82,11 +98,13 @@ class TelegramChannel
 
         try {
             /** Check is empty chat_id */
-            if (! $this->chat_id) throw new \Exception("Notify TelegramChannel telegram chat_id is empty");
+            if (! $this->chat_id) {
+                throw new \Exception('Notify TelegramChannel telegram chat_id is empty');
+            }
 
             $client = new Client([
-                'timeout'  => config('notifications.curl_timeout'),
-                'headers'  => $this->headers,
+                'timeout' => config('notifications.curl_timeout'),
+                'headers' => $this->headers,
             ]);
 
             $apiUri = sprintf('%s/bot%s/%s', $this->apiBaseUri, $this->bot_key, $this->endpoint);
@@ -106,12 +124,12 @@ class TelegramChannel
 
             logger()->channel('mongodb')->info('TelegramChannel', [
                 'collection' => self::mongo_collection_processed,
-                'chat_id'    => $this->chat_id,
-                'payload'    => $this->payload,
-                'response'   => [
+                'chat_id' => $this->chat_id,
+                'payload' => $this->payload,
+                'response' => [
                     'data' => $response_data,
                     'code' => $response_code,
-                ]
+                ],
             ]);
         } catch (RequestException $exception) {
             $this->exceptionHandle($exception);
@@ -120,46 +138,50 @@ class TelegramChannel
         }
     }
 
-    private function entity_decoder(string $text = '') : string
+    private function entity_decoder(string $text = ''): string
     {
-        $decoded_text = \str_replace('_', "\_",  $text);
-        $decoded_text = \str_replace('*', "\*",  $decoded_text);
-        $decoded_text = \str_replace('[', "\[",  $decoded_text);
-        $decoded_text = \str_replace(']', "\]",  $decoded_text);
-        $decoded_text = \str_replace('`', "\`",  $decoded_text);
-        return $decoded_text;
+        $decoded_text = \str_replace('_', "\_", $text);
+        $decoded_text = \str_replace('*', "\*", $decoded_text);
+        $decoded_text = \str_replace('[', "\[", $decoded_text);
+        $decoded_text = \str_replace(']', "\]", $decoded_text);
+        return \str_replace('`', "\`", $decoded_text);
     }
+
     private function exceptionHandle(Exception $exception)
     {
         $error_payload = [
             'chat_id' => $this->chat_id,
             'payload' => $this->payload,
-            'error'   => [
-                'message' => (string)$exception->getMessage(),
-                'line'    => (int)$exception->getLine(),
-                'code'    => (int)$exception->getCode(),
+            'error' => [
+                'message' => (string) $exception->getMessage(),
+                'line' => (int) $exception->getLine(),
+                'code' => (int) $exception->getCode(),
             ],
         ];
         if ($exception instanceof \GuzzleHttp\Exception\RequestException) {
             $error_payload = array_merge($error_payload, [
                 'exception' => 'RequestException',
-                'request'   => [
-                    'uri'     => (string)$exception->getRequest()->getUri() ?? null,
-                    'method'  => $exception->getRequest()->getMethod() ?? null,
-                    'headers' => (string)\json_encode($exception->getRequest()->getHeaders(), true) ?? null,
-                    'body'    => (string)$exception->getRequest()->getBody() ?? null,
+                'request' => [
+                    'uri' => (string) $exception->getRequest()->getUri() ?? null,
+                    'method' => $exception->getRequest()->getMethod() ?? null,
+                    'headers' => (string) \json_encode($exception->getRequest()->getHeaders(), true) ?? null,
+                    'body' => (string) $exception->getRequest()->getBody() ?? null,
                 ],
-                'response'  => [
-                    'code'    => $exception->getResponse()->getStatusCode() ?? null,
-                    'headers' => (string)\json_encode($exception->getResponse()->getHeaders(), true) ?? null,
-                    'body'    => (string)$exception->getResponse()->getBody() ?? null,
+                'response' => [
+                    'code' => $exception->getResponse()->getStatusCode() ?? null,
+                    'headers' => (string) \json_encode($exception->getResponse()->getHeaders(), true) ?? null,
+                    'body' => (string) $exception->getResponse()->getBody() ?? null,
                 ],
             ]);
         }
 
-        logger()->channel('mongodb')->error('TelegramChannel', array_merge(['collection' => self::mongo_collection_failed], $error_payload));
-        logger()->channel('telegram')->error('TelegramChannel', array_merge(['type' => 'clear'], $error_payload));
+        logger()->channel('mongodb')->error('TelegramChannel', array_merge([
+            'collection' => self::mongo_collection_failed,
+        ], $error_payload));
+        logger()->channel('telegram')->error('TelegramChannel', array_merge([
+            'type' => 'clear',
+        ], $error_payload));
 
-        throw new Exception((string)$exception->getMessage(), $exception->getCode());
+        throw new Exception((string) $exception->getMessage(), $exception->getCode());
     }
 }

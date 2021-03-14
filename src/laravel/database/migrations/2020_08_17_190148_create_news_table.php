@@ -20,7 +20,7 @@ class CreateNewsTable extends Migration
             $table->string('slug');
             $table->longText('content');
 
-            $table->bigInteger('author_id')->unsigned()->index();
+            $table->bigInteger('author_id')->unsigned();
             $table->foreign('author_id')->references('id')->on('users');
 
             $table->boolean('is_active')->default(true);

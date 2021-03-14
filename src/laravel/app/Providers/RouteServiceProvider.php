@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use Illuminate\Cache\RateLimiting\Limit;
@@ -21,8 +23,6 @@ class RouteServiceProvider extends ServiceProvider
 
     /**
      * Define your route model bindings, pattern filters, etc.
-     *
-     * @return void
      */
     public function boot()
     {
@@ -30,21 +30,19 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->routes(function () {
             Route::prefix('api')
-                 ->middleware('api')
-                 ->group(base_path('routes/api.php'));
+                ->middleware('api')
+                ->group(base_path('routes/api.php'));
 
             Route::middleware('web')
-                 ->group(base_path('routes/web.php'));
+                ->group(base_path('routes/web.php'));
 
             Route::middleware('spa')
-                 ->group(base_path('routes/spa.php'));
+                ->group(base_path('routes/spa.php'));
         });
     }
 
     /**
      * Configure the rate limiters for the application.
-     *
-     * @return void
      */
     protected function configureRateLimiting()
     {

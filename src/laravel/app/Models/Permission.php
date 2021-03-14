@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -37,15 +38,23 @@ use Illuminate\Database\Query\Builder;
  * @property-read int|null $permissionsCount
  * @property-read int|null $rolesCount
  * @property-read int|null $usersCount
+ * @mixin IdeHelperPermission
  */
 class Permission extends \Spatie\Permission\Models\Permission
 {
     /**
      * @todo: need improve
      */
-    const PERMISSION_PERMISSION_MANAGE = 'manage permission';
+    public const MANAGE_PERMISSION = 'manage permission';
+
+    public const MANAGE_USERS = 'manage users';
 
     public $guard_name = 'web';
+
+    protected $fillable = [
+        'name',
+        'guard_name',
+    ];
 
     /**
      * To exclude permission management from the list
@@ -55,6 +64,6 @@ class Permission extends \Spatie\Permission\Models\Permission
      */
     public function scopeAllowed($query)
     {
-        return $query->where('name', '!=', self::PERMISSION_PERMISSION_MANAGE);
+        return $query->where('name', '!=', self::MANAGE_PERMISSION);
     }
 }

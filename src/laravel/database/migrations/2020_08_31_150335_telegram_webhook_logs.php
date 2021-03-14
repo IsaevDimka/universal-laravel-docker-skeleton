@@ -34,7 +34,7 @@ class TelegramWebhookLogs extends Migration
             'event_time'      => Clickhouse::COLUMN_DATETIME,
             'event_date'      => 'DEFAULT toDate(event_time)',
         ];
-        Clickhouse::createTableIfNotExists($this->table_name, $engine, $columns);
+//        Clickhouse::createTableIfNotExists($this->table_name, $engine, $columns);
     }
 
     /**
@@ -44,6 +44,6 @@ class TelegramWebhookLogs extends Migration
      */
     public function down()
     {
-        Clickhouse::dropTableIfExists($this->table_name);
+//        Clickhouse::dropTableIfExists($this->table_name);
     }
 }

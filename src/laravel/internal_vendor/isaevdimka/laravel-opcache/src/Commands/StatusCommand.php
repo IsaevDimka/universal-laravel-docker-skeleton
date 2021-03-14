@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Opcache\Commands;
 
 use Illuminate\Console\Command;
@@ -23,8 +25,6 @@ class StatusCommand extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -62,21 +62,21 @@ class StatusCommand extends Command
 
         $this->table([], $this->parseTable($general));
 
-        $this->line(PHP_EOL.'Memory usage:');
+        $this->line(PHP_EOL . 'Memory usage:');
         $this->table([], $this->parseTable($data['memory_usage']));
 
         if (isset($data['opcache_statistics'])) {
-            $this->line(PHP_EOL.'Statistics:');
+            $this->line(PHP_EOL . 'Statistics:');
             $this->table([], $this->parseTable($data['opcache_statistics']));
         }
 
         if (isset($data['interned_strings_usage'])) {
-            $this->line(PHP_EOL.'Interned strings usage:');
+            $this->line(PHP_EOL . 'Interned strings usage:');
             $this->table([], $this->parseTable($data['interned_strings_usage']));
         }
 
         if (isset($data['preload_statistics'])) {
-            $this->line(PHP_EOL.'Preload statistics:');
+            $this->line(PHP_EOL . 'Preload statistics:');
             $this->table([], $this->parseTable($data['preload_statistics']));
         }
     }
@@ -96,7 +96,7 @@ class StatusCommand extends Command
 
         return array_map(function ($key, $value) use ($bytes, $times) {
             if (in_array($key, $bytes)) {
-                $value = number_format($value / 1048576, 2).' MB';
+                $value = number_format($value / 1048576, 2) . ' MB';
             } elseif (in_array($key, $times)) {
                 $value = date('Y-m-d H:i:s', $value);
             } elseif (is_bool($value)) {

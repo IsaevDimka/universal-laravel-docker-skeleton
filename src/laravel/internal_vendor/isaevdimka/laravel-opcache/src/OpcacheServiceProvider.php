@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Opcache;
 
 use Illuminate\Support\ServiceProvider;
@@ -24,11 +26,10 @@ class OpcacheServiceProvider extends ServiceProvider
                 StatusCommand::class,
             ]);
 
-            $this->app->bind(OpcacheInterface::class, function(){
+            $this->app->bind(OpcacheInterface::class, function () {
                 return new OpcacheService();
             });
         }
-
     }
 
     public function register()

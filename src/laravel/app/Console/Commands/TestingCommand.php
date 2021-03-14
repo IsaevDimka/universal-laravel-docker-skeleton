@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -13,8 +15,7 @@ class TestingCommand extends Command
      * @var string
      */
     protected $signature = 'testing
-                            {--f= : Functions}
-                            ';
+                            {--f= : Functions}';
 
     /**
      * The console command description.
@@ -23,11 +24,8 @@ class TestingCommand extends Command
      */
     protected $description = 'Command description';
 
-
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -48,17 +46,17 @@ class TestingCommand extends Command
         //        $this->line("<fg=yellow>YELLOW</fg=yellow>\t");
         //        $this->line("<fg=white>white</fg=white>");
 
-        if(method_exists($this, $f = Str::studly($this->option('f') ?? null))) {
+        if (method_exists($this, $f = Str::studly($this->option('f') ?? null))) {
             $this->alert('Running function: ' . $f);
             $this->{$f}();
-        }else{
-            $this->error("Testing method not found!");
+        } else {
+            $this->error('Testing method not found!');
             return 2;
         }
 
         $meta = \Services\DebugService::result([
             'durations',
-            'queryLogs'
+            'queryLogs',
         ]);
         $this->newLine();
         $this->comment(\json_encode($meta, JSON_PRETTY_PRINT));
@@ -72,7 +70,7 @@ class TestingCommand extends Command
     private function arrayValuesToInt()
     {
         $array = [
-            "1", 2, "3"
+            '1', 2, '3',
         ];
         dd($array, array_values_to_int($array));
     }
@@ -80,7 +78,7 @@ class TestingCommand extends Command
     private function arrayValuesToString()
     {
         $array = [
-            "1", 2, "3"
+            '1', 2, '3',
         ];
         dd($array, array_values_to_string($array));
     }
@@ -91,7 +89,7 @@ class TestingCommand extends Command
         $result = \json_encode($result, JSON_PRETTY_PRINT);
 
         $file = storage_path('/logs/' . __FUNCTION__ . '.json');
-        $log  = fopen($file, 'a');
+        $log = fopen($file, 'a');
         fwrite($log, $result);
         fclose($log);
     }
@@ -109,7 +107,7 @@ class TestingCommand extends Command
         $progressBar->start();
 
         $moon = [];
-        for($i = 1; $i <= $count_items; $i++){
+        for ($i = 1; $i <= $count_items; $i++) {
             sleep(1);
             $moon[] = $i;
             $progressBar->advance();
@@ -125,30 +123,30 @@ class TestingCommand extends Command
     private function notify()
     {
         $channel = 'mail';
-        $route   = 'isaevdimka@gmail.com';
-        $data    = [
-            'subject'      => $subject ?? 'Спасибо за регистрацию',
-            'replyTo'      => $replyTo ?? null,
-            'line_1'       => $line_1 ?? 'Ваша логин: ',
-            'line_2'       => $line_2 ?? 'Ваш пароль: ' . $route,
+        $route = 'isaevdimka@gmail.com';
+        $data = [
+            'subject' => $subject ?? 'Спасибо за регистрацию',
+            'replyTo' => $replyTo ?? null,
+            'line_1' => $line_1 ?? 'Ваша логин: ',
+            'line_2' => $line_2 ?? 'Ваш пароль: ' . $route,
             'action_label' => $action_label ?? 'Перейти на сайт',
-            'action_url'   => $action_url ?? url()->to('/'),
-            'line_3'       => $line_3 ?? null,
+            'action_url' => $action_url ?? url()->to('/'),
+            'line_3' => $line_3 ?? null,
         ];
         \Illuminate\Support\Facades\Notification::route($channel, $route)
-                                                ->notify(new \App\Notifications\MailMessageNotification());
+            ->notify(new \App\Notifications\MailMessageNotification());
     }
 
     private function getNodeByWeights(array $weights = []): array
     {
         $rand = mt_rand(0, 1000);
-        foreach($weights as $node => $weight){
+        foreach ($weights as $node => $weight) {
             $realWeight = $weight * 10;
-            if($rand >= 0 && $rand <= $realWeight) {
+            if ($rand >= 0 && $rand <= $realWeight) {
                 return [
-                    'node'       => $node,
-                    'rand'       => $rand,
-                    'weight'     => $weight,
+                    'node' => $node,
+                    'rand' => $rand,
+                    'weight' => $weight,
                     'realWeight' => $realWeight,
                 ];
             }
@@ -159,10 +157,10 @@ class TestingCommand extends Command
     private function sendMail()
     {
         $this->alert(__FUNCTION__);
-        try{
+        try {
             $recipient = 'isaevdimka@gmail.com';
             \Illuminate\Support\Facades\Mail::to($recipient)->send(new \App\Mail\WelcomeMail());
-        } catch(\Throwable $e){
+        } catch (\Throwable $e) {
             dd($e->getMessage());
         }
     }
@@ -171,7 +169,9 @@ class TestingCommand extends Command
     {
         logger()->channel('mongodb')->error('Test message', [
             'collection' => 'TestCollection',
-            'data'       => ['key' => 'value'],
+            'data' => [
+                'key' => 'value',
+            ],
         ]);
     }
 
@@ -181,7 +181,7 @@ class TestingCommand extends Command
             'key' => 'value',
         ];
         $type = null; # without param type or clear or message
-        logger()->channel('telegram')->error("test message", [
+        logger()->channel('telegram')->error('test message', [
             'type' => $type,
             'data' => $data,
         ]);
@@ -191,8 +191,8 @@ class TestingCommand extends Command
     {
         $database_manager = app(\Illuminate\Database\DatabaseManager::class);
 
-        $postgres_version = object_get(array_first((array) $database_manager->connection('pgsql')->select("SELECT version();")), 'version');
-        $clickhouse_version = array_first(array_first($database_manager->connection('clickhouse')->select("SELECT version()")));
+        $postgres_version = object_get(array_first((array) $database_manager->connection('pgsql')->select('SELECT version();')), 'version');
+        $clickhouse_version = array_first(array_first($database_manager->connection('clickhouse')->select('SELECT version()')));
         $app_version = (new \PragmaRX\Version\Package\Version())->format();
         $laravel_version = app()->version();
 
@@ -209,5 +209,12 @@ class TestingCommand extends Command
         $uuid = Str::uuid();
 
         $this->comment($uuid);
+    }
+
+    private function events()
+    {
+        $external_api_id = '';
+        $order_id = 1;
+        event(new \App\Events\ManualCreateOrder($external_api_id, $order_id));
     }
 }

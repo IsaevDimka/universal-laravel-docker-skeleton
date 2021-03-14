@@ -1,6 +1,8 @@
 <?php
 
-if (!function_exists('api')) {
+declare(strict_types=1);
+
+if (! function_exists('api')) {
     /**
      * Create a new APIResponse instance.
      *

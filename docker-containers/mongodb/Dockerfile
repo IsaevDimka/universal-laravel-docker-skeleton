@@ -1,4 +1,4 @@
-FROM mongo:4.4.2
+FROM mongo:4.4.3
 
 LABEL Description="MongoDB container"
 

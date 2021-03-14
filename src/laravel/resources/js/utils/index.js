@@ -1,4 +1,5 @@
 import { pluralize } from '@/filters';
+
 export function parseTime(time, cFormat) {
   if (arguments.length === 0) {
     return null;
@@ -206,44 +207,113 @@ export function toggleClass(element, className) {
   element.className = classString;
 }
 
-export const pickerOptions = [
-  {
-    text: 'Now',
-    onClick(picker) {
-      const end = new Date();
-      const start = new Date(new Date().toDateString());
-      end.setTime(start.getTime());
-      picker.$emit('pick', [start, end]);
+const DATETIME_FORMAT = 'YYYY-MM-DD H:mm:ss';
+
+export const pickerOptions = {
+  firstDayOfWeek: 1,
+  shortcuts: [
+    {
+      text: 'Today',
+      onClick(picker) {
+        const start = moment().set({hours: 0, minutes: 0, seconds: 0}).format(DATETIME_FORMAT);
+        const end = moment().set({hours: 23, minutes: 59, seconds: 59}).format(DATETIME_FORMAT);
+        picker.$emit('pick', [start, end]);
+      }
     },
-  },
-  {
-    text: 'Last week',
-    onClick(picker) {
-      const end = new Date(new Date().toDateString());
-      const start = new Date();
-      start.setTime(end.getTime() - 3600 * 1000 * 24 * 7);
-      picker.$emit('pick', [start, end]);
+    {
+      text: 'Yesterday',
+      onClick(picker) {
+        const start = moment().subtract(1, 'days').set({
+          hours: 0,
+          minutes: 0,
+          seconds: 0
+        }).format(DATETIME_FORMAT);
+        const end = moment().subtract(1, 'days').set({
+          hours: 23,
+          minutes: 59,
+          seconds: 59
+        }).format(DATETIME_FORMAT);
+        picker.$emit('pick', [start, end]);
+      }
     },
-  },
-  {
-    text: 'Last month',
-    onClick(picker) {
-      const end = new Date(new Date().toDateString());
-      const start = new Date();
-      start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-      picker.$emit('pick', [start, end]);
+    {
+      text: 'This week',
+      onClick(picker) {
+        const start = moment().startOf('isoWeek').set({
+          hours: 0,
+          minutes: 0,
+          seconds: 0
+        }).format(DATETIME_FORMAT);
+        const end = moment().endOf('day').set({
+          hours: 23,
+          minutes: 59,
+          seconds: 59
+        }).format(DATETIME_FORMAT);
+        picker.$emit('pick', [start, end]);
+      }
     },
-  },
-  {
-    text: 'Last three months',
-    onClick(picker) {
-      const end = new Date(new Date().toDateString());
-      const start = new Date();
-      start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-      picker.$emit('pick', [start, end]);
+    {
+      text: 'Previous week',
+      onClick(picker) {
+        const start = moment().subtract(1, 'weeks').startOf('isoWeek').set({
+          hours: 0,
+          minutes: 0,
+          seconds: 0
+        }).format(DATETIME_FORMAT);
+        const end = moment().subtract(1, 'weeks').endOf('isoWeek').set({
+          hours: 23,
+          minutes: 59,
+          seconds: 59
+        }).format(DATETIME_FORMAT);
+        picker.$emit('pick', [start, end]);
+      }
     },
-  },
-];
+    {
+      text: 'Last 30 Days',
+      onClick(picker) {
+        const start = moment().subtract(29, 'days').set({
+          hours: 0,
+          minutes: 0,
+          seconds: 0
+        }).format(DATETIME_FORMAT);
+        const end = moment().set({hours: 23, minutes: 59, seconds: 59}).format(DATETIME_FORMAT);
+        picker.$emit('pick', [start, end]);
+      }
+    },
+    {
+      text: 'This Month',
+      onClick(picker) {
+        const start = moment().startOf('month').set({
+          hours: 0,
+          minutes: 0,
+          seconds: 0
+        }).format(DATETIME_FORMAT);
+        const end = moment().endOf('month').set({
+          hours: 23,
+          minutes: 59,
+          seconds: 59
+        }).format(DATETIME_FORMAT);
+        picker.$emit('pick', [start, end]);
+      }
+    },
+    {
+      text: 'Last Month',
+      onClick(picker) {
+        const start = moment().subtract(1, 'month').startOf('month').set({
+          hours: 0,
+          minutes: 0,
+          seconds: 0
+        }).format(DATETIME_FORMAT);
+        const end = moment().subtract(1, 'month').endOf('month').set({
+          hours: 23,
+          minutes: 59,
+          seconds: 59
+        }).format(DATETIME_FORMAT);
+        picker.$emit('pick', [start, end]);
+      }
+    },
+  ]
+};
 
 export function getTime(type) {
   if (type === 'start') {

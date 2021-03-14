@@ -77,3 +77,75 @@ pre {
 .el-select {
   width: 100%;
 }
+
+/** orders */
+// status-color btn
+@mixin status-color-btn($color) {
+  border-color: rgba($color, .5);
+  color: $color;
+  transition: all .3s;
+  &:hover {
+    border-color: $color;
+    color: $color;
+  }
+  &.active {
+    background-color: $color;
+    color: white;
+  }
+}
+
+// status-color tag
+@mixin status-color-tag($color) {
+  border-color: rgba($color, .8);
+  background-color: rgba($color, .1);
+  color: $color;
+  &:hover {
+    border-color: $color;
+    color: $color;
+  }
+  &.active {
+    background-color: $color;
+    color: white;
+  }
+  .el-tag__close {
+    color: $color;
+    &:hover {
+      color: white;
+      background-color: $color;
+    }
+  }
+}
+.status-btn-wrap {
+  margin: 0 -.25rem;
+}
+
+.status-btn.el-button--mini {
+  padding-left: .8rem;
+  padding-right: .8rem;
+  margin: .5rem .1rem 0;
+  text-transform: capitalize;
+}
+
+.status-btn {
+  &.status-pending {
+    @include status-color-btn(#1890ff)
+  }
+  &.status-approved {
+    @include status-color-btn(#67C23A)
+  }
+  &.status-recall {
+    @include status-color-btn(#E6A23C)
+  }
+  &.status-uncall {
+    @include status-color-btn(#E6A23C)
+  }
+  &.status-trashed {
+    @include status-color-btn(#67C23A)
+  }
+  &.status-rejected {
+    @include status-color-btn(#E6A23C)
+  }
+  &.status-duplicate {
+    @include status-color-btn(#909399)
+  }
+}

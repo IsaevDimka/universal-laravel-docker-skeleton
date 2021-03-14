@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands\Monitor;
 
 use Illuminate\Console\Command;
@@ -15,21 +17,20 @@ class CheckCertificates extends Command
      */
     protected $signature = 'monitor:check-certificate
                            {--url= : Only check these urls}';
+
     /**
      * The console command description.
      *
      * @var string
      */
-
     protected $description = 'Check the certificates of all sites';
 
     private $expiration_days;
+
     private $result = [];
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -60,47 +61,28 @@ class CheckCertificates extends Command
         }
 
         $this->info('All done!');
-
-    }
-
-    private function getForCertificateCheck()
-    {
-        return config('monitor.check_certificates.sites');
-    }
-
-    private function getCertificateStatusAsEmojiAttribute($certificate_status): string
-    {
-        if ($certificate_status === true) {
-            return '✅';
-        }
-
-        if ($certificate_status === false) {
-            return '❌';
-        }
-
-        return '';
     }
 
     public function checkCertificate($url)
     {
         $this->result = [
-            'domain'  => $url,
+            'domain' => $url,
             'message' => null,
         ];
         try {
             $certificate = SslCertificate::createForHostName($url);
             $this->result = [
-                'url'                       => $url,
-                'domain'                    => $certificate->getDomain(),
-                'isValidUntil'              => $certificate->isValidUntil(now()->addDays($this->expiration_days)),
-                'AdditionalDomains'         => $certificate->getAdditionalDomains(),
-                'Issuer'                    => $certificate->getIssuer(),
-                'isValid'                   => $certificate->isValid(),
-                'validFromDate'             => $certificate->validFromDate()->format('Y-m-d H:i:s'),
-                'expirationDate'            => $certificate->expirationDate()->format('Y-m-d H:i:s'),
+                'url' => $url,
+                'domain' => $certificate->getDomain(),
+                'isValidUntil' => $certificate->isValidUntil(now()->addDays($this->expiration_days)),
+                'AdditionalDomains' => $certificate->getAdditionalDomains(),
+                'Issuer' => $certificate->getIssuer(),
+                'isValid' => $certificate->isValid(),
+                'validFromDate' => $certificate->validFromDate()->format('Y-m-d H:i:s'),
+                'expirationDate' => $certificate->expirationDate()->format('Y-m-d H:i:s'),
                 'expirationDate_diffInDays' => $certificate->expirationDate()->diffInDays(),
-                'SignatureAlgorithm'        => $certificate->getSignatureAlgorithm(),
-                'isExpired'                 => $certificate->isExpired(),
+                'SignatureAlgorithm' => $certificate->getSignatureAlgorithm(),
+                'isExpired' => $certificate->isExpired(),
             ];
             if ($this->result['isValidUntil'] === false) {
                 $this->result['message'] = $this->getCertificateStatusAsEmojiAttribute(false) . " Checking certificate of {$this->result['domain']}: is valid until {$this->expiration_days} days";
@@ -122,6 +104,24 @@ class CheckCertificates extends Command
         }
     }
 
+    private function getForCertificateCheck()
+    {
+        return config('monitor.check_certificates.sites');
+    }
+
+    private function getCertificateStatusAsEmojiAttribute($certificate_status): string
+    {
+        if ($certificate_status === true) {
+            return '✅';
+        }
+
+        if ($certificate_status === false) {
+            return '❌';
+        }
+
+        return '';
+    }
+
     private function notify($error = false)
     {
         if ($error) {
@@ -129,15 +129,14 @@ class CheckCertificates extends Command
         } else {
             $level = 'error';
         }
-        logger()->channel('mongodb')->$level($this->result['message'], [
+        logger()->channel('mongodb')->{$level}($this->result['message'], [
             'collection' => 'MonitorCheckCertificates',
-            'domain'     => $this->result['domain'],
-            'result'     => $this->result,
+            'domain' => $this->result['domain'],
+            'result' => $this->result,
         ]);
-        logger()->channel('telegram')->$level($this->result['message'], [
-            'type'   => 'clear',
+        logger()->channel('telegram')->{$level}($this->result['message'], [
+            'type' => 'clear',
             'result' => $this->result,
         ]);
     }
-
 }

@@ -1,0 +1,2480 @@
+[
+  {
+    "type_id": 0,
+    "fias_level": 0,
+    "name": "",
+    "name_full": ""
+  },
+  {
+    "type_id": 101,
+    "fias_level": 1,
+    "name": "АО",
+    "name_full": "Автономный округ"
+  },
+  {
+    "type_id": 102,
+    "fias_level": 1,
+    "name": "Аобл",
+    "name_full": "Автономная область"
+  },
+  {
+    "type_id": 103,
+    "fias_level": 1,
+    "name": "г",
+    "name_full": "Город"
+  },
+  {
+    "type_id": 104,
+    "fias_level": 1,
+    "name": "край",
+    "name_full": "Край"
+  },
+  {
+    "type_id": 105,
+    "fias_level": 1,
+    "name": "обл",
+    "name_full": "Область"
+  },
+  {
+    "type_id": 106,
+    "fias_level": 1,
+    "name": "Респ",
+    "name_full": "Республика"
+  },
+  {
+    "type_id": 107,
+    "fias_level": 1,
+    "name": "округ",
+    "name_full": "Округ"
+  },
+  {
+    "type_id": 108,
+    "fias_level": 1,
+    "name": "Чувашия",
+    "name_full": "Чувашия"
+  },
+  {
+    "type_id": 109,
+    "fias_level": 1,
+    "name": "а.обл.",
+    "name_full": "Автономная область"
+  },
+  {
+    "type_id": 110,
+    "fias_level": 1,
+    "name": "а.окр.",
+    "name_full": "Автономный округ"
+  },
+  {
+    "type_id": 111,
+    "fias_level": 1,
+    "name": "г.",
+    "name_full": "Город"
+  },
+  {
+    "type_id": 112,
+    "fias_level": 1,
+    "name": "г.ф.з.",
+    "name_full": "Город федерального значения"
+  },
+  {
+    "type_id": 113,
+    "fias_level": 1,
+    "name": "обл.",
+    "name_full": "Область"
+  },
+  {
+    "type_id": 114,
+    "fias_level": 1,
+    "name": "респ.",
+    "name_full": "Республика"
+  },
+  {
+    "type_id": 201,
+    "fias_level": 2,
+    "name": "АО",
+    "name_full": "Автономный округ"
+  },
+  {
+    "type_id": 301,
+    "fias_level": 3,
+    "name": "р-н",
+    "name_full": "Район"
+  },
+  {
+    "type_id": 302,
+    "fias_level": 3,
+    "name": "у",
+    "name_full": "Улус"
+  },
+  {
+    "type_id": 303,
+    "fias_level": 3,
+    "name": "тер",
+    "name_full": "Территория"
+  },
+  {
+    "type_id": 305,
+    "fias_level": 3,
+    "name": "АО",
+    "name_full": "Автономный округ"
+  },
+  {
+    "type_id": 306,
+    "fias_level": 3,
+    "name": "п",
+    "name_full": "Поселение"
+  },
+  {
+    "type_id": 307,
+    "fias_level": 3,
+    "name": "вн.тер. г.",
+    "name_full": "Внутригородская территория"
+  },
+  {
+    "type_id": 308,
+    "fias_level": 3,
+    "name": "г.о.",
+    "name_full": "Городской округ"
+  },
+  {
+    "type_id": 309,
+    "fias_level": 3,
+    "name": "м.р-н",
+    "name_full": "Муниципальный район"
+  },
+  {
+    "type_id": 310,
+    "fias_level": 3,
+    "name": "пос.",
+    "name_full": "Поселение"
+  },
+  {
+    "type_id": 311,
+    "fias_level": 3,
+    "name": "у.",
+    "name_full": "Улус"
+  },
+  {
+    "type_id": 3501,
+    "fias_level": 35,
+    "name": "вн.р-н",
+    "name_full": "Внутригородской район"
+  },
+  {
+    "type_id": 3502,
+    "fias_level": 35,
+    "name": "г. п.",
+    "name_full": "Городское поселение"
+  },
+  {
+    "type_id": 3503,
+    "fias_level": 35,
+    "name": "с.п.",
+    "name_full": "Сельское поселение"
+  },
+  {
+    "type_id": 3504,
+    "fias_level": 35,
+    "name": "с/с",
+    "name_full": "Сельсовет"
+  },
+  {
+    "type_id": 401,
+    "fias_level": 4,
+    "name": "г",
+    "name_full": "Город"
+  },
+  {
+    "type_id": 402,
+    "fias_level": 4,
+    "name": "пгт",
+    "name_full": "Поселок городского типа"
+  },
+  {
+    "type_id": 403,
+    "fias_level": 4,
+    "name": "рп",
+    "name_full": "Рабочий поселок"
+  },
+  {
+    "type_id": 404,
+    "fias_level": 4,
+    "name": "кп",
+    "name_full": "Курортный поселок"
+  },
+  {
+    "type_id": 405,
+    "fias_level": 4,
+    "name": "дп",
+    "name_full": "Дачный поселок"
+  },
+  {
+    "type_id": 406,
+    "fias_level": 4,
+    "name": "с/с",
+    "name_full": "Сельсовет"
+  },
+  {
+    "type_id": 407,
+    "fias_level": 4,
+    "name": "с/а",
+    "name_full": "Сельская администрация"
+  },
+  {
+    "type_id": 409,
+    "fias_level": 4,
+    "name": "с/о",
+    "name_full": "Сельский округ"
+  },
+  {
+    "type_id": 410,
+    "fias_level": 4,
+    "name": "волость",
+    "name_full": "Волость"
+  },
+  {
+    "type_id": 411,
+    "fias_level": 4,
+    "name": "п/о",
+    "name_full": "Почтовое отделение"
+  },
+  {
+    "type_id": 412,
+    "fias_level": 4,
+    "name": "тер",
+    "name_full": "Территория"
+  },
+  {
+    "type_id": 414,
+    "fias_level": 4,
+    "name": "с/п",
+    "name_full": "Сельское поселение"
+  },
+  {
+    "type_id": 415,
+    "fias_level": 4,
+    "name": "с/мо",
+    "name_full": "Сельское муницип.образование"
+  },
+  {
+    "type_id": 416,
+    "fias_level": 4,
+    "name": "массив",
+    "name_full": "Массив"
+  },
+  {
+    "type_id": 417,
+    "fias_level": 4,
+    "name": "п",
+    "name_full": "Поселок"
+  },
+  {
+    "type_id": 418,
+    "fias_level": 4,
+    "name": "г.",
+    "name_full": "Город"
+  },
+  {
+    "type_id": 419,
+    "fias_level": 4,
+    "name": "пгт.",
+    "name_full": "Поселок городского типа"
+  },
+  {
+    "type_id": 502,
+    "fias_level": 5,
+    "name": "тер",
+    "name_full": "Территория"
+  },
+  {
+    "type_id": 503,
+    "fias_level": 5,
+    "name": "р-н",
+    "name_full": "Район"
+  },
+  {
+    "type_id": 601,
+    "fias_level": 6,
+    "name": "аал",
+    "name_full": "Аал"
+  },
+  {
+    "type_id": 602,
+    "fias_level": 6,
+    "name": "аул",
+    "name_full": "Аул"
+  },
+  {
+    "type_id": 603,
+    "fias_level": 6,
+    "name": "волость",
+    "name_full": "Волость"
+  },
+  {
+    "type_id": 604,
+    "fias_level": 6,
+    "name": "высел",
+    "name_full": "Выселки(ок)"
+  },
+  {
+    "type_id": 605,
+    "fias_level": 6,
+    "name": "г",
+    "name_full": "Город"
+  },
+  {
+    "type_id": 606,
+    "fias_level": 6,
+    "name": "д",
+    "name_full": "Деревня"
+  },
+  {
+    "type_id": 607,
+    "fias_level": 6,
+    "name": "дп",
+    "name_full": "Дачный поселок"
+  },
+  {
+    "type_id": 608,
+    "fias_level": 6,
+    "name": "ж/д_будка",
+    "name_full": "Железнодорожная будка"
+  },
+  {
+    "type_id": 609,
+    "fias_level": 6,
+    "name": "ж/д_казарм",
+    "name_full": "Железнодорожная казарма"
+  },
+  {
+    "type_id": 610,
+    "fias_level": 6,
+    "name": "ж/д_оп",
+    "name_full": "ж/д останов. (обгонный) пункт"
+  },
+  {
+    "type_id": 611,
+    "fias_level": 6,
+    "name": "ж/д_пост",
+    "name_full": "Железнодорожный пост"
+  },
+  {
+    "type_id": 612,
+    "fias_level": 6,
+    "name": "ж/д_рзд",
+    "name_full": "Железнодорожный разъезд"
+  },
+  {
+    "type_id": 613,
+    "fias_level": 6,
+    "name": "ж/д_ст",
+    "name_full": "Железнодорожная станция"
+  },
+  {
+    "type_id": 614,
+    "fias_level": 6,
+    "name": "заимка",
+    "name_full": "Заимка"
+  },
+  {
+    "type_id": 615,
+    "fias_level": 6,
+    "name": "казарма",
+    "name_full": "Казарма"
+  },
+  {
+    "type_id": 616,
+    "fias_level": 6,
+    "name": "кп",
+    "name_full": "Курортный поселок"
+  },
+  {
+    "type_id": 617,
+    "fias_level": 6,
+    "name": "м",
+    "name_full": "Местечко"
+  },
+  {
+    "type_id": 618,
+    "fias_level": 6,
+    "name": "мкр",
+    "name_full": "Микрорайон"
+  },
+  {
+    "type_id": 619,
+    "fias_level": 6,
+    "name": "нп",
+    "name_full": "Населенный пункт"
+  },
+  {
+    "type_id": 620,
+    "fias_level": 6,
+    "name": "остров",
+    "name_full": "Остров"
+  },
+  {
+    "type_id": 621,
+    "fias_level": 6,
+    "name": "п",
+    "name_full": "Поселок"
+  },
+  {
+    "type_id": 622,
+    "fias_level": 6,
+    "name": "п/р",
+    "name_full": "Планировочный район"
+  },
+  {
+    "type_id": 623,
+    "fias_level": 6,
+    "name": "п/ст",
+    "name_full": "Поселок и(при) станция(и)"
+  },
+  {
+    "type_id": 624,
+    "fias_level": 6,
+    "name": "пгт",
+    "name_full": "Поселок городского типа"
+  },
+  {
+    "type_id": 625,
+    "fias_level": 6,
+    "name": "починок",
+    "name_full": "Починок"
+  },
+  {
+    "type_id": 626,
+    "fias_level": 6,
+    "name": "п/о",
+    "name_full": "Почтовое отделение"
+  },
+  {
+    "type_id": 627,
+    "fias_level": 6,
+    "name": "промзона",
+    "name_full": "Промышленная зона"
+  },
+  {
+    "type_id": 628,
+    "fias_level": 6,
+    "name": "рзд",
+    "name_full": "Разъезд"
+  },
+  {
+    "type_id": 629,
+    "fias_level": 6,
+    "name": "рп",
+    "name_full": "Рабочий поселок"
+  },
+  {
+    "type_id": 630,
+    "fias_level": 6,
+    "name": "с",
+    "name_full": "Село"
+  },
+  {
+    "type_id": 631,
+    "fias_level": 6,
+    "name": "сл",
+    "name_full": "Слобода"
+  },
+  {
+    "type_id": 632,
+    "fias_level": 6,
+    "name": "ст",
+    "name_full": "Станция"
+  },
+  {
+    "type_id": 633,
+    "fias_level": 6,
+    "name": "ст-ца",
+    "name_full": "Станица"
+  },
+  {
+    "type_id": 634,
+    "fias_level": 6,
+    "name": "у",
+    "name_full": "Улус"
+  },
+  {
+    "type_id": 635,
+    "fias_level": 6,
+    "name": "х",
+    "name_full": "Хутор"
+  },
+  {
+    "type_id": 636,
+    "fias_level": 6,
+    "name": "г-к",
+    "name_full": "Городок"
+  },
+  {
+    "type_id": 637,
+    "fias_level": 6,
+    "name": "тер",
+    "name_full": "Территория"
+  },
+  {
+    "type_id": 638,
+    "fias_level": 6,
+    "name": "ж/д_платф",
+    "name_full": "Железнодорожная платформа"
+  },
+  {
+    "type_id": 639,
+    "fias_level": 6,
+    "name": "кв-л",
+    "name_full": "Квартал"
+  },
+  {
+    "type_id": 640,
+    "fias_level": 6,
+    "name": "арбан",
+    "name_full": "Арбан"
+  },
+  {
+    "type_id": 641,
+    "fias_level": 6,
+    "name": "снт",
+    "name_full": "Садовое неком-е товарищество"
+  },
+  {
+    "type_id": 642,
+    "fias_level": 6,
+    "name": "лпх",
+    "name_full": "Леспромхоз"
+  },
+  {
+    "type_id": 643,
+    "fias_level": 6,
+    "name": "погост",
+    "name_full": "Погост"
+  },
+  {
+    "type_id": 644,
+    "fias_level": 6,
+    "name": "кордон",
+    "name_full": "Кордон"
+  },
+  {
+    "type_id": 645,
+    "fias_level": 6,
+    "name": "автодорога",
+    "name_full": "Автодорога"
+  },
+  {
+    "type_id": 646,
+    "fias_level": 6,
+    "name": "жилрайон",
+    "name_full": "Жилой район"
+  },
+  {
+    "type_id": 647,
+    "fias_level": 6,
+    "name": "жилзона",
+    "name_full": "Жилая зона"
+  },
+  {
+    "type_id": 648,
+    "fias_level": 6,
+    "name": "массив",
+    "name_full": "Массив"
+  },
+  {
+    "type_id": 649,
+    "fias_level": 6,
+    "name": "гп",
+    "name_full": "Городской поселок"
+  },
+  {
+    "type_id": 650,
+    "fias_level": 6,
+    "name": "ж/д б-ка",
+    "name_full": "Железнодорожная будка"
+  },
+  {
+    "type_id": 6501,
+    "fias_level": 65,
+    "name": "б-г",
+    "name_full": "Берег"
+  },
+  {
+    "type_id": 6502,
+    "fias_level": 65,
+    "name": "вал",
+    "name_full": "Вал"
+  },
+  {
+    "type_id": 6503,
+    "fias_level": 65,
+    "name": "ж/р",
+    "name_full": "Жилой район"
+  },
+  {
+    "type_id": 6504,
+    "fias_level": 65,
+    "name": "зона",
+    "name_full": "Зона (массив)"
+  },
+  {
+    "type_id": 6505,
+    "fias_level": 65,
+    "name": "кв-л",
+    "name_full": "Квартал"
+  },
+  {
+    "type_id": 6506,
+    "fias_level": 65,
+    "name": "мкр.",
+    "name_full": "Микрорайон"
+  },
+  {
+    "type_id": 6507,
+    "fias_level": 65,
+    "name": "ост-в",
+    "name_full": "Остров"
+  },
+  {
+    "type_id": 6508,
+    "fias_level": 65,
+    "name": "п/р",
+    "name_full": "Промышленный район"
+  },
+  {
+    "type_id": 6509,
+    "fias_level": 65,
+    "name": "парк",
+    "name_full": "Парк"
+  },
+  {
+    "type_id": 651,
+    "fias_level": 6,
+    "name": "пгт.",
+    "name_full": "Поселок городского типа"
+  },
+  {
+    "type_id": 6510,
+    "fias_level": 65,
+    "name": "платф.",
+    "name_full": "Платформа"
+  },
+  {
+    "type_id": 6511,
+    "fias_level": 65,
+    "name": "р-н",
+    "name_full": "Район"
+  },
+  {
+    "type_id": 6512,
+    "fias_level": 65,
+    "name": "сад",
+    "name_full": "Сад"
+  },
+  {
+    "type_id": 6513,
+    "fias_level": 65,
+    "name": "сквер",
+    "name_full": "Сквер"
+  },
+  {
+    "type_id": 6514,
+    "fias_level": 65,
+    "name": "тер.",
+    "name_full": "Территория"
+  },
+  {
+    "type_id": 6515,
+    "fias_level": 65,
+    "name": "тер. ГСК",
+    "name_full": "Территория ГСК"
+  },
+  {
+    "type_id": 6516,
+    "fias_level": 65,
+    "name": "тер. ДНО",
+    "name_full": "Территория ДНО"
+  },
+  {
+    "type_id": 6517,
+    "fias_level": 65,
+    "name": "тер. ДНП",
+    "name_full": "Территория ДНП"
+  },
+  {
+    "type_id": 6518,
+    "fias_level": 65,
+    "name": "тер. ДНТ",
+    "name_full": "Территория ДНТ"
+  },
+  {
+    "type_id": 6519,
+    "fias_level": 65,
+    "name": "тер. ДПК",
+    "name_full": "Территория ДПК"
+  },
+  {
+    "type_id": 652,
+    "fias_level": 6,
+    "name": "ж/д пл-ка",
+    "name_full": "Железнодорожная площадка"
+  },
+  {
+    "type_id": 6520,
+    "fias_level": 65,
+    "name": "тер. ОНО",
+    "name_full": "Территория ОНО"
+  },
+  {
+    "type_id": 6521,
+    "fias_level": 65,
+    "name": "тер. ОНП",
+    "name_full": "Территория ОНП"
+  },
+  {
+    "type_id": 6522,
+    "fias_level": 65,
+    "name": "тер. ОНТ",
+    "name_full": "Территория ОНТ"
+  },
+  {
+    "type_id": 6523,
+    "fias_level": 65,
+    "name": "тер. ОПК",
+    "name_full": "Территория ОПК"
+  },
+  {
+    "type_id": 6524,
+    "fias_level": 65,
+    "name": "тер. СНО",
+    "name_full": "Территория СНО"
+  },
+  {
+    "type_id": 6525,
+    "fias_level": 65,
+    "name": "тер. СНП",
+    "name_full": "Территория СНП"
+  },
+  {
+    "type_id": 6526,
+    "fias_level": 65,
+    "name": "тер. СНТ",
+    "name_full": "Территория СНТ"
+  },
+  {
+    "type_id": 6527,
+    "fias_level": 65,
+    "name": "тер. СПК",
+    "name_full": "Территория СПК"
+  },
+  {
+    "type_id": 6528,
+    "fias_level": 65,
+    "name": "тер. ТСН",
+    "name_full": "Территория ТСН"
+  },
+  {
+    "type_id": 6529,
+    "fias_level": 65,
+    "name": "тер.ф.х.",
+    "name_full": "Территория ФХ"
+  },
+  {
+    "type_id": 653,
+    "fias_level": 6,
+    "name": "ж/д пл-ма",
+    "name_full": "Железнодорожная платформа"
+  },
+  {
+    "type_id": 6530,
+    "fias_level": 65,
+    "name": "ус.",
+    "name_full": "Усадьба"
+  },
+  {
+    "type_id": 6531,
+    "fias_level": 65,
+    "name": "ю.",
+    "name_full": "Юрты"
+  },
+  {
+    "type_id": 6532,
+    "fias_level": 65,
+    "name": "а/я",
+    "name_full": "Абонентский ящик"
+  },
+  {
+    "type_id": 6534,
+    "fias_level": 65,
+    "name": "аал",
+    "name_full": "Аал"
+  },
+  {
+    "type_id": 6535,
+    "fias_level": 65,
+    "name": "ал.",
+    "name_full": "Аллея"
+  },
+  {
+    "type_id": 6536,
+    "fias_level": 65,
+    "name": "арбан",
+    "name_full": "Арбан"
+  },
+  {
+    "type_id": 6537,
+    "fias_level": 65,
+    "name": "аул",
+    "name_full": "Аул"
+  },
+  {
+    "type_id": 6538,
+    "fias_level": 65,
+    "name": "б-р",
+    "name_full": "Бульвар"
+  },
+  {
+    "type_id": 6539,
+    "fias_level": 65,
+    "name": "взд.",
+    "name_full": "Въезд"
+  },
+  {
+    "type_id": 654,
+    "fias_level": 6,
+    "name": "киш.",
+    "name_full": "Кишлак"
+  },
+  {
+    "type_id": 6540,
+    "fias_level": 65,
+    "name": "г-к",
+    "name_full": "Городок"
+  },
+  {
+    "type_id": 6541,
+    "fias_level": 65,
+    "name": "д.",
+    "name_full": "Деревня"
+  },
+  {
+    "type_id": 6542,
+    "fias_level": 65,
+    "name": "дор.",
+    "name_full": "Дорога"
+  },
+  {
+    "type_id": 6543,
+    "fias_level": 65,
+    "name": "ж/д б-ка",
+    "name_full": "Железнодорожная будка"
+  },
+  {
+    "type_id": 6544,
+    "fias_level": 65,
+    "name": "ж/д к-ма",
+    "name_full": "Железнодорожная казарма"
+  },
+  {
+    "type_id": 6545,
+    "fias_level": 65,
+    "name": "ж/д пл-ма",
+    "name_full": "Железнодорожная платформа"
+  },
+  {
+    "type_id": 6546,
+    "fias_level": 65,
+    "name": "ж/д рзд.",
+    "name_full": "Железнодорожный разъезд"
+  },
+  {
+    "type_id": 6547,
+    "fias_level": 65,
+    "name": "ж/д ст.",
+    "name_full": "Железнодорожная станция"
+  },
+  {
+    "type_id": 6548,
+    "fias_level": 65,
+    "name": "ззд.",
+    "name_full": "Заезд"
+  },
+  {
+    "type_id": 6549,
+    "fias_level": 65,
+    "name": "км",
+    "name_full": "Километр"
+  },
+  {
+    "type_id": 655,
+    "fias_level": 6,
+    "name": "п. ж/д ст.",
+    "name_full": "Поселок при железнодорожной станции"
+  },
+  {
+    "type_id": 6550,
+    "fias_level": 65,
+    "name": "коса",
+    "name_full": "Коса"
+  },
+  {
+    "type_id": 6551,
+    "fias_level": 65,
+    "name": "к-цо",
+    "name_full": "Кольцо"
+  },
+  {
+    "type_id": 6552,
+    "fias_level": 65,
+    "name": "лн.",
+    "name_full": "Линия"
+  },
+  {
+    "type_id": 6553,
+    "fias_level": 65,
+    "name": "м-ко",
+    "name_full": "Местечко"
+  },
+  {
+    "type_id": 6554,
+    "fias_level": 65,
+    "name": "наб.",
+    "name_full": "Набережная"
+  },
+  {
+    "type_id": 6555,
+    "fias_level": 65,
+    "name": "п.",
+    "name_full": "Поселок"
+  },
+  {
+    "type_id": 6556,
+    "fias_level": 65,
+    "name": "пер.",
+    "name_full": "Переулок"
+  },
+  {
+    "type_id": 6557,
+    "fias_level": 65,
+    "name": "пер-д",
+    "name_full": "Переезд"
+  },
+  {
+    "type_id": 6558,
+    "fias_level": 65,
+    "name": "п-к",
+    "name_full": "Починок"
+  },
+  {
+    "type_id": 6559,
+    "fias_level": 65,
+    "name": "пл.",
+    "name_full": "Площадь"
+  },
+  {
+    "type_id": 656,
+    "fias_level": 6,
+    "name": "ж/д бл-ст",
+    "name_full": "Железнодорожный блокпост"
+  },
+  {
+    "type_id": 6560,
+    "fias_level": 65,
+    "name": "пл-ка",
+    "name_full": "Площадка"
+  },
+  {
+    "type_id": 6561,
+    "fias_level": 65,
+    "name": "пр-д",
+    "name_full": "Проезд"
+  },
+  {
+    "type_id": 6562,
+    "fias_level": 65,
+    "name": "пр-к",
+    "name_full": "Просек"
+  },
+  {
+    "type_id": 6563,
+    "fias_level": 65,
+    "name": "пр-ка",
+    "name_full": "Просека"
+  },
+  {
+    "type_id": 6564,
+    "fias_level": 65,
+    "name": "пр-кт",
+    "name_full": "Проспект"
+  },
+  {
+    "type_id": 6565,
+    "fias_level": 65,
+    "name": "пр-лок",
+    "name_full": "Проселок"
+  },
+  {
+    "type_id": 6566,
+    "fias_level": 65,
+    "name": "проул.",
+    "name_full": "Проулок"
+  },
+  {
+    "type_id": 6567,
+    "fias_level": 65,
+    "name": "рзд.",
+    "name_full": "Разъезд"
+  },
+  {
+    "type_id": 6568,
+    "fias_level": 65,
+    "name": "с.",
+    "name_full": "Село"
+  },
+  {
+    "type_id": 6569,
+    "fias_level": 65,
+    "name": "с-к",
+    "name_full": "Спуск"
+  },
+  {
+    "type_id": 657,
+    "fias_level": 6,
+    "name": "ж/д в-ка",
+    "name_full": "Железнодорожная ветка"
+  },
+  {
+    "type_id": 6570,
+    "fias_level": 65,
+    "name": "сл.",
+    "name_full": "Слобода"
+  },
+  {
+    "type_id": 6571,
+    "fias_level": 65,
+    "name": "с-р",
+    "name_full": "Сквер"
+  },
+  {
+    "type_id": 6572,
+    "fias_level": 65,
+    "name": "ст.",
+    "name_full": "Станция"
+  },
+  {
+    "type_id": 6573,
+    "fias_level": 65,
+    "name": "стр.",
+    "name_full": "Строение"
+  },
+  {
+    "type_id": 6574,
+    "fias_level": 65,
+    "name": "тракт",
+    "name_full": "Тракт"
+  },
+  {
+    "type_id": 6575,
+    "fias_level": 65,
+    "name": "туп.",
+    "name_full": "Тупик"
+  },
+  {
+    "type_id": 6576,
+    "fias_level": 65,
+    "name": "ул.",
+    "name_full": "Улица"
+  },
+  {
+    "type_id": 6577,
+    "fias_level": 65,
+    "name": "х.",
+    "name_full": "Хутор"
+  },
+  {
+    "type_id": 6578,
+    "fias_level": 65,
+    "name": "ш.",
+    "name_full": "Шоссе"
+  },
+  {
+    "type_id": 6579,
+    "fias_level": 65,
+    "name": "гск",
+    "name_full": "Гаражно-строительный кооп."
+  },
+  {
+    "type_id": 658,
+    "fias_level": 6,
+    "name": "ж/д к-ма",
+    "name_full": "Железнодорожная казарма"
+  },
+  {
+    "type_id": 6580,
+    "fias_level": 65,
+    "name": "днп",
+    "name_full": "Дачное неком-е партнерство"
+  },
+  {
+    "type_id": 6581,
+    "fias_level": 65,
+    "name": "местность",
+    "name_full": "Местность"
+  },
+  {
+    "type_id": 6582,
+    "fias_level": 65,
+    "name": "мкр",
+    "name_full": "Микрорайон"
+  },
+  {
+    "type_id": 6583,
+    "fias_level": 65,
+    "name": "н/п",
+    "name_full": "Некоммерческое партнерство"
+  },
+  {
+    "type_id": 6584,
+    "fias_level": 65,
+    "name": "промзона",
+    "name_full": "Промышленная зона"
+  },
+  {
+    "type_id": 6585,
+    "fias_level": 65,
+    "name": "снт",
+    "name_full": "Садовое товарищество"
+  },
+  {
+    "type_id": 6586,
+    "fias_level": 65,
+    "name": "тер",
+    "name_full": "Территория"
+  },
+  {
+    "type_id": 6587,
+    "fias_level": 65,
+    "name": "ф/х",
+    "name_full": "Фермерское хозяйство"
+  },
+  {
+    "type_id": 6588,
+    "fias_level": 65,
+    "name": "месторожд.",
+    "name_full": "Месторождение"
+  },
+  {
+    "type_id": 6589,
+    "fias_level": 65,
+    "name": "порт",
+    "name_full": "Порт"
+  },
+  {
+    "type_id": 659,
+    "fias_level": 6,
+    "name": "ж/д к-т",
+    "name_full": "Железнодорожный комбинат"
+  },
+  {
+    "type_id": 6590,
+    "fias_level": 65,
+    "name": "тер.СОСН",
+    "name_full": "Территория СОСН"
+  },
+  {
+    "type_id": 6591,
+    "fias_level": 65,
+    "name": "тер. ТСЖ",
+    "name_full": "Территория ТСЖ"
+  },
+  {
+    "type_id": 6592,
+    "fias_level": 65,
+    "name": "тер. ПК",
+    "name_full": "Территория ПК"
+  },
+  {
+    "type_id": 6594,
+    "fias_level": 65,
+    "name": "мр.",
+    "name_full": "Месторождение"
+  },
+  {
+    "type_id": 660,
+    "fias_level": 6,
+    "name": "ж/д п.п.",
+    "name_full": "Железнодорожный путевой пост"
+  },
+  {
+    "type_id": 661,
+    "fias_level": 6,
+    "name": "ж/д о.п.",
+    "name_full": "Железнодорожный остановочный пункт"
+  },
+  {
+    "type_id": 662,
+    "fias_level": 6,
+    "name": "зим.",
+    "name_full": "Зимовье"
+  },
+  {
+    "type_id": 663,
+    "fias_level": 6,
+    "name": "нп.",
+    "name_full": "Населенный пункт"
+  },
+  {
+    "type_id": 664,
+    "fias_level": 6,
+    "name": "дп.",
+    "name_full": "Дачный поселок"
+  },
+  {
+    "type_id": 665,
+    "fias_level": 6,
+    "name": "сп.",
+    "name_full": "Сельский поселок"
+  },
+  {
+    "type_id": 666,
+    "fias_level": 6,
+    "name": "пос.рзд",
+    "name_full": "Поселок разъезда"
+  },
+  {
+    "type_id": 667,
+    "fias_level": 6,
+    "name": "сп",
+    "name_full": "Сельский поселок"
+  },
+  {
+    "type_id": 701,
+    "fias_level": 7,
+    "name": "аллея",
+    "name_full": "Аллея"
+  },
+  {
+    "type_id": 702,
+    "fias_level": 7,
+    "name": "б-р",
+    "name_full": "Бульвар"
+  },
+  {
+    "type_id": 703,
+    "fias_level": 7,
+    "name": "въезд",
+    "name_full": "Въезд"
+  },
+  {
+    "type_id": 704,
+    "fias_level": 7,
+    "name": "дор",
+    "name_full": "Дорога"
+  },
+  {
+    "type_id": 705,
+    "fias_level": 7,
+    "name": "жт",
+    "name_full": "Животноводческая точка"
+  },
+  {
+    "type_id": 706,
+    "fias_level": 7,
+    "name": "заезд",
+    "name_full": "Заезд"
+  },
+  {
+    "type_id": 707,
+    "fias_level": 7,
+    "name": "кв-л",
+    "name_full": "Квартал"
+  },
+  {
+    "type_id": 708,
+    "fias_level": 7,
+    "name": "км",
+    "name_full": "Километр"
+  },
+  {
+    "type_id": 709,
+    "fias_level": 7,
+    "name": "кольцо",
+    "name_full": "Кольцо"
+  },
+  {
+    "type_id": 710,
+    "fias_level": 7,
+    "name": "линия",
+    "name_full": "Линия"
+  },
+  {
+    "type_id": 711,
+    "fias_level": 7,
+    "name": "наб",
+    "name_full": "Набережная"
+  },
+  {
+    "type_id": 712,
+    "fias_level": 7,
+    "name": "остров",
+    "name_full": "Остров"
+  },
+  {
+    "type_id": 713,
+    "fias_level": 7,
+    "name": "парк",
+    "name_full": "Парк"
+  },
+  {
+    "type_id": 714,
+    "fias_level": 7,
+    "name": "пер",
+    "name_full": "Переулок"
+  },
+  {
+    "type_id": 715,
+    "fias_level": 7,
+    "name": "переезд",
+    "name_full": "Переезд"
+  },
+  {
+    "type_id": 716,
+    "fias_level": 7,
+    "name": "пл",
+    "name_full": "Площадь"
+  },
+  {
+    "type_id": 717,
+    "fias_level": 7,
+    "name": "пл-ка",
+    "name_full": "Площадка"
+  },
+  {
+    "type_id": 718,
+    "fias_level": 7,
+    "name": "проезд",
+    "name_full": "Проезд"
+  },
+  {
+    "type_id": 719,
+    "fias_level": 7,
+    "name": "пр-кт",
+    "name_full": "Проспект"
+  },
+  {
+    "type_id": 720,
+    "fias_level": 7,
+    "name": "просек",
+    "name_full": "Просек"
+  },
+  {
+    "type_id": 721,
+    "fias_level": 7,
+    "name": "проселок",
+    "name_full": "Проселок"
+  },
+  {
+    "type_id": 722,
+    "fias_level": 7,
+    "name": "проулок",
+    "name_full": "Проулок"
+  },
+  {
+    "type_id": 723,
+    "fias_level": 7,
+    "name": "сад",
+    "name_full": "Сад"
+  },
+  {
+    "type_id": 724,
+    "fias_level": 7,
+    "name": "сквер",
+    "name_full": "Сквер"
+  },
+  {
+    "type_id": 725,
+    "fias_level": 7,
+    "name": "стр",
+    "name_full": "Строение"
+  },
+  {
+    "type_id": 726,
+    "fias_level": 7,
+    "name": "тер",
+    "name_full": "Территория"
+  },
+  {
+    "type_id": 727,
+    "fias_level": 7,
+    "name": "тракт",
+    "name_full": "Тракт"
+  },
+  {
+    "type_id": 728,
+    "fias_level": 7,
+    "name": "туп",
+    "name_full": "Тупик"
+  },
+  {
+    "type_id": 729,
+    "fias_level": 7,
+    "name": "ул",
+    "name_full": "Улица"
+  },
+  {
+    "type_id": 730,
+    "fias_level": 7,
+    "name": "уч-к",
+    "name_full": "Участок"
+  },
+  {
+    "type_id": 731,
+    "fias_level": 7,
+    "name": "ш",
+    "name_full": "Шоссе"
+  },
+  {
+    "type_id": 732,
+    "fias_level": 7,
+    "name": "пр-д",
+    "name_full": "Проезд"
+  },
+  {
+    "type_id": 733,
+    "fias_level": 7,
+    "name": "пр-к",
+    "name_full": "Просек"
+  },
+  {
+    "type_id": 734,
+    "fias_level": 7,
+    "name": "пр-ка",
+    "name_full": "Просека"
+  },
+  {
+    "type_id": 735,
+    "fias_level": 7,
+    "name": "г-к",
+    "name_full": "Городок"
+  },
+  {
+    "type_id": 736,
+    "fias_level": 7,
+    "name": "д",
+    "name_full": "Деревня"
+  },
+  {
+    "type_id": 737,
+    "fias_level": 7,
+    "name": "ж/д_будка",
+    "name_full": "Железнодорожная будка"
+  },
+  {
+    "type_id": 738,
+    "fias_level": 7,
+    "name": "ж/д_казарм",
+    "name_full": "Железнодорожная казарма"
+  },
+  {
+    "type_id": 739,
+    "fias_level": 7,
+    "name": "ж/д_оп",
+    "name_full": "ж/д останов. (обгонный) пункт"
+  },
+  {
+    "type_id": 740,
+    "fias_level": 7,
+    "name": "ж/д_пост",
+    "name_full": "Железнодорожный пост"
+  },
+  {
+    "type_id": 741,
+    "fias_level": 7,
+    "name": "ж/д_рзд",
+    "name_full": "Железнодорожный разъезд"
+  },
+  {
+    "type_id": 742,
+    "fias_level": 7,
+    "name": "ж/д_ст",
+    "name_full": "Железнодорожная станция"
+  },
+  {
+    "type_id": 743,
+    "fias_level": 7,
+    "name": "казарма",
+    "name_full": "Казарма"
+  },
+  {
+    "type_id": 744,
+    "fias_level": 7,
+    "name": "м",
+    "name_full": "Местечко"
+  },
+  {
+    "type_id": 745,
+    "fias_level": 7,
+    "name": "мкр",
+    "name_full": "Микрорайон"
+  },
+  {
+    "type_id": 746,
+    "fias_level": 7,
+    "name": "нп",
+    "name_full": "Населенный пункт"
+  },
+  {
+    "type_id": 747,
+    "fias_level": 7,
+    "name": "платф",
+    "name_full": "Платформа"
+  },
+  {
+    "type_id": 748,
+    "fias_level": 7,
+    "name": "п",
+    "name_full": "Поселок"
+  },
+  {
+    "type_id": 749,
+    "fias_level": 7,
+    "name": "п/о",
+    "name_full": "Почтовое отделение"
+  },
+  {
+    "type_id": 750,
+    "fias_level": 7,
+    "name": "п/р",
+    "name_full": "Планировочный район"
+  },
+  {
+    "type_id": 7501,
+    "fias_level": 75,
+    "name": "з/у",
+    "name_full": "Земельный участок"
+  },
+  {
+    "type_id": 751,
+    "fias_level": 7,
+    "name": "п/ст",
+    "name_full": "Поселок и(при) станция(и)"
+  },
+  {
+    "type_id": 752,
+    "fias_level": 7,
+    "name": "полустанок",
+    "name_full": "Полустанок"
+  },
+  {
+    "type_id": 753,
+    "fias_level": 7,
+    "name": "пр-лок",
+    "name_full": "Проселок"
+  },
+  {
+    "type_id": 754,
+    "fias_level": 7,
+    "name": "рзд",
+    "name_full": "Разъезд"
+  },
+  {
+    "type_id": 755,
+    "fias_level": 7,
+    "name": "с",
+    "name_full": "Село"
+  },
+  {
+    "type_id": 756,
+    "fias_level": 7,
+    "name": "сл",
+    "name_full": "Слобода"
+  },
+  {
+    "type_id": 757,
+    "fias_level": 7,
+    "name": "ст",
+    "name_full": "Станция"
+  },
+  {
+    "type_id": 758,
+    "fias_level": 7,
+    "name": "х",
+    "name_full": "Хутор"
+  },
+  {
+    "type_id": 759,
+    "fias_level": 7,
+    "name": "ж/д_платф",
+    "name_full": "Железнодорожная платформа"
+  },
+  {
+    "type_id": 760,
+    "fias_level": 7,
+    "name": "проул.",
+    "name_full": "Проулок"
+  },
+  {
+    "type_id": 761,
+    "fias_level": 7,
+    "name": "спуск",
+    "name_full": "Спуск"
+  },
+  {
+    "type_id": 762,
+    "fias_level": 7,
+    "name": "ул.",
+    "name_full": "Улица"
+  },
+  {
+    "type_id": 763,
+    "fias_level": 7,
+    "name": "гск",
+    "name_full": "Гаражно-строительный кооп."
+  },
+  {
+    "type_id": 764,
+    "fias_level": 7,
+    "name": "снт",
+    "name_full": "Садовое неком-е товарищество"
+  },
+  {
+    "type_id": 765,
+    "fias_level": 7,
+    "name": "ал.",
+    "name_full": "Аллея"
+  },
+  {
+    "type_id": 766,
+    "fias_level": 7,
+    "name": "тер. ДНТ",
+    "name_full": "Территория ДНТ"
+  },
+  {
+    "type_id": 767,
+    "fias_level": 7,
+    "name": "коса",
+    "name_full": "Коса"
+  },
+  {
+    "type_id": 768,
+    "fias_level": 7,
+    "name": "вал",
+    "name_full": "Вал"
+  },
+  {
+    "type_id": 769,
+    "fias_level": 7,
+    "name": "ферма",
+    "name_full": "Ферма"
+  },
+  {
+    "type_id": 770,
+    "fias_level": 7,
+    "name": "мост",
+    "name_full": "Мост"
+  },
+  {
+    "type_id": 771,
+    "fias_level": 7,
+    "name": "ряды",
+    "name_full": "Ряды"
+  },
+  {
+    "type_id": 772,
+    "fias_level": 7,
+    "name": "а/я",
+    "name_full": "Абонентский ящик"
+  },
+  {
+    "type_id": 773,
+    "fias_level": 7,
+    "name": "берег",
+    "name_full": "Берег"
+  },
+  {
+    "type_id": 774,
+    "fias_level": 7,
+    "name": "просека",
+    "name_full": "Просека"
+  },
+  {
+    "type_id": 775,
+    "fias_level": 7,
+    "name": "рзд.",
+    "name_full": "Разъезд"
+  },
+  {
+    "type_id": 776,
+    "fias_level": 7,
+    "name": "бугор",
+    "name_full": "Бугор"
+  },
+  {
+    "type_id": 777,
+    "fias_level": 7,
+    "name": "зона",
+    "name_full": "Зона"
+  },
+  {
+    "type_id": 778,
+    "fias_level": 7,
+    "name": "ряд",
+    "name_full": "Ряд(ы)"
+  },
+  {
+    "type_id": 779,
+    "fias_level": 7,
+    "name": "тер. СНТ",
+    "name_full": "Территория СНТ"
+  },
+  {
+    "type_id": 780,
+    "fias_level": 7,
+    "name": "местность",
+    "name_full": "Местность"
+  },
+  {
+    "type_id": 781,
+    "fias_level": 7,
+    "name": "балка",
+    "name_full": "Балка"
+  },
+  {
+    "type_id": 782,
+    "fias_level": 7,
+    "name": "с/т",
+    "name_full": "Садовое товарищество"
+  },
+  {
+    "type_id": 783,
+    "fias_level": 7,
+    "name": "пер-д",
+    "name_full": "Переезд"
+  },
+  {
+    "type_id": 784,
+    "fias_level": 7,
+    "name": "сзд.",
+    "name_full": "Съезд"
+  },
+  {
+    "type_id": 785,
+    "fias_level": 7,
+    "name": "маяк",
+    "name_full": "Маяк"
+  },
+  {
+    "type_id": 786,
+    "fias_level": 7,
+    "name": "с-к",
+    "name_full": "Спуск"
+  },
+  {
+    "type_id": 787,
+    "fias_level": 7,
+    "name": "днп",
+    "name_full": "Дачное неком-е партнерство"
+  },
+  {
+    "type_id": 788,
+    "fias_level": 7,
+    "name": "н/п",
+    "name_full": "Некоммерческое партнерство"
+  },
+  {
+    "type_id": 789,
+    "fias_level": 7,
+    "name": "ф/х",
+    "name_full": "Фермерское хозяйство"
+  },
+  {
+    "type_id": 790,
+    "fias_level": 7,
+    "name": "промзона",
+    "name_full": "Промзона"
+  },
+  {
+    "type_id": 791,
+    "fias_level": 7,
+    "name": "взв.",
+    "name_full": "Взвоз"
+  },
+  {
+    "type_id": 792,
+    "fias_level": 7,
+    "name": "с-р",
+    "name_full": "Сквер"
+  },
+  {
+    "type_id": 793,
+    "fias_level": 7,
+    "name": "ш.",
+    "name_full": "Шоссе"
+  },
+  {
+    "type_id": 794,
+    "fias_level": 7,
+    "name": "ззд.",
+    "name_full": "Заезд"
+  },
+  {
+    "type_id": 795,
+    "fias_level": 7,
+    "name": "к-цо",
+    "name_full": "Кольцо"
+  },
+  {
+    "type_id": 796,
+    "fias_level": 7,
+    "name": "лн.",
+    "name_full": "Линия"
+  },
+  {
+    "type_id": 797,
+    "fias_level": 7,
+    "name": "мгстр.",
+    "name_full": "Магистраль"
+  },
+  {
+    "type_id": 798,
+    "fias_level": 7,
+    "name": "наб.",
+    "name_full": "Набережная"
+  },
+  {
+    "type_id": 799,
+    "fias_level": 7,
+    "name": "пер.",
+    "name_full": "Переулок"
+  },
+  {
+    "type_id": 801,
+    "fias_level": 8,
+    "name": "ДОМ",
+    "name_full": "Дом"
+  },
+  {
+    "type_id": 802,
+    "fias_level": 8,
+    "name": "влд.",
+    "name_full": "Владение"
+  },
+  {
+    "type_id": 803,
+    "fias_level": 8,
+    "name": "д.",
+    "name_full": "Дом"
+  },
+  {
+    "type_id": 804,
+    "fias_level": 8,
+    "name": "двлд.",
+    "name_full": "Домовладение"
+  },
+  {
+    "type_id": 805,
+    "fias_level": 8,
+    "name": "зд.",
+    "name_full": "Здание"
+  },
+  {
+    "type_id": 806,
+    "fias_level": 8,
+    "name": "к.",
+    "name_full": "Корпус"
+  },
+  {
+    "type_id": 807,
+    "fias_level": 8,
+    "name": "кот.",
+    "name_full": "Котельная"
+  },
+  {
+    "type_id": 808,
+    "fias_level": 8,
+    "name": "ОНС",
+    "name_full": "Объект незав. строительства"
+  },
+  {
+    "type_id": 809,
+    "fias_level": 8,
+    "name": "пав.",
+    "name_full": "Павильон"
+  },
+  {
+    "type_id": 810,
+    "fias_level": 8,
+    "name": "соор.",
+    "name_full": "Сооружение"
+  },
+  {
+    "type_id": 811,
+    "fias_level": 8,
+    "name": "стр.",
+    "name_full": "Строение"
+  },
+  {
+    "type_id": 812,
+    "fias_level": 8,
+    "name": "шахта",
+    "name_full": "Шахта"
+  },
+  {
+    "type_id": 9002,
+    "fias_level": 90,
+    "name": "снт",
+    "name_full": "Садовое товарищество"
+  },
+  {
+    "type_id": 9003,
+    "fias_level": 90,
+    "name": "промзона",
+    "name_full": "Промышленная зона"
+  },
+  {
+    "type_id": 9004,
+    "fias_level": 90,
+    "name": "гск",
+    "name_full": "Гаражно-строительный кооп."
+  },
+  {
+    "type_id": 9005,
+    "fias_level": 90,
+    "name": "тер",
+    "name_full": "Территория"
+  },
+  {
+    "type_id": 9006,
+    "fias_level": 90,
+    "name": "мкр",
+    "name_full": "Микрорайон"
+  },
+  {
+    "type_id": 9007,
+    "fias_level": 90,
+    "name": "сад",
+    "name_full": "Сад"
+  },
+  {
+    "type_id": 9008,
+    "fias_level": 90,
+    "name": "ф/х",
+    "name_full": "Фермерское хозяйство"
+  },
+  {
+    "type_id": 9009,
+    "fias_level": 90,
+    "name": "н/п",
+    "name_full": "Некоммерческое партнерство"
+  },
+  {
+    "type_id": 901,
+    "fias_level": 9,
+    "name": "г-ж",
+    "name_full": "Гараж"
+  },
+  {
+    "type_id": 9010,
+    "fias_level": 90,
+    "name": "днп",
+    "name_full": "Дачное неком-е партнерство"
+  },
+  {
+    "type_id": 9011,
+    "fias_level": 90,
+    "name": "местность",
+    "name_full": "Местность"
+  },
+  {
+    "type_id": 902,
+    "fias_level": 9,
+    "name": "кв.",
+    "name_full": "Квартира"
+  },
+  {
+    "type_id": 903,
+    "fias_level": 9,
+    "name": "ком.",
+    "name_full": "Комната"
+  },
+  {
+    "type_id": 904,
+    "fias_level": 9,
+    "name": "офис",
+    "name_full": "Офис"
+  },
+  {
+    "type_id": 905,
+    "fias_level": 9,
+    "name": "п-б",
+    "name_full": "Погреб"
+  },
+  {
+    "type_id": 906,
+    "fias_level": 9,
+    "name": "подв.",
+    "name_full": "Подвал"
+  },
+  {
+    "type_id": 907,
+    "fias_level": 9,
+    "name": "помещ.",
+    "name_full": "Помещение"
+  },
+  {
+    "type_id": 908,
+    "fias_level": 9,
+    "name": "раб.уч.",
+    "name_full": "Рабочий участок"
+  },
+  {
+    "type_id": 909,
+    "fias_level": 9,
+    "name": "скл.",
+    "name_full": "Склад"
+  },
+  {
+    "type_id": 910,
+    "fias_level": 9,
+    "name": "торг. зал",
+    "name_full": "Торговый зал"
+  },
+  {
+    "type_id": 9101,
+    "fias_level": 91,
+    "name": "аллея",
+    "name_full": "Аллея"
+  },
+  {
+    "type_id": 9102,
+    "fias_level": 91,
+    "name": "б-р",
+    "name_full": "Бульвар"
+  },
+  {
+    "type_id": 9103,
+    "fias_level": 91,
+    "name": "въезд",
+    "name_full": "Въезд"
+  },
+  {
+    "type_id": 9104,
+    "fias_level": 91,
+    "name": "дор",
+    "name_full": "Дорога"
+  },
+  {
+    "type_id": 9105,
+    "fias_level": 91,
+    "name": "жт",
+    "name_full": "Животноводческая точка"
+  },
+  {
+    "type_id": 9106,
+    "fias_level": 91,
+    "name": "заезд",
+    "name_full": "Заезд"
+  },
+  {
+    "type_id": 9107,
+    "fias_level": 91,
+    "name": "кв-л",
+    "name_full": "Квартал"
+  },
+  {
+    "type_id": 9108,
+    "fias_level": 91,
+    "name": "км",
+    "name_full": "Километр"
+  },
+  {
+    "type_id": 9109,
+    "fias_level": 91,
+    "name": "кольцо",
+    "name_full": "Кольцо"
+  },
+  {
+    "type_id": 911,
+    "fias_level": 9,
+    "name": "цех",
+    "name_full": "Цех"
+  },
+  {
+    "type_id": 9110,
+    "fias_level": 91,
+    "name": "линия",
+    "name_full": "Линия"
+  },
+  {
+    "type_id": 9111,
+    "fias_level": 91,
+    "name": "наб",
+    "name_full": "Набережная"
+  },
+  {
+    "type_id": 9112,
+    "fias_level": 91,
+    "name": "остров",
+    "name_full": "Остров"
+  },
+  {
+    "type_id": 9113,
+    "fias_level": 91,
+    "name": "парк",
+    "name_full": "Парк"
+  },
+  {
+    "type_id": 9114,
+    "fias_level": 91,
+    "name": "пер",
+    "name_full": "Переулок"
+  },
+  {
+    "type_id": 9115,
+    "fias_level": 91,
+    "name": "переезд",
+    "name_full": "Переезд"
+  },
+  {
+    "type_id": 9116,
+    "fias_level": 91,
+    "name": "пл",
+    "name_full": "Площадь"
+  },
+  {
+    "type_id": 9117,
+    "fias_level": 91,
+    "name": "пл-ка",
+    "name_full": "Площадка"
+  },
+  {
+    "type_id": 9118,
+    "fias_level": 91,
+    "name": "проезд",
+    "name_full": "Проезд"
+  },
+  {
+    "type_id": 9119,
+    "fias_level": 91,
+    "name": "пр-кт",
+    "name_full": "Проспект"
+  },
+  {
+    "type_id": 9120,
+    "fias_level": 91,
+    "name": "просек",
+    "name_full": "Просек"
+  },
+  {
+    "type_id": 9121,
+    "fias_level": 91,
+    "name": "проселок",
+    "name_full": "Проселок"
+  },
+  {
+    "type_id": 9122,
+    "fias_level": 91,
+    "name": "проулок",
+    "name_full": "Проулок"
+  },
+  {
+    "type_id": 9123,
+    "fias_level": 91,
+    "name": "сад",
+    "name_full": "Сад"
+  },
+  {
+    "type_id": 9124,
+    "fias_level": 91,
+    "name": "сквер",
+    "name_full": "Сквер"
+  },
+  {
+    "type_id": 9125,
+    "fias_level": 91,
+    "name": "стр",
+    "name_full": "Строение"
+  },
+  {
+    "type_id": 9126,
+    "fias_level": 91,
+    "name": "тер",
+    "name_full": "Территория"
+  },
+  {
+    "type_id": 9127,
+    "fias_level": 91,
+    "name": "тракт",
+    "name_full": "Тракт"
+  },
+  {
+    "type_id": 9128,
+    "fias_level": 91,
+    "name": "туп",
+    "name_full": "Тупик"
+  },
+  {
+    "type_id": 9129,
+    "fias_level": 91,
+    "name": "ул",
+    "name_full": "Улица"
+  },
+  {
+    "type_id": 913,
+    "fias_level": 9,
+    "name": "м/м",
+    "name_full": "Машино-место"
+  },
+  {
+    "type_id": 9130,
+    "fias_level": 91,
+    "name": "уч-к",
+    "name_full": "Участок"
+  },
+  {
+    "type_id": 9131,
+    "fias_level": 91,
+    "name": "ш",
+    "name_full": "Шоссе"
+  },
+  {
+    "type_id": 9132,
+    "fias_level": 91,
+    "name": "аал",
+    "name_full": "Аал"
+  },
+  {
+    "type_id": 9133,
+    "fias_level": 91,
+    "name": "аул",
+    "name_full": "Аул"
+  },
+  {
+    "type_id": 9134,
+    "fias_level": 91,
+    "name": "высел",
+    "name_full": "Выселки(ок)"
+  },
+  {
+    "type_id": 9135,
+    "fias_level": 91,
+    "name": "г-к",
+    "name_full": "Городок"
+  },
+  {
+    "type_id": 9136,
+    "fias_level": 91,
+    "name": "д",
+    "name_full": "Деревня"
+  },
+  {
+    "type_id": 9137,
+    "fias_level": 91,
+    "name": "ж/д_будка",
+    "name_full": "Железнодорожная будка"
+  },
+  {
+    "type_id": 9138,
+    "fias_level": 91,
+    "name": "ж/д_казарм",
+    "name_full": "Железнодорожная казарма"
+  },
+  {
+    "type_id": 9139,
+    "fias_level": 91,
+    "name": "ж/д_оп",
+    "name_full": "ж/д останов. (обгонный) пункт"
+  },
+  {
+    "type_id": 9140,
+    "fias_level": 91,
+    "name": "ж/д_пост",
+    "name_full": "Железнодорожный пост"
+  },
+  {
+    "type_id": 9141,
+    "fias_level": 91,
+    "name": "ж/д_рзд",
+    "name_full": "Железнодорожный разъезд"
+  },
+  {
+    "type_id": 9142,
+    "fias_level": 91,
+    "name": "ж/д_ст",
+    "name_full": "Железнодорожная станция"
+  },
+  {
+    "type_id": 9143,
+    "fias_level": 91,
+    "name": "казарма",
+    "name_full": "Казарма"
+  },
+  {
+    "type_id": 9144,
+    "fias_level": 91,
+    "name": "м",
+    "name_full": "Местечко"
+  },
+  {
+    "type_id": 9145,
+    "fias_level": 91,
+    "name": "мкр",
+    "name_full": "Микрорайон"
+  },
+  {
+    "type_id": 9146,
+    "fias_level": 91,
+    "name": "нп",
+    "name_full": "Населенный пункт"
+  },
+  {
+    "type_id": 9147,
+    "fias_level": 91,
+    "name": "платф",
+    "name_full": "Платформа"
+  },
+  {
+    "type_id": 9148,
+    "fias_level": 91,
+    "name": "п",
+    "name_full": "Поселок"
+  },
+  {
+    "type_id": 9149,
+    "fias_level": 91,
+    "name": "п/о",
+    "name_full": "Почтовое отделение"
+  },
+  {
+    "type_id": 9150,
+    "fias_level": 91,
+    "name": "п/р",
+    "name_full": "Планировочный район"
+  },
+  {
+    "type_id": 9151,
+    "fias_level": 91,
+    "name": "п/ст",
+    "name_full": "Поселок и(при) станция(и)"
+  },
+  {
+    "type_id": 9153,
+    "fias_level": 91,
+    "name": "починок",
+    "name_full": "Починок"
+  },
+  {
+    "type_id": 9154,
+    "fias_level": 91,
+    "name": "рзд",
+    "name_full": "Разъезд"
+  },
+  {
+    "type_id": 9155,
+    "fias_level": 91,
+    "name": "с",
+    "name_full": "Село"
+  },
+  {
+    "type_id": 9156,
+    "fias_level": 91,
+    "name": "сл",
+    "name_full": "Слобода"
+  },
+  {
+    "type_id": 9157,
+    "fias_level": 91,
+    "name": "ст",
+    "name_full": "Станция"
+  },
+  {
+    "type_id": 9158,
+    "fias_level": 91,
+    "name": "х",
+    "name_full": "Хутор"
+  },
+  {
+    "type_id": 9159,
+    "fias_level": 91,
+    "name": "ж/д_платф",
+    "name_full": "Железнодорожная платформа"
+  },
+  {
+    "type_id": 9160,
+    "fias_level": 91,
+    "name": "арбан",
+    "name_full": "Арбан"
+  },
+  {
+    "type_id": 9161,
+    "fias_level": 91,
+    "name": "спуск",
+    "name_full": "Спуск"
+  },
+  {
+    "type_id": 9163,
+    "fias_level": 91,
+    "name": "гск",
+    "name_full": "Гаражно-строит-ный кооператив"
+  },
+  {
+    "type_id": 9164,
+    "fias_level": 91,
+    "name": "снт",
+    "name_full": "Садовое неком-е товарищество"
+  },
+  {
+    "type_id": 9167,
+    "fias_level": 91,
+    "name": "коса",
+    "name_full": "Коса"
+  },
+  {
+    "type_id": 9168,
+    "fias_level": 91,
+    "name": "вал",
+    "name_full": "Вал"
+  },
+  {
+    "type_id": 9169,
+    "fias_level": 91,
+    "name": "ферма",
+    "name_full": "Ферма"
+  },
+  {
+    "type_id": 9170,
+    "fias_level": 91,
+    "name": "мост",
+    "name_full": "Мост"
+  },
+  {
+    "type_id": 9171,
+    "fias_level": 91,
+    "name": "ряды",
+    "name_full": "Ряды"
+  },
+  {
+    "type_id": 9172,
+    "fias_level": 91,
+    "name": "а/я",
+    "name_full": "Абонентский ящик"
+  },
+  {
+    "type_id": 9173,
+    "fias_level": 91,
+    "name": "берег",
+    "name_full": "Берег"
+  },
+  {
+    "type_id": 9174,
+    "fias_level": 91,
+    "name": "просека",
+    "name_full": "Просека"
+  },
+  {
+    "type_id": 9177,
+    "fias_level": 91,
+    "name": "зона",
+    "name_full": "Зона"
+  }
+]

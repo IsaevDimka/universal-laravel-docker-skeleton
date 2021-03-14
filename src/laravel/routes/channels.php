@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -13,17 +15,19 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::routes(['prefix' => 'api/v1', 'middleware' => ['auth:api']]);
+Broadcast::routes([
+    'prefix' => 'api/v1',
+    'middleware' => ['auth:api'],
+]);
 
 Broadcast::channel('private-events', function (\App\Models\User $user) {
-    if(in_array($user->id, [1])){
+    if (in_array($user->id, [1])) {
         return true;
     }
-    logger()->debug('Broadcast-private-events', ['status' => false, 'user' => $user->id]);
     return false;
 });
 
-Broadcast::channel('system-name', function () {
+Broadcast::channel('system-events', function () {
     return true;
 });
 

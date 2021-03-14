@@ -1,17 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use App\Jobs\TestJob;
-use Illuminate\Console\Command;
-
 use Illuminate\Bus\Batch;
+
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Bus;
 use Throwable;
 
 class TestingJobsCommand extends Command
 {
-
     /**
      * The name and signature of the console command.
      *
@@ -28,8 +29,6 @@ class TestingJobsCommand extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -51,8 +50,7 @@ class TestingJobsCommand extends Command
             'test' => now()->toDateTimeString(),
         ];
 
-        switch($method)
-        {
+        switch ($method) {
             case 'queue':
                 \App\Jobs\TestJob::dispatch($payload)->onQueue($queue)->onConnection($connection);
             break;
@@ -62,29 +60,29 @@ class TestingJobsCommand extends Command
                     new TestJob($payload),
                 ])->then(function (Batch $batch) {
                     // All jobs completed successfully...
-                    logger()->channel('telegram')->debug("All jobs completed successfully...", [
+                    logger()->channel('telegram')->debug('All jobs completed successfully...', [
                         'batch' => $batch->name,
                         'id' => $batch->id,
                     ]);
                 })->catch(function (Batch $batch, Throwable $e) {
                     // First batch job failure detected...
-                    logger()->channel('telegram')->debug("First batch job failure detected...", [
+                    logger()->channel('telegram')->debug('First batch job failure detected...', [
                         'batch' => $batch->name,
                         'id' => $batch->id,
                     ]);
                 })->finally(function (Batch $batch) {
                     // The batch has finished executing...
-                    logger()->channel('telegram')->debug("The batch has finished executing", [
+                    logger()->channel('telegram')->debug('The batch has finished executing', [
                         'batch' => $batch->name,
                         'id' => $batch->id,
                     ]);
                 })
-                            ->name('Name of bus')
-                            ->onQueue($queue)
-                            ->onConnection($connection)
-                            ->dispatch();
+                    ->name('Name of bus')
+                    ->onQueue($queue)
+                    ->onConnection($connection)
+                    ->dispatch();
 
-                $this->alert('Batch ID: '.$batch->id);
+                $this->alert('Batch ID: ' . $batch->id);
             break;
             default:
                 $this->error('method not supported...');
