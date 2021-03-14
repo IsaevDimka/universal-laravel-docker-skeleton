@@ -19,6 +19,11 @@ class DatabaseSeeder extends Seeder
              CurrencySeeder::class,
              TimezoneSeeder::class,
              UserSeeder::class,
+             CountrySeeder::class,
+             AreaSeeder::class,
+             RegionSeeder::class,
+             CitySeeder::class,
+             TypeOfAddressSeeder::class,
          ]);
     }
 }

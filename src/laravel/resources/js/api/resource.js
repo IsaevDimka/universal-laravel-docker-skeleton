@@ -40,6 +40,18 @@ class Resource {
       method: 'delete',
     });
   }
+  restore(id) {
+    return request({
+      url: '/' + this.uri + '/' + id + '/restore',
+      method: 'patch',
+    });
+  }
+  delete(id) {
+    return request({
+      url: '/' + this.uri + '/' + id + '/delete',
+      method: 'delete',
+    });
+  }
 }
 
 export { Resource as default };

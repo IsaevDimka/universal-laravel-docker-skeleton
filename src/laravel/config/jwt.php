@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of jwt-auth.
  *
@@ -10,7 +12,6 @@
  */
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | JWT Authentication Secret
@@ -300,5 +301,4 @@ return [
         'storage' => Tymon\JWTAuth\Providers\Storage\Illuminate::class,
 
     ],
-
 ];

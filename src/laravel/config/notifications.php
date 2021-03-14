@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Laravel notification custom config
  */
 
 return [
-    'connection'   => 'redis',
-    'queue'        => 'notification',
+    'connection' => 'redis',
+    'queue' => 'notification',
     'curl_timeout' => 10.0,
     'channels' => [
         'mail',

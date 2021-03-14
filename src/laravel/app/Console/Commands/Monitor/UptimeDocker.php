@@ -1,11 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands\Monitor;
 
 use App\Services\BackendService;
-use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Support\Str;
 
 class UptimeDocker extends Command
 {
@@ -27,8 +27,6 @@ class UptimeDocker extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @param BackendService $backendService
      */
     public function __construct(BackendService $backendService)
     {
@@ -43,8 +41,10 @@ class UptimeDocker extends Command
      */
     public function handle()
     {
-        $uptime = "Uptime docker: ".$this->backendService->uptimeDocker();
+        $uptime = 'Uptime docker: ' . $this->backendService->uptimeDocker();
         $this->comment($uptime);
-        logger()->channel('telegram')->info($uptime, ['type' => 'clear']);
+        logger()->channel('telegram')->info($uptime, [
+            'type' => 'clear',
+        ]);
     }
 }

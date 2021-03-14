@@ -1,5 +1,6 @@
 // set function parseTime,formatTime to filter
 export { parseTime, formatTime } from '@/utils';
+import checkPermission from '@/utils/permission'
 
 export function pluralize(time, label) {
   if (time === 1) {
@@ -65,4 +66,14 @@ export function uppercaseFirstCamelCase(string = '') {
     return '';
   }
   return (string.charAt(0).toUpperCase() + string.slice(1)).replaceAll('_', ' ');
+}
+
+/*
+* Phone encode filter
+* @param {String} string
+* */
+export function encodeCustomerPhone(phone) {
+  const isAdmin = checkPermission(['admin', 'superadmin', 'root'])
+  const middle = '*****'
+  return isAdmin ? phone : phone.substr(0, 4) + middle + phone.substr(-2)
 }

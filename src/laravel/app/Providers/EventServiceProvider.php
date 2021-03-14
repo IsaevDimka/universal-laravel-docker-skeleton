@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use App\Listeners\UserEventSubscriber;
@@ -14,7 +16,6 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array
      */
-
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
@@ -35,8 +36,6 @@ class EventServiceProvider extends ServiceProvider
 
     /**
      * Register any events for your application.
-     *
-     * @return void
      */
     public function boot()
     {

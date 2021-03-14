@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers\Socialite;
 
 use SocialiteProviders\Manager\OAuth2\AbstractProvider;
@@ -12,58 +14,45 @@ class GitLabServiceProvider extends AbstractProvider
      */
     public const IDENTIFIER = 'GITLAB';
 
-    /**
-     * {@inheritdoc}
-     */
     protected $scopeSeparator = ' ';
 
-    /**
-     * {@inheritdoc}
-     */
+    public static function additionalConfigKeys()
+    {
+        return ['instance_uri'];
+    }
+
     protected function getAuthUrl($state)
     {
-        return $this->buildAuthUrlFromBase($this->getInstanceUri().'oauth/authorize', $state);
+        return $this->buildAuthUrlFromBase($this->getInstanceUri() . 'oauth/authorize', $state);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getTokenUrl()
     {
-        return $this->getInstanceUri().'oauth/token';
+        return $this->getInstanceUri() . 'oauth/token';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getUserByToken($token)
     {
-        $response = $this->getHttpClient()->get($this->getInstanceUri().'api/v4/user', [
+        $response = $this->getHttpClient()->get($this->getInstanceUri() . 'api/v4/user', [
             'headers' => [
-                'Authorization' => 'Bearer '.$token,
+                'Authorization' => 'Bearer ' . $token,
             ],
         ]);
 
         return json_decode($response->getBody(), true);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function mapUserToObject(array $user)
     {
         return (new User())->setRaw($user)->map([
-            'id'       => $user['id'],
+            'id' => $user['id'],
             'nickname' => $user['username'],
-            'name'     => $user['name'],
-            'email'    => $user['email'],
-            'avatar'   => $user['avatar_url'],
+            'name' => $user['name'],
+            'email' => $user['email'],
+            'avatar' => $user['avatar_url'],
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getTokenFields($code)
     {
         return array_merge(parent::getTokenFields($code), [
@@ -74,13 +63,5 @@ class GitLabServiceProvider extends AbstractProvider
     protected function getInstanceUri()
     {
         return $this->getConfig('instance_uri', 'https://gitlab.com/');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function additionalConfigKeys()
-    {
-        return ['instance_uri'];
     }
 }

@@ -18,7 +18,7 @@ jobs:
         stability: [prefer-stable]
 
     name: PHP ${{ matrix.php }} - ${{ matrix.stability }}
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -27,7 +27,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd, mongodb, memcached
           tools: composer:v2
           coverage: none
 
@@ -39,16 +39,19 @@ jobs:
 
       - name: Copy .env
         run: (cd ./src/laravel && composer run-script post-root-package-install)
-      
+
       - name: Install dependencies
         uses: nick-invision/retry@v2
         with:
           timeout_minutes: 5
           max_attempts: 5
           command: (cd ./src/laravel && composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress --no-scripts)
- 
+
       - name: Generate key
         run: (cd ./src/laravel && php artisan key:generate --force)
-      
+
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         run: (cd ./src/laravel && php artisan test)
+
+      - name: Linter
+        run: (cd ./src/laravel && sh ./linter.sh)

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\API\v1\Auth;
 
 use App\Http\Controllers\API\ApiController;
@@ -13,8 +15,6 @@ class VerificationController extends ApiController
 {
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -24,7 +24,6 @@ class VerificationController extends ApiController
     /**
      * Mark the user's email address as verified.
      *
-     * @param  \Illuminate\Http\Request $request
      * @param  \App\User $user
      * @return \Illuminate\Http\JsonResponse
      */
@@ -54,12 +53,13 @@ class VerificationController extends ApiController
     /**
      * Resend the email verification notification.
      *
-     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function resend(Request $request)
     {
-        $this->validate($request, ['email' => 'required|email']);
+        $this->validate($request, [
+            'email' => 'required|email',
+        ]);
 
         $user = User::where('email', $request->email)->first();
 
@@ -77,6 +77,8 @@ class VerificationController extends ApiController
 
         $user->sendEmailVerificationNotification();
 
-        return response()->json(['status' => trans('verification.sent')]);
+        return response()->json([
+            'status' => trans('verification.sent'),
+        ]);
     }
 }

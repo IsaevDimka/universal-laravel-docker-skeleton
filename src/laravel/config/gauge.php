@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 use TobiasDierich\Gauge\Http\Middleware\Authorize;
 use TobiasDierich\Gauge\Watchers;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Gauge Domain
@@ -47,7 +48,7 @@ return [
     'storage' => [
         'database' => [
             'connection' => env('DB_CONNECTION', 'pgsql'),
-            'chunk'      => 1000,
+            'chunk' => 1000,
         ],
     ],
 
@@ -93,7 +94,7 @@ return [
     */
 
     'ignore_paths' => [
-        'telescope/*'
+        'telescope/*',
     ],
 
     /*
@@ -109,13 +110,13 @@ return [
 
     'watchers' => [
         Watchers\QueryWatcher::class => [
-            'enabled'         => env('GAUGE_QUERY_WATCHER', true),
+            'enabled' => env('GAUGE_QUERY_WATCHER', true),
             'ignore_packages' => true,
-            'slow'            => 100,
+            'slow' => 100,
         ],
 
         Watchers\RequestWatcher::class => [
-            'enabled'    => env('GAUGE_REQUEST_WATCHER', true),
+            'enabled' => env('GAUGE_REQUEST_WATCHER', true),
             'size_limit' => env('GAUGE_RESPONSE_SIZE_LIMIT', 64),
         ],
     ],

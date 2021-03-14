@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -39,19 +40,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Support\Carbon|null $createdAt
  * @property \Illuminate\Support\Carbon|null $updatedAt
  * @property \Illuminate\Support\Carbon|null $deletedAt
+ * @mixin IdeHelperStorage
  */
-class Storage extends Model
+class Storage extends BaseModel
 {
     use SoftDeletes;
 
     public const PUBLIC_PATH = '/storage/';
+
     public const STORAGE_PATH = 'public';
+
+    protected $perPage = 50;
 
     protected $table = 'storages';
 
     protected $primaryKey = 'id';
-
-    protected $dates = ['deleted_at'];
 
     protected $fillable = [
         'filename',
@@ -61,9 +64,13 @@ class Storage extends Model
         'user_id',
     ];
 
+    protected $dates = [
+        'deleted_at',
+    ];
+
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withDefault();
     }
 
     /**

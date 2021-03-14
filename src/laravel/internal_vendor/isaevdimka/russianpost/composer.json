@@ -1,0 +1,30 @@
+{
+  "name": "isaevdimka/russianpost",
+  "description": "SDK для работы с API Почты России (pochta.ru)",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "support": {
+    "issues": "https://github.com/isaevdimka/russianpost/issues",
+    "source": "https://github.com/isaevdimka/russianpost"
+  },
+  "authors": [
+    {
+      "name": "Dmitriy Isaev",
+      "email": "isaevdimka@gmail.com",
+      "homepage": "https://github.com/IsaevDimka",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.5",
+    "guzzlehttp/guzzle": "6.3 - 7.2",
+    "psr/log": "^1.0",
+    "ext-soap": "*",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "IsaevDimka\\RussianPost\\": "src/"
+    }
+  }
+}

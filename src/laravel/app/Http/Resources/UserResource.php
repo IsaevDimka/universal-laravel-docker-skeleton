@@ -1,38 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
-
-class UserResource extends JsonResource
+/** @mixin \App\Models\User */
+class UserResource extends ModelResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return array
-     */
-    public function toArray($request)
+    public function transformTo(): array
     {
         return [
-            'id'                => $this->id,
-            'username'          => $this->username,
-            'email'             => $this->email,
-            'phone'             => $this->phone,
-            'phone_is_verify'   => $this->phone_is_verify,
-            'avatar'            => $this->avatar,
-            'telegram_chat_id'  => $this->telegram_chat_id,
-            'email_verified_at' => $this->email_verified_at,
-            'last_visit_at'     => $this->last_visit_at,
-            'is_active'         => $this->is_active,
-            'locale'            => $this->locale,
-            'options'           => $this->options,
-            'roles'             => $this->getRoleNames()->toArray(),
-            'permissions'       => $this->getPermissionNames()->toArray(),
-            'created_at'        => $this->created_at,
-            'updated_at'        => $this->updated_at,
-            'jwt'               => $this->getJWTIdentifier(),
+            'roles' => $this->whenAppended('role_names'),
+            'permissions' => $this->whenAppended('permission_names'),
+            'jwt' => $this->whenAppended('jwt'),
         ];
     }
 }

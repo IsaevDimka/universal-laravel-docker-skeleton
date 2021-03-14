@@ -140,5 +140,6 @@ class Preloader
         \Illuminate\Database\PDO\SqlServerConnection::class,
         \Illuminate\Database\PDO\SqlServerDriver::class,
         \Illuminate\Testing\Constraints\ArraySubset::class,
+        \Illuminate\Testing\ParallelRunner::class,
     )
     ->load();

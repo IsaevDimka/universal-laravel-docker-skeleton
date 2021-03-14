@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,21 +14,40 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::group(['prefix' => 'v1', 'as' => 'api.v1.'], function() {
-    Route::get('localization/{locale}', App\Http\Controllers\API\v1\LocalizationController::class)->where(['locale' => '[a-zA-Z]{2}'])->name('localization');
-    Route::get('status', App\Http\Controllers\API\v1\StatusController::class)->name('status');
+Route::group([
+    'prefix' => 'v1',
+    'as' => 'api.v1.',
+], function () {
+    Route::get('localization/{locale}', App\Http\Controllers\API\v1\LocalizationController::class)->where([
+        'locale' => '[a-zA-Z]{2}',
+    ])->name('localization');
+    Route::get('health', App\Http\Controllers\API\v1\HealthController::class)->name('health');
     Route::any('webhook', [App\Http\Controllers\API\v1\WebhookController::class, 'any'])->name('webhook.any');
     Route::get('webhook/test', [App\Http\Controllers\API\v1\WebhookController::class, 'test'])->name('webhook.test');
 
     Route::apiResource('timezones', App\Http\Controllers\API\v1\TimezoneController::class)->only(['index']);
-    Route::apiResource('countries', App\Http\Controllers\API\v1\CountryController::class)->only(['index']);
+    Route::apiResource('countries', App\Http\Controllers\API\v1\CountryController::class)->only(['index', 'show']);
+
+    Route::group([
+        'prefix' => 'countries',
+        'as' => 'countries.',
+    ], function () {
+        Route::get('getByIsoCode/{iso_code}', [App\Http\Controllers\API\v1\CountryController::class, 'getByIsoCode'])->name('getByIsoCode');
+    });
+
+    Route::apiResource('regions', App\Http\Controllers\API\v1\RegionController::class)->only(['index', 'show']);
+    Route::apiResource('cities', App\Http\Controllers\API\v1\CityController::class)->only(['index', 'show']);
+
     Route::apiResource('storages', App\Http\Controllers\API\v1\StorageController::class)->only(['index', 'show', 'store']);
     Route::apiResource('news', App\Http\Controllers\API\v1\NewsController::class)->only(['index', 'show']);
     Route::apiResource('feedback', App\Http\Controllers\API\v1\FeedbackController::class)->only(['store']);
-    Route::apiResource('storages', App\Http\Controllers\API\v1\StorageController::class)->only(['index', 'show', 'store']);
 
-    Route::group(['middleware' => ['guest:api', 'throttle:60,1']], function () {
-        Route::group(['prefix' => 'auth'], function () {
+    Route::group([
+        'middleware' => ['guest:api', 'throttle:60,1'],
+    ], function () {
+        Route::group([
+            'prefix' => 'auth',
+        ], function () {
             Route::post('login', [App\Http\Controllers\API\v1\Auth\LoginController::class, 'login']);
             Route::post('register', App\Http\Controllers\API\v1\Auth\RegisterController::class);
 
@@ -41,15 +62,21 @@ Route::group(['prefix' => 'v1', 'as' => 'api.v1.'], function() {
         Route::get('oauth/{driver}/callback', [App\Http\Controllers\API\v1\Auth\OAuthController::class, 'handleProviderCallback'])->name('oauth.callback');
     });
 
-    Route::group(['middleware' => 'auth:api'], function() {
-        Route::group(['prefix' => 'auth'], function () {
+    Route::group([
+        'middleware' => 'auth:api',
+    ], function () {
+        Route::group([
+            'prefix' => 'auth',
+        ], function () {
             Route::get('user', [App\Http\Controllers\API\v1\Auth\UserController::class, 'current']);
             Route::post('logout', [App\Http\Controllers\API\v1\Auth\LoginController::class, 'logout']);
             Route::apiResource('loginActivities', App\Http\Controllers\API\v1\Auth\UserLoginActivityController::class)->only(['index']);
         });
-        //        Route::patch('settings/profile', 'Settings\ProfileController@update');
+//        Route::patch('settings/profile', 'Settings\ProfileController@update');
 //        Route::patch('settings/password', 'Settings\PasswordController@update');
-        Route::group(['middleware' => 'role:root|admin'], function() {
+        Route::group([
+            'middleware' => 'role:root|admin',
+        ], function () {
             Route::apiResource('roles', App\Http\Controllers\API\v1\RoleController::class);
             Route::apiResource('users', App\Http\Controllers\API\v1\UserController::class);
             Route::apiResource('permissions', App\Http\Controllers\API\v1\PermissionController::class);
@@ -61,22 +88,33 @@ Route::group(['prefix' => 'v1', 'as' => 'api.v1.'], function() {
 
         Route::apiResource('currencies', App\Http\Controllers\API\v1\CurrencyController::class)->only(['index', 'show']);
         Route::get('currencies/getByIsoCode/{iso_code}', [App\Http\Controllers\API\v1\CurrencyController::class, 'getByIsoCode'])->name('currencies.getByIsoCode');
+
+        Route::get('filterKeysByModel/{model}', App\Http\Controllers\API\v1\FilterKeysByModelController::class)->name('filterKeysByModel');
     });
 
     /**
      * token_scopes:root
      */
-    Route::group(['middleware' => ['token']], function() {
+    Route::group([
+        'middleware' => ['token'],
+    ], function () {
     });
 
     /**
      * Debug & testing controller
      */
-    Route::group(['prefix' => 'debug', 'as' => 'debug.', 'middleware' => ['token']], function() {
+    Route::group([
+        'prefix' => 'debug',
+        'as' => 'debug.',
+        'middleware' => ['token'],
+    ], function () {
         Route::match(['GET', 'POST'], '/', [App\Http\Controllers\API\v1\DebugController::class, 'index'])->name('index');
     });
 
-    Route::group(['prefix' => 'telegram', 'as' => 'telegram.'], function(){
+    Route::group([
+        'prefix' => 'telegram',
+        'as' => 'telegram.',
+    ], function () {
         Route::any('webhook', [App\Http\Controllers\API\v1\TelegramWebhookController::class, 'webhook'])->name('webhook');
         Route::get('webhook/get', [App\Http\Controllers\API\v1\TelegramWebhookController::class, 'get'])->name('webhook.get');
     });

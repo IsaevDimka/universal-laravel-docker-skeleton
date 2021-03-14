@@ -1,18 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use App\Models\User;
 use App\Observers\UserObserver;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
-     *
-     * @return void
      */
     public function register()
     {
@@ -27,8 +27,6 @@ class AppServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
     public function boot()
     {
@@ -36,10 +34,12 @@ class AppServiceProvider extends ServiceProvider
 
         //        \URL::forceScheme('https');
         Schema::defaultStringLength(256);
-        
+
         if (file_exists(config_path('settings.json'))) {
             $settings = \json_decode(file_get_contents(config_path('settings.json')), true);
-            config(['settings' => $settings]);
+            config([
+                'settings' => $settings,
+            ]);
         }
     }
 }

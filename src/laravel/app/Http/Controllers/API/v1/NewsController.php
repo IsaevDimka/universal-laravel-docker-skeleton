@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\API\v1;
 
 use App\Http\Controllers\API\ApiController;
-use App\Models\News;
 use App\Http\Resources\NewsResource;
+use App\Models\News;
 use Illuminate\Http\Request;
 
 class NewsController extends ApiController
 {
-    const DEFAULT_LIMIT = 25;
+    public const DEFAULT_LIMIT = 25;
 
     /**
      * Display a listing of the resource.
@@ -23,9 +25,9 @@ class NewsController extends ApiController
         /** @var \App\Models\User $user */
         $user = $request->user();
 
-        if (!is_null($request->get('withTrashed', null)) && $user->hasAnyRole([\App\Models\Role::ROLE_ADMIN, \App\Models\Role::ROLE_CLIENT, \App\Models\Role::ROLE_ROOT])) {
+        if (! is_null($request->get('withTrashed', null)) && $user->hasAnyRole([\App\Models\Role::ROLE_ADMIN, \App\Models\Role::ROLE_CLIENT, \App\Models\Role::ROLE_ROOT])) {
             $queryBuilder = News::withTrashed()->orderBy('created_at', 'DESC');
-        }else{
+        } else {
             $queryBuilder = News::withoutTrashed()->orderBy('created_at', 'DESC');
         }
         $total = $queryBuilder->count();
@@ -38,8 +40,6 @@ class NewsController extends ApiController
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -64,7 +64,6 @@ class NewsController extends ApiController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      *
      * @return \Illuminate\Http\JsonResponse

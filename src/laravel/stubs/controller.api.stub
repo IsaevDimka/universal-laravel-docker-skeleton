@@ -1,64 +1,51 @@
 <?php
 
+declare(strict_types=1);
+
 namespace {{ namespace }};
 
-use {{ rootNamespace }}\Http\Controllers\API\ApiController;
+use {{ rootNamespace }}Http\Controllers\API\ApiController;
+use App\Traits\QueryFilterByRequest;
 use Illuminate\Http\Request;
 
 class {{ class }} extends ApiController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function index()
+    use QueryFilterByRequest;
+
+    public function index(Request $request)
     {
-        // return api()->ok('', []);
+        return api()->ok(null, []);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function store(Request $request)
     {
-        // return api()->ok('', []);
+        $payload = $request->all();
+        return api()->ok(__('api.store'), [], compact('payload'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function show($id)
+    public function show(int $id)
     {
-        // return api()->ok('', []);
+        return api()->ok(null, []);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
-        // return api()->ok('', []);
+        $payload = $request->all();
+        return api()->ok(__('api.update'), [], compact('payload'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function destroy($id)
+    public function destroy(int $id)
     {
-        // return api()->ok('', []);
+        return api()->ok(__('api.destroy'), []);
+    }
+
+    public function restore(int $id)
+    {
+        return api()->ok(__('api.restore'), []);
+    }
+
+    public function delete(int $id)
+    {
+        return api()->ok(__('api.delete'), compact('id'));
     }
 }

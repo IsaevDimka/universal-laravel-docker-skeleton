@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('last_visit_at')->nullable();
             $table->string('password');
+            $table->float('balance')->default(0.00);
             $table->boolean('is_active')->default(false);
             $table->char('locale', 2)->default(config('app.fallback_locale'));
             $table->json('options')->nullable();

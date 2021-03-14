@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Language;
@@ -20,7 +22,7 @@ class DebugController extends Controller
 
     protected Application $app;
 
-    function __construct(Application $application)
+    public function __construct(Application $application)
     {
         $this->app = $application;
     }
@@ -52,13 +54,12 @@ class DebugController extends Controller
         $result['UA'] = $request->userAgent();
         $result['secure'] = $request->secure();
         $result['fullUrl'] = $request->fullUrl();
-        $result['session'] = $request->session()->all();
         $result['route'] = $request->route();
 
         $f = $request->get('f');
 
         if (method_exists($this, $method = Str::studly($f))) {
-            $result[(string)$f] = $this->{$method}();
+            $result[(string) $f] = $this->{$method}();
         }
 
         $result['meta'] = \Services\DebugService::result();
@@ -99,7 +100,7 @@ class DebugController extends Controller
             'first' => 'test',
         ];
         $type = null; # without param type or clear or message
-        logger()->channel('telegram')->error("test message", [
+        logger()->channel('telegram')->error('test message', [
             'type' => $type,
             'data' => $data,
         ]);
@@ -110,7 +111,7 @@ class DebugController extends Controller
         $payload = \request()->toArray();
         logger()->channel('mongodb')->error('Test message', [
             'collection' => 'TestCollection',
-            'payload'    => $payload,
+            'payload' => $payload,
         ]);
     }
 
@@ -142,8 +143,8 @@ class DebugController extends Controller
     {
         $payload = [
             'environment' => app()->environment(),
-            'time'        => now()->format('d-m-Y H:i:s'),
-            'message'     => 'Running TestJob',
+            'time' => now()->format('d-m-Y H:i:s'),
+            'message' => 'Running TestJob',
         ];
 
         if (app()->environment('production', 'staging')) {
@@ -161,7 +162,7 @@ class DebugController extends Controller
 
     private function clickhouse()
     {
-        $clickhouse = "clickhouse";
+        $clickhouse = 'clickhouse';
     }
 
     private function datatables()

@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Services;
 
@@ -22,9 +23,8 @@ class DebugService
 
     /**
      * Process set duration and start query log
-     * @return void
      */
-    public static function start() : void
+    public static function start(): void
     {
         self::$debug_start_microtime = microtime(true);
         DB::enableQueryLog();
@@ -38,17 +38,16 @@ class DebugService
         'locale',
         'queryLogs',
         'durations',
-    ]) : array
+    ]): array
     {
         $durations = [
             'laravel' => format_duration((microtime(true) - LARAVEL_START)),
-            'this'    => format_duration((microtime(true) - self::$debug_start_microtime)),
+            'this' => format_duration((microtime(true) - self::$debug_start_microtime)),
         ];
 
         $queryExecuted = DB::getQueryLog();
         $queryLogs = [];
-        foreach ($queryExecuted as $query)
-        {
+        foreach ($queryExecuted as $query) {
             $sqlWithPlaceholders = str_replace(['%', '?'], ['%%', '%s'], $query['query']);
             $bindings = $query['bindings'];
             $realSql = $sqlWithPlaceholders;

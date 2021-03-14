@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\API\v1\Auth;
 
 use App\Http\Controllers\API\ApiController;
@@ -12,8 +14,6 @@ class ForgotPasswordController extends ApiController
 
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -23,7 +23,6 @@ class ForgotPasswordController extends ApiController
     /**
      * Get the response for a successful password reset link.
      *
-     * @param  \Illuminate\Http\Request $request
      * @param  string  $response
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -35,12 +34,13 @@ class ForgotPasswordController extends ApiController
     /**
      * Get the response for a failed password reset link.
      *
-     * @param  \Illuminate\Http\Request $request
      * @param  string  $response
      * @return \Illuminate\Http\RedirectResponse
      */
     protected function sendResetLinkFailedResponse(Request $request, $response)
     {
-        return api()->validation('Failed password reset link', ['email' => trans($response)]);
+        return api()->validation('Failed password reset link', [
+            'email' => trans($response),
+        ]);
     }
 }

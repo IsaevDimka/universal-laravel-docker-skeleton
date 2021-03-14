@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 return [
-    'commands'     => [
+    'commands' => [
         \Illuminate\Foundation\Console\UpCommand::class,
         \Illuminate\Foundation\Console\DownCommand::class,
         \Illuminate\Cache\Console\ClearCommand::class,
@@ -12,7 +14,7 @@ return [
         \App\Console\Commands\Monitor\UptimeDocker::class,
         \App\Console\Commands\Monitor\PgsqlStats::class,
     ],
-    'auth'         => [
+    'auth' => [
         env('ARTISAN_REMOTE_API_KEY_DEPLOY') => [
             \Illuminate\Foundation\Console\UpCommand::class,
             \Illuminate\Foundation\Console\DownCommand::class,

@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Traits;
-
 
 trait PhoneNumberFormattingTrait
 {
@@ -23,17 +23,15 @@ trait PhoneNumberFormattingTrait
             /**
              * Cleanup phone number
              */
-            if (!empty($phone))
-            {
+            if (! empty($phone)) {
                 $cleanup_phonenumber = preg_replace('![^\w\d\x\s]*!', '', $phone);               # clear special symbols
-                $cleanup_phonenumber = preg_replace("/[^0-9\s]/", "", $cleanup_phonenumber);     # clear number
+                $cleanup_phonenumber = preg_replace("/[^0-9\s]/", '', $cleanup_phonenumber);     # clear number
                 $cleanup_phonenumber = str_replace(' ', '', $cleanup_phonenumber);               # clear spaces
-            }else{
+            } else {
                 throw new \RuntimeException('Phone number is required', 400);
             }
 
-            if (empty($country_iso_code))
-            {
+            if (empty($country_iso_code)) {
                 throw new \RuntimeException('Country iso code is required', 400);
             }
 
@@ -51,7 +49,7 @@ trait PhoneNumberFormattingTrait
 //            $formatNational = preg_replace('/\s+/', '', $formatNational); # удаляем пробелы
         } catch (\Throwable $exception) {
             $status = false;
-            $message = (string)$exception->getMessage() . ' ' . $country_iso_code;
+            $message = (string) $exception->getMessage() . ' ' . $country_iso_code;
             $formatNational = '';
             $formatInternational = '';
             $formatE164 = '';
@@ -59,15 +57,15 @@ trait PhoneNumberFormattingTrait
         }
 
         return [
-            'payload'   => [
+            'payload' => [
                 compact(
                     'phone',
                     'country_iso_code',
-                )
+                ),
             ],
-            'status'    => $status,
-            'message'   => $message,
-            'cleanup'   => $cleanup_phonenumber,
+            'status' => $status,
+            'message' => $message,
+            'cleanup' => $cleanup_phonenumber,
             'formatted' => compact(
                 'formatNational',
                 'formatInternational',

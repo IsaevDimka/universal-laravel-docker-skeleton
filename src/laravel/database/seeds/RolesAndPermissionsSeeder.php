@@ -23,6 +23,7 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'debug', 'guard_name' => 'web']);
         Permission::create(['name' => 'beta', 'guard_name' => 'web']);
         Permission::create(['name' => 'manage permission', 'guard_name' => 'web']);
+        Permission::create(['name' => 'manage users', 'guard_name' => 'web']);
 
         // create roles and assign created permissions
         Role::create(['name' => 'root', 'guard_name' => 'web'])->givePermissionTo(Permission::all());

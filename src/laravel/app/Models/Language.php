@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 /**
@@ -27,12 +29,15 @@ namespace App\Models;
  * @mixin \Illuminate\Database\Eloquent\
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Language active()
  * @property bool $isActive
+ * @mixin IdeHelperLanguage
  */
 class Language extends BaseModel
 {
-    protected $table = 'languages';
-    protected $primaryKey = 'id';
     public $timestamps = false;
+
+    protected $table = 'languages';
+
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'short',
@@ -43,7 +48,7 @@ class Language extends BaseModel
     ];
 
     protected $casts = [
-        'is_active'  => 'boolean',
+        'is_active' => 'boolean',
     ];
 
     /**

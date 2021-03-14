@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\API\v1\Auth;
 
 use App\Exceptions\VerifyEmailException;
@@ -18,15 +20,11 @@ class LoginController extends ApiController
 
     /**
      * Login username to be used by the controller.
-     *
-     * @var string
      */
     protected string $username;
 
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -58,9 +56,19 @@ class LoginController extends ApiController
     }
 
     /**
+     * Log the user out of the application.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout()
+    {
+        $this->guard()->logout();
+        return api()->ok('Logout successful');
+    }
+
+    /**
      * Attempt to log the user into the application.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return bool
      */
     protected function attemptLogin(Request $request)
@@ -89,29 +97,27 @@ class LoginController extends ApiController
     /**
      * Send the response after the user was authenticated.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     protected function sendLoginResponse(Request $request)
     {
         $this->clearLoginAttempts($request);
-        $token      = (string) $this->guard()->getToken();
+        $token = (string) $this->guard()->getToken();
         $expiration = $this->guard()->getPayload()->get('exp');
         /** @var User $user */
         $user = $request->user();
 
         return api()->ok(null, [
-            'token'      => $token,
+            'token' => $token,
             'token_type' => 'bearer',
             'expires_in' => $expiration - time(),
-            'locale'     => $user->locale,
+            'locale' => $user->locale,
         ]);
     }
 
     /**
      * Get the failed login response instance.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      *
      * @throws \Illuminate\Validation\ValidationException
@@ -128,16 +134,5 @@ class LoginController extends ApiController
         throw ValidationException::withMessages([
             $this->username() => [],
         ]);
-    }
-
-    /**
-     * Log the user out of the application.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function logout()
-    {
-        $this->guard()->logout();
-        return api()->ok('Logout successful');
     }
 }

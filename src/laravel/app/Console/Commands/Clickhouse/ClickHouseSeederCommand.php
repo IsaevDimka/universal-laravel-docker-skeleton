@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands\Clickhouse;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ClickHouseSeederCommand extends Command
@@ -24,8 +26,6 @@ class ClickHouseSeederCommand extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -84,21 +84,19 @@ class ClickHouseSeederCommand extends Command
                 'event_time' => time(),
             ]);
 
-
-            dd(__METHOD__,
+            dd(
+                __METHOD__,
                 $tracking->get(),
                 $tracking->count(),
                 $builder->toSql(),
             );
-
-        } catch (\Throwable $exception)
-        {
-            $this->error("Message: " . (string)$exception->getMessage());
-            $this->error("Code: " . (int)$exception->getCode());
+        } catch (\Throwable $exception) {
+            $this->error('Message: ' . (string) $exception->getMessage());
+            $this->error('Code: ' . (int) $exception->getCode());
         }
 
         $duration_stop = microtime(true) - $duration_start;
-        $this->comment('Duration: '.round($duration_stop, 2).' sec  .');
+        $this->comment('Duration: ' . round($duration_stop, 2) . ' sec  .');
     }
 
     private function seeder($limit = 1)
@@ -107,37 +105,36 @@ class ClickHouseSeederCommand extends Command
 
         $x = 1;
         while ($x <= $limit):
-            $this->comment('add tracking '.$x);
+            $this->comment('add tracking ' . $x);
 
-            $clickhouse->insert([
-                'BrowserEngine' => '',
-                'BrowserName' => '',
-                'DeviceBrand' => '',
-                'DeviceModel' => '',
-                'DeviceType' => '',
-                'IP' => '',
-                'IsBot' => '',
-                'UserID' => 1,
-                'Locale' => '',
-                'LocationCity' => '',
-                'LocationCountry' => '',
-                'LocationLatitude' => '',
-                'LocationLongitude' => '',
-                'LocationRegion' => '',
-                'Os' => '',
-                'OsVersion' => '',
-                'Referer' => '',
-                'utm_source' => Str::random(10),
-                'utm_medium' => '',
-                'utm_campaign' => '',
-                'utm_content' => '',
-                'utm_term' => '',
-                'UserAgent' => '',
-                'event_time' => time(),
-            ]);
+        $clickhouse->insert([
+            'BrowserEngine' => '',
+            'BrowserName' => '',
+            'DeviceBrand' => '',
+            'DeviceModel' => '',
+            'DeviceType' => '',
+            'IP' => '',
+            'IsBot' => '',
+            'UserID' => 1,
+            'Locale' => '',
+            'LocationCity' => '',
+            'LocationCountry' => '',
+            'LocationLatitude' => '',
+            'LocationLongitude' => '',
+            'LocationRegion' => '',
+            'Os' => '',
+            'OsVersion' => '',
+            'Referer' => '',
+            'utm_source' => Str::random(10),
+            'utm_medium' => '',
+            'utm_campaign' => '',
+            'utm_content' => '',
+            'utm_term' => '',
+            'UserAgent' => '',
+            'event_time' => time(),
+        ]);
 
-            $x++;
+        $x++;
         endwhile;
-
     }
 }

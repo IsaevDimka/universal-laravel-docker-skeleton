@@ -1,7 +1,8 @@
 <?php
 
-return [
+declare(strict_types=1);
 
+return [
     /*
     |--------------------------------------------------------------------------
     | Editor
@@ -121,5 +122,4 @@ return [
     |
     */
     'housekeeping_endpoint_prefix' => '_ignition',
-
 ];

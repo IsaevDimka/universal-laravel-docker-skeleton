@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Logger;
 
 use Illuminate\Support\Facades\DB;
@@ -8,11 +10,12 @@ use Monolog\Handler\AbstractProcessingHandler;
 class MongoDBHandler extends AbstractProcessingHandler
 {
     protected const DATEFORMAT = 'Y-m-d';
+
     protected const DEFAULT_COLLECTION_NAME = 'default';
 
     protected function write(array $record): void
     {
-        if (!empty($record)) {
+        if (! empty($record)) {
             try {
                 $request = request();
                 $extra['server'] = $request->server('SERVER_ADDR');
@@ -27,28 +30,30 @@ class MongoDBHandler extends AbstractProcessingHandler
                 $collection = $now->format(self::DATEFORMAT) . '_';
 
                 $collection .= $record['context']['collection'] ?? self::DEFAULT_COLLECTION_NAME;
-                if ($collection) unset($record['context']['collection']);
+                if ($collection) {
+                    unset($record['context']['collection']);
+                }
 
                 $data = [
-                    'level'           => $record['level_name'],
-                    'env'             => app()->environment(),
-                    'app_version'     => (new \PragmaRX\Version\Package\Version())->format(),
+                    'level' => $record['level_name'],
+                    'env' => app()->environment(),
+                    'app_version' => (new \PragmaRX\Version\Package\Version())->format(),
                     'laravel_version' => app()->version(),
-                    'domain'          => config('app.url'),
-                    'app_locale'      => app()->getLocale(),
-                    'app_timezone'    => config('app.timezone'),
-                    'collection'      => $collection,
-                    'user'            => (\auth()->id() ?? null),
-                    'extra'           => $extra,
-                    'message'         => $record['message'],
-                    'context'         => $record['context'],
-                    'timestamp'       => $now->timestamp,
-                    'created_at'      => $now->toDateTimeString(),
+                    'domain' => config('app.url'),
+                    'app_locale' => app()->getLocale(),
+                    'app_timezone' => config('app.timezone'),
+                    'collection' => $collection,
+                    'user' => (\auth()->id() ?? null),
+                    'extra' => $extra,
+                    'message' => $record['message'],
+                    'context' => $record['context'],
+                    'timestamp' => $now->timestamp,
+                    'created_at' => $now->toDateTimeString(),
                 ];
 
                 DB::connection('mongodb')->collection($collection)->insert($data);
             } catch (\Throwable $e) {
-                logger()->error('Send logs to MongoDB collection via MongoDB failed: ' . (string) $e->getMessage().' | code '.(string) $e->getCode());
+                logger()->error('Send logs to MongoDB collection via MongoDB failed: ' . (string) $e->getMessage() . ' | code ' . (string) $e->getCode());
             }
         }
     }

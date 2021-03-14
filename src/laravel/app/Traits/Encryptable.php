@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Traits;
 
 use Illuminate\Support\Facades\Crypt;
@@ -35,9 +37,9 @@ trait Encryptable
     public function setAttribute($key, $value)
     {
         if (is_null($value)) {
-            $value = "";
+            $value = '';
         }
-        if (in_array($key, $this->encryptable) && $value != "") {
+        if (in_array($key, $this->encryptable) && $value != '') {
             $value = Crypt::encrypt($value);
         }
         return parent::setAttribute($key, $value);

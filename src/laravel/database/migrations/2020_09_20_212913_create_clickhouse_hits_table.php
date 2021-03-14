@@ -359,7 +359,7 @@ class CreateClickhouseHitsTable extends Migration
                         SAMPLE BY intHash32(UserID)
                         SETTINGS index_granularity = 8192";
 
-        Clickhouse::createTableIfNotExists($this->table_name, $engine, $columns);
+//        Clickhouse::createTableIfNotExists($this->table_name, $engine, $columns);
     }
 
     /**
@@ -369,6 +369,6 @@ class CreateClickhouseHitsTable extends Migration
      */
     public function down()
     {
-        Clickhouse::dropTableIfExists($this->table_name);
+//        Clickhouse::dropTableIfExists($this->table_name);
     }
 }

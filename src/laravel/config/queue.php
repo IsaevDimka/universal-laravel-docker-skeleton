@@ -1,7 +1,8 @@
 <?php
 
-return [
+declare(strict_types=1);
 
+return [
     /*
     |--------------------------------------------------------------------------
     | Default Queue Connection Name
@@ -68,44 +69,45 @@ return [
         ],
 
         'rabbitmq' => [
-            'driver'     => 'rabbitmq',
-            'queue'      => env('RABBITMQ_QUEUE', 'default'),
+            'driver' => 'rabbitmq',
+            'queue' => env('RABBITMQ_QUEUE', 'default'),
             'connection' => PhpAmqpLib\Connection\AMQPLazyConnection::class,
 
             'hosts' => [
                 [
-                    'host'     => env('RABBITMQ_HOST', '127.0.0.1'),
-                    'port'     => env('RABBITMQ_PORT', 5672),
-                    'user'     => env('RABBITMQ_USER', 'guest'),
+                    'host' => env('RABBITMQ_HOST', '127.0.0.1'),
+                    'port' => env('RABBITMQ_PORT', 5672),
+                    'user' => env('RABBITMQ_USER', 'guest'),
                     'password' => env('RABBITMQ_PASSWORD', 'guest'),
-                    'vhost'    => env('RABBITMQ_VHOST', '/'),
+                    'vhost' => env('RABBITMQ_VHOST', '/'),
                 ],
             ],
 
             'options' => [
                 'ssl_options' => [
-                    'cafile'      => env('RABBITMQ_SSL_CAFILE', null),
-                    'local_cert'  => env('RABBITMQ_SSL_LOCALCERT', null),
-                    'local_key'   => env('RABBITMQ_SSL_LOCALKEY', null),
+                    'cafile' => env('RABBITMQ_SSL_CAFILE', null),
+                    'local_cert' => env('RABBITMQ_SSL_LOCALCERT', null),
+                    'local_key' => env('RABBITMQ_SSL_LOCALKEY', null),
                     'verify_peer' => env('RABBITMQ_SSL_VERIFY_PEER', true),
-                    'passphrase'  => env('RABBITMQ_SSL_PASSPHRASE', null),
+                    'passphrase' => env('RABBITMQ_SSL_PASSPHRASE', null),
                 ],
-                //                'queue' => [
-                //                    'prioritize_delayed_messages' => false,
-                //                    'queue_max_priority'          => 10,
-                //                    'exchange'                    => 'application-x',
-                //                    'exchange_type'               => 'topic',
-                //                    'exchange_routing_key'        => '',
-                //                    'reroute_failed' => true,
-                //                    'failed_exchange' => 'failed-exchange',
-                //                    'failed_routing_key' => 'application-x.%s',
-                //                ],
+                'queue' => [
+                    'job' => VladimirYuldashev\LaravelQueueRabbitMQ\Queue\Jobs\RabbitMQJob::class,
+                    //                    'prioritize_delayed_messages' => false,
+                    //                    'queue_max_priority'          => 10,
+                    //                    'exchange'                    => 'application-x',
+                    //                    'exchange_type'               => 'topic',
+                    //                    'exchange_routing_key'        => '',
+                    'reroute_failed' => true,
+                    'failed_exchange' => 'failed-exchange',
+                    'failed_routing_key' => 'application-x.%s',
+                ],
             ],
 
             /*
              * Set to "horizon" if you wish to use Laravel Horizon.
              */
-            'worker'  => env('RABBITMQ_WORKER', 'horizon'),
+            'worker' => env('RABBITMQ_WORKER', 'horizon'),
 
         ],
 
@@ -129,7 +131,6 @@ return [
     ],
 
     'batching' => [
-        'table' => 'job_batches'
+        'table' => 'job_batches',
     ],
-
 ];

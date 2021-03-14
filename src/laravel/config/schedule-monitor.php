@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     /*
      * The schedule monitor will log each start, finish and failure of all scheduled jobs.

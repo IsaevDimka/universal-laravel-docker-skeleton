@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Resources;
+declare(strict_types=1);
 
-use Illuminate\Http\Resources\Json\JsonResource;
+namespace App\Http\Resources;
 
 /**
  * Class TimezoneResource
@@ -10,21 +10,10 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @package App\Http\Resources
  * @mixin \App\Models\Timezone
  */
-class TimezoneResource extends JsonResource
+class TimezoneResource extends ModelResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return array
-     */
-    public function toArray($request)
+    public function transformTo(): array
     {
-        return [
-            'timezone' => $this->timezone,
-            'name'     => $this->name,
-            'offset'   => $this->offset,
-        ];
+        return [];
     }
 }

@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Str;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Horizon Domain
@@ -56,7 +57,7 @@ return [
 
     'prefix' => env(
         'HORIZON_PREFIX',
-        Str::slug(env('APP_NAME', 'laravel'), '_').'_horizon:'
+        Str::slug(env('APP_NAME', 'laravel'), '_') . '_horizon:'
     ),
 
     /*
@@ -102,12 +103,18 @@ return [
     */
 
     'trim' => [
-        'recent'        => 120,     # 2 hours
-        'pending'       => 1440,    # 1 days
-        'completed'     => 120,     # 2 hours
-        'recent_failed' => 1440,    # 1 days
-        'failed'        => 1440,    # 1 days
-        'monitored'     => 1440,    # 1 days
+        'recent' => 120,
+        # 2 hours
+        'pending' => 1440,
+        # 1 days
+        'completed' => 120,
+        # 2 hours
+        'recent_failed' => 1440,
+        # 1 days
+        'failed' => 1440,
+        # 1 days
+        'monitored' => 1440,
+        # 1 days
     ],
 
     /*
@@ -171,7 +178,7 @@ return [
         'production' => [
             'supervisor-1' => [
                 'connection' => 'redis',
-                'queue' => ['default', 'api', 'mail', 'notification', 'backup'],
+                'queue' => ['default', 'api', 'mail', 'notification', 'backup', 'exports'],
                 'balance' => 'auto',
                 'minProcesses' => 1,
                 'maxProcesses' => 5,
@@ -198,7 +205,7 @@ return [
         'local' => [
             'supervisor-1' => [
                 'connection' => 'redis',
-                'queue' => ['default', 'api', 'mail', 'notification', 'backup'],
+                'queue' => ['default', 'api', 'mail', 'notification', 'backup', 'exports'],
                 'balance' => 'auto',
                 'minProcesses' => 1,
                 'maxProcesses' => 1,

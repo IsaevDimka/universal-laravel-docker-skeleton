@@ -1,16 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 \Illuminate\Support\Collection::macro(
     'mapKeysWith',
     function ($callable) {
-        /* @var $this \Illuminate\Support\Collection */
+        /** @var \Illuminate\Support\Collection $this */
         return $this->mapWithKeys(function ($item, $key) use ($callable) {
             if (is_array($item)) {
                 $item = collect($item)
                     ->mapKeysWith($callable)
                     ->toArray();
             }
-            return [$callable($key) => $item];
+            return [
+                $callable($key) => $item,
+            ];
         });
     }
 );
@@ -18,7 +22,7 @@
 \Illuminate\Support\Collection::macro(
     'mapKeysToCamelCase',
     function () {
-        /* @var $this \Illuminate\Support\Collection */
+        /** @var \Illuminate\Support\Collection $this */
         return $this->mapKeysWith('camel_case');
     }
 );
@@ -31,11 +35,12 @@
     'whereSpatialDistance',
     function ($column, $operator, $point, $distance, $boolean = 'and') {
         $this->whereRaw(
-            "ST_Distance_Sphere(`{$this->from}`.`$column`, POINT(?, ?)) $operator ?",
+            "ST_Distance_Sphere(`{$this->from}`.`${column}`, POINT(?, ?)) ${operator} ?",
             [$point[0], $point[1], $distance],
             $boolean
         );
-    });
+    }
+);
 /**
  * Example using: $query->orWhereSpatialDistance('coordinates', [0, 0], 1);
  */

@@ -1,15 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Spatie\ValidationRules\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
 class Enum implements Rule
 {
-    /** @var array */
+    /**
+     * @var array
+     */
     protected $validValues;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $attribute;
 
     public function __construct(string $enumClass)

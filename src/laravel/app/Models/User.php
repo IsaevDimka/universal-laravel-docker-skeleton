@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Casts\Json;
 use App\Casts\Locale;
+use App\Models\Concerns\UsesActive;
 use App\Notifications\ResetPassword;
 use App\Notifications\VerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -29,20 +32,26 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property \Illuminate\Support\Carbon|null $last_visit_at
  * @property string $password
+ * @property float $balance
  * @property bool $is_active
  * @property string $locale
  * @property array|null $options
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read int $jwt
+ * @property-read array $permission_names
+ * @property-read array $role_names
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\OAuthProvider[] $oauthProviders
  * @property-read int|null $oauth_providers_count
+ * @property-read \App\Models\Operator $operator
  * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Permission[] $permissions
  * @property-read int|null $permissions_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Role[] $roles
  * @property-read int|null $roles_count
+ * @property-read \App\Models\Webmaster $webmaster
  * @method static \Illuminate\Database\Eloquent\Builder|User active()
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
@@ -51,6 +60,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @method static \Illuminate\Database\Eloquent\Builder|User query()
  * @method static \Illuminate\Database\Eloquent\Builder|User role($roles, $guard = null)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereAvatar($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereBalance($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereEmailVerifiedAt($value)
@@ -67,16 +77,17 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereTelegramChatId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUsername($value)
- * @mixin \Illuminate\Database\Eloquent\Collection|Authenticatable
+ * @mixin \Eloquent
  */
-class User extends Authenticatable implements HasLocalePreference, JWTSubject
-//    ,MustVerifyEmail
+class User extends Authenticatable implements
+    HasLocalePreference,
+    JWTSubject
+    //    ,MustVerifyEmail
 {
     use Notifiable;
     use HasRoles;
     use HasFactory;
-
-    const FORMAT_DATETIME = 'Y-m-d H:i:s';
+    use UsesActive;
 
     /**
      * The attributes that are mass assignable.
@@ -92,6 +103,7 @@ class User extends Authenticatable implements HasLocalePreference, JWTSubject
         'telegram_chat_id',
         'email_verified_at',
         'last_visit_at',
+        'balance',
         'is_active',
         'locale',
         'options',
@@ -120,34 +132,37 @@ class User extends Authenticatable implements HasLocalePreference, JWTSubject
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'last_visit_at'     => 'datetime',
-        'is_active'         => 'boolean',
-        'options'           => Json::class,
-        'locale'            => Locale::class,
-        'phone_is_verify'   => 'boolean',
+        'last_visit_at' => 'datetime',
+        'is_active' => 'boolean',
+        'options' => Json::class,
+        'locale' => Locale::class,
+        'phone_is_verify' => 'boolean',
+        'balance' => 'float',
     ];
 
     /**
      * Set permissions guard to API by default
+     *
      * @var string
      */
-//    protected $guard_name = 'api';
+    //    protected $guard_name = 'api';
 
     public static function boot()
     {
         parent::boot();
 
-        static::creating(function(User $model) {
+        static::creating(function (self $model) {
             $model->password = \Illuminate\Support\Facades\Hash::make($model->password);
             $model->email = strtolower($model->email);
         });
-        static::updating(function(User $model) {
+        static::updating(function (self $model) {
             $model->email = strtolower($model->email);
         });
     }
 
     /**
      * Lowercase username
+     *
      * @param $value
      */
     public function setUsernameAttribute($value)
@@ -157,6 +172,7 @@ class User extends Authenticatable implements HasLocalePreference, JWTSubject
 
     /**
      * Lowercase email
+     *
      * @param $value
      */
     public function setEmailAttribute($value)
@@ -164,47 +180,9 @@ class User extends Authenticatable implements HasLocalePreference, JWTSubject
         $this->attributes['email'] = strtolower($value);
     }
 
-    /**
-     * Scope a query to only include active users.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeActive($query)
-    {
-        return $query->where('is_active', 1);
-    }
-
-    /**
-     * Scope a query to only include not active users.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeNotActive($query)
-    {
-        return $query->where('is_active', 0);
-    }
-
-    /**
-     * @return bool
-     */
-    public function isActive() : bool
-    {
-        return $this->is_active === null;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isNotActive() : bool
-    {
-        return ! $this->isActive();
-    }
-
     public function routeNotificationFor($driver)
     {
-        if (method_exists($this, $method = 'routeNotificationFor'.Str::studly($driver))) {
+        if (method_exists($this, $method = 'routeNotificationFor' . Str::studly($driver))) {
             return $this->{$method}();
         }
 
@@ -265,15 +243,13 @@ class User extends Authenticatable implements HasLocalePreference, JWTSubject
      */
     public function receivesBroadcastNotificationsOn()
     {
-        return 'users.'.$this->id;
+        return 'users.' . $this->id;
     }
 
     /**
      * Check valid email domain mx records
-     *
-     * @return bool
      */
-    public function hasValidEmail() : bool
+    public function hasValidEmail(): bool
     {
         [$username, $domain] = explode('@', $this->email);
 
@@ -293,8 +269,7 @@ class User extends Authenticatable implements HasLocalePreference, JWTSubject
     /**
      * Send the password reset notification.
      *
-     * @param  string  $token
-     * @return void
+     * @param string $token
      */
     public function sendPasswordResetNotification($token)
     {
@@ -303,12 +278,10 @@ class User extends Authenticatable implements HasLocalePreference, JWTSubject
 
     /**
      * Send the email verification notification.
-     *
-     * @return void
      */
     public function sendEmailVerificationNotification()
     {
-        $this->notify(new VerifyEmail);
+        $this->notify(new VerifyEmail());
     }
 
     /**
@@ -327,29 +300,23 @@ class User extends Authenticatable implements HasLocalePreference, JWTSubject
         return [];
     }
 
-    public function getCreatedAtAttribute($value)
+    public function getRoleNamesAttribute(): array
     {
-        return BaseModel::formattingCarbonAttribute($value);
+        return $this->getRoleNames()->toArray();
     }
 
-    public function getUpdatedAtAttribute($value)
+    public function getPermissionNamesAttribute(): array
     {
-        return BaseModel::formattingCarbonAttribute($value);
+        return $this->getPermissionNames()->toArray();
     }
 
-    public function getLastVisitAtAttribute($value)
+    public function getJwtAttribute(): int
     {
-        return BaseModel::formattingCarbonAttribute($value);
-    }
-
-    public function getEmailVerifiedAtAttribute($value)
-    {
-        return BaseModel::formattingCarbonAttribute($value);
+        return $this->getJWTIdentifier();
     }
 
     /**
      * Check whether current role is admin
-     * @return bool
      */
     public function isAdmin(): bool
     {
@@ -358,7 +325,6 @@ class User extends Authenticatable implements HasLocalePreference, JWTSubject
 
     /**
      * Check whether current role is root
-     * @return bool
      */
     public function isRoot(): bool
     {
@@ -367,12 +333,9 @@ class User extends Authenticatable implements HasLocalePreference, JWTSubject
 
     /**
      * Check whether current role is visitor
-     *
-     * @return bool
      */
-    public function isClient() : bool
+    public function isClient(): bool
     {
         return $this->hasRole(Role::ROLE_CLIENT);
     }
-
 }

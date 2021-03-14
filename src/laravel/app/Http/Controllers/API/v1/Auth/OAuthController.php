@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\API\v1\Auth;
 
 use App\Exceptions\EmailTakenException;
@@ -15,8 +17,6 @@ class OAuthController extends ApiController
 
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -31,10 +31,9 @@ class OAuthController extends ApiController
      */
     public function redirectToProvider($provider)
     {
-        try{
+        try {
             $url = Socialite::driver($provider)->stateless()->redirect()->getTargetUrl();
-        }catch(\Throwable $e)
-        {
+        } catch (\Throwable $e) {
             return api()->validation($e->getMessage());
         }
         return api()->ok(null, compact('url'));
@@ -43,36 +42,32 @@ class OAuthController extends ApiController
     /**
      * Obtain the user information from the provider.
      *
-     * @param string $driver
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function handleProviderCallback($provider)
     {
-        try{
+        try {
             $user = Socialite::driver($provider)->stateless()->user();
-        }catch(\Throwable $e)
-        {
+        } catch (\Throwable $e) {
             return api()->validation($e->getMessage());
         }
 
         $user = $this->findOrCreateUser($provider, $user);
 
         $this->guard()->setToken($token = $this->guard()->login($user));
-        $token      = (string) $this->guard()->getToken();
+        $token = (string) $this->guard()->getToken();
         $expiration = $this->guard()->getPayload()->get('exp');
 
         return api()->ok(null, [
-            'token'      => $token,
+            'token' => $token,
             'token_type' => 'bearer',
             'expires_in' => $expiration - time(),
-            'locale'     => $user->locale,
+            'locale' => $user->locale,
         ]);
     }
 
     /**
      * @param string                            $provider
-     * @param \Laravel\Socialite\Contracts\User $sUser
      *
      * @return \App\Models\User|false
      */
@@ -82,17 +77,17 @@ class OAuthController extends ApiController
     ) {
         $oauthProvider = OAuthProvider::where('provider', $provider)->where('provider_user_id', $user->getId())->first();
 
-        if($oauthProvider) {
+        if ($oauthProvider) {
             $oauthProvider->update([
-                'access_token'  => $user->token,
+                'access_token' => $user->token,
                 'refresh_token' => $user->refreshToken,
             ]);
 
             return $oauthProvider->user;
         }
 
-        if(User::where('email', $user->getEmail())->exists()) {
-            throw new EmailTakenException;
+        if (User::where('email', $user->getEmail())->exists()) {
+            throw new EmailTakenException();
         }
 
         return $this->createUser($provider, $user);
@@ -109,23 +104,23 @@ class OAuthController extends ApiController
         $sUser
     ) {
         $user = User::create([
-            'name'              => $sUser->getName(),
-            'username'          => $sUser->getNickname(),
-            'email'             => $sUser->getEmail(),
+            'name' => $sUser->getName(),
+            'username' => $sUser->getNickname(),
+            'email' => $sUser->getEmail(),
             'email_verified_at' => now(),
-            'avatar'            => $sUser->getAvatar(),
-            'locale'            => config('app.fallback_locale'),
-            'is_active'         => true,
-            'options'           => null,
+            'avatar' => $sUser->getAvatar(),
+            'locale' => config('app.fallback_locale'),
+            'is_active' => true,
+            'options' => null,
         ]);
 
         $user->assignRole(\App\Models\Role::ROLE_CLIENT);
 
         $user->oauthProviders()->create([
-            'provider'         => $provider,
+            'provider' => $provider,
             'provider_user_id' => $sUser->getId(),
-            'access_token'     => $sUser->token,
-            'refresh_token'    => $sUser->refreshToken,
+            'access_token' => $sUser->token,
+            'refresh_token' => $sUser->refreshToken,
         ]);
         return $user;
     }

@@ -1,7 +1,8 @@
 <?php
 
-return [
+declare(strict_types=1);
 
+return [
     /*
      * Set trusted proxy IP addresses.
      *
@@ -15,7 +16,8 @@ return [
      * of your proxy (e.g. if using ELB or similar).
      *
      */
-    'proxies' => null, // [<ip addresses>,], '*', '<ip addresses>,'
+    'proxies' => null,
+    // [<ip addresses>,], '*', '<ip addresses>,'
 
     /*
      * To trust one or more specific proxies that connect
@@ -46,5 +48,4 @@ return [
      * @link https://symfony.com/doc/current/deployment/proxies.html
      */
     'headers' => Illuminate\Http\Request::HEADER_X_FORWARDED_ALL,
-
 ];

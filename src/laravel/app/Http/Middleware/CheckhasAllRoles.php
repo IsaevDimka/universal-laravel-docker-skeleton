@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Middleware;
 
 use Closure;
-use Spatie\Permission\Exceptions\UnauthorizedException;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 /**
  *  I have all of these roles!
@@ -17,7 +19,6 @@ class CheckhasAllRoles
      * Handle an incoming request.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Closure                 $next
      *
      * @return mixed
      */
@@ -31,11 +32,10 @@ class CheckhasAllRoles
             ? $role
             : explode('|', $role);
 
-        if (!Auth::user()->hasAllRoles($roles)) {
+        if (! Auth::user()->hasAllRoles($roles)) {
             throw UnauthorizedException::forRoles($roles);
         }
 
         return $next($request);
     }
 }
-

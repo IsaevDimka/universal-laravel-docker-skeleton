@@ -303,9 +303,7 @@ class CurrencySeeder extends Seeder
         $json = file_get_contents(database_path('currencies.json'));
         $currencies = json_decode($json, true);
         $is_allowed = [
-            'USD',
             'RUB',
-            'VND',
         ];
 
         foreach ($currencies as $sign => $item)

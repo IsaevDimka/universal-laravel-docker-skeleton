@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
@@ -10,12 +12,11 @@ use Illuminate\Queue\SerializesModels;
 class WelcomeMail extends Mailable
 //    implements ShouldQueue
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * Create a new message instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -29,7 +30,7 @@ class WelcomeMail extends Mailable
     public function build()
     {
         return $this->from(env('MAIL_FROM_ADDRESS'))
-                    ->subject('Test Subject')
-                    ->markdown('emails.welcome');
+            ->subject('Test Subject')
+            ->markdown('emails.welcome');
     }
 }

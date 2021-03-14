@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use Carbon\Carbon;
@@ -9,8 +11,6 @@ class CarbonServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
-     *
-     * @return void
      */
     public function register()
     {
@@ -19,27 +19,25 @@ class CarbonServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap services.
-     *
-     * @return void
      */
     public function boot()
     {
         /**
          * Use: Carbon::generateDateRange($start_date, $end_date)
          */
-        Carbon::macro('generateDateRange', function(
+        Carbon::macro('generateDateRange', function (
             $start_date,
             $end_date
         ) {
-            if(! $start_date instanceof Carbon) {
+            if (! $start_date instanceof Carbon) {
                 $start_date = Carbon::createFromFormat('Y-m-d', $start_date);
             }
-            if(! $end_date instanceof Carbon) {
+            if (! $end_date instanceof Carbon) {
                 $end_date = Carbon::createFromFormat('Y-m-d', $end_date);
             }
 
             $dates = [];
-            for($date = $start_date; $date->lte($end_date); $date->addDay()){
+            for ($date = $start_date; $date->lte($end_date); $date->addDay()) {
                 $dates[] = $date->format('Y-m-d');
             }
             return $dates;

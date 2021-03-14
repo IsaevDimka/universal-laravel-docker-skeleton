@@ -11,13 +11,18 @@
     }
   ],
   "require": {
-    "php": "^8.0",
+    "php": "^7.4 || ^8.0",
     "ext-json": "*",
     "geoip2/geoip2": "^2.11",
     "mongodb/mongodb": "^1.7",
     "monolog/monolog": "^2.2",
-    "spiral/roadrunner": "1.9.1",
-    "zendframework/zend-diactoros": "^2.0"
+    "nesbot/carbon": "^2.45",
+    "spiral/roadrunner": "1.9.2",
+    "nyholm/psr7": "^1.4"
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^0.12.81",
+    "symplify/easy-coding-standard": "^9.2"
   },
   "autoload": {
     "psr-4": {

@@ -1,4 +1,4 @@
-FROM rabbitmq:3.8.9-management-alpine
+FROM rabbitmq:3.8.11-management-alpine
 
 LABEL Description="RabbitMQ + management container"
 

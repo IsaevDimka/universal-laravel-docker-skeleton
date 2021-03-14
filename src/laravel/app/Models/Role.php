@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -30,13 +31,20 @@ namespace App\Models;
  * @property \Illuminate\Support\Carbon|null $updatedAt
  * @property-read int|null $permissionsCount
  * @property-read int|null $usersCount
+ * @mixin IdeHelperRole
  */
 class Role extends \Spatie\Permission\Models\Role
 {
-    const ROLE_ROOT = 'root';
-    const ROLE_ADMIN = 'admin';
-    const ROLE_CLIENT = 'client';
+    public const ROLE_ROOT = 'root';
+
+    public const ROLE_ADMIN = 'admin';
+
+    public const ROLE_CLIENT = 'client';
 
     public $guard_name = 'web';
 
+    protected $fillable = [
+        'name',
+        'guard_name',
+    ];
 }

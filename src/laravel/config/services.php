@@ -1,7 +1,8 @@
 <?php
 
-return [
+declare(strict_types=1);
 
+return [
     /*
     |--------------------------------------------------------------------------
     | Third Party Services
@@ -15,8 +16,8 @@ return [
     */
 
     'mailgun' => [
-        'domain'   => env('MAILGUN_DOMAIN'),
-        'secret'   => env('MAILGUN_SECRET'),
+        'domain' => env('MAILGUN_DOMAIN'),
+        'secret' => env('MAILGUN_SECRET'),
         'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
     ],
 
@@ -25,76 +26,75 @@ return [
     ],
 
     'ses' => [
-        'key'    => env('AWS_ACCESS_KEY_ID'),
+        'key' => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
     'recaptcha' => [
-        'key'    => env('RECAPTCHA_SITE_KEY'),
+        'key' => env('RECAPTCHA_SITE_KEY'),
         'secret' => env('RECAPTCHA_SECRET'),
     ],
 
     'github' => [
-        'client_id'     => env('GITHUB_CLIENT_ID'),
+        'client_id' => env('GITHUB_CLIENT_ID'),
         'client_secret' => env('GITHUB_CLIENT_SECRET'),
-        'redirect'      => env('GITHUB_REDIRECT_URI')
+        'redirect' => env('GITHUB_REDIRECT_URI'),
     ],
 
     'google' => [
-        'client_id'     => env('GOOGLE_CLIENT_ID'),
+        'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect'      => env('GOOGLE_REDIRECT_URI'),
+        'redirect' => env('GOOGLE_REDIRECT_URI'),
     ],
 
     'facebook' => [
-        'client_id'     => env('FACEBOOK_APP_ID'),
+        'client_id' => env('FACEBOOK_APP_ID'),
         'client_secret' => env('FACEBOOK_APP_SECRET'),
-        'redirect'      => env('FACEBOOK_REDIRECT_URI'),
+        'redirect' => env('FACEBOOK_REDIRECT_URI'),
     ],
 
     'telegram' => [
-        'bot'           => env('TELEGRAM_BOT_NAME'),
+        'bot' => env('TELEGRAM_BOT_NAME'),
         // The bot's username
-        'client_id'     => null,
+        'client_id' => null,
         'client_secret' => env('TELEGRAM_TOKEN'),
-        'redirect'      => env('TELEGRAM_REDIRECT_URI'),
+        'redirect' => env('TELEGRAM_REDIRECT_URI'),
     ],
 
     'vkontakte' => [
-        'client_id'     => env('VKONTAKTE_CLIENT_ID'),
+        'client_id' => env('VKONTAKTE_CLIENT_ID'),
         'client_secret' => env('VKONTAKTE_CLIENT_SECRET'),
-        'redirect'      => env('VKONTAKTE_REDIRECT_URI')
+        'redirect' => env('VKONTAKTE_REDIRECT_URI'),
     ],
 
     'twitter' => [
-        'client_id'     => env('TWITTER_CLIENT_ID'),
+        'client_id' => env('TWITTER_CLIENT_ID'),
         'client_secret' => env('TWITTER_CLIENT_SECRET'),
-        'redirect'      => env('TWITTER_REDIRECT_URI')
+        'redirect' => env('TWITTER_REDIRECT_URI'),
     ],
 
     'gitlab' => [
-        'client_id'     => env('GITLAB_CLIENT_ID'),
+        'client_id' => env('GITLAB_CLIENT_ID'),
         'client_secret' => env('GITLAB_CLIENT_SECRET'),
-        'redirect'      => env('GITLAB_REDIRECT_URI')
+        'redirect' => env('GITLAB_REDIRECT_URI'),
     ],
 
     'zalo' => [
-        'client_id'     => env('ZALO_CLIENT_ID'),
+        'client_id' => env('ZALO_CLIENT_ID'),
         'client_secret' => env('ZALO_CLIENT_SECRET'),
-        'redirect'      => env('ZALO_REDIRECT_URI')
+        'redirect' => env('ZALO_REDIRECT_URI'),
     ],
 
     'bitbucket' => [
-        'client_id'     => env('BITBUCKET_CLIENT_ID'),
+        'client_id' => env('BITBUCKET_CLIENT_ID'),
         'client_secret' => env('BITBUCKET_CLIENT_SECRET'),
-        'redirect'      => env('BITBUCKET_REDIRECT_URI')
+        'redirect' => env('BITBUCKET_REDIRECT_URI'),
     ],
 
     'yandex' => [
-        'client_id'     => env('YANDEX_CLIENT_ID'),
+        'client_id' => env('YANDEX_CLIENT_ID'),
         'client_secret' => env('YANDEX_CLIENT_SECRET'),
-        'redirect'      => env('YANDEX_REDIRECT_URI')
+        'redirect' => env('YANDEX_REDIRECT_URI'),
     ],
-
 ];

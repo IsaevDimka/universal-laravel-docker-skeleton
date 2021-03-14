@@ -19,7 +19,7 @@ class CreateStoragesTable extends Migration
             $table->string('type');
             $table->string('path');
             $table->unsignedBigInteger('size');
-            $table->foreignId('user_id')->nullable()->index()->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained('users');
             $table->timestamps();
             $table->softDeletes();
         });

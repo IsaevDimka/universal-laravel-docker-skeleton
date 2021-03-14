@@ -15,7 +15,7 @@ class CreateUserLoginActivitiesTable extends Migration
     {
         Schema::create('user_login_activities', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->index()->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users');
             $table->ipAddress('ip_address');
             $table->jsonb('geoip');
             $table->string('user_agent');
@@ -32,6 +32,6 @@ class CreateUserLoginActivitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('login_activities');
+        Schema::dropIfExists('user_login_activities');
     }
 }

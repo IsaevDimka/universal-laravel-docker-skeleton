@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs;
 
 use Illuminate\Bus\Batchable;
@@ -11,7 +13,11 @@ use Illuminate\Queue\SerializesModels;
 
 class TestJob implements ShouldQueue
 {
-    use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Batchable;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * The number of times the job may be attempted
@@ -28,7 +34,6 @@ class TestJob implements ShouldQueue
 
     /**
      * The number of seconds the job can run before timing out
-     *
      */
     public $timeout = 120;
 
@@ -51,23 +56,21 @@ class TestJob implements ShouldQueue
     //    public $delay = 2;
 
     private array $payload;
+
     private bool $failed;
 
     /**
      * Create a new job instance.
-     *
-     * @param array $payload
-     * @param bool  $failed
      */
     public function __construct(array $payload = [], bool $failed = false)
     {
-        $this->payload  = $payload;
+        $this->payload = $payload;
         $this->failed = $failed;
     }
 
     public function tags()
     {
-        return ['connection:'.$this->connection, 'delay:'.$this->delay];
+        return ['connection:' . $this->connection, 'delay:' . $this->delay];
     }
 
     public function retryAfter()
@@ -77,26 +80,26 @@ class TestJob implements ShouldQueue
          * Delay versus attempts
          */
         return now()->addSeconds(
-            (int) round(((2 ** $this->attempts()) - 1 ) / 2)
+            (int) round(((2 ** $this->attempts()) - 1) / 2)
         );
     }
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
     public function handle()
     {
-        logger()->channel('telegram')->debug('Running TestJob...',
+        logger()->channel('telegram')->debug(
+            'Running TestJob...',
             [
-                'type'       => 'clear',
-                'payload'    => $this->payload,
-                'failed'     => $this->failed,
-                'queue'      => $this->queue,
+                'type' => 'clear',
+                'payload' => $this->payload,
+                'failed' => $this->failed,
+                'queue' => $this->queue,
                 'connection' => $this->connection,
-                'tags'       => $this->tags(),
-            ]);
+                'tags' => $this->tags(),
+            ]
+        );
         if ($this->failed) {
             throw new \Exception('Job failed!');
         }

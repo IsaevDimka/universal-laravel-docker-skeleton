@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Opcache\Commands;
 
 use Illuminate\Console\Command;
@@ -23,8 +25,6 @@ class ClearCommand extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {

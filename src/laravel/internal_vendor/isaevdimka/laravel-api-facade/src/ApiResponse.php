@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Api;
 
@@ -9,9 +10,9 @@ use Symfony\Component\HttpFoundation\Response as ResponseStatus;
 
 class ApiResponse implements ApiInterface
 {
-    const FORMAT_DATETIME = Carbon::DEFAULT_TO_STRING_FORMAT;
+    public const FORMAT_DATETIME = Carbon::DEFAULT_TO_STRING_FORMAT;
 
-    const BYPASS_KEY = 'debug';
+    public const BYPASS_KEY = 'debug';
 
     protected array $headers = [
         'Content-Type' => 'application/json',
@@ -34,37 +35,40 @@ class ApiResponse implements ApiInterface
         }
 
         $json = [
-            config('apifacade.keys.status')  => config('apifacade.stringify') ? strval($status) : $status,
+            config('apifacade.keys.status') => config('apifacade.stringify') ? strval($status) : $status,
             config('apifacade.keys.message') => $message,
-            config('apifacade.keys.data')    => $data,
+            config('apifacade.keys.data') => $data,
         ];
 
-        if(is_countable($data) && config('apifacade.include_data_count', false) && !empty($data)) {
-            $json = array_merge($json, [config('apifacade.keys.data_count') => config('apifacade.stringify') ? strval(count($data)) : count($data)]);
+        if (is_countable($data) && config('apifacade.include_data_count', false) && ! empty($data)) {
+            $json = array_merge($json, [
+                config('apifacade.keys.data_count') => config('apifacade.stringify') ? strval(count($data)) : count($data),
+            ]);
         }
 
-        if($extraData) {
-            foreach($extraData as $extra){
+        if ($extraData) {
+            foreach ($extraData as $extra) {
                 $json = array_merge($json, $extra);
             }
         }
 
-        if(config('apifacade.include_app_info', false)) {
+        if (config('apifacade.include_app_info', false)) {
             $version = (new \PragmaRX\Version\Package\Version());
-            $app     = [
-                'environment'    => app()->environment(),
-                'locale'         => app()->getLocale(),
-                'version'        => $version->format('compact'),
+            $app = [
+                'environment' => app()->environment(),
+                'locale' => app()->getLocale(),
+                'version' => $version->format('compact'),
                 'latest_release' => Carbon::create($version->format('timestamp-datetime'))->toDateTimeString(),
             ];
-            $json    = array_merge($json, $app);
+            $json = array_merge($json, $app);
         }
 
-        if(config('apifacade.debug')) {
+        if (config('apifacade.debug')) {
             $debug = [
                 'duration' => format_duration((microtime(true) - LARAVEL_START)),
+                //                'route' => \request()->route(),
             ];
-            $json  = array_merge($json, compact('debug'));
+            $json = array_merge($json, compact('debug'));
         }
 
         if (config('apifacade.notify_too_many_requests') && $status == ResponseStatus::HTTP_TOO_MANY_REQUESTS) {
@@ -75,7 +79,7 @@ class ApiResponse implements ApiInterface
             $method = $request->getMethod();
             $fullUrl = $request->fullUrl();
             $data = $request->toArray();
-            $user_id = \auth()->id();
+            $user_id = optional(auth())->id();
             $hit = compact('ip', 'ua', 'token', 'fullUrl', 'method', 'data', 'user_id');
             $json = array_merge($json, compact('hit'));
             logger()->channel('telegram')->warning($message, $json);
@@ -98,7 +102,7 @@ class ApiResponse implements ApiInterface
      */
     public function ok($message = null, $data = [], ...$extraData)
     {
-        if(is_null($message)) {
+        if (is_null($message)) {
             $message = config('apifacade.messages.success');
         }
 
@@ -130,7 +134,7 @@ class ApiResponse implements ApiInterface
      */
     public function bad($message = null, $errors = [], ...$extraData)
     {
-        if(is_null($message)) {
+        if (is_null($message)) {
             $message = config('apifacade.messages.bad');
         }
 
@@ -146,7 +150,7 @@ class ApiResponse implements ApiInterface
      */
     public function notFound($message = null)
     {
-        if(is_null($message)) {
+        if (is_null($message)) {
             $message = config('apifacade.messages.notfound');
         }
 
@@ -164,7 +168,7 @@ class ApiResponse implements ApiInterface
      */
     public function validation($message = null, $errors = [], ...$extraData)
     {
-        if(is_null($message)) {
+        if (is_null($message)) {
             $message = config('apifacade.messages.validation');
         }
 
@@ -182,7 +186,7 @@ class ApiResponse implements ApiInterface
      */
     public function forbidden($message = null, $errors = [], ...$extraData)
     {
-        if(is_null($message)) {
+        if (is_null($message)) {
             $message = config('apifacade.messages.forbidden');
         }
 
@@ -200,7 +204,7 @@ class ApiResponse implements ApiInterface
      */
     public function error($message = null, $errors = [], ...$extraData)
     {
-        if(is_null($message)) {
+        if (is_null($message)) {
             $message = config('apifacade.messages.error');
         }
 

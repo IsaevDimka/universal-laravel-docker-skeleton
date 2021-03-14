@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Exceptions;
 
 use Illuminate\Validation\ValidationException;
@@ -14,7 +16,7 @@ class VerifyEmailException extends ValidationException
     {
         return static::withMessages([
             'email' => [__('You must :linkOpen verify :linkClose your email first.', [
-                'linkOpen' => '<a href="/email/resend?email='.urlencode($user->email).'">',
+                'linkOpen' => '<a href="/email/resend?email=' . urlencode($user->email) . '">',
                 'linkClose' => '</a>',
             ])],
         ]);

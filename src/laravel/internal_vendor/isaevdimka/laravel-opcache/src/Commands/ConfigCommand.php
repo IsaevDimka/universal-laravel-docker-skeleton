@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Opcache\Commands;
 
 use Illuminate\Console\Command;
@@ -23,8 +25,6 @@ class ConfigCommand extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -40,13 +40,13 @@ class ConfigCommand extends Command
     {
         $opcache = Opcache::getConfig();
 
-        if($opcache) {
+        if ($opcache) {
             $this->line('Version info:');
             $this->table([], $this->parseTable($opcache['version']));
 
             $this->line(PHP_EOL . 'Configuration info:');
             $this->table([], $this->parseTable($opcache['directives']));
-        }else{
+        } else {
             $this->error('OPcache not configured');
 
             return 2;
@@ -64,17 +64,17 @@ class ConfigCommand extends Command
     {
         $input = (array) $input;
 
-        return array_map(function($key, $value) {
+        return array_map(function ($key, $value) {
             $bytes = ['opcache.memory_consumption'];
 
-            if(in_array($key, $bytes)) {
+            if (in_array($key, $bytes)) {
                 $value = number_format($value / 1048576, 2) . ' MB';
-            }elseif(is_bool($value)){
+            } elseif (is_bool($value)) {
                 $value = $value ? 'true' : 'false';
             }
 
             return [
-                'key'   => $key,
+                'key' => $key,
                 'value' => $value,
             ];
         }, array_keys($input), $input);

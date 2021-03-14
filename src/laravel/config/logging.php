@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+use Logger\MongoDBLogger;
+use Logger\TelegramLogger;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
-use Logger\TelegramLogger;
-use Logger\MongoDBLogger;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Log Channel
@@ -128,5 +129,4 @@ return [
         ],
 
     ],
-
 ];

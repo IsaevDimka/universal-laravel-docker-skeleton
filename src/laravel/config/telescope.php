@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 use Laravel\Telescope\Http\Middleware\Authorize;
 use Laravel\Telescope\Watchers;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Telescope Domain
@@ -93,7 +94,7 @@ return [
     */
 
     'only_paths' => [
-         'api/*'
+        'api/*',
     ],
 
     'ignore_paths' => [

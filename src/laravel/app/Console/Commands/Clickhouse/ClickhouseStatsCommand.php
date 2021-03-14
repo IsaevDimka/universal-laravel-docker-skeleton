@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands\Clickhouse;
 
 use Illuminate\Console\Command;
@@ -23,8 +25,6 @@ class ClickhouseStatsCommand extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -39,18 +39,21 @@ class ClickhouseStatsCommand extends Command
     public function handle()
     {
         try {
-            $query = "SELECT table, round(sum(bytes) / 1024/1024/1024, 2) as size_gb
+            $query = DB::connection('clickhouse')->select('SELECT table, 
+                        round(sum(bytes) / 1024/1024/1024, 2) as size_gb
                         FROM system.parts
                         WHERE active
                         GROUP BY table
-                        ORDER BY size_gb DESC";
+                        ORDER BY size_gb DESC');
 
-            $stats = DB::connection('clickhouse')->select($query);
+            $rows = array_map(fn ($row) => array_merge($row), $query);
 
-            $this->table(['table', 'size_gb'], $stats);
+            if (count($rows)) {
+                $this->table(array_keys(array_first($rows)), $rows);
+            }
         } catch (\Throwable $exception) {
-            $this->error("Message: " . (string)$exception->getMessage());
-            $this->error("Code: " . (int)$exception->getCode());
+            $this->error('Message: ' . (string) $exception->getMessage());
+            $this->error('Code: ' . (int) $exception->getCode());
         }
     }
 }

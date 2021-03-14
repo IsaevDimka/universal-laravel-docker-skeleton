@@ -18,7 +18,7 @@ mix-manifest.json
 _ide_helper.php
 _ide_helper_models.php
 laravel.app.js
-/public/status.json
+health.json
 /public/dist
 
 /public/js
@@ -31,4 +31,3 @@ laravel.app.js
 /public/stats.html
 /public/*.js
 /public/*.js.map
-

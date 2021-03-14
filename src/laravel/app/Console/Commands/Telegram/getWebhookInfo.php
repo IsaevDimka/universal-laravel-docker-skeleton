@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands\Telegram;
 
 use App\Services\TelegramService;
@@ -23,8 +25,6 @@ class getWebhookInfo extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     protected $telegramService;
 
