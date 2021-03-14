@@ -238,7 +238,7 @@ services:
     restart: unless-stopped
     ports:
       - ${ROADRUNNER_HTTP_PORT}:8082
-      - ${ROADRUNNER_HTTPS_PORT}:8084
+#      - ${ROADRUNNER_HTTPS_PORT}:8084
       - ${ROADRUNNER_HEALTH_PORT}:8085
       - ${ROADRUNNER_METRICS_POST}:8086
     volumes:
