@@ -79,11 +79,14 @@ class TelegramServiceProvider extends AbstractProvider
 
     protected function mapUserToObject(array $user)
     {
+        $next_id = app(\App\Models\User::class)->getNextSequenceValue();
+
         return (new User())->setRaw($user)->map([
             'id' => $user['id'],
             'nickname' => $user['username'],
             'name' => $user['first_name'] . ' ' . $user['last_name'],
             'avatar' => $user['photo_url'],
+            'email' => $next_id . '@' . env('APP_DOMAIN'),
         ]);
     }
 }

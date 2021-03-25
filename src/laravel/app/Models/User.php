@@ -6,12 +6,14 @@ namespace App\Models;
 
 use App\Casts\Json;
 use App\Casts\Locale;
+use App\Models\Concerns\GetNextSequenceValue;
 use App\Models\Concerns\UsesActive;
 use App\Notifications\ResetPassword;
 use App\Notifications\VerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -88,6 +90,7 @@ class User extends Authenticatable implements
     use HasRoles;
     use HasFactory;
     use UsesActive;
+    use GetNextSequenceValue;
 
     /**
      * The attributes that are mass assignable.
@@ -153,34 +156,16 @@ class User extends Authenticatable implements
 
         static::creating(function (self $model) {
             $model->password = \Illuminate\Support\Facades\Hash::make($model->password);
+            $model->username = strtolower($model->username);
             $model->email = strtolower($model->email);
         });
         static::updating(function (self $model) {
+            $model->username = strtolower($model->username);
             $model->email = strtolower($model->email);
         });
     }
 
-    /**
-     * Lowercase username
-     *
-     * @param $value
-     */
-    public function setUsernameAttribute($value)
-    {
-        $this->attributes['username'] = strtolower($value);
-    }
-
-    /**
-     * Lowercase email
-     *
-     * @param $value
-     */
-    public function setEmailAttribute($value)
-    {
-        $this->attributes['email'] = strtolower($value);
-    }
-
-    public function routeNotificationFor($driver)
+    public function routeNotificationFor(string $driver)
     {
         if (method_exists($this, $method = 'routeNotificationFor' . Str::studly($driver))) {
             return $this->{$method}();
@@ -203,7 +188,7 @@ class User extends Authenticatable implements
      *
      * @return string|null
      */
-    public function routeNotificationForMail()
+    public function routeNotificationForMail(): string
     {
         return $this->email;
     }
@@ -213,7 +198,7 @@ class User extends Authenticatable implements
      *
      * @return string|null
      */
-    public function routeNotificationForSms()
+    public function routeNotificationForSms(): string
     {
         return $this->phone;
     }
@@ -223,7 +208,7 @@ class User extends Authenticatable implements
      *
      * @return string|null
      */
-    public function routeNotificationForTelegram()
+    public function routeNotificationForTelegram(): string
     {
         return $this->telegram_chat_id;
     }
@@ -231,17 +216,15 @@ class User extends Authenticatable implements
     /**
      * @return string|null
      */
-    public function preferredLocale()
+    public function preferredLocale(): string
     {
         return $this->locale;
     }
 
     /**
      * The channels the user receives notification broadcasts on.
-     *
-     * @return string
      */
-    public function receivesBroadcastNotificationsOn()
+    public function receivesBroadcastNotificationsOn(): string
     {
         return 'users.' . $this->id;
     }
@@ -258,10 +241,8 @@ class User extends Authenticatable implements
 
     /**
      * Get the oauth providers.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function oauthProviders()
+    public function oauthProviders(): HasMany
     {
         return $this->hasMany(\App\Models\OAuthProvider::class);
     }
@@ -271,7 +252,7 @@ class User extends Authenticatable implements
      *
      * @param string $token
      */
-    public function sendPasswordResetNotification($token)
+    public function sendPasswordResetNotification($token): void
     {
         $this->notify(new ResetPassword($token));
     }
@@ -279,23 +260,17 @@ class User extends Authenticatable implements
     /**
      * Send the email verification notification.
      */
-    public function sendEmailVerificationNotification()
+    public function sendEmailVerificationNotification(): void
     {
         $this->notify(new VerifyEmail());
     }
 
-    /**
-     * @return int
-     */
-    public function getJWTIdentifier()
+    public function getJWTIdentifier(): int
     {
         return $this->getKey();
     }
 
-    /**
-     * @return array
-     */
-    public function getJWTCustomClaims()
+    public function getJWTCustomClaims(): array
     {
         return [];
     }
