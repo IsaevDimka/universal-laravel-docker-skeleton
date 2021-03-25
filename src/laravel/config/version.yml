@@ -4,17 +4,17 @@ current:
   label: v
   major: 1
   minor: 2
-  patch: 0
+  patch: 1
   prerelease: stable
   buildmetadata: 1
   commit: 10001a
   timestamp:
     year: 2021
     month: 3
-    day: 14
-    hour: 21
-    minute: 17
-    second: 31
+    day: 25
+    hour: 17
+    minute: 13
+    second: 21
     timezone: Europe/Moscow
 commit:
   mode: increment
