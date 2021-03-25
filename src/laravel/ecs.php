@@ -6,6 +6,9 @@ use PhpCsFixer\Fixer\ArrayNotation\ArraySyntaxFixer;
 use PhpCsFixer\Fixer\Operator\UnaryOperatorSpacesFixer;
 use PhpCsFixer\Fixer\ArrayNotation\TrailingCommaInMultilineArrayFixer;
 use PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer;
+use PhpCsFixer\RuleSet\Sets\PSR12Set;
+use PhpCsFixer\Fixer\PhpTag\BlankLineAfterOpeningTagFixer;
+use PhpCsFixer\Fixer\Operator\NotOperatorWithSuccessorSpaceFixer;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symplify\EasyCodingStandard\ValueObject\Option;
 use Symplify\EasyCodingStandard\ValueObject\Set\SetList;
@@ -13,11 +16,14 @@ use Symplify\EasyCodingStandard\ValueObject\Set\SetList;
 return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
     $services->set(ArraySyntaxFixer::class)->call('configure', [[
-            'syntax' => 'short',
+        'syntax' => 'short',
     ]]);
     $services->set(UnaryOperatorSpacesFixer::class);
     $services->set(TrailingCommaInMultilineArrayFixer::class);
     $services->set(BinaryOperatorSpacesFixer::class);
+    $services->set(PSR12Set::class);
+    $services->set(BlankLineAfterOpeningTagFixer::class);
+    $services->set(NotOperatorWithSuccessorSpaceFixer::class);
 
     $parameters = $containerConfigurator->parameters();
     $parameters->set(Option::PATHS, [
@@ -30,12 +36,12 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     ]);
     $parameters->set(Option::SETS, [
         // run and fix, one by one
-         SetList::SPACES,
-         SetList::ARRAY,
-         SetList::DOCBLOCK,
-         SetList::NAMESPACES,
-         SetList::CONTROL_STRUCTURES,
-         SetList::CLEAN_CODE,
-         SetList::PSR_12,
+        SetList::SPACES,
+        SetList::ARRAY,
+        SetList::DOCBLOCK,
+        SetList::NAMESPACES,
+        SetList::CONTROL_STRUCTURES,
+        SetList::CLEAN_CODE,
+        SetList::PSR_12,
     ]);
 };
