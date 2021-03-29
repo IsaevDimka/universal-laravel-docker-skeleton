@@ -51,7 +51,6 @@ class ClickhouseQueryTestingCommand extends Command
             $query = $clickhouse->from($table_name)->select($selectsRaw);
             if (! empty($whereRaw)) {
                 $query->whereRaw((string) trim($whereRaw));
-
             } else {
                 $searchString = $this->ask('searchString', 'город Электросталь');
                 $area_code = $this->ask('area_code', 50);
