@@ -1,7 +1,7 @@
 # Universal laravel docker skeleton
 
 [![Changelog badge][changelog-badge]][changelog] 
-[![Version 1.2.1 Badge][version-badge]][changelog] 
+[![Version 1.2.2 Badge][version-badge]][changelog] 
 [![MIT License Badge][license-badge]][license]
 ![Docker build CI](https://github.com/IsaevDimka/universal-laravel-docker-skeleton/workflows/Docker%20build%20CI/badge.svg)
 ![Laravel](https://github.com/IsaevDimka/universal-laravel-docker-skeleton/workflows/Laravel/badge.svg)
@@ -110,7 +110,7 @@ Thank you for your help to improving software one changelog at a time!
 ## License
 MIT License (MIT). Please see [`LICENSE`](./LICENSE) for more information. Maintained by [IsaevDimka](https://github.com/IsaevDimka).
 
-[version-badge]: https://img.shields.io/badge/stable-1.2.1-blue.svg
+[version-badge]: https://img.shields.io/badge/stable-1.2.2-blue.svg
 [changelog]: ./CHANGELOG.md
 [changelog-badge]: https://img.shields.io/badge/changelog-docker%20skeleton-%23E05735
 [license]: ./LICENSE
