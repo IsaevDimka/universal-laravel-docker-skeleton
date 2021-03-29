@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use \App\Models\Clickhouse;
+use App\Services\ClickhouseService;
 
 class TelegramWebhookLogs extends Migration
 {
@@ -19,22 +19,22 @@ class TelegramWebhookLogs extends Migration
          */
         $engine  = 'MergeTree(event_date, (uuid), 8192)';
         $columns = [
-            'uuid'            => Clickhouse::COLUMN_UUID,
-            'app_version'     => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
-            'latest_release'  => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
-            'laravel_version' => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
-            'environment'     => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
-            'locale'          => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
-            'duration'        => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
-            'ip'              => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
-            'user_agent'      => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
-            'host'            => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
-            'url'             => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
-            'raw'             => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
-            'event_time'      => Clickhouse::COLUMN_DATETIME,
+            'uuid'            => ClickhouseService::COLUMN_UUID,
+            'app_version'     => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
+            'latest_release'  => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
+            'laravel_version' => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
+            'environment'     => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
+            'locale'          => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
+            'duration'        => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
+            'ip'              => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
+            'user_agent'      => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
+            'host'            => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
+            'url'             => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
+            'raw'             => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
+            'event_time'      => ClickhouseService::COLUMN_DATETIME,
             'event_date'      => 'DEFAULT toDate(event_time)',
         ];
-//        Clickhouse::createTableIfNotExists($this->table_name, $engine, $columns);
+//        app(ClickhouseService::class)->createTableIfNotExists($this->table_name, $engine, $columns);
     }
 
     /**
@@ -44,6 +44,6 @@ class TelegramWebhookLogs extends Migration
      */
     public function down()
     {
-//        Clickhouse::dropTableIfExists($this->table_name);
+//        app(ClickhouseService::class)->dropTableIfExists($this->table_name);
     }
 }
