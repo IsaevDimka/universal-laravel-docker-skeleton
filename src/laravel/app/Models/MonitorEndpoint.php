@@ -34,7 +34,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @mixin \Eloquent
  * @mixin IdeHelperMonitorEndpoint
  */
-class MonitorEndpoint extends BaseModel
+class MonitorEndpoint extends AbstractModel
 {
     use SoftDeletes;
 

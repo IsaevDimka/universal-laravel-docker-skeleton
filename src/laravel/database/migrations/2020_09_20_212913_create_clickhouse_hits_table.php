@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use App\Models\Clickhouse;
+use App\Services\ClickhouseService;
 
 class CreateClickhouseHitsTable extends Migration
 {
@@ -19,53 +19,53 @@ class CreateClickhouseHitsTable extends Migration
          */
         $engine  = 'MergeTree(EventDate, (UserID, EventTime, EventDate), 8192)';
         $columns = [
-            'UserID'         => Clickhouse::COLUMN_UINT64,
-            'Domain'         => Clickhouse::COLUMN_STRING,
-            'URLScheme'      => Clickhouse::COLUMN_STRING,
-            'URL'            => Clickhouse::COLUMN_STRING,
-            'Environment'    => Clickhouse::COLUMN_STRING,
-            'AppVersion'     => Clickhouse::COLUMN_STRING,
-            'LaravelVersion' => Clickhouse::COLUMN_STRING,
-            'QueryParams'    => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
-            'SearchPhrase'   => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
+            'UserID'         => ClickhouseService::COLUMN_UINT64,
+            'Domain'         => ClickhouseService::COLUMN_STRING,
+            'URLScheme'      => ClickhouseService::COLUMN_STRING,
+            'URL'            => ClickhouseService::COLUMN_STRING,
+            'Environment'    => ClickhouseService::COLUMN_STRING,
+            'AppVersion'     => ClickhouseService::COLUMN_STRING,
+            'LaravelVersion' => ClickhouseService::COLUMN_STRING,
+            'QueryParams'    => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
+            'SearchPhrase'   => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
 
-            'Duration' => Clickhouse::COLUMN_UINT32,
+            'Duration' => ClickhouseService::COLUMN_UINT32,
 
-            'BrowserEngine' => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
-            'BrowserName'   => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
-            'DeviceBrand'   => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
-            'DeviceModel'   => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
-            'DeviceType'    => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
-            'Locale'        => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
-            'TimeZone'      => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
+            'BrowserEngine' => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
+            'BrowserName'   => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
+            'DeviceBrand'   => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
+            'DeviceModel'   => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
+            'DeviceType'    => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
+            'Locale'        => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
+            'TimeZone'      => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
 
-            'IP'   => Clickhouse::Nullable(Clickhouse::COLUMN_IPV4),
-            'IPv6' => Clickhouse::Nullable(Clickhouse::COLUMN_IPV6),
+            'IP'   => ClickhouseService::Nullable(ClickhouseService::COLUMN_IPV4),
+            'IPv6' => ClickhouseService::Nullable(ClickhouseService::COLUMN_IPV6),
 
-            'IsBot'    => Clickhouse::Nullable(Clickhouse::COLUMN_UINT8),
-            'Route'    => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
-            'IsMobile' => Clickhouse::Nullable(Clickhouse::COLUMN_UINT8),
-            'IsAjax'   => Clickhouse::Nullable(Clickhouse::COLUMN_UINT8),
+            'IsBot'    => ClickhouseService::Nullable(ClickhouseService::COLUMN_UINT8),
+            'Route'    => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
+            'IsMobile' => ClickhouseService::Nullable(ClickhouseService::COLUMN_UINT8),
+            'IsAjax'   => ClickhouseService::Nullable(ClickhouseService::COLUMN_UINT8),
 
-            'LocationCity'      => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
-            'LocationCountry'   => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
-            'LocationLatitude'  => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
-            'LocationLongitude' => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
-            'LocationRegion'    => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
+            'LocationCity'      => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
+            'LocationCountry'   => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
+            'LocationLatitude'  => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
+            'LocationLongitude' => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
+            'LocationRegion'    => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
 
-            'UserAgent' => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
-            'Os'        => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
-            'OsVersion' => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
+            'UserAgent' => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
+            'Os'        => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
+            'OsVersion' => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
 
-            'Referer' => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
+            'Referer' => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
 
-            'UTMSource'   => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
-            'UTMMedium'   => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
-            'UTMCampaign' => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
-            'UTMContent'  => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
-            'UTMTerm'     => Clickhouse::Nullable(Clickhouse::COLUMN_STRING),
+            'UTMSource'   => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
+            'UTMMedium'   => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
+            'UTMCampaign' => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
+            'UTMContent'  => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
+            'UTMTerm'     => ClickhouseService::Nullable(ClickhouseService::COLUMN_STRING),
 
-            'EventTime' => Clickhouse::COLUMN_DATETIME,
+            'EventTime' => ClickhouseService::COLUMN_DATETIME,
             'EventDate' => 'DEFAULT toDate(EventTime)',
         ];
 
@@ -359,7 +359,7 @@ class CreateClickhouseHitsTable extends Migration
                         SAMPLE BY intHash32(UserID)
                         SETTINGS index_granularity = 8192";
 
-//        Clickhouse::createTableIfNotExists($this->table_name, $engine, $columns);
+//        app(ClickhouseService::class)->createTableIfNotExists($this->table_name, $engine, $columns);
     }
 
     /**
@@ -369,6 +369,6 @@ class CreateClickhouseHitsTable extends Migration
      */
     public function down()
     {
-//        Clickhouse::dropTableIfExists($this->table_name);
+//        app(ClickhouseService::class)->dropTableIfExists($this->table_name);
     }
 }

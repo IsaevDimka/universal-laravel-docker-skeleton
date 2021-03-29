@@ -27,7 +27,7 @@ namespace App\Models;
  * @property bool $isActive
  * @mixin IdeHelperLocale
  */
-class Locale extends BaseModel
+class Locale extends AbstractModel
 {
     public $timestamps = false;
 

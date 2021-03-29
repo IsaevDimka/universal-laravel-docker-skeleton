@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands\Clickhouse;
 
-use App\Models\Clickhouse;
+use App\Services\ClickhouseService;
 use Illuminate\Console\Command;
 
 class ClickhouseQueryTestingCommand extends Command
@@ -40,15 +40,13 @@ class ClickhouseQueryTestingCommand extends Command
      */
     public function handle()
     {
-        $table_name = 'cik_commissions';
-        $clickhouse = Clickhouse::builder();
+        $table_name = $this->ask('table name:');
+        $clickhouse = app(ClickhouseService::class)->builder();
 
-        // area_code,uik_number,voting_name, voting_address
-        $selects = $this->ask('selects', null);
+        $selects = $this->ask('selects:', null);
         $selectsRaw = $selects ? explode(',', str_replace(' ', '', $selects)) : ['area_code', 'uik_number', 'voting_name', 'voting_address'];
 
-        //area_code = 50 AND is_found = 1 AND match(voting_address, '(?i).*город Электросталь.*')
-        $whereRaw = $this->ask('sql');
+        $whereRaw = $this->ask('where sql:');
         try {
             $query = $clickhouse->from($table_name)->select($selectsRaw);
             if (! empty($whereRaw)) {

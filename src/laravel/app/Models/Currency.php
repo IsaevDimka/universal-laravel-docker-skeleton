@@ -33,7 +33,7 @@ namespace App\Models;
  * @property-read mixed                      $updatedAt
  * @mixin IdeHelperCurrency
  */
-class Currency extends BaseModel
+class Currency extends AbstractModel
 {
     public $timestamps = false;
 

@@ -8,16 +8,15 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class BaseModel
+ * Class AbstractModel
  *
  * @package App\Models
- * @method static \Illuminate\Database\Eloquent\Builder|BaseModel newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|BaseModel newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|BaseModel query()
+ * @method static \Illuminate\Database\Eloquent\Builder|AbstractModel newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|AbstractModel newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|AbstractModel query()
  * @mixin \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder
- * @mixin IdeHelperBaseModel
  */
-class BaseModel extends Model
+abstract class AbstractModel extends Model
 {
     public const FORMAT_DATETIME = Carbon::DEFAULT_TO_STRING_FORMAT;
 

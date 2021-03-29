@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Models;
+namespace App\Services;
 
 use App\Exceptions\ClickhouseException;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 use Tinderbox\Clickhouse\Exceptions\TransportException as TinderboxTransportException;
 
-class Clickhouse
+class ClickhouseService
 {
     public const COLUMN_UINT8 = 'UInt8';
 

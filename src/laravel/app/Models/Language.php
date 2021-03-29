@@ -31,7 +31,7 @@ namespace App\Models;
  * @property bool $isActive
  * @mixin IdeHelperLanguage
  */
-class Language extends BaseModel
+class Language extends AbstractModel
 {
     public $timestamps = false;
 

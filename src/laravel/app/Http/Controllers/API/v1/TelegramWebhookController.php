@@ -5,13 +5,20 @@ declare(strict_types=1);
 namespace App\Http\Controllers\API\v1;
 
 use App\Http\Controllers\Controller;
-use App\Models\Clickhouse;
 use App\Models\TelegramWebhookLogs;
+use App\Services\ClickhouseService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class TelegramWebhookController extends Controller
 {
+    private ClickhouseService $clickhouseService;
+
+    public function __construct(ClickhouseService $clickhouseService)
+    {
+        $this->clickhouseService = $clickhouseService;
+    }
+
     public function webhook(Request $request)
     {
         \Services\DebugService::start();
@@ -32,7 +39,9 @@ class TelegramWebhookController extends Controller
             'raw' => (string) \json_encode($request->toArray(), JSON_UNESCAPED_UNICODE),
             'event_time' => now()->timestamp,
         ];
-        $clickhouse = Clickhouse::builder()->table('telegram_webhook_logs')->insert($telegram_webhook_logs);
+
+        $clickhouse = app(ClickhouseService::class)->builder()->table('telegram_webhook_logs')->insert($telegram_webhook_logs);
+
         return api()->ok('Telegram webhook', [
             'request' => $request->toArray(),
             'debug' => $debug,
@@ -40,7 +49,7 @@ class TelegramWebhookController extends Controller
         ]);
     }
 
-    public function get()
+    public function get(Request $request)
     {
         $items = TelegramWebhookLogs::all()->filter(fn ($i) => $i['raw'] = \json_decode($i['raw']));
         return api()->ok(null, [

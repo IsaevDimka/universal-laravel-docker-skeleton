@@ -96,7 +96,7 @@ namespace App\Models;
  * @property bool $is_active
  * @mixin IdeHelperCity
  */
-class City extends BaseModel
+class City extends AbstractModel
 {
     public $timestamps = false;
 

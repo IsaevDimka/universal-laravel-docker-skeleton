@@ -32,7 +32,7 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|Country whereNameOfficial($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Country whereRaw($value)
  */
-class Country extends BaseModel
+class Country extends AbstractModel
 {
     public $timestamps = false;
 

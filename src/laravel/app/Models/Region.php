@@ -74,7 +74,7 @@ namespace App\Models;
  * @property bool $is_active
  * @mixin IdeHelperRegion
  */
-class Region extends BaseModel
+class Region extends AbstractModel
 {
     public $timestamps = false;
 

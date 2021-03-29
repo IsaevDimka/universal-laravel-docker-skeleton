@@ -19,7 +19,7 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|ExchangeRate whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExchangeRate whereUpdatedAt($value)
  */
-class ExchangeRate extends BaseModel
+class ExchangeRate extends AbstractModel
 {
     //
 }
