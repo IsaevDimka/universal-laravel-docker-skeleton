@@ -42,7 +42,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Support\Carbon|null $deletedAt
  * @mixin IdeHelperStorage
  */
-class Storage extends BaseModel
+class Storage extends AbstractModel
 {
     use SoftDeletes;
 

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * App\Models\OAuthProvider
  *
@@ -38,7 +36,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon|null $updatedAt
  * @mixin IdeHelperOAuthProvider
  */
-class OAuthProvider extends Model
+class OAuthProvider extends AbstractModel
 {
     /**
      * The table associated with the model.

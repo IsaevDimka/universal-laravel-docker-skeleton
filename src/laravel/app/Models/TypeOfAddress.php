@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * Class TypeOfAddress
  *
@@ -31,7 +29,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $nameFull Полное название типа
  * @mixin IdeHelperTypeOfAddress
  */
-class TypeOfAddress extends Model
+class TypeOfAddress extends AbstractModel
 {
     public $timestamps = false;
 

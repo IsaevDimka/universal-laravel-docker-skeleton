@@ -35,7 +35,7 @@ use App\Casts\Json;
  * @mixin \Eloquent
  * @mixin IdeHelperUserLoginActivity
  */
-class UserLoginActivity extends BaseModel
+class UserLoginActivity extends AbstractModel
 {
     protected $table = 'user_login_activities';
 

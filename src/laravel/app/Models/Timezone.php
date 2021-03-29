@@ -26,7 +26,7 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|Timezone whereTimezone($value)
  * @mixin IdeHelperTimezone
  */
-class Timezone extends BaseModel
+class Timezone extends AbstractModel
 {
     public $timestamps = false;
 

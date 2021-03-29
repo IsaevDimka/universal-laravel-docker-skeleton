@@ -22,7 +22,7 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|Area whereIsActive($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Area whereName($value)
  */
-class Area extends BaseModel
+class Area extends AbstractModel
 {
     public $timestamps = false;
 
