@@ -47,7 +47,7 @@
     "webpack": "^4.43.0",
     "webpack-bundle-analyzer": "^3.8.0",
     "webpack-chunk-rename-plugin": "^1.0.3",
-    "webpack-cli": "^3.3.12"
+    "webpack-cli": "^4.6.0"
   },
   "dependencies": {
     "axios": "^0.21.1",
