@@ -16,17 +16,17 @@
 
 ## 🐳 Docker containers
 
-+ `php` — php:7.4.15-fpm | Laravel 8.x.x
++ `php` — php:7.4.16-fpm | Laravel 8.x.x
 + `laravel-echo-server` — node:15-alpine + laravel-echo-server
-+ `nginx` — nginx:1.19.6-alpine
++ `nginx` — nginx:1.19.9-alpine
 + `postgres` — postgres:13.2-alpine
 + `memcached` — memcached:1.6.9-alpine
-+ `redis` — redis:6.0.10-alpine
-+ `mongodb` — mongo:4.4.3
++ `redis` — redis:6.2.1-alpine
++ `mongodb` — mongo:4.4.5
 + `adminer` — adminer:latest
-+ `rabbitmq` — rabbitmq:3.8.11-management-alpine
-+ `roadrunner` — php:8.0.2-cli & spiral/roadrunner v1.9.2
-+ `clickhouse-server` — yandex/clickhouse-server 20.8.12.2
++ `rabbitmq` — rabbitmq:3.8.14-management-alpine
++ `roadrunner` — php:8.0.3-cli & spiral/roadrunner v1.9.2
++ `clickhouse-server` — yandex/clickhouse-server 20.8.17.26
 
 ## Features
 

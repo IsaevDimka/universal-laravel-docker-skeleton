@@ -1,4 +1,4 @@
-FROM nginx:1.19.6-alpine
+FROM nginx:1.19.9-alpine
 
 LABEL Description="nginx (a little bit customized)"
 

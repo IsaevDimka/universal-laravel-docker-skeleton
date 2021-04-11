@@ -1,4 +1,4 @@
-FROM yandex/clickhouse-server:20.8.12.2
+FROM yandex/clickhouse-server:21.3.5.42
 
 LABEL Description="Yandex ClickHouse"
 
