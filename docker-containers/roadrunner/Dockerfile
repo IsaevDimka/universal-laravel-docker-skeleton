@@ -1,4 +1,4 @@
-FROM php:8.0.2-cli
+FROM php:8.0.3-cli
 
 LABEL Description="high-performance PHP application server, load balancer and process manager"
 

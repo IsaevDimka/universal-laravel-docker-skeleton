@@ -1,4 +1,4 @@
-FROM redis:6.0.10-alpine
+FROM redis:6.2.1-alpine
 
 LABEL Description="Redis container"
 
