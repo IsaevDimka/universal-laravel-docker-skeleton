@@ -58,7 +58,7 @@
     "css-loader": "^3.6.0",
     "driver.js": "^0.9.7",
     "dropzone": "^5.7.2",
-    "echarts": "^4.8.0",
+    "echarts": "^5.2.2",
     "element-ui": "^2.13.2",
     "file-loader": "^6.0.0",
     "file-saver": "^2.0.2",
