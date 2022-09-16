@@ -17,7 +17,7 @@
     "mongodb/mongodb": "^1.7",
     "monolog/monolog": "^2.2",
     "nesbot/carbon": "^2.45",
-    "spiral/roadrunner": "1.9.2",
+    "spiral/roadrunner": "2.11.2",
     "nyholm/psr7": "^1.4"
   },
   "require-dev": {
